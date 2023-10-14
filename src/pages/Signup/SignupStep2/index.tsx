@@ -98,7 +98,6 @@ const SignupStep2 = () => {
     formData.append('memberForm', new Blob([JSON.stringify(data)], { type: 'application/json' }))
 
 
-    console.log('formData', formData)
     await axios.post('/signup', formData,
       { headers: { 'Content-Type': 'multipart/form-data', accept: 'application/json' } }
     )
