@@ -26,8 +26,10 @@ const SignupStep2 = () => {
 
   const imageRef = useRef<any>();
 
-  const goToHome = () => {
-    navigate("/")
+  const goToLogin = () => {
+    console.log('????')
+    navigate("/login");
+
   }
   const goBack = () => {
     navigate(-1);
@@ -87,7 +89,7 @@ const SignupStep2 = () => {
     console.log('image', profileImage)
     if (profileImage === "/assets/icon/icon-profile-picture.svg") {
       formData.append('image', "")
-    }else{
+    } else {
       formData.append('image', profileImage)
     }
     const data = {
@@ -103,12 +105,12 @@ const SignupStep2 = () => {
     )
       .then((res) => {
         console.log('res', res.data.email)
-        if (res.data.email){
+        if (res.data.email) {
           console.log('계정 생성 성공');
           signupKeyword();
-        } 
+        }
         else {
-        console.log('data', data)
+          console.log('data', data)
         }
       }
       ).catch((res) => {
@@ -129,15 +131,12 @@ const SignupStep2 = () => {
     }
     await axios.post('/survey', keyword_data)
       .then((res) => {
-        console.log('keyword', res)
-        // if (res?.data?.length > 0) {
-        //   console.log('키워드 저장 성공');
-        //   alert('회원가입에 성공했습니다.');
-        //   // goToLogin();
-        // } else {
-        //   console.log('키워드 저장 실패')
-        //   console.log('res', res)
-        // }
+        console.log('keyword', res?.data[0].utagId)
+        if (res.data[0].utagId> 0) {
+          console.log('키워드 저장 성공');
+          alert('회원가입에 성공했습니다.');
+          goToLogin();
+        }
       }
       ).catch((res) => {
         console.log(res)
