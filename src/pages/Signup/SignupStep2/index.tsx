@@ -8,6 +8,7 @@ import {
   AreaTitle,
   Keywords,
   KeywordButton,
+  SignupButton,
 }
   // @ts-ignore
   from './styles.tsx';
@@ -170,7 +171,7 @@ const SignupStep2 = () => {
           <AreaTitle>계열</AreaTitle>
           <Keywords>
             {fragranceWheelKeywords.map((el) =>
-              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161" }}>
+              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161" ,  backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF"  }}>
                 {el.utag_kr}
               </KeywordButton>
             )}
@@ -180,14 +181,14 @@ const SignupStep2 = () => {
           <AreaTitle>분위기</AreaTitle>
           <Keywords>
             {moodKeywords.map((el) =>
-              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161" }} >
+              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161", backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF"  }} >
                 {el.utag_kr}
               </KeywordButton>
             )}
           </Keywords>
         </KeywordArea>
 
-        <button onClick={Signup}>가입하기</button>
+        <SignupButton onClick={Signup}>가입하기</SignupButton>
       </Content>
     </div>
   );

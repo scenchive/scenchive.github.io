@@ -3,48 +3,67 @@ import styled from "@emotion/styled"
 export const Header = styled.div`
     label:header;
     color:#616161;
-    font-size:18px;
+    font-size:15px;
     margin-top:40px;
 `
 export const Content=styled.div`
     label:content;
-    display:flex;
+    display:inline-block;
     flex-direction:column;
-    jusify-content:center;
-    margin-top:50px;
-    padding-left:20px;
-    padding-right:20px;
+    justify-content:center;
+    padding:40px;
     align-items:center;
+    border:1px solid rgba(181, 146, 255, 0.6);
+    border-radius:20px;
+    margin-top:20px;
+    margin-bottom:60px;
 `
 
 export const KeywordArea=styled.div`
-    width:100%;
+    label:keyword-area;
+    width:250px;
 `
 
 export const AreaTitle=styled.div`
-    font-size:18px;
+    label:area-title;
+    font-size:15px;
+    font-weight:400;
+    margin-bottom:10px;
 `
 
 export const Keywords=styled.div`
+    label:keywords;
     display:flex;
     width:100%;
     flex-direction:row;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-content:center;
+    column-gap:3px;
+    justify-content:center;
+    margin-bottom:20px;
 `
 
 export const KeywordButton=styled.div`
-    font-size:18px;
+    label:keyword-button;
+    font-size:12px;
+    font-weight:450;
     border: 1.5px solid #A281FF;
     align-self:flex-start;
-    padding-top:9px;
-    padding-bottom : 11px;
-    padding-left:23px;
-    padding-right:23px;
+    padding : 6px 10px 6.5px 10px;
     border-radius:30px;
     background-color:#F6F2FF;
-    elevation:4;   
-    margin-right:6px;
-    margin-bottom:10px;
-    font-size : 14px;
+    box-shadow:2px 3px 2.5px #D9D9D9;
+    margin-bottom:5px;
+`
+
+export const SignupButton=styled.button`
+    label:signup-button;
+    width:43%;
+    max-width:200px;
+    color:#FFFFFF;
+    border:0;
+    border-radius:20px;
+    background-color:#B592FF;
+    padding: 6px 10px;
+    margin-top:20px;
 `
