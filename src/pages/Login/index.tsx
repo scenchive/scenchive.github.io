@@ -8,6 +8,7 @@ import {
   RowArea,
   QuestionRow,
   AnswerRow,
+  LoginButton,
 }
   // @ts-ignore
   from './styles.tsx';
@@ -60,7 +61,7 @@ const Login = () => {
 
         </LoginArea>
 
-        <button onClick={Login}>로그인</button>
+        <LoginButton onClick={Login}>로그인</LoginButton>
       </Content>
     </div>
   );

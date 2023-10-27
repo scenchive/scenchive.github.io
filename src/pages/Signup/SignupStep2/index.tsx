@@ -8,6 +8,7 @@ import {
   AreaTitle,
   Keywords,
   KeywordButton,
+  SignupButton,
 }
   // @ts-ignore
   from './styles.tsx';
@@ -27,7 +28,6 @@ const SignupStep2 = () => {
   const imageRef = useRef<any>();
 
   const goToLogin = () => {
-    console.log('????')
     navigate("/login");
 
   }
@@ -86,7 +86,6 @@ const SignupStep2 = () => {
 
   const signupAccount = async () => {
     const formData = new FormData();
-    console.log('image', profileImage)
     if (profileImage === "/assets/icon/icon-profile-picture.svg") {
       formData.append('image', "")
     } else {
@@ -104,7 +103,6 @@ const SignupStep2 = () => {
       { headers: { 'Content-Type': 'multipart/form-data', accept: 'application/json' } }
     )
       .then((res) => {
-        console.log('res', res.data.email)
         if (res.data.email) {
           console.log('계정 생성 성공');
           signupKeyword();
@@ -131,7 +129,6 @@ const SignupStep2 = () => {
     }
     await axios.post('/survey', keyword_data)
       .then((res) => {
-        console.log('keyword', res?.data[0].utagId)
         if (res.data[0].utagId> 0) {
           console.log('키워드 저장 성공');
           alert('회원가입에 성공했습니다.');
@@ -170,7 +167,7 @@ const SignupStep2 = () => {
           <AreaTitle>계열</AreaTitle>
           <Keywords>
             {fragranceWheelKeywords.map((el) =>
-              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161" }}>
+              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161" ,  backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF"  }}>
                 {el.utag_kr}
               </KeywordButton>
             )}
@@ -180,14 +177,14 @@ const SignupStep2 = () => {
           <AreaTitle>분위기</AreaTitle>
           <Keywords>
             {moodKeywords.map((el) =>
-              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161" }} >
+              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161", backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF"  }} >
                 {el.utag_kr}
               </KeywordButton>
             )}
           </Keywords>
         </KeywordArea>
 
-        <button onClick={Signup}>가입하기</button>
+        <SignupButton onClick={Signup}>가입하기</SignupButton>
       </Content>
     </div>
   );
