@@ -54,6 +54,8 @@ export const KeywordButton=styled.div`
     background-color:#F6F2FF;
     box-shadow:2px 3px 2.5px #D9D9D9;
     margin-bottom:5px;
+    cursor:pointer;
+
 `
 
 export const SignupButton=styled.button`
@@ -66,4 +68,5 @@ export const SignupButton=styled.button`
     background-color:#B592FF;
     padding: 6px 10px;
     margin-top:20px;
+    cursor:pointer;
 `

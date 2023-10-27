@@ -4,7 +4,7 @@ export const Header = styled.div`
     label:header;
     color:#616161;
     font-size:15px;
-    margin-top:40px;
+    margin-top:80px;
 `
 export const Content=styled.div`
     label:content;

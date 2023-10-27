@@ -87,7 +87,6 @@ const SignupStep2 = () => {
 
   const signupAccount = async () => {
     const formData = new FormData();
-    console.log('image', profileImage)
     if (profileImage === "/assets/icon/icon-profile-picture.svg") {
       formData.append('image', "")
     } else {
@@ -105,7 +104,6 @@ const SignupStep2 = () => {
       { headers: { 'Content-Type': 'multipart/form-data', accept: 'application/json' } }
     )
       .then((res) => {
-        console.log('res', res.data.email)
         if (res.data.email) {
           console.log('계정 생성 성공');
           signupKeyword();
