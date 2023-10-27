@@ -28,7 +28,6 @@ const SignupStep2 = () => {
   const imageRef = useRef<any>();
 
   const goToLogin = () => {
-    console.log('????')
     navigate("/login");
 
   }
@@ -130,7 +129,6 @@ const SignupStep2 = () => {
     }
     await axios.post('/survey', keyword_data)
       .then((res) => {
-        console.log('keyword', res?.data[0].utagId)
         if (res.data[0].utagId> 0) {
           console.log('키워드 저장 성공');
           alert('회원가입에 성공했습니다.');
