@@ -96,7 +96,6 @@ const SignupStep1 = () => {
     const currentPassword = e.target.value;
     setPassword(currentPassword);
     const passwordRegularExpression = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/
-    console.log('password', password, passwordRegularExpression.test(currentPassword))
     if (e.target.value.length === 0) {
       setPasswordMessage("비밀번호를 입력해주세요");
       setIsPasswordValid(false);
