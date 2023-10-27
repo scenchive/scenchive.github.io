@@ -54,8 +54,8 @@ export const InfoArea=styled.div`
 `
 
 export const RowArea=styled.div`
-    max-width:90%;
-    min-width:250px;
+    width:250px;
+    margin-bottom:30px;
 `
 
 export const QuestionRow=styled.div`
@@ -65,17 +65,33 @@ export const QuestionRow=styled.div`
     margin-right:auto;
     margin-bottom:2px;
 `
+export const AnswerArea=styled.div`
+    label:answer-area;
+    position:relative;
+`
 
 export const AnswerRow=styled.input`
     label:answer-row;
     height:25px;
     width:-webkit-fill-available;
-    margin-bottom:25px;
     border:none;
     border-bottom:1px solid #DFDFDF;
     background-color:transparent;
     outline:none;
     -webkit-box-shadow: 0 0 0 1000px white inset;
+    ::placeholder{
+        font-size:8px;   
+        color:#B2B2B2;
+    }
+`
+
+export const AlertMessage=styled.div`
+    label:alert-message;
+    color:red;
+    font-size:10px;
+    text-align:left;
+    width:inherit;
+    position:absolute;
 `
 
 export const GoToStep2Button=styled.button`
@@ -91,4 +107,6 @@ export const GoToStep2Button=styled.button`
     padding-right:10px;
     padding-left:10px;
     margin-top:25px;
+    cursor:pointer;
+
 `
