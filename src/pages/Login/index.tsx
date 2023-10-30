@@ -38,6 +38,7 @@ const Login = () => {
       if (res.data.token){
         console.log('로그인 성공했습니다.')
       }
+      goToHome();
     })
     
   
