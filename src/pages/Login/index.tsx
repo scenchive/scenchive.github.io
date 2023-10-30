@@ -28,6 +28,7 @@ const Login = () => {
     navigate(-1);
   }
   const Login = async () => {
+    if (email.length>0 && password.length>0){
     const data={
       email:email,
       password:password,
@@ -40,9 +41,16 @@ const Login = () => {
       }
       goToHome();
     })
-    
-  
+  }else{
+    alert("모든 항목을 입력해주세요.")
+  }
+  }
 
+
+  const handleOnKeyPress=(e: { key: string; })=>{
+    if (e.key==='Enter'){
+      Login();
+    }
   }
 
 
@@ -53,11 +61,11 @@ const Login = () => {
         <LoginArea>
           <RowArea>
             <QuestionRow>이메일</QuestionRow>
-            <AnswerRow type="text" onChange={(e: { target: { value: React.SetStateAction<string>; }; })=>setEmail(e.target.value)}/>
+            <AnswerRow type="text" onChange={(e: { target: { value: React.SetStateAction<string>; }; })=>setEmail(e.target.value)} onKeyPress={handleOnKeyPress} />
           </RowArea>
           <RowArea>
             <QuestionRow>비밀번호</QuestionRow>
-            <AnswerRow type="password" onChange={(e: { target: { value: React.SetStateAction<string>; }; })=>setPassword(e.target.value)} />
+            <AnswerRow type="password" onChange={(e: { target: { value: React.SetStateAction<string>; }; })=>setPassword(e.target.value)} onKeyPress={handleOnKeyPress} />
           </RowArea>
 
         </LoginArea>
