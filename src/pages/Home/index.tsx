@@ -108,7 +108,7 @@ const Home = () => {
   };
 
   return (
-    <Container>
+    <>
       <Header>
         <HeaderLeft>
           <Title>
@@ -135,101 +135,103 @@ const Home = () => {
           )}
         </HeaderRight>
       </Header>
-      <Top>
-        <Search isSearching={search.length === 0 ? false : true}>
-          <input
-            type="text"
-            className="search__input"
-            placeholder="향수 이름 혹은 브랜드 명을 검색하세요"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <img src="/assets/icon/icon_search.svg" className="search__img" />
-        </Search>
-        {search.length !== 0 && (
-          <SearchList>
-            <ListContent>
-              <div className="list-content__title">브랜드</div>
-              <ListDetail>
-                <img src="/assets/icon/icon_search.svg" />
-                <div className="list-detail__name">딥디크</div>
-                <img src="/assets/icon/icon_link.svg" />
-              </ListDetail>
-            </ListContent>
-            <ListContent>
-              <div className="list-content__title">향수</div>
-              {["딥디크 오로즈", "딥디크 오로즈"].map((el) => {
-                return (
-                  <ListDetail>
-                    <img src="/assets/icon/icon_search.svg" />
-                    <div className="list-detail__name">{el}</div>
-                    <img src="/assets/icon/icon_link.svg" />
-                  </ListDetail>
-                );
-              })}
-            </ListContent>
-          </SearchList>
-        )}
-      </Top>
-      {token ? (
-        <Main>
-          <MainTop>
-            <div className="main-top__text">'{username}'님을 위한</div>
-            <Select>
-              <img
-                src={
-                  selectToggle
-                    ? "/assets/icon/icon_arrow_up.svg"
-                    : "/assets/icon/icon_arrow_down.svg"
-                }
-              />
-              <Option onClick={handleSelectClick}>{options[option]}</Option>
-              {selectToggle &&
-                options.map((el, index) => {
-                  if (index !== option) {
-                    return (
-                      <Option
-                        style={{ color: "#8D8D8D" }}
-                        onClick={() => handleOptionClick(index)}
-                      >
-                        {el}
-                      </Option>
-                    );
-                  }
+      <Container>
+        <Top>
+          <Search isSearching={search.length === 0 ? false : true}>
+            <input
+              type="text"
+              className="search__input"
+              placeholder="향수 이름 혹은 브랜드 명을 검색하세요"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <img src="/assets/icon/icon_search.svg" className="search__img" />
+          </Search>
+          {search.length !== 0 && (
+            <SearchList>
+              <ListContent>
+                <div className="list-content__title">브랜드</div>
+                <ListDetail>
+                  <img src="/assets/icon/icon_search.svg" />
+                  <div className="list-detail__name">딥디크</div>
+                  <img src="/assets/icon/icon_link.svg" />
+                </ListDetail>
+              </ListContent>
+              <ListContent>
+                <div className="list-content__title">향수</div>
+                {["딥디크 오로즈", "딥디크 오로즈"].map((el) => {
+                  return (
+                    <ListDetail>
+                      <img src="/assets/icon/icon_search.svg" />
+                      <div className="list-detail__name">{el}</div>
+                      <img src="/assets/icon/icon_link.svg" />
+                    </ListDetail>
+                  );
                 })}
-            </Select>
-            <div className="main-top__text">향수 추천</div>
-          </MainTop>
-          <MainBottom>
-            <img
-              src="/assets/icon/icon_arrow_left.svg"
-              onClick={() => handleSwipeClick(-1)}
-            />
-            <MainBottomContent>
-              <img src={perfumes[perfumeIndex]?.perfumeImage} />
-              <ContentText>
-                <div className="content-text__name">
-                  {perfumes[perfumeIndex]?.perfumeName}
-                </div>
-                <div className="content-text__brand-kr">
-                  {perfumes[perfumeIndex]?.brandName_kr}
-                </div>
-                <div className="content-text__brand-en">
-                  {perfumes[perfumeIndex]?.brandName}
-                </div>
-                <div className="content-text__rate">
-                  <img src="/assets/icon/icon_star.svg" />
-                  <div>{perfumes[perfumeIndex]?.ratingAvg} / 5</div>
-                </div>
-              </ContentText>
-            </MainBottomContent>
-            <img
-              src="/assets/icon/icon_arrow_right.svg"
-              onClick={() => handleSwipeClick(-1)}
-            />
-          </MainBottom>
-        </Main>
-      ) : null}
-    </Container>
+              </ListContent>
+            </SearchList>
+          )}
+        </Top>
+        {token ? (
+          <Main>
+            <MainTop>
+              <div className="main-top__text">'{username}'님을 위한</div>
+              <Select>
+                <img
+                  src={
+                    selectToggle
+                      ? "/assets/icon/icon_arrow_up.svg"
+                      : "/assets/icon/icon_arrow_down.svg"
+                  }
+                />
+                <Option onClick={handleSelectClick}>{options[option]}</Option>
+                {selectToggle &&
+                  options.map((el, index) => {
+                    if (index !== option) {
+                      return (
+                        <Option
+                          style={{ color: "#8D8D8D" }}
+                          onClick={() => handleOptionClick(index)}
+                        >
+                          {el}
+                        </Option>
+                      );
+                    }
+                  })}
+              </Select>
+              <div className="main-top__text">향수 추천</div>
+            </MainTop>
+            <MainBottom>
+              <img
+                src="/assets/icon/icon_arrow_left.svg"
+                onClick={() => handleSwipeClick(-1)}
+              />
+              <MainBottomContent>
+                <img src={perfumes[perfumeIndex]?.perfumeImage} />
+                <ContentText>
+                  <div className="content-text__name">
+                    {perfumes[perfumeIndex]?.perfumeName}
+                  </div>
+                  <div className="content-text__brand-kr">
+                    {perfumes[perfumeIndex]?.brandName_kr}
+                  </div>
+                  <div className="content-text__brand-en">
+                    {perfumes[perfumeIndex]?.brandName}
+                  </div>
+                  <div className="content-text__rate">
+                    <img src="/assets/icon/icon_star.svg" />
+                    <div>{perfumes[perfumeIndex]?.ratingAvg} / 5</div>
+                  </div>
+                </ContentText>
+              </MainBottomContent>
+              <img
+                src="/assets/icon/icon_arrow_right.svg"
+                onClick={() => handleSwipeClick(-1)}
+              />
+            </MainBottom>
+          </Main>
+        ) : null}
+      </Container>
+    </>
   );
 };
 
