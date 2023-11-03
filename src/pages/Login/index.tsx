@@ -9,9 +9,8 @@ import {
   QuestionRow,
   AnswerRow,
   LoginButton,
-}
   // @ts-ignore
-  from './styles.tsx';
+} from "./styles.tsx";
 // import ApiService from "../ApiService.js";
 import axios from "axios";
 
@@ -22,28 +21,25 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
 
   const goToHome = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
   const goBack = () => {
     navigate(-1);
-  }
+  };
   const Login = async () => {
-    const data={
-      email:email,
-      password:password,
-    }
-    await axios.post('/login', data)
-    .then((res)=>{
-      console.log(res)
-      if (res.data.token){
-        console.log('로그인 성공했습니다.')
+    const data = {
+      email: email,
+      password: password,
+    };
+    await axios.post("/login", data).then((res) => {
+      console.log(res);
+      if (res.data.token) {
+        localStorage.setItem("my-token", res.data.token);
+        console.log("로그인 성공했습니다.", res.data.token);
+        goToHome();
       }
-    })
-    
-  
-
-  }
-
+    });
+  };
 
   return (
     <div>
@@ -52,13 +48,22 @@ const Login = () => {
         <LoginArea>
           <RowArea>
             <QuestionRow>이메일</QuestionRow>
-            <AnswerRow type="text" onChange={(e: { target: { value: React.SetStateAction<string>; }; })=>setEmail(e.target.value)}/>
+            <AnswerRow
+              type="text"
+              onChange={(e: {
+                target: { value: React.SetStateAction<string> };
+              }) => setEmail(e.target.value)}
+            />
           </RowArea>
           <RowArea>
             <QuestionRow>비밀번호</QuestionRow>
-            <AnswerRow type="password" onChange={(e: { target: { value: React.SetStateAction<string>; }; })=>setPassword(e.target.value)} />
+            <AnswerRow
+              type="password"
+              onChange={(e: {
+                target: { value: React.SetStateAction<string> };
+              }) => setPassword(e.target.value)}
+            />
           </RowArea>
-
         </LoginArea>
 
         <LoginButton onClick={Login}>로그인</LoginButton>
