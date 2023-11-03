@@ -87,13 +87,14 @@ export const Top = styled.div`
   align-items: center;
   margin-top: 130px;
   position: relative;
+  margin-bottom: 50px;
 `;
 
 export const Search = styled.div<{ isSearching: boolean }>`
   label: search;
   width: 80%;
   position: relative;
-  margin-bottom: 35px;
+  
   .search__input {
     border: ${(props) =>
       props.isSearching ? "1.5px #dabdff solid" : "1px #dabdff solid"};
@@ -181,7 +182,7 @@ export const Main = styled.div`
 export const MainTop = styled.div`
   label: main-top;
   display: flex;
-  height: 50px;
+  height: 40px;
   font-family: NanumSquareRound;
   font-size: 20px;
   align-items: start;
@@ -189,7 +190,7 @@ export const MainTop = styled.div`
     color: #c597ff;
     line-height: 42px;
   }
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 `;
 
 export const Select = styled.div`
