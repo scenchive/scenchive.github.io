@@ -6,6 +6,7 @@ export const Container = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  align-items: center;
   position: relative;
   min-width: 992px;
 `;
@@ -94,7 +95,7 @@ export const Search = styled.div<{ isSearching: boolean }>`
   label: search;
   width: 80%;
   position: relative;
-  
+
   .search__input {
     border: ${(props) =>
       props.isSearching ? "1.5px #dabdff solid" : "1px #dabdff solid"};
@@ -173,6 +174,7 @@ export const ListDetail = styled.div`
 
 export const Main = styled.div`
   label: main;
+  width: 60%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -190,7 +192,7 @@ export const MainTop = styled.div`
     color: #c597ff;
     line-height: 42px;
   }
-  margin-bottom: 15px;
+  margin-bottom: 50px;
 `;
 
 export const Select = styled.div`
@@ -221,7 +223,7 @@ export const Option = styled.div`
 
 export const MainBottom = styled.div`
   label: main-bottom;
-  width: 60%;
+  width: 100%;
   display: flex;
   & > img {
     width: 15px;
