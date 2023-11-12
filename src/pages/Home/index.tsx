@@ -107,7 +107,6 @@ const Home = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log(res.data.brandsNum);
         if (res.data.brandsNum === 0) setSearchBrands(null);
         else setSearchBrands(res.data.brands);
         if (res.data.perfumesNum === 0) setSearchPerfumes(null);
@@ -130,11 +129,15 @@ const Home = () => {
     else setPerfumeIndex(perfumeIndex + dir);
   };
 
+  const handleEnterClick = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") navigate(`/searchresult?search=${search}`);
+  };
+
   return (
     <>
       <Header>
         <HeaderLeft>
-          <Title>
+          <Title onClick={()=>navigate('/')}>
             <div className="title__kr">센카이브</div>
             <div className="title__en">Scenchive</div>
           </Title>
@@ -172,8 +175,15 @@ const Home = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setSearch(e.target.value);
               }}
+              onKeyDown={(e) => {
+                handleEnterClick(e);
+              }}
             />
-            <img src="/assets/icon/icon_search.svg" className="search__img" />
+            <img
+              src="/assets/icon/icon_search.svg"
+              className="search__img"
+              onClick={() => navigate(`/searchresult?search=${search}`)}
+            />
           </Search>
           {(searchPerfumes !== null || searchBrands !== null) && (
             <SearchList>
