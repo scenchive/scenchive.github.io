@@ -98,11 +98,18 @@ const SearchResult = () => {
       });
   };
 
+  const handleEnterClick = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      navigate(`/searchresult?search=${search}`);
+      window.location.reload();
+    }
+  };
+
   return (
     <>
       <Header>
         <HeaderLeft>
-          <Title onClick={()=>navigate('/')}>
+          <Title onClick={() => navigate("/")}>
             <div className="title__kr">센카이브</div>
             <div className="title__en">Scenchive</div>
           </Title>
@@ -140,8 +147,18 @@ const SearchResult = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setSearch(e.target.value);
               }}
+              onKeyDown={(e) => {
+                handleEnterClick(e);
+              }}
             />
-            <img src="/assets/icon/icon_search.svg" className="search__img" />
+            <img
+              src="/assets/icon/icon_search.svg"
+              className="search__img"
+              onClick={() => {
+                navigate(`/searchresult?search=${search}`);
+                window.location.reload();
+              }}
+            />
           </Search>
           {(searchPerfumes !== null || searchBrands !== null) && (
             <SearchList>
@@ -150,7 +167,12 @@ const SearchResult = () => {
                   <div className="list-content__title">브랜드</div>
                   {searchBrands.map((el) => {
                     return (
-                      <ListDetail>
+                      <ListDetail
+                        onClick={() => {
+                          navigate(`/searchresult?search=${el.brandName_kr}`);
+                          window.location.reload();
+                        }}
+                      >
                         <img src="/assets/icon/icon_search.svg" />
                         <div className="list-detail__name">
                           {el.brandName_kr}
@@ -166,7 +188,12 @@ const SearchResult = () => {
                   <div className="list-content__title">향수</div>
                   {searchPerfumes.map((el) => {
                     return (
-                      <ListDetail>
+                      <ListDetail
+                        onClick={() => {
+                          navigate(`/searchresult?search=${el.perfumeName}`);
+                          window.location.reload();
+                        }}
+                      >
                         <img src="/assets/icon/icon_search.svg" />
                         <div className="list-detail__name">
                           {el.perfumeName}
@@ -193,7 +220,9 @@ const SearchResult = () => {
                         <div className="list-text__title">
                           {el.brandName_kr}
                         </div>
-                        <div className="list-text__sub-title">{el.brandName}</div>
+                        <div className="list-text__sub-title">
+                          {el.brandName}
+                        </div>
                       </ListText>
                     </List>
                   );
@@ -211,8 +240,12 @@ const SearchResult = () => {
                       <img src={`${el.perfumeImage}`} />
                       <ListText>
                         <div className="list-text__title">{el.perfumeName}</div>
-                        <div className="list-text__sub-title">{el.brandName}</div>
-                        <div className="list-text__sub-title">{el.brandName_kr}</div>
+                        <div className="list-text__sub-title">
+                          {el.brandName}
+                        </div>
+                        <div className="list-text__sub-title">
+                          {el.brandName_kr}
+                        </div>
                       </ListText>
                     </List>
                   );

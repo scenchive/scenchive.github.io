@@ -180,12 +180,13 @@ export const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: start;
+  padding-bottom: 30px;
 `;
 
 export const Content = styled.div`
   label: content;
   width: 50%;
-  height: 100%;
+  height: 800px;
   margin: 0 5px;
 
   .content__title {
@@ -197,8 +198,7 @@ export const Content = styled.div`
     color: #a9a9a9;
   }
   .content__none {
-    //height: 200px;
-    height: 100%;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -215,7 +215,7 @@ export const List = styled.div`
   label: list;
   width: 100%;
   height: 70px;
-  margin: 2px 0;
+  margin: 3px 0;
   box-sizing: border-box;
   display: flex;
   img {
