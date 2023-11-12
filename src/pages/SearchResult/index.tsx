@@ -8,20 +8,18 @@ import {
   Top,
   Title,
   Search,
-  Main,
-  MainTop,
   Menu,
   MenuList,
-  Select,
-  Option,
-  MainBottom,
-  MainBottomContent,
-  ContentText,
   SearchList,
   ListContent,
   ListDetail,
+  Main,
+  Content,
+  List,
+  Lists,
+  ListText,
 } from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 interface Perfumes {
@@ -39,18 +37,17 @@ interface Brands {
   brandImage: string;
 }
 
-const Home = () => {
+const SearchResult = () => {
   const navigate = useNavigate();
-  const [selectToggle, setSelectToggle] = useState(false);
-  const [option, setOption] = useState(0);
-  const options = ["봄", "여름", "가을", "겨울"];
   const [token, setToken] = useState<string | null>(null);
-  const [username, setUsername] = useState("");
-  const [perfumes, setPerfumes] = useState<Perfumes[]>([]);
-  const [perfumeIndex, setPerfumeIndex] = useState(0);
+  const [querySearch, setQuerySearch] = useSearchParams();
   const [search, setSearch] = useState("");
   const [searchBrands, setSearchBrands] = useState<Array<Brands> | null>(null);
   const [searchPerfumes, setSearchPerfumes] = useState<Array<Perfumes> | null>(
+    null
+  );
+  const [resultBrands, setResultBrands] = useState<Array<Brands> | null>(null);
+  const [resultPerfumes, setResultPerfumes] = useState<Array<Perfumes> | null>(
     null
   );
 
@@ -59,17 +56,13 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (token) getUsername();
+    if (token !== null) getSearchResult(true);
   }, [token]);
-
-  useEffect(() => {
-    if (token) getPerfumeData();
-  }, [option, token]);
 
   useEffect(() => {
     const debounce = setTimeout(() => {
       if (search.length > 0) {
-        getSearchResult();
+        getSearchResult(false);
       } else {
         setSearchBrands(null);
         setSearchPerfumes(null);
@@ -85,59 +78,38 @@ const Home = () => {
     setToken(token);
   };
 
-  const getUsername = async () => {
+  const getSearchResult = async (init: boolean) => {
     await axios
-      .get(`/username`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setUsername(res.data));
-  };
-
-  const getPerfumeData = async () => {
-    await axios
-      .get(`/recommend?season=${option + 36}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setPerfumes(res.data));
-  };
-
-  const getSearchResult = async () => {
-    await axios
-      .get(`/search?name=${search}&page=0`, {
+      .get(`/search?name=${init ? querySearch.get("search") : search}&page=0`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        if (res.data.brandsNum === 0) setSearchBrands(null);
-        else setSearchBrands(res.data.brands);
-        if (res.data.perfumesNum === 0) setSearchPerfumes(null);
-        else setSearchPerfumes(res.data.perfumes);
+        if (init) {
+          if (res.data.brandsNum === 0) setResultBrands(null);
+          else setResultBrands(res.data.brands);
+          if (res.data.perfumesNum === 0) setResultPerfumes(null);
+          else setResultPerfumes(res.data.perfumes);
+        } else {
+          if (res.data.brandsNum === 0) setSearchBrands(null);
+          else setSearchBrands(res.data.brands);
+          if (res.data.perfumesNum === 0) setSearchPerfumes(null);
+          else setSearchPerfumes(res.data.perfumes);
+        }
       });
   };
 
-  const handleSelectClick = () => {
-    setSelectToggle(!selectToggle);
-  };
-
-  const handleOptionClick = (val: number) => {
-    setOption(val);
-    handleSelectClick();
-  };
-
-  const handleSwipeClick = (dir: number) => {
-    if (perfumeIndex + dir === perfumes.length) setPerfumeIndex(0);
-    else if (perfumeIndex + dir === -1) setPerfumeIndex(perfumes.length - 1);
-    else setPerfumeIndex(perfumeIndex + dir);
-  };
-
   const handleEnterClick = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") navigate(`/searchresult?search=${search}`);
+    if (e.key === "Enter") {
+      navigate(`/searchresult?search=${search}`);
+      window.location.reload();
+    }
   };
 
   return (
     <>
       <Header>
         <HeaderLeft>
-          <Title onClick={()=>navigate('/')}>
+          <Title onClick={() => navigate("/")}>
             <div className="title__kr">센카이브</div>
             <div className="title__en">Scenchive</div>
           </Title>
@@ -182,7 +154,10 @@ const Home = () => {
             <img
               src="/assets/icon/icon_search.svg"
               className="search__img"
-              onClick={() => navigate(`/searchresult?search=${search}`)}
+              onClick={() => {
+                navigate(`/searchresult?search=${search}`);
+                window.location.reload();
+              }}
             />
           </Search>
           {(searchPerfumes !== null || searchBrands !== null) && (
@@ -193,9 +168,10 @@ const Home = () => {
                   {searchBrands.map((el) => {
                     return (
                       <ListDetail
-                        onClick={() =>
-                          navigate(`/searchresult?search=${el.brandName_kr}`)
-                        }
+                        onClick={() => {
+                          navigate(`/searchresult?search=${el.brandName_kr}`);
+                          window.location.reload();
+                        }}
                       >
                         <img src="/assets/icon/icon_search.svg" />
                         <div className="list-detail__name">
@@ -213,9 +189,10 @@ const Home = () => {
                   {searchPerfumes.map((el) => {
                     return (
                       <ListDetail
-                        onClick={() =>
-                          navigate(`/searchresult?search=${el.perfumeName}`)
-                        }
+                        onClick={() => {
+                          navigate(`/searchresult?search=${el.perfumeName}`);
+                          window.location.reload();
+                        }}
                       >
                         <img src="/assets/icon/icon_search.svg" />
                         <div className="list-detail__name">
@@ -230,68 +207,61 @@ const Home = () => {
             </SearchList>
           )}
         </Top>
-        {token ? (
-          <Main>
-            <MainTop>
-              <div className="main-top__text">'{username}'님을 위한</div>
-              <Select>
-                <img
-                  src={
-                    selectToggle
-                      ? "/assets/icon/icon_arrow_up.svg"
-                      : "/assets/icon/icon_arrow_down.svg"
-                  }
-                />
-                <Option onClick={handleSelectClick}>{options[option]}</Option>
-                {selectToggle &&
-                  options.map((el, index) => {
-                    if (index !== option) {
-                      return (
-                        <Option
-                          style={{ color: "#8D8D8D" }}
-                          onClick={() => handleOptionClick(index)}
-                        >
-                          {el}
-                        </Option>
-                      );
-                    }
-                  })}
-              </Select>
-              <div className="main-top__text">향수 추천</div>
-            </MainTop>
-            <MainBottom>
-              <img
-                src="/assets/icon/icon_arrow_left.svg"
-                onClick={() => handleSwipeClick(-1)}
-              />
-              <MainBottomContent>
-                <img src={perfumes[perfumeIndex]?.perfumeImage} />
-                <ContentText>
-                  <div className="content-text__name">
-                    {perfumes[perfumeIndex]?.perfumeName}
-                  </div>
-                  <div className="content-text__brand-kr">
-                    {perfumes[perfumeIndex]?.brandName_kr}
-                  </div>
-                  <div className="content-text__brand-en">
-                    {perfumes[perfumeIndex]?.brandName}
-                  </div>
-                  <div className="content-text__rate">
-                    <img src="/assets/icon/icon_star.svg" />
-                    <div>{perfumes[perfumeIndex]?.ratingAvg} / 5</div>
-                  </div>
-                </ContentText>
-              </MainBottomContent>
-              <img
-                src="/assets/icon/icon_arrow_right.svg"
-                onClick={() => handleSwipeClick(-1)}
-              />
-            </MainBottom>
-          </Main>
-        ) : null}
+        <Main>
+          {resultBrands !== null && (
+            <Content>
+              <div className="content__title">브랜드</div>
+              <Lists>
+                {resultBrands.map((el) => {
+                  return (
+                    <List>
+                      <img src={el.brandImage} />
+                      <ListText>
+                        <div className="list-text__title">
+                          {el.brandName_kr}
+                        </div>
+                        <div className="list-text__sub-title">
+                          {el.brandName}
+                        </div>
+                      </ListText>
+                    </List>
+                  );
+                })}
+              </Lists>
+            </Content>
+          )}
+          {resultPerfumes !== null && (
+            <Content>
+              <div className="content__title">향수</div>
+              <Lists>
+                {resultPerfumes.map((el) => {
+                  return (
+                    <List>
+                      <img src={`${el.perfumeImage}`} />
+                      <ListText>
+                        <div className="list-text__title">{el.perfumeName}</div>
+                        <div className="list-text__sub-title">
+                          {el.brandName}
+                        </div>
+                        <div className="list-text__sub-title">
+                          {el.brandName_kr}
+                        </div>
+                      </ListText>
+                    </List>
+                  );
+                })}
+              </Lists>
+            </Content>
+          )}
+          {resultBrands === null && resultPerfumes === null && (
+            <Content>
+              <div className="content__none">검색결과가 없습니다.</div>
+            </Content>
+          )}
+        </Main>
       </Container>
     </>
   );
 };
 
-export default Home;
+export default SearchResult;
