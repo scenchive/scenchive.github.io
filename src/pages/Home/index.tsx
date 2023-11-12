@@ -182,7 +182,11 @@ const Home = () => {
                   <div className="list-content__title">브랜드</div>
                   {searchBrands.map((el) => {
                     return (
-                      <ListDetail>
+                      <ListDetail
+                        onClick={() =>
+                          navigate(`/searchresult?search=${el.brandName_kr}`)
+                        }
+                      >
                         <img src="/assets/icon/icon_search.svg" />
                         <div className="list-detail__name">
                           {el.brandName_kr}
@@ -198,7 +202,11 @@ const Home = () => {
                   <div className="list-content__title">향수</div>
                   {searchPerfumes.map((el) => {
                     return (
-                      <ListDetail>
+                      <ListDetail
+                        onClick={() =>
+                          navigate(`/searchresult?search=${el.perfumeName}`)
+                        }
+                      >
                         <img src="/assets/icon/icon_search.svg" />
                         <div className="list-detail__name">
                           {el.perfumeName}
