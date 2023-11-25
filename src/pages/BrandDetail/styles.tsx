@@ -88,14 +88,13 @@ export const Top = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
-  margin-bottom: 20px;
+  margin-top: 120px;
+  margin-bottom: 50px;
   position: relative;
   padding: 5px 0;
   box-sizing: border-box;
   border-radius: 5px;
-  //border-bottom: 0.5px solid #a9a9a9;
-  //box-shadow: 0px 0px 2px #a9a9a9;
+  box-shadow: 1px 1px 3px #a9a9a9;
   img {
     height: 100px;
   }
@@ -145,7 +144,9 @@ export const Card = styled.div`
   img {
     width: 100%;
     box-shadow: 0px 0px 1px #a9a9a9;
+    border-radius: 12px;
     margin-bottom: 5px;
+    min-height: 90%;
   }
 `;
 
@@ -167,8 +168,9 @@ export const PageNation = styled.div`
   height: 30px;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 50px;
-  img{
+  img {
     margin: 0 5px;
   }
 `;

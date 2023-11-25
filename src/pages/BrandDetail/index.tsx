@@ -128,9 +128,21 @@ const BrandDetail = () => {
             onClick={() => setPerfumesPage(perfumesPage - 1)}
           />
           {new Array(Math.ceil(num / 10)).fill(0).map((el, index) => {
-            return <PageButton onClick={() => setPage(index)}>{index + 1}</PageButton>;
+            return (
+              <PageButton
+                onClick={() => setPage(index)}
+                style={{
+                  border: perfumesPage === index ? "2px solid #bf8dff" : undefined,
+                }}
+              >
+                {index + 1}
+              </PageButton>
+            );
           })}
-          <img src="/assets/icon/icon_arrow_right.svg" onClick={() => setPerfumesPage(perfumesPage + 1)}/>
+          <img
+            src="/assets/icon/icon_arrow_right.svg"
+            onClick={() => setPerfumesPage(perfumesPage + 1)}
+          />
         </PageNation>
       </Container>
     </>
