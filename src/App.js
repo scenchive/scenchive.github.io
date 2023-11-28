@@ -6,6 +6,7 @@ import SignupStep2 from "./pages/Signup/SignupStep2/index.tsx";
 import Login from "./pages/Login/index.tsx";
 import Home from "./pages/Home/index.tsx";
 import SearchResult from "./pages/SearchResult/index.tsx";
+import MyPage from "./pages/MyPage/index.tsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/signupstep2" element={<SignupStep2 />} />
         <Route path="/login" element={<Login />} />
         <Route path="/searchresult" element={<SearchResult />} />
+        <Route path="/mypage" element={<MyPage/>}/>
       </Routes>
     </div>
   );
