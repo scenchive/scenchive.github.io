@@ -9,9 +9,8 @@ import {
   QuestionRow,
   AnswerRow,
   LoginButton,
-}
   // @ts-ignore
-  from './styles.tsx';
+} from "./styles.tsx";
 // import ApiService from "../ApiService.js";
 import axios from "axios";
 
@@ -22,12 +21,13 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
 
   const goToHome = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
   const goBack = () => {
     navigate(-1);
-  }
+  };
   const Login = async () => {
+
     if (email.length > 0 && password.length > 0) {
       const data = {
         email: email,
@@ -54,8 +54,6 @@ const Login = () => {
       Login();
     }
   }
-
-
   return (
     <div>
       <Header>로그인</Header>
@@ -63,6 +61,7 @@ const Login = () => {
         <LoginArea>
           <RowArea>
             <QuestionRow>이메일</QuestionRow>
+
             <AnswerRow type="text"
              placeholder="이메일을 입력해주세요."
             onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setEmail(e.target.value)} onKeyPress={handleOnKeyPress} />
@@ -73,7 +72,6 @@ const Login = () => {
              placeholder="비밀번호를 입력해주세요."
             onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setPassword(e.target.value)} onKeyPress={handleOnKeyPress} />
           </RowArea>
-
         </LoginArea>
 
         <LoginButton onClick={Login}>로그인</LoginButton>
