@@ -264,7 +264,11 @@ const Home = () => {
                 src="/assets/icon/icon_arrow_left.svg"
                 onClick={() => handleSwipeClick(-1)}
               />
-              <MainBottomContent>
+              <MainBottomContent
+               onClick={() =>
+                navigate(`/perfumedetail?perfume=${perfumes[perfumeIndex]?.id}`)
+              }
+              >
                 <img src={perfumes[perfumeIndex]?.perfumeImage} />
                 <ContentText>
                   <div className="content-text__name">
