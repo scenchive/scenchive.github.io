@@ -12,6 +12,39 @@ export const ShoppingInformationTabArea = styled.div`
 
 `;
 
+export const ShoppingTabTitle=styled.div`
+  label:shopping-tab-title;
+  width:fit-content;
+  display:flex;
+  font-size:20px;
+  color:#B592FF;
+  margin-right:auto;
+  margin-bottom:20px;
+`
+
+export const WarningBox=styled.div`
+  label: warning-box;
+  display:flex;
+  flex-direction:column;
+  border:1px solid #D6B5FF;
+  border-radius:10px;
+  padding: 20px 25px;
+  margin-bottom:40px;
+
+`
+
+export const WarningTitle=styled.div`
+  label: warning-title;
+  font-size:18px;
+  color:#242424;
+  margin-bottom:20px;
+`
+
+export const WarningContent=styled.div`
+  label: warning-content;
+  text-align:left;
+`
+
 export const ShoppingInformationRow=styled.div`
   label: shopping-information-row;
   width:100%;
