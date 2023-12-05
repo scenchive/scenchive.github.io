@@ -7,6 +7,9 @@ import Login from "./pages/Login/index.tsx";
 import Home from "./pages/Home/index.tsx";
 import SearchResult from "./pages/SearchResult/index.tsx";
 import BrandDetail from "./pages/BrandDetail/index.tsx";
+import PerfumeDetail from "./pages/PerfumeDetail/index.tsx";
+import MyPage from "./pages/MyPage/index.tsx";
+import WriteReview from "./pages/WriteReview";
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/searchresult" element={<SearchResult />} />
         <Route path="/branddetail" element={<BrandDetail />} />
+        <Route path="/perfumedetail" element={<PerfumeDetail/>}/>
+        <Route path="/mypage" element={<MyPage/>}/>
+        <Route path="/writereview" element={<WriteReview/>}/>
       </Routes>
     </div>
   );
