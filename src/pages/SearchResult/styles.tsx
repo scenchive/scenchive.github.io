@@ -176,7 +176,6 @@ export const ListDetail = styled.div`
 export const Main = styled.div`
   label: main;
   width: 60%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: start;
@@ -186,7 +185,6 @@ export const Main = styled.div`
 export const Content = styled.div`
   label: content;
   width: 50%;
-  height: 800px;
   margin: 0 5px;
 
   .content__title {
@@ -208,9 +206,17 @@ export const Content = styled.div`
 export const Lists = styled.div`
   label: lists;
   width: 100%;
+  height: 700px;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
   display: flex;
   flex-direction: column;
 `;
+
 export const List = styled.div`
   label: list;
   width: 100%;

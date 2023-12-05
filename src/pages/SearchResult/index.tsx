@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Container,
   Header,
@@ -50,19 +50,51 @@ const SearchResult = () => {
   const [resultPerfumes, setResultPerfumes] = useState<Array<Perfumes> | null>(
     null
   );
+  const [perfumesPage, setPerfumesPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const view = useRef<HTMLDivElement>(null);
+
+  const callback = () => {
+    setPerfumesPage(perfumesPage + 1);
+  };
+  const options = {
+    root: view.current,
+    threshold: 1.0,
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    if (entries[0].isIntersecting) {
+      callback();
+      observer.unobserve(entries[0].target);
+    }
+  }, options);
+
+  useEffect(() => {
+    if (target) {
+      setLoading(true);
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target, loading]);
 
   useEffect(() => {
     getToken();
   }, []);
 
   useEffect(() => {
-    if (token !== null) getSearchResult(true);
+    if (token !== null) getSearchResult("result");
   }, [token]);
+
+  useEffect(() => {
+    if (token !== null) getSearchResult("more");
+  }, [perfumesPage]);
 
   useEffect(() => {
     const debounce = setTimeout(() => {
       if (search.length > 0) {
-        getSearchResult(false);
+        getSearchResult("search");
       } else {
         setSearchBrands(null);
         setSearchPerfumes(null);
@@ -78,22 +110,39 @@ const SearchResult = () => {
     setToken(token);
   };
 
-  const getSearchResult = async (init: boolean) => {
+  const getSearchResult = async (type: string) => {
     await axios
-      .get(`/search?name=${init ? querySearch.get("search") : search}&page=0`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .get(
+        `/search?name=${
+          type === "search" ? search : querySearch.get("search")
+        }&page=${type !== "more" ? 0 : perfumesPage}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       .then((res) => {
-        if (init) {
+        if (type === "result") {
+          //검색 결과
           if (res.data.brandsNum === 0) setResultBrands(null);
           else setResultBrands(res.data.brands);
           if (res.data.perfumesNum === 0) setResultPerfumes(null);
           else setResultPerfumes(res.data.perfumes);
-        } else {
+        } else if (type === "search") {
+          //자동검색어
           if (res.data.brandsNum === 0) setSearchBrands(null);
           else setSearchBrands(res.data.brands);
           if (res.data.perfumesNum === 0) setSearchPerfumes(null);
           else setSearchPerfumes(res.data.perfumes);
+        } else if (type === "more") {
+          //무한스크롤
+          if (res.data.perfumesNum === 0) setResultPerfumes(null);
+          else
+            setResultPerfumes((prev) =>
+              prev !== null
+                ? [...prev, ...res.data.perfumes]
+                : res.data.perfumes
+            );
+          setLoading(false);
         }
       });
   };
@@ -214,7 +263,16 @@ const SearchResult = () => {
               <Lists>
                 {resultBrands.map((el) => {
                   return (
-                    <List>
+                    <List
+                      onClick={() =>
+                        navigate(`/branddetail?name=${el.brandName}`, {
+                          state: {
+                            brandName_kr: el.brandName_kr,
+                            brandImage: el.brandImage,
+                          },
+                        })
+                      }
+                    >
                       <img src={el.brandImage} />
                       <ListText>
                         <div className="list-text__title">
@@ -233,8 +291,8 @@ const SearchResult = () => {
           {resultPerfumes !== null && (
             <Content>
               <div className="content__title">향수</div>
-              <Lists>
-                {resultPerfumes.map((el) => {
+              <Lists ref={view}>
+                {resultPerfumes?.map((el) => {
                   return (
                     <List>
                       <img src={`${el.perfumeImage}`} />
@@ -250,6 +308,12 @@ const SearchResult = () => {
                     </List>
                   );
                 })}
+                {resultPerfumes && (
+                  <div
+                    ref={setTarget}
+                    style={{ width: "100%", height: "1px" }}
+                  />
+                )}
               </Lists>
             </Content>
           )}
