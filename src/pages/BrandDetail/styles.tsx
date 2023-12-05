@@ -113,7 +113,7 @@ export const Cards = styled.div`
   width: 80%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px 10px;
+  gap: 20px 10px;
 `;
 
 export const TopText = styled.div`
