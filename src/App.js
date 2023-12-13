@@ -10,6 +10,7 @@ import BrandDetail from "./pages/BrandDetail/index.tsx";
 import PerfumeDetail from "./pages/PerfumeDetail/index.tsx";
 import MyPage from "./pages/MyPage/index.tsx";
 import WriteReview from "./pages/WriteReview";
+import KeywordSearch from "./pages/KeywordSearch";
 
 function App() {
   return (
@@ -21,9 +22,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/searchresult" element={<SearchResult />} />
         <Route path="/branddetail" element={<BrandDetail />} />
-        <Route path="/perfumedetail" element={<PerfumeDetail/>}/>
-        <Route path="/mypage" element={<MyPage/>}/>
-        <Route path="/writereview" element={<WriteReview/>}/>
+        <Route path="/perfumedetail" element={<PerfumeDetail />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/writereview" element={<WriteReview />} />
+        <Route path="/keywordsearch" element={<KeywordSearch />} />
       </Routes>
     </div>
   );
