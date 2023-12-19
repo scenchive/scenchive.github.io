@@ -55,10 +55,12 @@ const SearchResult = () => {
 
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const view = useRef<HTMLDivElement>(null);
-
+  
+  //무한 스크롤 target이 감지되면 호출되는 함수
   const callback = () => {
     setPerfumesPage(perfumesPage + 1);
   };
+
   const options = {
     root: view.current,
     threshold: 1.0,
