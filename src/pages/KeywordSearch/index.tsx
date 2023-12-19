@@ -167,7 +167,11 @@ const KeywordSearch = () => {
             })}
         </Content>
       </Main>
-      <Button>추천 받기</Button>
+      <Button
+        onClick={() => navigate(`/recommendresult?id=${selectedKeywords}`)}
+      >
+        추천 받기
+      </Button>
     </Container>
   );
 };
