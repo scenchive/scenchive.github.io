@@ -11,6 +11,7 @@ import PerfumeDetail from "./pages/PerfumeDetail/index.tsx";
 import MyPage from "./pages/MyPage/index.tsx";
 import WriteReview from "./pages/WriteReview";
 import KeywordSearch from "./pages/KeywordSearch";
+import RecommendResult from "./pages/RecommendResult";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/writereview" element={<WriteReview />} />
         <Route path="/keywordsearch" element={<KeywordSearch />} />
+        <Route path="/recommendresult" element={<RecommendResult />} />
       </Routes>
     </div>
   );
