@@ -9,6 +9,9 @@ import SearchResult from "./pages/SearchResult/index.tsx";
 import PerfumeDetail from "./pages/PerfumeDetail/index.tsx";
 import MyPage from "./pages/MyPage/index.tsx";
 import WriteReview from "./pages/WriteReview";
+import Commmunity from "./pages/Community";
+import CommunityWrite from "./pages/CommunityWrite";
+import CommunityDetail from "./pages/CommunityDetail";
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
         <Route path="/perfumedetail" element={<PerfumeDetail/>}/>
         <Route path="/mypage" element={<MyPage/>}/>
         <Route path="/writereview" element={<WriteReview/>}/>
+        <Route path="/community" element={<Commmunity/>}/>
+        <Route path="/communitywrite" element={<CommunityWrite/>}/>
+        <Route path="/communitydetail" element={<CommunityDetail/>}/>
       </Routes>
     </div>
   );
