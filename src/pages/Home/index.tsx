@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
   Container,
-  Header,
-  HeaderLeft,
-  HeaderRight,
-  HeaderText,
   Top,
-  Title,
   Search,
   Main,
   MainTop,
-  Menu,
-  MenuList,
   Select,
   Option,
   MainBottom,
@@ -23,6 +16,7 @@ import {
 } from "./styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from "../../components/Header/index";
 
 interface Perfumes {
   id: number;
@@ -135,32 +129,7 @@ const Home = () => {
 
   return (
     <>
-      <Header>
-        <HeaderLeft>
-          <Title onClick={()=>navigate('/')}>
-            <div className="title__kr">센카이브</div>
-            <div className="title__en">Scenchive</div>
-          </Title>
-          <Menu>
-            <MenuList>마이페이지</MenuList>
-            <MenuList>필터 추천</MenuList>
-            <MenuList>게시판</MenuList>
-          </Menu>
-        </HeaderLeft>
-        <HeaderRight>
-          {!token ? (
-            <>
-              <HeaderText onClick={() => navigate("/login")}>로그인</HeaderText>
-              <HeaderText>|</HeaderText>
-              <HeaderText onClick={() => navigate("/signupstep1")}>
-                회원가입
-              </HeaderText>
-            </>
-          ) : (
-            <img src="/assets/icon/icon_notice.svg" />
-          )}
-        </HeaderRight>
-      </Header>
+      <Header />
       <Container>
         <Top>
           <Search
@@ -265,9 +234,11 @@ const Home = () => {
                 onClick={() => handleSwipeClick(-1)}
               />
               <MainBottomContent
-               onClick={() =>
-                navigate(`/perfumedetail?perfume=${perfumes[perfumeIndex]?.id}`)
-              }
+                onClick={() =>
+                  navigate(
+                    `/perfumedetail?perfume=${perfumes[perfumeIndex]?.id}`
+                  )
+                }
               >
                 <img src={perfumes[perfumeIndex]?.perfumeImage} />
                 <ContentText>
