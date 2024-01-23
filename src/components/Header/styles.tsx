@@ -10,13 +10,14 @@ export const Container = styled.div`
   background-color: #e3a6a1;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 20px 30px;
   box-sizing: border-box;
   color: white;
 `;
 
 export const Logo = styled.div`
-  width: 200px;
+  width: 25%;
   display: flex;
   justify-content: start;
   align-items: end;
@@ -36,11 +37,10 @@ export const Logo = styled.div`
 `;
 
 export const Menu = styled.div`
-  width: calc(100% - 350px);
+  width: 50%;
   display: flex;
   justify-content: start;
   font-family: Noto Sans Kr;
-  padding: 0 50px;
   box-sizing: border-box;
 `;
 
@@ -50,7 +50,7 @@ export const MenuItem = styled.div`
 `;
 
 export const HeaderRight = styled.div`
-  width: 150px;
+  width: 25%;
   display: flex;
   justify-content: end;
 
