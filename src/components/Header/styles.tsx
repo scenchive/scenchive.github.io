@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 
 const breakpoint = "768px";
-
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
@@ -11,7 +10,7 @@ export const Container = styled.div`
   background-color: #e3a6a1;
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 20px 30px;
   box-sizing: border-box;
   color: white;
 `;
@@ -37,7 +36,7 @@ export const Logo = styled.div`
 `;
 
 export const Menu = styled.div`
-  width: 70%;
+  width: calc(100% - 350px);
   display: flex;
   justify-content: start;
   font-family: Noto Sans Kr;
@@ -51,11 +50,11 @@ export const MenuItem = styled.div`
 `;
 
 export const HeaderRight = styled.div`
-  width: 15%;
+  width: 150px;
   display: flex;
   justify-content: end;
 
-  img{
+  img {
     width: 25px;
   }
 `;
@@ -63,4 +62,5 @@ export const HeaderRight = styled.div`
 export const HeaderRightText = styled.div`
   font-family: Noto Sans Kr;
   padding: 0 3px;
+  font-size: 1.5rem;
 `;
