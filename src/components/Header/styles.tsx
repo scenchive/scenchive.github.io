@@ -6,12 +6,12 @@ const mediaQuery = () => `@media(max-width:${breakpoint})`;
 export const Container = styled.div`
   label: container;
   width: 100%;
-  height: 60px;
+  height: 70px;
   background-color: #e3a6a1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 30px;
+  padding: 20px 35px;
   box-sizing: border-box;
   color: white;
 `;
@@ -31,7 +31,7 @@ export const Logo = styled.div`
   }
 
   .logo__en {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     padding-bottom: 5px;
   }
 `;
@@ -42,11 +42,12 @@ export const Menu = styled.div`
   justify-content: start;
   font-family: Noto Sans Kr;
   box-sizing: border-box;
+  padding: 5px;
 `;
 
 export const MenuItem = styled.div`
   padding: 0 10px;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 `;
 
 export const HeaderRight = styled.div`
@@ -62,5 +63,5 @@ export const HeaderRight = styled.div`
 export const HeaderRightText = styled.div`
   font-family: Noto Sans Kr;
   padding: 0 3px;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 `;
