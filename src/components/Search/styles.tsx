@@ -41,6 +41,7 @@ export const InputBox = styled.div`
       width: 15px;
       height: 15px;
       top: 8px;
+      right: 12px;
     }
   }
 `;
@@ -65,6 +66,7 @@ export const Input = styled.input`
 
   ${mediaQuery} {
     height: 30px;
+    padding: 0 15px;
 
     &::placeholder {
       font-size: 1rem;
