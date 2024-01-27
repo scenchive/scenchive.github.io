@@ -13,6 +13,10 @@ export const Container = styled.div`
   align-items: center;
   margin-top: 5px;
   position: relative;
+
+  ${mediaQuery} {
+    height: 45px;
+  }
 `;
 
 export const InputBox = styled.div`
@@ -27,6 +31,17 @@ export const InputBox = styled.div`
     position: absolute;
     right: 15px;
     top: 12px;
+  }
+
+  ${mediaQuery} {
+    height: 30px;
+    width: 70%;
+
+    img {
+      width: 15px;
+      height: 15px;
+      top: 8px;
+    }
   }
 `;
 
@@ -46,6 +61,14 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
+  }
+
+  ${mediaQuery} {
+    height: 30px;
+
+    &::placeholder {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -67,6 +90,11 @@ export const SearchList = styled.div`
   font-family: Noto Sans KR;
   font-size: 1.5rem;
   margin-bottom: 20px;
+
+  ${mediaQuery} {
+    width: 70%;
+    top: 50px;
+  }
 `;
 
 export const ListContent = styled.div`
@@ -77,6 +105,11 @@ export const ListContent = styled.div`
     font-size: 1.6rem;
     color: #ceb172;
     margin: 10px 0;
+
+    ${mediaQuery} {
+      font-size: 1.4rem;
+      margin: 5px 0;
+    }
   }
   margin-bottom: 10px;
 `;
@@ -101,5 +134,13 @@ export const ListDetail = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
     word-break: break-all;
+  }
+
+  ${mediaQuery} {
+    font-size: 1.2rem;
+
+    img {
+      width: 12px;
+    }
   }
 `;
