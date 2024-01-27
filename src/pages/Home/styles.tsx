@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
+
 export const Container = styled.div`
   label: container;
   width: 100%;
@@ -20,6 +23,12 @@ export const Main = styled.div`
   flex-direction: column;
   align-items: center;
   font-family: Gowun Batang;
+
+  ${mediaQuery} {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
 `;
 
 export const MainTop = styled.div`
@@ -37,6 +46,10 @@ export const MainTop = styled.div`
     line-height: 42px;
   }
   margin-bottom: 50px;
+
+  ${mediaQuery} {
+    font-size: 1.8rem;
+  }
 `;
 
 export const Select = styled.div`
@@ -46,6 +59,11 @@ export const Select = styled.div`
   flex-direction: column;
   margin: 0 20px;
   color: #bc5f6a;
+
+  ${mediaQuery} {
+    width: 67px;
+    margin: 0 10px;
+  }
 `;
 
 export const Selected = styled.div`
@@ -56,6 +74,11 @@ export const Selected = styled.div`
   position: relative;
   border: 1px solid #bc5f6a;
   border-radius: 10px;
+
+  ${mediaQuery} {
+    font-size: 1.8rem;
+    padding: 2px 0;
+  }
 `;
 
 export const Options = styled.div`
@@ -64,6 +87,10 @@ export const Options = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 1.5rem;
+
+  ${mediaQuery} {
+    font-size: 1.1rem;
+  }
 `;
 
 export const Option = styled.div`
@@ -79,6 +106,10 @@ export const MainBottom = styled.div`
   font-family: Noto Sans KR;
   & > img {
     width: 20px;
+
+    ${mediaQuery} {
+      width: 15px;
+    }
   }
 `;
 
@@ -100,27 +131,39 @@ export const ContentText = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
+  font-size: 1.5rem;
 
   .content-text__name {
-    font-size: 20px;
+    font-size: 2rem;
     margin-bottom: 10px;
     text-align: start;
   }
   .content-text__brand-kr {
-    font-size: 15px;
     color: #a5a5a5;
   }
   .content-text__brand-en {
-    font-size: 15px;
     color: #a5a5a5;
   }
   .content-text__rate {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
     img {
       margin-right: 5px;
       width: 20px;
     }
-    display: flex;
-    margin-top: 10px;
-    font-size: 15px;
+  }
+
+  ${mediaQuery} {
+    font-size: 1.2rem;
+    .content-text__name {
+      font-size: 1.8rem;
+    }
+    .content-text__rate {
+      img {
+        margin-right: 3px;
+        width: 15px;
+      }
+    }
   }
 `;
