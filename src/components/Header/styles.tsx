@@ -102,7 +102,7 @@ export const MenuSmall = styled.div`
     position: absolute;
     top: 60px;
     left: 5px;
-    z-index: 9999;
+    z-index: 99999;
   }
 `;
 
