@@ -106,11 +106,10 @@ export const ListContent = styled.div`
     width: fit-content;
     font-size: 1.6rem;
     color: #ceb172;
-    margin: 10px 0;
+    margin: 5px 0;
 
     ${mediaQuery} {
       font-size: 1.4rem;
-      margin: 5px 0;
     }
   }
   margin-bottom: 10px;
@@ -122,7 +121,7 @@ export const ListDetail = styled.div`
   display: flex;
   align-items: end;
   justify-content: space-between;
-  padding: 7px 0;
+  padding: 6px 0;
   border-bottom: 1px solid #f5d0cd;
   img {
     width: 15px;
