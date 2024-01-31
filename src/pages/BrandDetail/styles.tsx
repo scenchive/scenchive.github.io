@@ -109,7 +109,7 @@ export const Text = styled.div`
 `;
 
 export const Cards = styled.div`
-  label: main;
+  label: cards;
   width: 80%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
