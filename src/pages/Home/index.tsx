@@ -10,9 +10,12 @@ import {
   ContentText,
   Selected,
   Options,
+  PerfumeBox,
+  ColorPick,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Color, { useColor } from "color-thief-react";
 import Header from "../../components/Header/index";
 import Search from "../../components/Search/index";
 
@@ -34,13 +37,42 @@ const Home = () => {
   const [username, setUsername] = useState("");
   const [perfumes, setPerfumes] = useState<Perfumes[]>([]);
   const [perfumeIndex, setPerfumeIndex] = useState(0);
+  const [randomPerfumes, setRandomPerfumes] = useState<Perfumes[]>([]);
+  const [imageIndex, setImageIndex] = useState([0, 0, 0]);
 
   useEffect(() => {
     getToken();
+
+    const interval = setInterval(() => {
+      setImageIndex((prev) =>
+        prev[0] === 0 ? [3, prev[1], prev[2]] : [0, prev[1], prev[2]]
+      );
+
+      setTimeout(
+        () =>
+          setImageIndex((prev) =>
+            prev[1] === 0 ? [prev[0], 3, prev[2]] : [prev[0], 0, prev[2]]
+          ),
+        1000
+      );
+
+      setTimeout(
+        () =>
+          setImageIndex((prev) =>
+            prev[2] === 0 ? [prev[0], prev[1], 3] : [prev[0], prev[1], 0]
+          ),
+        2000
+      );
+    }, 6000);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     if (token) getUsername();
+    else {
+      getRandomPerfume();
+    }
   }, [token]);
 
   useEffect(() => {
@@ -83,13 +115,19 @@ const Home = () => {
     else setPerfumeIndex(perfumeIndex + dir);
   };
 
+  const getRandomPerfume = async () => {
+    await axios.get(`/randomperfume`).then((res) => {
+      setRandomPerfumes(res.data);
+    });
+  };
+
   return (
     <>
       <Container>
         <Header />
         <Search />
         {token ? (
-          <Main>
+          <Main width={"60%"}>
             <MainTop>
               <div className="main-top__text">'{username}'님을 위한</div>
               <Select>
@@ -143,7 +181,42 @@ const Home = () => {
               />
             </MainBottom>
           </Main>
-        ) : null}
+        ) : (
+          <Main width={"60%"}>
+            <MainTop>
+              <span className="main-top__text--big">“</span>&nbsp;나와 맞는
+              &nbsp;
+              <span>향수</span>를 찾아보세요.
+              <span className="main-top__text--big">”</span>
+            </MainTop>
+            <MainBottom>
+              <MainBottomContent>
+                {[0, 1, 2].map((el) => (
+                  <PerfumeBox index={el}>
+                    <img
+                      src={randomPerfumes[el + imageIndex[el]]?.perfumeImage}
+                    />
+                    <div className="perfume-box__text">
+                      {randomPerfumes[el + imageIndex[el]]?.perfumeName}
+                    </div>
+                    <Color
+                      src={`https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${encodeURIComponent(
+                        randomPerfumes[el + imageIndex[el]]?.perfumeImage
+                      )}`}
+                      crossOrigin="anonymous"
+                      format={"hex"}
+                    >
+                      {({ data, loading }) => {
+                        if (loading) return <div>{loading}</div>;
+                        return <ColorPick index={el} color={data} />;
+                      }}
+                    </Color>
+                  </PerfumeBox>
+                ))}
+              </MainBottomContent>
+            </MainBottom>
+          </Main>
+        )}
       </Container>
     </>
   );

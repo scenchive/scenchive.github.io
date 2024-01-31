@@ -1,7 +1,21 @@
+import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
+import { ArrayRGB } from "color-thief-react/lib/types";
 
 const breakpoint = "768px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
+const colors = ["#F5D0CD", "#E3A6A1", "#D67070"];
+const fadeInOut = keyframes`
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+`;
 
 export const Container = styled.div`
   label: container;
@@ -13,9 +27,9 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const Main = styled.div`
+export const Main = styled.div<{ width: string }>`
   label: main;
-  width: 60%;
+  width: ${(props) => props.width};
   max-width: 700px;
   height: calc(100vh - 170px);
   display: flex;
@@ -38,17 +52,30 @@ export const MainTop = styled.div`
   display: flex;
   justify-content: center;
   font-size: 3rem;
-  font-weight: 700;
   align-items: start;
   word-wrap: break-word;
+  margin-bottom: 50px;
+
   .main-top__text {
     color: #e3a6a1;
     line-height: 42px;
+    font-weight: 700;
   }
-  margin-bottom: 50px;
+
+  span {
+    color: #bc5f6a;
+  }
+
+  .main-top__text--big {
+    font-size: 4.5rem;
+  }
 
   ${mediaQuery} {
     font-size: 1.8rem;
+
+    .main-top__text--big {
+      font-size: 2.5rem;
+    }
   }
 `;
 
@@ -59,6 +86,7 @@ export const Select = styled.div`
   flex-direction: column;
   margin: 0 20px;
   color: #bc5f6a;
+  font-weight: 700;
 
   ${mediaQuery} {
     width: 67px;
@@ -116,6 +144,7 @@ export const MainBottom = styled.div`
 export const MainBottomContent = styled.div`
   label: main-bottom-content;
   width: 100%;
+  height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -166,4 +195,41 @@ export const ContentText = styled.div`
       }
     }
   }
+`;
+
+export const PerfumeBox = styled.div<{ index: number }>`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  animation: ${fadeInOut} 6s ${(props) => `${0 + props.index}s`} ease-in-out
+    infinite;
+
+  img {
+    width: 180px;
+    margin: 0 5px;
+  }
+
+  .perfume-box__text {
+    width: 200px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 1.5rem;
+  }
+`;
+
+export const ColorPick = styled.div<{
+  color: string | undefined;
+  index: number;
+}>`
+  width: 30px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: ${(props) =>
+    props.color === undefined ? colors[props.index] : props.color};
 `;
