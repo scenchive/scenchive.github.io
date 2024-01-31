@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
   Container,
+  HeaderLeft,
   HeaderRight,
   HeaderRightText,
   Logo,
   Menu,
   MenuItem,
+  MenuItemSmall,
+  MenuSmall,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
 
@@ -16,10 +19,11 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState<string | null>(null);
+  const [toggle, setToggle] = useState(false);
   const menuItems = [
-    { name: "마이페이지", url: "" },
-    { name: "필터 추천", url: "" },
-    { name: "커뮤니티", url: "" },
+    { name: "마이페이지", url: "", img: "/assets/icon/icon_mypage.svg" },
+    { name: "필터 추천", url: "", img: "/assets/icon/icon_filter.svg" },
+    { name: "커뮤니티", url: "", img: "/assets/icon/icon_board.svg" },
   ];
 
   useEffect(() => {
@@ -31,8 +35,15 @@ const Header = () => {
     setToken(token);
   };
 
+  const handleMenuClick = () => {
+    setToggle(!toggle);
+  };
+
   return (
     <Container>
+      <HeaderLeft onClick={() => handleMenuClick()}>
+        <img src="/assets/icon/icon_menu.svg" />
+      </HeaderLeft>
       <Logo onClick={() => navigate("/")}>
         <div className="logo__kr">센카이브</div>
         <div className="logo__en">Scenchive</div>
@@ -42,6 +53,18 @@ const Header = () => {
           return <MenuItem>{item.name}</MenuItem>;
         })}
       </Menu>
+      {toggle && (
+        <MenuSmall>
+          {menuItems.map((item, index) => {
+            return (
+              <MenuItemSmall border={index !== 2}>
+                <img src={item.img} />
+                <div>{item.name}</div>
+              </MenuItemSmall>
+            );
+          })}
+        </MenuSmall>
+      )}
       {!token ? (
         <HeaderRight>
           <HeaderRightText onClick={() => navigate("/login")}>
