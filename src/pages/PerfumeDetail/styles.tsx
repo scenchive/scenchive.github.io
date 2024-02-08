@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
   label:container;
@@ -9,86 +10,38 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  min-width: 992px;
   align-items:center; 
 `;
 
-export const Header = styled.div`
-  label:header;
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 50px;
-  box-sizing: border-box;
-  color: #bf8dff;
-  font-family: NanumSquareRound;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  box-shadow: 0px 5px 5px #f6f2ff;
-`;
-
-export const HeaderLeft = styled.div`
-  width: fit-content;
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-`;
-
-export const Title = styled.div`
-  width: fit-content;
-  display: flex;
-  align-items: end;
-  .title__kr {
-    font-size: 30px;
-    margin-right: 10px;
-  }
-  .title__en {
-    font-size: 15px;
-    padding-bottom: 5px;
-  }
-`;
-
-export const Menu = styled.div`
-  display: flex;
-  margin-left: 50px;
-  font-size: 17px;
-`;
-
-export const MenuList = styled.div`
+export const Main = styled.div`
+  label: main;
+  width: 60%;
+  max-width: 700px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 0 10px;
-  line-height: 49px;
+  font-family: Gowun Batang;
+
+  ${mediaQuery} {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
 `;
 
-export const HeaderRight = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const HeaderText = styled.div`
-  padding: 0 5px;
-  font-size: 15px;
-`;
-
-export const ContentArea=styled.div`
-  label: content-area;
-  width:60%;
-  margin-top:80px;
-  display:flex;
-  flex-direction:column;
-
-`
 
 export const PerfumeNameKR=styled.div`
   label: perfume-name-kr;
-  margin-top:50px;
+  color: #242424;
+  font-size: 1.7rem;
+  font-family: Noto Sans KR;
+  margin-top: 4px;
 
+  ${mediaQuery} {
+    
+  }
+  
 
 `
 
@@ -96,16 +49,52 @@ export const PerfumeArea=styled.div`
   label: perfume-area;
   display:flex;
   flex-direction:row;
-  
+  margin-top: 50px;
+
 `
+
+export const PerfumeImageArea=styled.div`
+  label: perfume-image-area;
+  width:250px;
+  height:250px;
+  position: relative;
+  margin-right:15px;
+
+  ${mediaQuery} {
+    width:200px;
+    height:200px;
+    position: relative;
+    margin-right:15px;
+    
+  }
+`
+
 export const PerfumeImage=styled.img`
   label:perfume-image;
-  width:300px;
-  height:300px;
-  object-fit:cover;
-  box-shadow: 5px 5px 5px 5px #F3F3F3;
-  border-radius:20px;
-  margin-right:15px;
+  width:250px;
+  height:250px;
+  object-fit:scale-down;
+  box-shadow: 2px 2px 10px 2px #EAEAEA;
+  
+  ${mediaQuery} {
+    width:200px;
+    height:200px;
+    box-sizing: border-box;
+  }
+`
+
+export const Bookmark=styled.img`
+  label: bookmark;
+  width: 37.33px;
+  height: 59.94px;
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  cursor: pointer;
+  ${mediaQuery} {
+
+
+  }
 `
 
 export const PerfumeInformationArea=styled.div`
@@ -116,9 +105,38 @@ export const PerfumeInformationArea=styled.div`
 
 `
 
-export const BrandNameKR=styled.div`
-  label: brand-name-kr;
+export const BrandArea=styled.div`
+  label: brand-area;
+  height: 22px;
+  display: flex;
+  flex-direction: row;
+  ${mediaQuery} {
 
+
+  }
+`
+
+export const BrandNameKR=styled.span`
+  label: brand-name-kr;
+  color: #616161;
+  font-size: 1.3rem;
+  font-family: Noto Sans KR;
+  margin-right: 3px;
+
+  ${mediaQuery} {
+  }
+
+`
+
+export const BrandDetailPageIcon=styled.img`
+  label: brand-detail-page-icon;
+  width: 13px;
+  height: 13px;
+  margin-top: auto;
+  margin-bottom: auto;
+
+  ${mediaQuery} {
+  }
 `
 
 export const BrandNameEN=styled.div`
@@ -128,24 +146,75 @@ export const BrandNameEN=styled.div`
 
 export const PerfumeRating=styled.div`
   label: perfume-rating;
+  display:flex;
+  flex-direction: row;
+  margin-top: 5px;
+  font-family: Noto Sans KR;
+  font-size: 1.1rem;
+  color: #2E2E2E;
+  font-weight: 500;
+
 `
 
-export const SeasonRatingArea=styled.div`
-  label: season-rating-area;
-  display:flex;
-  flex-direction:row;
+
+export const SeasonCell=styled.div `
+  label: season-cell;
+  width: 65px;
+  height: 70px;
+  text-align: center;
+  margin-right: 10px;
+  
+  ${mediaQuery} {
+  }
+`
+
+export const SeasonIcon=styled.img`
+  label: season-icon;
+  width: 45px;
+  height: 35px;
+  object-fit: scale-down;
+  margin-bottom: 3px;
+  
+  ${mediaQuery} {
+  }
 `
 
 export const SeasonRating=styled.div`
   label: season-rating;
-  font-size:15px;
-  margin-right:10px;
+  color: #616161;
+  font-size:1rem;
+  font-family: Noto Sans KR;
+  font-weight: 500;
+
 `
+
+export const StatusBarArea=styled.div`
+  label: status-bar-area;
+  width: 100%;
+  height: 10px; 
+  border-radius:10px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 5px;
+  background-color: #D9D9D9;
+`
+
+export const StatusBar=styled.div<{backgroundColor:string, statusWidth:number}>`
+  label: status-bar;
+  width: ${(props)=>props.statusWidth}%;
+  height: 10px;
+  background-color: ${(props)=>props.backgroundColor};
+  border-radius: 10px;
+  position: absolute;
+  z-index: 10;
+`
+
 
 export const OtherRatingArea=styled.div`
   label: other-rating-area;
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
+  margin-top: 20px;
 `
 
 export const ButtonArea=styled.div`

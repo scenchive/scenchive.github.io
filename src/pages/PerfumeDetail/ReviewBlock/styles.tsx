@@ -1,36 +1,12 @@
 import styled from "@emotion/styled";
 
 
-export const BasicInformationTabArea = styled.div`
-  label:basic-information-tab-area;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  align-items:center; 
-`;
-
-export const NoteTitle=styled.div`
-  label: note-title;
-  font-size:20px;
-  margin-top:40px;
-  margin-bottom:15px;
-`
-
-export const NoteInformation=styled.div`
-  label:note-information;
-`
-
-export const NoteInformationArea=styled.div`
-  label:note-information-area;
-`
-
 export const ReviewArea=styled.div`
   label: review-area;
   width:100%;
   display:flex;
   flex-direction:column;
-  margin-top:50px;
+  margin-top:80px;
   margin-bottom:100px;
 
 `
@@ -46,12 +22,24 @@ export const ReviewHeaderArea=styled.div`
 export const ReviewAreaTitle=styled.div`
   label:review-area-title;
   margin-right:auto;
-
+  width:fit-content;
+  display:flex;
+  font-size:2rem;
+  font-family: Noto Sans KR;
+  color:#4C4538;
 `
 
 export const WriteReviewButton=styled.div`
   label:write-review-button;
+  color: #FFFFFF;
+  font-size: 1.4rem;
+  font-family: Noto Sans KR;
+  background-color: #D67070;
+  border: 1px solid #EFC6C6;
+  border-radius: 3px;
   margin-left:auto;
+  padding: 3px 13px;
+  text-align: center;
   cursor:pointer;
 `
 
@@ -59,13 +47,17 @@ export const WriteReviewButton=styled.div`
 export const ReviewRow=styled.div`
   label: review-row;
   text-align:left;
-  margin-bottom:40px;
+  margin-bottom:40px;  
+  font-size: 1.5rem;
+  font-family: Noto Sans KR;
+  color: #616161;
 `
 
 export const UserInformationArea=styled.div`
   label:user-information-area;
   display:flex;
   flex-direction:row;
+  margin-bottom:7px;
 `
 
 export const UserProfilePicture=styled.img`
@@ -73,21 +65,32 @@ export const UserProfilePicture=styled.img`
   width:50px;
   height:50px;
   object-fit:cover;
+  box-shadow: 1px 1px 3px 1px #EAEAEA;
+  border-radius: 12px;
 `
 
 export const UserInformation=styled.div`
   label:user-information;
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
+  font-size: 1.3rem;
+  font-family: Noto Sans KR;
+  color: #616161;
   margin-left:15px;
-  margin-bottom:10px;
 `
 
 export const UserName=styled.div`
   label:user-name;
-
+  font-size: 1.3rem;
+  font-family: Noto Sans KR;
+  color: #616161;
+  margin-right: 6px;
 `
 
 export const UpdatedAt=styled.div`
   label:updated-at;
+  font-size: 1.3rem;
+  font-family: Noto Sans KR;
+  color: #616161;
+  margin-left: 6px;
 `
