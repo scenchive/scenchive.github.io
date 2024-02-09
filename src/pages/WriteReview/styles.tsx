@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
   label:container;
@@ -11,69 +12,10 @@ export const Container = styled.div`
   position: relative;
   min-width: 992px;
   align-items:center; 
-`;
 
-export const Header = styled.div`
-  label:header;
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 50px;
-  box-sizing: border-box;
-  color: #bf8dff;
-  font-family: NanumSquareRound;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  box-shadow: 0px 5px 5px #f6f2ff;
-`;
+  ${mediaQuery} {
 
-export const HeaderLeft = styled.div`
-  width: fit-content;
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-`;
-
-export const Title = styled.div`
-  width: fit-content;
-  display: flex;
-  align-items: end;
-  .title__kr {
-    font-size: 30px;
-    margin-right: 10px;
   }
-  .title__en {
-    font-size: 15px;
-    padding-bottom: 5px;
-  }
-`;
-
-export const Menu = styled.div`
-  display: flex;
-  margin-left: 50px;
-  font-size: 17px;
-`;
-
-export const MenuList = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 10px;
-  line-height: 49px;
-`;
-
-export const HeaderRight = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const HeaderText = styled.div`
-  padding: 0 5px;
-  font-size: 15px;
 `;
 
 export const ContentArea=styled.div`
@@ -84,41 +26,68 @@ export const ContentArea=styled.div`
   flex-direction:column;
 
 `
+export const PageTitle=styled.div`
+  label: page-title;
+  color: #616161;
+  font-size: 2.2rem;
+  font-family: Noto Sans KR;
+  margin-bottom: 40px;
+  ${mediaQuery} {
 
+  }
+`
 export const PerfumeNameKR=styled.div`
   label: perfume-name-kr;
   margin-top:50px;
 
 `
 
-export const PerfumeArea=styled.div`
-  label: perfume-area;
+export const PerfumeInformationArea=styled.div`
+  label: perfume-information-area;
+  width: 100%;
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
   align-items:center;
+  border: 1px solid #DFDFDF;
+  padding-top: 13px;
+  padding-bottom: 13px;
   
 `
 export const PerfumeImage=styled.img`
   label:perfume-image;
-  width:300px;
-  height:300px;
+  width:105px;
+  height:105px;
   object-fit:cover;
-  box-shadow: 5px 5px 5px 5px #F3F3F3;
   border-radius:20px;
-  margin-bottom:30px;
+  margin-right: 20px;
+  margin-left: auto;
 `
+
+export const PerfumeInformation=styled.div`
+  label: perfume-information;
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+
+`
+
 
 export const BrandNameKR=styled.div`
   label: brand-name-kr;
+  width: fit-content;
+  font-size: 1.8rem;
+  font-family: Noto Sans KR;
+  color: #616161;
+  margin-bottom: 10px;
 
-`
-
-export const PageTitle=styled.div`
-  label: page-title;
 `
 
 export const PerfumeName=styled.div`
   label: perfume-name;
+  width: fit-content;
+  font-size: 2.0rem;
+  font-family: Noto Sans KR;
+  color: #242424;
 `
 
 export const KeywordArea=styled.div`
@@ -131,13 +100,16 @@ export const AreaTitle=styled.div`
   label: area-title;
   width:fit-content;
   font-size:20px;
-  margin-right:auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
 `
 
 export const KeywordCellArea=styled.div`
   label: keyword-cell-area;
   display:flex;
   flex-direction:row;
+
 `
 
 export const KeywordCell=styled.div`
@@ -148,14 +120,20 @@ export const KeywordCell=styled.div`
   border-radius:20px;
   padding:8px 10px;
   cursor :pointer;
+
 `
 
 export const AddCell=styled.div`
   label: add-cell;
-  border:1px solid red;
+  color: #BBBBBB;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border:2px solid #E3E3E3;
   border-radius:20px;
-  padding:8px 10px;
+  padding:6px 8px;
   cursor :pointer;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 export const ReviewArea=styled.div`
@@ -175,7 +153,13 @@ export const QuestionRow=styled.div`
 
 export const Question=styled.div`
   label: question;
+  color: #616161;
+  font-family: Noto Sans KR;
+  font-size: 1.6rem;
   width:fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 12px;
 `
 
 export const AnswerRow=styled.div`
@@ -191,12 +175,16 @@ export const AnswerRow=styled.div`
 
 export const Answer=styled.div`
   label:answer;
+  color:#B3B3B3;
+  font-family: Noto Sans KR;
+  font-size: 1.2rem;
   cursor:pointer;
   margin-left:5px;
   margin-right:5px;
-  border:1px solid red;
+  border:1.5px solid #B3B3B3;
   padding:8px 10px;
   border-radius:20px;
+  line-height: 1.3rem;
 
 `
 
@@ -209,11 +197,17 @@ export const DetailReviewRow=styled.div`
 
 export const DetailReviewAnswer=styled.textarea`
   label: detail-review-answer;
-  width:100%;
-  border:1px solid red;
+  width:calc(100% - 52px);
+  height: 240px;
+  color: #B6B6B6;
+  font-size: 1.3rem;
+  font-family: Noto Sans KR;
+  border:1px solid #DDDDDD;
+  border-radius: 10px;
   resize:none;
   margin-top:15px;
   margin-bottom:40px;
+  padding: 20px 26px;
   :focus{
     outline:none;
   }
@@ -221,6 +215,14 @@ export const DetailReviewAnswer=styled.textarea`
 
 export const UploadButton=styled.div`
   label: upload-button;
-  margin-bottom:100px;
+  width: fit-content;
+  color: #FFFFFF;
+  font-family: Noto Sans KR;
+  font-size: 1.6rem;
+  background-color: #D67070;
+  padding: 7px 46px;
+  margin-bottom:150px;
+  margin-left:auto;
   cursor:pointer;
+  border-radius: 2px;
 `
