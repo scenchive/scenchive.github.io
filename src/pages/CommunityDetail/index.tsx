@@ -105,7 +105,6 @@ const CommunityDetail = () => {
       axios.get('/comments/board/' + boardId, { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setCommentList(res?.data)
-          console.log('res?.data', res.data)
         })
         .catch((err) => {
           console.error('err', err)

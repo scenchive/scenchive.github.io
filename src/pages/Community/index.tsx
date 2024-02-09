@@ -72,7 +72,6 @@ const Community = () => {
           setBoardCount(res?.data?.totalBoardCount);
           setBoardList(res?.data?.boards)
         }).catch((res) => {
-          console.log(res)
           alert('로그인 후 이용 가능합니다.')
           goToHome();
         })
@@ -82,7 +81,6 @@ const Community = () => {
           setQnaBoardCount(res?.data?.totalBoardCount);
           setQnaBoardList(res?.data?.boards)
         }).catch((res) => {
-          console.log(res)
           alert('로그인 후 이용 가능합니다.')
           goToHome();
         })
@@ -92,7 +90,6 @@ const Community = () => {
           setFakeBoardCount(res?.data?.totalBoardCount);
           setFakeBoardList(res?.data?.boards)
         }).catch((res) => {
-          console.log(res)
           alert('로그인 후 이용 가능합니다.')
           goToHome();
         })
@@ -102,7 +99,6 @@ const Community = () => {
           setFreeBoardCount(res?.data?.totalBoardCount);
           setFreeBoardList(res?.data?.boards)
         }).catch((res) => {
-          console.log(res)
           alert('로그인 후 이용 가능합니다.')
           goToHome();
         })
