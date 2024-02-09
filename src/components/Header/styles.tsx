@@ -86,6 +86,7 @@ export const Menu = styled.div`
 export const MenuItem = styled.div`
   padding: 0 10px;
   font-size: 1.7rem;
+  cursor: pointer;
 `;
 
 export const MenuSmall = styled.div`
