@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Container,
-  ContentArea,
+  Main,
   PerfumeInformationArea,
   PerfumeImage,
   PerfumeInformation,
@@ -200,7 +200,8 @@ const WriteReview = () => {
     <Container>
       <Header />
       <Search />
-      <ContentArea>
+
+      <Main>
         <PageTitle>후기 작성</PageTitle>
         <PerfumeInformationArea>
           <PerfumeImage src={perfumeDetail?.perfumeImage} />
@@ -270,7 +271,7 @@ const WriteReview = () => {
         </ReviewArea>
         <UploadButton onClick={() => uploadReview()}>등록</UploadButton>
 
-      </ContentArea>
+      </Main>
     </Container>
   </>
   );
