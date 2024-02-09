@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
   label:container;
@@ -9,96 +10,58 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  min-width: 992px;
   align-items:center; 
-`;
 
-export const Header = styled.div`
-  label:header;
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 50px;
-  box-sizing: border-box;
-  color: #bf8dff;
-  font-family: NanumSquareRound;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  box-shadow: 0px 5px 5px #f6f2ff;
-`;
+  ${mediaQuery} {
 
-export const HeaderLeft = styled.div`
-  width: fit-content;
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-`;
-
-export const Title = styled.div`
-  width: fit-content;
-  display: flex;
-  align-items: end;
-  .title__kr {
-    font-size: 30px;
-    margin-right: 10px;
-  }
-  .title__en {
-    font-size: 15px;
-    padding-bottom: 5px;
   }
 `;
 
-export const Menu = styled.div`
-  display: flex;
-  margin-left: 50px;
-  font-size: 17px;
-`;
-
-export const MenuList = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 10px;
-  line-height: 49px;
-`;
-
-export const HeaderRight = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const HeaderText = styled.div`
-  padding: 0 5px;
-  font-size: 15px;
-`;
-
-export const ContentArea=styled.div`
-  label: content-area;
+export const Main=styled.div`
+  label: main;
   width:60%;
-  margin-top:230px;
+  margin-top:80px;
   display:flex;
   flex-direction:column;
 
+  ${mediaQuery} {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
 `
 
 export const BoardMenu=styled.div`
   label: board-menu;
   width:fit-content;
-  color: #FFFFFF;
-  background-color:#B592FF;
-  border-radius:20px;
-  padding: 5px 10px;
-  margin-right:auto;
-  margin-bottom:15px;
+  color: #E3A6A1;
+  font-family: Noto Sans KR;
+  font-size:1.6rem;
+  margin-bottom:8px;
+  cursor:pointer;
+
+  ${mediaQuery} {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+`
+
+export const BoardMenuGo=styled.img`
+  label: board-menu-go;
+  margin-left: 8px;
+
+  ${mediaQuery} {
+    
+  }
 `
 
 export const BoardTitle=styled.div`
   label: board-title;
   width:100%;
+  color: #616161;
+  font-size: 2.1rem;
+  font-family: Noto Sans KR;
   text-align:start;
   margin-bottom:10px;
   padding-bottom: 5px;
@@ -115,19 +78,27 @@ export const BoardInfoArea=styled.div`
 export const UserName=styled.div`
   label: user-name;
   width:fit-content;
-  padding-right:10px;
+  color: #818181;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
 `
 
 export const UploadTime=styled.div`
   label: upload-time;
-  
+  color: #818181;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
+
 `
 
 export const BoardContent=styled.div`
   label: board-content;
   width:100%;
+  color: #717171;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
   text-align:start;
-  margin-top:40px;
+  margin-top:20px;
   margin-bottom:100px;
 `
 
@@ -135,16 +106,21 @@ export const WriteCommentArea=styled.div`
   label: write-comment-area;
   width:100%;
   display:flex;
-  flex-direction:row;
+  flex-direction:column;
+  border:1px solid #EAEAEA;
+  border-radius:2px;
 `
 
 export const CommentInput=styled.textarea`
   label: write-comment;
   width:-webkit-fill-available;
-  height:50px;
+  height:45px;
   resize:none;
-  border:1px solid #DFDFDF;
-  padding:15px;
+  color: #B2B2B2;
+  border:none;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
+  margin: 12px 16px;
   :focus{
     outline:none;
   }
@@ -152,8 +128,14 @@ export const CommentInput=styled.textarea`
 
 export const CommentButton=styled.div`
   label: write-comment-button;
-  width:10%;
+  width:fit-content;
+  color: #D67070;
+  font-size: 1.3rem;
+  font-family: Noto Sans KR;
   cursor:pointer;
+  margin-left: auto;
+  margin-right: 16px;
+  margin-bottom: 12px;
 
 `
 
@@ -166,8 +148,8 @@ export const CommentRow=styled.div<{isLast:boolean}>`
   label: comment-row;
   display:flex;
   flex-direction:column;
-  margin-bottom:20px;
-  padding-bottom:20px;
+  margin-bottom:10px;
+  padding-bottom:10px;
   border-bottom: ${(props)=>props?.isLast===false? "1px solid #E8E8E8": null};
 `
 
@@ -190,6 +172,8 @@ export const CommentDetailArea=styled.div`
 export const CommentDetail=styled.div`
   label: comment-detail-area;
   color:#717171;
+  font-size: 1.3rem;
+  font-family: Noto Sans KR;
   margin-top:4px;
 
 `
@@ -202,7 +186,8 @@ export const MinorArea=styled.div`
 
 export const CommentTime=styled.div`
   label: comment-time;
-  font-size:12px;
+  font-size:1rem;
+  font-family: Noto Sans KR;
   color:#A0A0A0;
   margin-top:6px;
   
@@ -210,24 +195,27 @@ export const CommentTime=styled.div`
 
 export const ReplyButton=styled.div`
   label: reply-button;
-  font-size:12px;
+  font-size:1rem;
+  font-family: Noto Sans KR;
   color:#A0A0A0;
   margin-top:6px;
   margin-left:20px;
   cursor:pointer;
 `
 
-export const DeleteButton=styled.div`
+export const DeleteButton=styled.img`
   label: delete-button;
-  width:10%;
-  font-size: 12px;
+  width: 15px;
+  height: 15px;
   cursor:pointer;
 
 `
 
 export const DeletedComment=styled.div`
   label: deleted-comment;
-  color:#717171;
+  color:#616161;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
   margin-left:20px;
   margin-top:5px;
   margin-bottom:5px;

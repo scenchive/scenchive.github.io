@@ -29,6 +29,7 @@ export const Logo = styled.div`
   font-family: Gowun Batang;
   font-weight: bold;
   display: flex;
+  cursor: pointer;
 
   .logo__kr {
     font-size: 2.7rem;
