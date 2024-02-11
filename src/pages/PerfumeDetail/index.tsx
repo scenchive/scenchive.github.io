@@ -1,32 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Container,
-  Header,
-  HeaderLeft,
-  HeaderRight,
-  HeaderText,
-  Title,
-  Menu,
-  MenuList,
-  ContentArea,
+  Main,
   PerfumeNameKR,
   PerfumeArea,
+  PerfumeImageArea,
   PerfumeImage,
+  Bookmark,
   PerfumeInformationArea,
+  BrandArea,
   BrandNameKR,
+  BrandDetailPageIcon,
   BrandNameEN,
   PerfumeRating,
-  SeasonRatingArea,
-  SeasonRating,
-  OtherRatingArea,
   ButtonArea,
   MenuButton,
 
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import BasicInformationTab from "./BasicInformationTab";
+import Header from "../../components/Header/index";
+import Search from "../../components/Search/index";
+import StarRating from "./StarRating/index";
+import PerfumeRatingBlock from "./PerfumeRatingBlock/index";
+import BasicInformationTab from "./NoteInformationBlock";
 import ShoppingInformationTab from "./ShoppingInformationTab";
+import NoteInformationBlock from "./NoteInformationBlock";
+import ReviewBlock from "./ReviewBlock";
 
 
 interface PerfumeDetailGroup {
@@ -40,7 +40,7 @@ interface PerfumeDetailGroup {
 interface PerfumeRatingGroup {
   perfumeId: number;
   ratingAvg: number;
-  longetivityAvg: number;
+  longevityAvg: number;
   sillageAvg: number;
   seasonAvg: {
     spring: number;
@@ -52,26 +52,26 @@ interface PerfumeRatingGroup {
 
 interface PerfumeNoteGroup {
   perfumeId: number;
-  perfumeName:string;
-  brandName:string;
-  top:string[];
-  middle:string[];
-  base:string[];
+  perfumeName: string;
+  brandName: string;
+  top: string[];
+  middle: string[];
+  base: string[];
 }
 
-interface ReviewInformation{
-  name:string;
-  content:string;
-  created_at:string;
-  imageUrl:string;
+interface ReviewInformation {
+  name: string;
+  content: string;
+  created_at: string;
+  imageUrl: string;
 }
 
-interface ShoppingInformation{
-  cleanedTitle:string;
-  link:string;
-  image:string;
-  lprice:number;
-  mallName:string;
+interface ShoppingInformation {
+  cleanedTitle: string;
+  link: string;
+  image: string;
+  lprice: number;
+  mallName: string;
 }
 
 const PerfumeDetail = () => {
@@ -79,13 +79,16 @@ const PerfumeDetail = () => {
   const [myToken, setMyToken] = useState<string | null>();
   const [querySearch, setQuerySearch] = useSearchParams();
   const [perfumeId, setPerfumeId] = useState<number | null | undefined>();
-  const [perfumeName, setPerfumeName]=useState<string>();
+  const [perfumeName, setPerfumeName] = useState<string>();
   const [perfumeDetail, setPerfumeDetail] = useState<PerfumeDetailGroup>();
   const [perfumeRating, setPerfumeRating] = useState<PerfumeRatingGroup>();
+  const [ratesResArr, setRatesResArr] = useState([0, 0, 0, 0, 0]);
+  const [isBookmark, setIsBookmark] = useState<boolean>();
+  const [reveiwTotal, setReviewTotal] = useState<string>();
   const [selectedMenu, setSelectedMenu] = useState<string>("기본 정보");
-  const [perfumeNote, setPerfumeNote]=useState<PerfumeNoteGroup|null|undefined>();
-  const [reviewList, setReviewList]=useState<ReviewInformation[]>();
-  const [shoppingList, setShoppingList]=useState<ShoppingInformation[] | null | undefined>();
+  const [perfumeNote, setPerfumeNote] = useState<PerfumeNoteGroup | null | undefined>();
+  const [reviewList, setReviewList] = useState<ReviewInformation[]>();
+  const [shoppingList, setShoppingList] = useState<ShoppingInformation[] | null | undefined>();
 
   const goToHome = () => {
     navigate("/")
@@ -96,6 +99,7 @@ const PerfumeDetail = () => {
   }
 
 
+  /* 토큰 유효성 검사 호출 api */
   useEffect(() => {
     let perfumeIdProps: null | string | number = querySearch.get("perfume")
     if (perfumeIdProps !== null) {
@@ -132,6 +136,39 @@ const PerfumeDetail = () => {
     }
   };
 
+  /* 향수 북마크 유무 확인 api */
+  const getBookmark = async () => {
+    if (perfumeId && myToken) {
+      await axios.get(`/checkmarked?perfumeId=` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+        .then((res) => {
+          if (res.data === "이미 북마크한 향수입니다.") {
+            setIsBookmark(true);
+          } else if (res.data === "북마크한 향수가 아닙니다.") {
+            setIsBookmark(false);
+          }
+        });
+    }
+  };
+
+  /* 향수 북마크 설정/삭제 api */
+  const handleBookmark = () => {
+    if (perfumeId && myToken) {
+      if (isBookmark === false) {
+        axios.post(`/bookmark?perfumeId=` + perfumeId, {}, { headers: { Authorization: `Bearer ${myToken}` } })
+          .then((res) => {
+            setIsBookmark(true);
+
+          });
+      } else {
+        axios.delete(`/bookmark?perfumeId=` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+          .then((res) => {
+            setIsBookmark(false);
+          });
+      }
+    }
+  }
+
+
   /* 향수 전체평점, 계절 평점, 기타 평점 호출 api */
   const getPerfumeRating = async () => {
     if (perfumeId && myToken) {
@@ -141,6 +178,23 @@ const PerfumeDetail = () => {
         });
     }
   }
+
+  /* 향수 전체평점 기반 별점 계산 */
+  const calcStarRates = () => {
+    if (perfumeRating?.ratingAvg !== undefined) {
+      let tempStarRatesArr = [0, 0, 0, 0, 0];
+      let starVerScore = (perfumeRating?.ratingAvg * 20 * 90) / 100;
+      let idx = 0;
+      while (starVerScore > 18) {
+        tempStarRatesArr[idx] = 18;
+        idx += 1;
+        starVerScore -= 18;
+      }
+      tempStarRatesArr[idx] = starVerScore;
+      setRatesResArr(tempStarRatesArr)
+
+    }
+  };
 
   /* 향수 노트 정보 호출 api, BasicInformationTab 컴포넌트에서 이용*/
   const getPerfumeNote = async () => {
@@ -157,7 +211,9 @@ const PerfumeDetail = () => {
     if (perfumeId && myToken) {
       await axios.get(`/review/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
+          console.log('res', res?.data)
           setReviewList(res?.data)
+          setReviewTotal(res.data.length)
         });
     }
   }
@@ -165,7 +221,7 @@ const PerfumeDetail = () => {
   /* 구매 정보 호출 api */
   const getShopping = async () => {
     if (perfumeName && myToken) {
-      await axios.get(`/product/search?query=`+perfumeName, { headers: { Authorization: `Bearer ${myToken}` } })
+      await axios.get(`/product/search?query=` + perfumeName, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
           setShoppingList(res?.data)
         });
@@ -174,82 +230,58 @@ const PerfumeDetail = () => {
 
   useEffect(() => {
     getPerfumeDetail();
+    getBookmark();
     getPerfumeRating();
     getPerfumeNote();
     getReview();
   }, [myToken])
 
-  useEffect(()=>{
+  useEffect(() => {
     getShopping();
-  },[perfumeName])
+  }, [perfumeName])
+
+  useEffect(() => {
+    if (perfumeRating?.ratingAvg !== undefined) {
+      calcStarRates();
+    }
+  }, [perfumeRating])
 
 
   return (<>
 
     <Container>
-      <Header>
-        <HeaderLeft>
-          <Title>
-            <div className="title__kr">센카이브</div>
-            <div className="title__en">Scenchive</div>
-          </Title>
-          <Menu>
-            <MenuList>마이페이지</MenuList>
-            <MenuList>필터 추천</MenuList>
-            <MenuList>게시판</MenuList>
-          </Menu>
-        </HeaderLeft>
-        <HeaderRight>
-          {!myToken ? (
-            <>
-              <HeaderText onClick={() => navigate("/login")}>로그인</HeaderText>
-              <HeaderText>|</HeaderText>
-              <HeaderText onClick={() => navigate("/signupstep1")}>
-                회원가입
-              </HeaderText>
-            </>
-          ) : (
-            <img src="/assets/icon/icon_notice.svg" />
-          )}
-        </HeaderRight>
-      </Header>
-      <ContentArea>
-        <PerfumeNameKR>{perfumeDetail?.perfumeName}</PerfumeNameKR>
+      <Header />
+      <Search />
+
+      <Main>
         <PerfumeArea>
-          <PerfumeImage src={perfumeDetail?.perfumeImage ? perfumeDetail?.perfumeImage : "/assets/icon/icon-perfume-pic.png"} />
+          <PerfumeImageArea>
+            <PerfumeImage src={perfumeDetail?.perfumeImage ? perfumeDetail?.perfumeImage : "/assets/icon/icon-perfume-pic.png"} />
+            <Bookmark onClick={handleBookmark} src={isBookmark === true ? "/assets/icon/icon_bookmark_Y.svg" : "/assets/icon/icon_bookmark_N.svg"} />
+          </PerfumeImageArea>
 
           <PerfumeInformationArea>
-            <BrandNameKR>
-              {perfumeDetail?.brandName_kr}
-            </BrandNameKR>
-            <BrandNameEN>
-              {perfumeDetail?.brandName}
-            </BrandNameEN>
+            <BrandArea>
+              <BrandNameKR>
+                {perfumeDetail?.brandName_kr} ( {perfumeDetail?.brandName})
+              </BrandNameKR>
+              <BrandDetailPageIcon src={"/assets/icon/icon_brand_page.svg"} />
+            </BrandArea>
+            <PerfumeNameKR>{perfumeDetail?.perfumeName}</PerfumeNameKR>
+
             <PerfumeRating>
-              {perfumeRating?.ratingAvg}
+              <StarRating ratesResArr={ratesResArr} /> {perfumeRating?.ratingAvg} ({reveiwTotal}건)
             </PerfumeRating>
-            <SeasonRatingArea>
-              <SeasonRating>{perfumeRating?.seasonAvg?.spring}%</SeasonRating>
-              <SeasonRating>{perfumeRating?.seasonAvg?.summer}%</SeasonRating>
-              <SeasonRating>{perfumeRating?.seasonAvg?.fall}%</SeasonRating>
-              <SeasonRating>{perfumeRating?.seasonAvg?.winter}%</SeasonRating>
-            </SeasonRatingArea>
-            <OtherRatingArea>
-              {perfumeRating?.longetivityAvg}
-              {perfumeRating?.sillageAvg}
-            </OtherRatingArea>
+
+            <PerfumeRatingBlock perfumeRating={perfumeRating} />
           </PerfumeInformationArea>
         </PerfumeArea>
-        <ButtonArea>
-          <MenuButton onClick={() => setSelectedMenu("기본 정보")} style={{ backgroundColor: selectedMenu === "기본 정보" ? "#A281FF" : "#E6E4FF" }}>기본 정보</MenuButton>
-          <MenuButton onClick={() => setSelectedMenu("구매 정보")} style={{ backgroundColor: selectedMenu === "구매 정보" ? "#A281FF" : "#E6E4FF" }}>구매 정보</MenuButton>
-        </ButtonArea>
-        {
-          selectedMenu==="기본 정보"? 
-          <BasicInformationTab PerfumeNote={perfumeNote} myToken={myToken} reviewList={reviewList}/> 
-          : <ShoppingInformationTab shoppingList={shoppingList}/>
-        }
-      </ContentArea>
+        <NoteInformationBlock PerfumeNote={perfumeNote} myToken={myToken} />
+
+        <ShoppingInformationTab shoppingList={shoppingList} />
+
+        <ReviewBlock PerfumeNote={perfumeNote} myToken={myToken} reviewList={reviewList} />
+      </Main>
     </Container>
   </>
   );

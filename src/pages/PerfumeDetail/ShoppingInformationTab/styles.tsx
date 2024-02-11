@@ -12,40 +12,45 @@ export const ShoppingInformationTabArea = styled.div`
 
 `;
 
-export const ShoppingTabTitle=styled.div`
+export const ShoppingTabTitle = styled.div`
   label:shopping-tab-title;
   width:fit-content;
   display:flex;
-  font-size:20px;
-  color:#B592FF;
+  font-size:2rem;
+  font-family: Noto Sans KR;
+  color:#4C4538;
+  margin-top: 50px;
   margin-right:auto;
   margin-bottom:20px;
 `
 
-export const WarningBox=styled.div`
+export const WarningBox = styled.div`
   label: warning-box;
   display:flex;
   flex-direction:column;
-  border:1px solid #D6B5FF;
+  border:1px solid #D67070;
   border-radius:10px;
   padding: 20px 25px;
-  margin-bottom:40px;
+  margin-bottom:20px;
 
 `
 
-export const WarningTitle=styled.div`
+export const WarningTitle = styled.div`
   label: warning-title;
-  font-size:18px;
+  font-size:1.8rem;
+  font-family: Noto Sans KR;
   color:#242424;
   margin-bottom:20px;
 `
 
-export const WarningContent=styled.div`
+export const WarningContent = styled.div`
   label: warning-content;
+  font-family: Noto Sans KR;
+  font-size: 1.5rem;
   text-align:left;
 `
 
-export const ShoppingInformationRow=styled.div`
+export const ShoppingInformationRow = styled.div`
   label: shopping-information-row;
   width:100%;
   display:flex;
@@ -55,7 +60,7 @@ export const ShoppingInformationRow=styled.div`
   cursor:pointer;
 `
 
-export const PerfumeImage=styled.img`
+export const PerfumeImage = styled.img`
   label: perfume-image;
   width:50px;
   height:50px;
@@ -63,26 +68,26 @@ export const PerfumeImage=styled.img`
   margin-right:10px;
 `
 
-export const ShoppingInformationArea=styled.div`
+export const ShoppingInformationArea = styled.div`
   label:shopping-information-area;
   display:flex;
   flex-direction:column;
   align-items:start;
 `
 
-export const ProductName=styled.div`
+export const ProductName = styled.div`
   label: product-name;
   font-size:15px;
   text-align:start;
 
 `
 
-export const ShoppingMallName=styled.div`
+export const ShoppingMallName = styled.div`
   label: shopping-mall-name;
   font-size:15px;
 `
 
-export const Price=styled.div`
+export const Price = styled.div`
   label:price;
 
 `

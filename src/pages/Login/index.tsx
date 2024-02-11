@@ -27,13 +27,11 @@ const Login = () => {
     navigate(-1);
   };
   const Login = async () => {
-
     if (email.length > 0 && password.length > 0) {
       const data = {
         email: email,
         password: password,
       }
-      console.log('data', data)
       await axios.post('/login', data)
         .then((res) => {
           if (res.data.token) {
@@ -43,6 +41,10 @@ const Login = () => {
           }
 
         })
+        .catch((err)=>{
+          console.log('err', err)
+        })
+        
     } else {
       alert("모든 항목을 입력해주세요.")
     }

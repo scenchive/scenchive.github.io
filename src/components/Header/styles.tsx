@@ -29,6 +29,7 @@ export const Logo = styled.div`
   font-family: Gowun Batang;
   font-weight: bold;
   display: flex;
+  cursor: pointer;
 
   .logo__kr {
     font-size: 2.7rem;
@@ -86,6 +87,7 @@ export const Menu = styled.div`
 export const MenuItem = styled.div`
   padding: 0 10px;
   font-size: 1.7rem;
+  cursor: pointer;
 `;
 
 export const MenuSmall = styled.div`

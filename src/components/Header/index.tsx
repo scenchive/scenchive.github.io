@@ -23,7 +23,7 @@ const Header = () => {
   const menuItems = [
     { name: "마이페이지", url: "", img: "/assets/icon/icon_mypage.svg" },
     { name: "필터 추천", url: "", img: "/assets/icon/icon_filter.svg" },
-    { name: "커뮤니티", url: "", img: "/assets/icon/icon_board.svg" },
+    { name: "커뮤니티", url: "/community", img: "/assets/icon/icon_board.svg" },
   ];
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Header = () => {
       </Logo>
       <Menu>
         {menuItems.map((item) => {
-          return <MenuItem>{item.name}</MenuItem>;
+          return <MenuItem  onClick={() => navigate(item?.url)}>{item.name}</MenuItem>;
         })}
       </Menu>
       {toggle && (
