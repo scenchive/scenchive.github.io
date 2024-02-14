@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Main,
@@ -12,7 +12,6 @@ import {
   Options,
   PerfumeBox,
   ColorPick,
-  MainBottomContentMobile,
   SlickSlider,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
@@ -40,45 +39,29 @@ const Home = () => {
   const [perfumes, setPerfumes] = useState<Perfumes[]>([]);
   const [perfumeIndex, setPerfumeIndex] = useState(0);
   const [randomPerfumes, setRandomPerfumes] = useState<Perfumes[]>([]);
-  const [imageIndex, setImageIndex] = useState([0, 0, 0]);
-  const [slideIndex, setSlideIndex] = useState(0);
+
   const sliderSettings = {
     dots: false,
     infinite: true,
-    slidesToShow: 1,
+    slidesToShow: 3,
+    slidesToScroll: 1,
     autoplay: true,
     speed: 500,
     autoplaySpeed: 3000,
+    initialSlide: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   useEffect(() => {
     getToken();
-
-    const interval = setInterval(() => {
-      setImageIndex((prev) =>
-        prev[0] === 0 ? [3, prev[1], prev[2]] : [0, prev[1], prev[2]]
-      );
-
-      setTimeout(
-        () =>
-          setImageIndex((prev) =>
-            prev[1] === 0 ? [prev[0], 3, prev[2]] : [prev[0], 0, prev[2]]
-          ),
-        1000
-      );
-
-      setTimeout(
-        () =>
-          setImageIndex((prev) =>
-            prev[2] === 0 ? [prev[0], prev[1], 3] : [prev[0], prev[1], 0]
-          ),
-        2000
-      );
-    }, 6000);
-
-    return () => {
-      clearInterval(interval);
-    };
   }, []);
 
   useEffect(() => {
@@ -203,30 +186,6 @@ const Home = () => {
               <span className="main-top__text--big">”</span>
             </MainTop>
             <MainBottom>
-              <MainBottomContent>
-                {[0, 1, 2].map((el) => (
-                  <PerfumeBox index={el}>
-                    <img
-                      src={randomPerfumes[el + imageIndex[el]]?.perfumeImage}
-                    />
-                    <div className="perfume-box__text">
-                      {randomPerfumes[el + imageIndex[el]]?.perfumeName}
-                    </div>
-                    <Color
-                      src={`https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${encodeURIComponent(
-                        randomPerfumes[el + imageIndex[el]]?.perfumeImage
-                      )}`}
-                      crossOrigin="anonymous"
-                      format={"hex"}
-                    >
-                      {({ data, loading }) => {
-                        if (loading) return <div>{loading}</div>;
-                        return <ColorPick index={el} color={data} />;
-                      }}
-                    </Color>
-                  </PerfumeBox>
-                ))}
-              </MainBottomContent>
               <SlickSlider {...sliderSettings}>
                 {randomPerfumes.map((el, index) => (
                   <PerfumeBox index={index} style={{ display: "flex" }}>

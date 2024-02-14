@@ -1,4 +1,3 @@
-import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -7,29 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 const breakpoint = "768px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 const colors = ["#F5D0CD", "#E3A6A1", "#D67070"];
-const fadeInOut = keyframes`
-  0%{
-    opacity: 0;
-  }
-  50%{
-    opacity: 1;
-  }
-  100%{
-    opacity: 0;
-  }
-`;
-const slide = keyframes`
-  0%{
-    opacity: 0;
-  }
-  50%{
-    opacity: 1;
-  }
-  100%{
-    opacity: 0;
-    transform: translateX(50px);
-  }
-`;
+
 export const Container = styled.div`
   label: container;
   width: 100%;
@@ -173,25 +150,13 @@ export const MainBottomContent = styled.div`
   }
 `;
 
-export const MainBottomContentMobile = styled.div`
-  label: main-bottom-content-mobile;
-  display: none;
-  ${mediaQuery} {
-    display: block;
-  }
-`;
-
 export const SlickSlider = styled(Slider)`
   label: slick-slider;
-  width: 200px;
-  display: none;
+  width: 600px;
 
   ${mediaQuery} {
     display: block;
-
-    .slick-current {
-      opacity: 1;
-    }
+    width: 200px;
   }
 `;
 
@@ -241,13 +206,6 @@ export const PerfumeBox = styled.div<{ index: number }>`
   label: prefume-box;
   width: 200px;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  opacity: 0;
-  animation: ${fadeInOut} 6s ${(props) => `${0 + props.index}s`} ease-in-out
-    infinite;
 
   img {
     width: 180px;
@@ -264,16 +222,10 @@ export const PerfumeBox = styled.div<{ index: number }>`
     font-size: 1.5rem;
   }
 
-  div {
+  & > div {
+    width: 100%;
     display: flex;
     justify-content: center;
-  }
-  ${mediaQuery} {
-    opacity: 100;
-    animation: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 `;
 
