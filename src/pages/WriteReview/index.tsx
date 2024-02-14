@@ -1,16 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Container,
-  Header,
-  HeaderLeft,
-  HeaderRight,
-  HeaderText,
-  Title,
-  Menu,
-  MenuList,
-  ContentArea,
-  PerfumeArea,
+  Main,
+  PerfumeInformationArea,
   PerfumeImage,
+  PerfumeInformation,
   BrandNameKR,
   PageTitle,
   PerfumeName,
@@ -31,7 +25,9 @@ import {
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import Header from "../../components/Header/index";
 import KeywordModal from "./KeywordModal";
+import Search from "../../components/Search";
 
 
 
@@ -155,7 +151,7 @@ const WriteReview = () => {
       console.log('dataaa')
       console.log(data)
       if (myToken && myToken.length > 0) {
-        axios.post('/review/', data,{ headers: { 'Authorization': `Bearer ${myToken}` } })
+        axios.post('/review/', data, { headers: { 'Authorization': `Bearer ${myToken}` } })
           .then((res) => {
             console.log('res', res)
             goToPerfumeDetail();
@@ -202,39 +198,19 @@ const WriteReview = () => {
       />
       : null}
     <Container>
-      <Header>
-        <HeaderLeft>
-          <Title>
-            <div className="title__kr">센카이브</div>
-            <div className="title__en">Scenchive</div>
-          </Title>
-          <Menu>
-            <MenuList>마이페이지</MenuList>
-            <MenuList>필터 추천</MenuList>
-            <MenuList>게시판</MenuList>
-          </Menu>
-        </HeaderLeft>
-        <HeaderRight>
-          {!myToken ? (
-            <>
-              <HeaderText onClick={() => navigate("/login")}>로그인</HeaderText>
-              <HeaderText>|</HeaderText>
-              <HeaderText onClick={() => navigate("/signupstep1")}>
-                회원가입
-              </HeaderText>
-            </>
-          ) : (
-            <img src="/assets/icon/icon_notice.svg" />
-          )}
-        </HeaderRight>
-      </Header>
-      <ContentArea>
+      <Header />
+      <Search />
+
+      <Main>
         <PageTitle>후기 작성</PageTitle>
-        <PerfumeArea>
+        <PerfumeInformationArea>
           <PerfumeImage src={perfumeDetail?.perfumeImage} />
-          <BrandNameKR>{perfumeDetail?.brandName_kr}</BrandNameKR>
-          <PerfumeName>{perfumeDetail?.perfumeName}</PerfumeName>
-        </PerfumeArea>
+          <PerfumeInformation>
+            <BrandNameKR>{perfumeDetail?.brandName_kr}</BrandNameKR>
+            <PerfumeName>{perfumeDetail?.perfumeName}</PerfumeName>
+          </PerfumeInformation>
+
+        </PerfumeInformationArea>
 
         <KeywordArea>
           <AreaTitle>향수 키워드</AreaTitle>
@@ -249,53 +225,53 @@ const WriteReview = () => {
           <QuestionRow>
             <Question>마음에 드는 향수였나요?</Question>
             <AnswerRow>
-              <Answer onClick={() => setRating(5)} style={{ backgroundColor: rating === 5 ? "blue" : "white" }}>5점</Answer>
-              <Answer onClick={() => setRating(4)} style={{ backgroundColor: rating === 4 ? "blue" : "white" }}>4점</Answer>
-              <Answer onClick={() => setRating(3)} style={{ backgroundColor: rating === 3 ? "blue" : "white" }}>3점</Answer>
-              <Answer onClick={() => setRating(2)} style={{ backgroundColor: rating === 4 ? "blue" : "white" }}>2점</Answer>
-              <Answer onClick={() => setRating(1)} style={{ backgroundColor: rating === 1 ? "blue" : "white" }}>1점</Answer>
+              <Answer onClick={() => setRating(5)} style={{ backgroundColor: rating === 5 ? "#E3A6A1" : "white", color: rating === 5 ? "#FFFFFF" : "#B3B3B3" }}>5점</Answer>
+              <Answer onClick={() => setRating(4)} style={{ backgroundColor: rating === 4 ? "#E3A6A1" : "white", color: rating === 4 ? "#FFFFFF" : "#B3B3B3" }}>4점</Answer>
+              <Answer onClick={() => setRating(3)} style={{ backgroundColor: rating === 3 ? "#E3A6A1" : "white", color: rating === 3 ? "#FFFFFF" : "#B3B3B3" }}>3점</Answer>
+              <Answer onClick={() => setRating(2)} style={{ backgroundColor: rating === 4 ? "#E3A6A1" : "white", color: rating === 2 ? "#FFFFFF" : "#B3B3B3" }}>2점</Answer>
+              <Answer onClick={() => setRating(1)} style={{ backgroundColor: rating === 1 ? "#E3A6A1" : "white", color: rating === 1 ? "#FFFFFF" : "#B3B3B3" }}>1점</Answer>
 
             </AnswerRow>
           </QuestionRow>
           <QuestionRow>
             <Question>지속력은 어느 정도인가요?</Question>
             <AnswerRow>
-              <Answer onClick={() => setLongevity(1)} style={{ backgroundColor: longevity === 1 ? "blue" : "white" }}>1h</Answer>
-              <Answer onClick={() => setLongevity(2)} style={{ backgroundColor: longevity === 2 ? "blue" : "white" }}>2h</Answer>
-              <Answer onClick={() => setLongevity(3)} style={{ backgroundColor: longevity === 3 ? "blue" : "white" }}>3h</Answer>
-              <Answer onClick={() => setLongevity(4)} style={{ backgroundColor: longevity === 4 ? "blue" : "white" }}>4h</Answer>
-              <Answer onClick={() => setLongevity(5)} style={{ backgroundColor: longevity === 5 ? "blue" : "white" }}>5h</Answer>
+              <Answer onClick={() => setLongevity(1)} style={{ backgroundColor: longevity === 1 ? "#E3A6A1" : "white" , color: longevity === 1 ? "#FFFFFF" : "#B3B3B3"}}>1h</Answer>
+              <Answer onClick={() => setLongevity(2)} style={{ backgroundColor: longevity === 2 ? "#E3A6A1" : "white" , color: longevity === 2 ? "#FFFFFF" : "#B3B3B3"}}>2h</Answer>
+              <Answer onClick={() => setLongevity(3)} style={{ backgroundColor: longevity === 3 ? "#E3A6A1" : "white" , color: longevity === 3 ? "#FFFFFF" : "#B3B3B3"}}>3h</Answer>
+              <Answer onClick={() => setLongevity(4)} style={{ backgroundColor: longevity === 4 ? "#E3A6A1" : "white" , color: longevity === 4 ? "#FFFFFF" : "#B3B3B3"}}>4h</Answer>
+              <Answer onClick={() => setLongevity(5)} style={{ backgroundColor: longevity === 5 ? "#E3A6A1" : "white" , color: longevity === 5 ? "#FFFFFF" : "#B3B3B3"}}>5h</Answer>
             </AnswerRow>
           </QuestionRow>
           <QuestionRow>
             <Question>확산력은 어느 정도인가요?</Question>
             <AnswerRow>
-              <Answer onClick={() => setSillage(1)} style={{ backgroundColor: sillage === 1 ? "blue" : "white" }}>1</Answer>
-              <Answer onClick={() => setSillage(2)} style={{ backgroundColor: sillage === 2 ? "blue" : "white" }}>2</Answer>
-              <Answer onClick={() => setSillage(3)} style={{ backgroundColor: sillage === 3 ? "blue" : "white" }}>3</Answer>
-              <Answer onClick={() => setSillage(4)} style={{ backgroundColor: sillage === 4 ? "blue" : "white" }}>4</Answer>
-              <Answer onClick={() => setSillage(5)} style={{ backgroundColor: sillage === 5 ? "blue" : "white" }}>5</Answer>
+              <Answer onClick={() => setSillage(1)} style={{ backgroundColor: sillage === 1 ? "#E3A6A1" : "white" , color: sillage === 1 ? "#FFFFFF" : "#B3B3B3"}}>1</Answer>
+              <Answer onClick={() => setSillage(2)} style={{ backgroundColor: sillage === 2 ? "#E3A6A1" : "white", color: sillage === 2 ? "#FFFFFF" : "#B3B3B3" }}>2</Answer>
+              <Answer onClick={() => setSillage(3)} style={{ backgroundColor: sillage === 3 ? "#E3A6A1" : "white", color: sillage === 3 ? "#FFFFFF" : "#B3B3B3" }}>3</Answer>
+              <Answer onClick={() => setSillage(4)} style={{ backgroundColor: sillage === 4 ? "#E3A6A1" : "white", color: sillage === 4 ? "#FFFFFF" : "#B3B3B3" }}>4</Answer>
+              <Answer onClick={() => setSillage(5)} style={{ backgroundColor: sillage === 5 ? "#E3A6A1" : "white", color: sillage === 5 ? "#FFFFFF" : "#B3B3B3" }}>5</Answer>
 
             </AnswerRow>
           </QuestionRow>
           <QuestionRow>
             <Question>어떤 계절에 어울리는 향수인가요?</Question>
             <AnswerRow>
-              <Answer onClick={() => setSeason(36)} style={{ backgroundColor: season === 36 ? "blue" : "white" }}>봄</Answer>
-              <Answer onClick={() => setSeason(37)} style={{ backgroundColor: season === 37 ? "blue" : "white" }}>여름</Answer>
-              <Answer onClick={() => setSeason(38)} style={{ backgroundColor: season === 38 ? "blue" : "white" }}>가을</Answer>
-              <Answer onClick={() => setSeason(39)} style={{ backgroundColor: season === 39 ? "blue" : "white" }}>겨울</Answer>
+              <Answer onClick={() => setSeason(36)} style={{ backgroundColor: season === 36 ? "#E3A6A1" : "white" , color: season === 36 ? "#FFFFFF" : "#B3B3B3"}}>봄</Answer>
+              <Answer onClick={() => setSeason(37)} style={{ backgroundColor: season === 37 ? "#E3A6A1" : "white", color: season === 37 ? "#FFFFFF" : "#B3B3B3" }}>여름</Answer>
+              <Answer onClick={() => setSeason(38)} style={{ backgroundColor: season === 38 ? "#E3A6A1" : "white", color: season === 38 ? "#FFFFFF" : "#B3B3B3" }}>가을</Answer>
+              <Answer onClick={() => setSeason(39)} style={{ backgroundColor: season === 39 ? "#E3A6A1" : "white" , color: season === 39 ? "#FFFFFF" : "#B3B3B3"}}>겨울</Answer>
             </AnswerRow>
           </QuestionRow>
 
           <DetailReviewRow>
-            <Question>상세한 시향 후기를 작성해주세요!</Question>
+            <Question style={{width:"fit-content", marginRight:"auto", marginLeft:"0px"}}>상세한 시향 후기를 작성해주세요!</Question>
             <DetailReviewAnswer onChange={(e: any) => setContent(e?.target?.value)} placeholder="어떤 착장과 잘 어울리는지, 어떤 이미지가 연상되는지 알려주세요!" />
           </DetailReviewRow>
         </ReviewArea>
         <UploadButton onClick={() => uploadReview()}>등록</UploadButton>
 
-      </ContentArea>
+      </Main>
     </Container>
   </>
   );

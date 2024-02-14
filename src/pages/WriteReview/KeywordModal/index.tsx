@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   ModalBackgroundArea,
   ModalArea,
+  ModalTitle,
   SectionArea,
   KeywordTitle,
   KeywordArea,
   KeywordCell,
-  ButtonArea,
   ModifyButton,
   CancelButton,
 
@@ -83,13 +83,16 @@ const KeywordModal = (
       <ModalBackgroundArea isModalOpen={props.isModalOpen} ref={props.ModalBackground}>
       </ModalBackgroundArea>
       <ModalArea isModalOpen={props.isModalOpen} ref={props.ModalBackground}>
+          <ModalTitle>향수 키워드 추가</ModalTitle>
+          <CancelButton onClick={() => cancelKeyword()} src={"/assets/icon/icon_modal_x.svg"} />
 
         <SectionArea>
           <KeywordTitle>계열</KeywordTitle>
           <KeywordArea>
             {props.fragranceWheelKeywords?.map((el) =>
               <KeywordCell key={el.id} style={{
-                backgroundColor: (newkeywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+                backgroundColor: (newkeywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#D67070" : "#F5D0CD",
+               color: (newkeywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
               }}
                 onClick={() => addOrDeleteKeyword(el)}
               >
@@ -105,7 +108,8 @@ const KeywordModal = (
           <KeywordArea>
             {props.moodKeywords?.map((el) =>
               <KeywordCell key={el.id} style={{
-                backgroundColor: (newkeywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+                backgroundColor: (newkeywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#D67070" : "#F5D0CD",
+                color: (newkeywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
               }}
                 onClick={() => addOrDeleteKeyword(el)}
               >
@@ -121,7 +125,8 @@ const KeywordModal = (
           <KeywordArea>
             {props.placeKeywords?.map((el) =>
               <KeywordCell key={el.id} style={{
-                backgroundColor: (newkeywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+                backgroundColor: (newkeywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#D67070" : "#F5D0CD",
+                color: (newkeywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
               }}
                 onClick={() => addOrDeleteKeyword(el)}
               >
@@ -131,10 +136,7 @@ const KeywordModal = (
           </KeywordArea>
         </SectionArea>
 
-        <ButtonArea>
-          <ModifyButton onClick={() => changeKeyword(newkeywordTagsArray)}>확인</ModifyButton>
-          <CancelButton onClick={() => cancelKeyword()}>취소</CancelButton>
-        </ButtonArea>
+          <ModifyButton onClick={() => changeKeyword(newkeywordTagsArray)}>추가하기</ModifyButton>
       </ModalArea>
     </div>
   );

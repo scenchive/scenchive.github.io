@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
   label:container;
@@ -9,94 +10,41 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  min-width: 992px;
   align-items:center; 
 `;
 
-export const Header = styled.div`
-  label:header;
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 50px;
-  box-sizing: border-box;
-  color: #bf8dff;
-  font-family: NanumSquareRound;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  box-shadow: 0px 5px 5px #f6f2ff;
-`;
-
-export const HeaderLeft = styled.div`
-  width: fit-content;
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-`;
-
-export const Title = styled.div`
-  width: fit-content;
-  display: flex;
-  align-items: end;
-  .title__kr {
-    font-size: 30px;
-    margin-right: 10px;
-  }
-  .title__en {
-    font-size: 15px;
-    padding-bottom: 5px;
-  }
-`;
-
-export const Menu = styled.div`
-  display: flex;
-  margin-left: 50px;
-  font-size: 17px;
-`;
-
-export const MenuList = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 10px;
-  line-height: 49px;
-`;
-
-export const HeaderRight = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const HeaderText = styled.div`
-  padding: 0 5px;
-  font-size: 15px;
-`;
-
-export const ContentArea=styled.div`
-  label: content-area;
+export const Main=styled.div`
+  label: main;
   width:60%;
   margin-top:80px;
   display:flex;
   flex-direction:column;
 
+  ${mediaQuery} {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
 `
 
 export const MenuArea=styled.div`
   label: menu-area;
+  width: 100%;
+  height: 3.1rem;
   display:flex;
   flex-direction:row;
-  margin-top:150px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid #D67070;
 `
 
 export const CommunityMenu=styled.div`
   label: community-menu;
   width:fit-content;
+  height: auto;
+  font-size: 1.8rem;
+  align-self: self-end;
   margin-left:10px;
-  margin-rigth:10px;
+  margin-right:10px;
   cursor:pointer;
 `
 
@@ -110,32 +58,50 @@ export const CommunityRow=styled.div`
   label: community-row;
   display:flex;
   flex-direction:row;
+  border-bottom: 1px solid #D5D5D5;
+  padding-top: 12px;
+  padding-bottom: 12px;
   cursor:pointer;
+
 `
 
 export const RowNumber=styled.div`
   label: row-number;
   width: 10%;
+  color: #616161;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
 `
 
 export const RowMenu=styled.div`
   label: row-menu;
   width: 15%;
+  color: #616161;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
 `
 
 export const RowTitle=styled.div`
   label: row-title;
   width:75%;
+  color: #616161;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
 `
 
 export const WriteButton=styled.div`
   label: write-button;
   width:fit-content;
-  margin-top:40px;
+  height: min-content;
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  font-family: Noto Sans KR;
+  line-height:1.3rem;
   margin-left:auto;
-  padding: 5px 10px;
-  background-color:#B592FF;
-  border-radius:20px;
-  color:#FFFFFF;
+  padding: 6px 16px;
+  background-color:#D67070;
+  border: 1px solid #EFC6C6;
+  border-radius:2px;
+  margin-top: auto;
   cursor:pointer;
 `

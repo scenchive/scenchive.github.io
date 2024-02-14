@@ -1,15 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Container,
-  Header,
-  HeaderLeft,
-  HeaderRight,
-  HeaderText,
-  Title,
-  Menu,
-  MenuList,
-  ContentArea,
+  Main,
   BoardMenu,
+  BoardMenuGo,
   BoardTitle,
   BoardInfoArea,
   UserName,
@@ -31,6 +25,8 @@ import {
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import Header from "../../components/Header";
+import Search from "../../components/Search";
 
 interface BoardDetail {
   boardtype_name: string;
@@ -71,11 +67,6 @@ const CommunityDetail = () => {
   const [userInformation, setUserInformation] = useState<User>();
   const [isReplyOn, setIsReplyOn] = useState<number | null>();
 
-
-  const goToHome = () => {
-    navigate("/")
-  }
-
   const goToLogin = () => {
     navigate("/login")
   }
@@ -94,7 +85,6 @@ const CommunityDetail = () => {
     }
 
   }
-
 
   // 게시글 get api
   const getBoard = () => {
@@ -144,9 +134,9 @@ const CommunityDetail = () => {
 
   // 대댓글 post api
   const writeReplyComment = () => {
-    if (isReplyOn&& replyComment) {
+    if (isReplyOn && replyComment) {
       if (myToken) {
-        axios.post('/comments/board/' + boardId+'/reply/'+isReplyOn, { content: replyComment }, { headers: { 'Authorization': `Bearer ${myToken}` } })
+        axios.post('/comments/board/' + boardId + '/reply/' + isReplyOn, { content: replyComment }, { headers: { 'Authorization': `Bearer ${myToken}` } })
           .then((res) => {
             alert('대댓글이 등록되었습니다.')
             setReplyComment('');
@@ -161,14 +151,14 @@ const CommunityDetail = () => {
     }
   }
 
-
   const handleOnKeyPress = (e: { key: string }) => {
     if (e?.key === 'Enter') {
       writeComment();
     }
   }
-  const handleOnKeyPressReply=(e:{key:string})=>{
-    if (e?.key==='Enter'){
+
+  const handleOnKeyPressReply = (e: { key: string }) => {
+    if (e?.key === 'Enter') {
       writeReplyComment();
     }
   }
@@ -177,17 +167,22 @@ const CommunityDetail = () => {
   const deleteComment = (commentId: number) => {
     if (commentId) {
       if (myToken) {
-        axios.delete('/comments/' + commentId, { headers: { 'Authorization': `Bearer ${myToken}` } })
-          .then((res) => {
-            alert('댓글이 삭제되었습니다.')
-            getComment();
-          })
-          .catch((err) => {
-            console.log('err', err)
-          })
+        if (window.confirm("정말 삭제하시겠습니까")) {
+          axios.delete('/comments/' + commentId, { headers: { 'Authorization': `Bearer ${myToken}` } })
+            .then((res) => {
+              alert('댓글이 삭제되었습니다.')
+              getComment();
+            })
+            .catch((err) => {
+              console.log('err', err)
+              alert('댓글이 삭제되지 않았습니다. 다시 시도해주세요')
+
+            })
+        } else {
+        }
+
       }
-    } else {
-      alert('댓글이 삭제되지 않았습니다. 다시 시도해주세요')
+
     }
   }
 
@@ -212,23 +207,23 @@ const CommunityDetail = () => {
                 <CommentDetail>{commentEach?.content}</CommentDetail>
                 <MinorArea>
                   <CommentTime>{commentEach?.createdAt}</CommentTime>
-                  <ReplyButton onClick={() => setIsReplyOn(isReplyOn !== commentEach?.id ? commentEach?.id : null)}>답글 작성하기</ReplyButton>
+                  <ReplyButton onClick={() => setIsReplyOn(isReplyOn !== commentEach?.id ? commentEach?.id : null)}>답글 쓰기</ReplyButton>
                 </MinorArea>
 
               </CommentDetailArea>
               {commentEach?.memberId === userInformation?.userId ?
-                <DeleteButton onClick={() => deleteComment(commentEach?.id)}>삭제하기</DeleteButton>
+                <DeleteButton onClick={() => deleteComment(commentEach?.id)} src="/assets/icon/icon_delete_comment_x.svg" />
                 : null}
             </div>
 
             {isReplyOn === commentEach?.id
-              ? <WriteCommentArea style={{ marginLeft: '30px', marginBottom: "30px" }}>
+              ? <WriteCommentArea style={{ width: "calc(100% - 30px)", marginLeft: '30px', marginTop: "20px", marginBottom: "10px" }}>
                 <CommentInput
-                  placeholder="댓글을 입력해 주세요."
+                  placeholder="답글을 입력해 주세요."
                   onChange={(e) => setReplyComment(e.target.value)}
                   onKeyPress={(e) => handleOnKeyPress}
                   value={replyComment}
-                  style={{ marginTop: "30px" }}
+
                 />
                 <CommentButton onClick={() => writeReplyComment()}>등록</CommentButton>
               </WriteCommentArea>
@@ -254,11 +249,11 @@ const CommunityDetail = () => {
                   <CommentDetail>{el2?.content}</CommentDetail>
                   <MinorArea>
                     <CommentTime>{el2?.createdAt}</CommentTime>
-                    <ReplyButton onClick={() => setIsReplyOn(isReplyOn !== el2?.id ? el2?.id : null)}>답글 작성하기</ReplyButton>
+                    <ReplyButton onClick={() => setIsReplyOn(isReplyOn !== el2?.id ? el2?.id : null)}>답글 쓰기</ReplyButton>
                   </MinorArea>
                 </CommentDetailArea>
                 {el2?.memberId === userInformation?.userId ?
-                  <DeleteButton onClick={() => deleteComment(commentEach?.id)}>삭제하기</DeleteButton>
+                  <DeleteButton onClick={() => deleteComment(commentEach?.id)} src="/assets/icon/icon_delete_comment_x.svg" />
                   : null}
               </div>
               {isReplyOn === el2?.id
@@ -309,109 +304,49 @@ const CommunityDetail = () => {
     }
   }, [])
 
-
-
-
   useEffect(() => {
     getBoard();
     getComment();
   }, [myToken])
 
-
   return (<>
-
     <Container>
-      <Header>
-        <HeaderLeft>
-          <Title>
-            <div className="title__kr">센카이브</div>
-            <div className="title__en">Scenchive</div>
-          </Title>
-          <Menu>
-            <MenuList>마이페이지</MenuList>
-            <MenuList>필터 추천</MenuList>
-            <MenuList onClick={() => navigate("/community")}>게시판</MenuList>
-          </Menu>
-        </HeaderLeft>
-        <HeaderRight>
-          {!myToken ? (
-            <>
-              <HeaderText onClick={() => navigate("/login")}>로그인</HeaderText>
-              <HeaderText>|</HeaderText>
-              <HeaderText onClick={() => navigate("/signupstep1")}>
-                회원가입
-              </HeaderText>
-            </>
-          ) : (
-            <img src="/assets/icon/icon_notice.svg" />
-          )}
-        </HeaderRight>
-      </Header>
-      <ContentArea>
-        <BoardMenu>
+      <Header />
+      <Search />
+      <Main>
+        <BoardMenu onClick={()=>{navigate("/community", {state: boardDetail?.boardtype_name})}}>
           {boardDetail?.boardtype_name === 'fake' ? "정/가품"
             : boardDetail?.boardtype_name === "qna" ? "Q & A"
               : "자유"}
+          <BoardMenuGo src={"/assets/icon/icon_community_type_go.svg"} />
         </BoardMenu>
         <BoardTitle>{boardDetail?.title}</BoardTitle>
         <BoardInfoArea>
           <UserName>{boardDetail?.name}</UserName>
+          <span style={{ marginLeft: "5px", marginRight: "5px", color: "#DFDFDF", fontSize: "1rem", fontFamily: "Noto Sans KR" }}>|</span>
           <UploadTime>{boardDetail?.modified_at}</UploadTime>
         </BoardInfoArea>
 
         <BoardContent>
           {boardDetail?.body}
         </BoardContent>
+
         <WriteCommentArea>
           <CommentInput
             placeholder="댓글을 입력해 주세요."
             onChange={(e) => setComment(e.target.value)}
             onKeyPress={handleOnKeyPress}
             value={comment}
-
           />
           <CommentButton onClick={() => writeComment()}>등록</CommentButton>
         </WriteCommentArea>
         <CommentArea>
           {renderCommentList()}
-          {/* {commentList?.filter((el) => el.parentId === null).map((comment, index) =>
-            <div>
-              <CommentRow key={comment?.id} isLast={index === commentList.length - 1}>
-                <UserImage src={comment?.imageUrl ? comment?.imageUrl : "/assets/icon/icon-profile-picture.svg"} />
-                <CommentDetailArea>
-                  <UserName>{comment?.memberName}</UserName>
-                  <CommentDetail>{comment?.content}</CommentDetail>
-                  <CommentTime>{comment?.createdAt}</CommentTime>
-                </CommentDetailArea>
-              </CommentRow>
-
-              {commentList?.map((el2) => el2?.parentId !== null && el2?.parentId === comment?.id).map(
-                (comment2, index) => {
-                  <div key={index + 'e'}>
-                    <div key={index}>{comment2}</div>
-
-                  </div>
-                  //    <CommentRow key={comment2?.id+'reply'} 
-                  //    isLast={index===commentList.length-1} 
-                  //    style={{marginLeft:60}}>
-                  //    <UserImage src={comment2?.imageUrl ? comment2?.imageUrl: "/assets/icon/icon-profile-picture.svg"}/>
-                  //    <CommentDetailArea>
-                  //      <UserName>{comment2?.memberName}</UserName>
-                  //      <CommentDetail>{comment2?.content}</CommentDetail>
-                  //      <CommentTime>{comment2?.createdAt}</CommentTime>
-                  //    </CommentDetailArea>
-                  //  </CommentRow>
-                })}
-            </div>
-
-          )
-          } */}
-
         </CommentArea>
         <CommentArea>
 
         </CommentArea>
-      </ContentArea>
+      </Main>
     </Container>
   </>
   );
