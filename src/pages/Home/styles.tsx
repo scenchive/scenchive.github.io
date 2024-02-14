@@ -1,6 +1,8 @@
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
-import { ArrayRGB } from "color-thief-react/lib/types";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const breakpoint = "768px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
@@ -16,7 +18,18 @@ const fadeInOut = keyframes`
     opacity: 0;
   }
 `;
-
+const slide = keyframes`
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+    transform: translateX(50px);
+  }
+`;
 export const Container = styled.div`
   label: container;
   width: 100%;
@@ -72,7 +85,7 @@ export const MainTop = styled.div`
 
   ${mediaQuery} {
     font-size: 1.8rem;
-
+    margin: 50px 0 30px 0;
     .main-top__text--big {
       font-size: 2.5rem;
     }
@@ -131,6 +144,7 @@ export const MainBottom = styled.div`
   label: main-bottom;
   width: 100%;
   display: flex;
+  justify-content: center;
   font-family: Noto Sans KR;
   & > img {
     width: 20px;
@@ -148,11 +162,37 @@ export const MainBottomContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 30px;
   & > img {
     width: 50%;
     max-width: 150px;
   }
-  margin: 0 30px;
+
+  ${mediaQuery} {
+    display: none;
+  }
+`;
+
+export const MainBottomContentMobile = styled.div`
+  label: main-bottom-content-mobile;
+  display: none;
+  ${mediaQuery} {
+    display: block;
+  }
+`;
+
+export const SlickSlider = styled(Slider)`
+  label: slick-slider;
+  width: 200px;
+  display: none;
+
+  ${mediaQuery} {
+    display: block;
+
+    .slick-current {
+      opacity: 1;
+    }
+  }
 `;
 
 export const ContentText = styled.div`
@@ -198,6 +238,8 @@ export const ContentText = styled.div`
 `;
 
 export const PerfumeBox = styled.div<{ index: number }>`
+  label: prefume-box;
+  width: 200px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -221,6 +263,18 @@ export const PerfumeBox = styled.div<{ index: number }>`
     margin: 10px 0;
     font-size: 1.5rem;
   }
+
+  div {
+    display: flex;
+    justify-content: center;
+  }
+  ${mediaQuery} {
+    opacity: 100;
+    animation: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const ColorPick = styled.div<{
@@ -231,5 +285,5 @@ export const ColorPick = styled.div<{
   height: 10px;
   border-radius: 10px;
   background-color: ${(props) =>
-    props.color === undefined ? colors[props.index] : props.color};
+    props.color === undefined ? colors[props.index % 3] : props.color};
 `;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Container,
   Main,
@@ -12,10 +12,12 @@ import {
   Options,
   PerfumeBox,
   ColorPick,
+  MainBottomContentMobile,
+  SlickSlider,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Color, { useColor } from "color-thief-react";
+import Color from "color-thief-react";
 import Header from "../../components/Header/index";
 import Search from "../../components/Search/index";
 
@@ -39,6 +41,15 @@ const Home = () => {
   const [perfumeIndex, setPerfumeIndex] = useState(0);
   const [randomPerfumes, setRandomPerfumes] = useState<Perfumes[]>([]);
   const [imageIndex, setImageIndex] = useState([0, 0, 0]);
+  const [slideIndex, setSlideIndex] = useState(0);
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 1,
+    autoplay: true,
+    speed: 500,
+    autoplaySpeed: 3000,
+  };
 
   useEffect(() => {
     getToken();
@@ -65,7 +76,9 @@ const Home = () => {
       );
     }, 6000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   useEffect(() => {
@@ -214,6 +227,32 @@ const Home = () => {
                   </PerfumeBox>
                 ))}
               </MainBottomContent>
+              <SlickSlider {...sliderSettings}>
+                {randomPerfumes.map((el, index) => (
+                  <PerfumeBox index={index} style={{ display: "flex" }}>
+                    <div>
+                      <img src={el.perfumeImage} />
+                    </div>
+                    <div className="perfume-box__text">{el.perfumeName}</div>
+                    <Color
+                      src={`https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${encodeURIComponent(
+                        el.perfumeImage
+                      )}`}
+                      crossOrigin="anonymous"
+                      format={"hex"}
+                    >
+                      {({ data, loading }) => {
+                        if (loading) return <div>{loading}</div>;
+                        return (
+                          <div>
+                            <ColorPick index={index} color={data} />
+                          </div>
+                        );
+                      }}
+                    </Color>
+                  </PerfumeBox>
+                ))}
+              </SlickSlider>
             </MainBottom>
           </Main>
         )}
