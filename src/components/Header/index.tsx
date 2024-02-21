@@ -72,7 +72,7 @@ const Header = () => {
           })}
         </MenuSmall>
       )}
-      {/* {!token ? (
+      {!token ? (
         <HeaderRight>
           <HeaderRightText onClick={() => navigate("/login")}>
             로그인
@@ -86,10 +86,7 @@ const Header = () => {
         <HeaderRight>
           <img src="/assets/icon/icon_notice.svg" />
         </HeaderRight>
-      )} */}
-      <HeaderRight>
-        {!token ? null : <img src="/assets/icon/icon_notice.svg" />}
-      </HeaderRight>
+      )}
     </Container>
   );
 };

@@ -178,7 +178,8 @@ export const HeaderRightText = styled.div`
   font-size: 1.7rem;
 
   ${mediaQuery} {
-    font-size: 1rem;
-    padding: 0 1px;
+    display: none;
+    /* font-size: 1rem;
+    padding: 0 1px; */
   }
 `;
