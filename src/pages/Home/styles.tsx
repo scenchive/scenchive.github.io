@@ -135,7 +135,7 @@ export const MainBottom = styled.div`
 export const MainBottomContent = styled.div`
   label: main-bottom-content;
   width: 100%;
-  height: fit-content;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,7 +146,7 @@ export const MainBottomContent = styled.div`
   }
 
   ${mediaQuery} {
-    display: none;
+    margin: 0 10px;
   }
 `;
 
@@ -191,7 +191,7 @@ export const ContentText = styled.div`
   ${mediaQuery} {
     font-size: 1.2rem;
     .content-text__name {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
     .content-text__rate {
       img {
