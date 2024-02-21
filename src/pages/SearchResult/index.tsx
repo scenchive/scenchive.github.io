@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import Search from "../../components/Search";
 
 interface Perfumes {
-  id: number;
+  perfumeId: number;
   perfumeName: string;
   perfumeImage: string;
   brandName: string;
@@ -146,7 +146,9 @@ const SearchResult = () => {
             <Lists ref={view}>
               {resultPerfumes?.map((el) => {
                 return (
-                  <List>
+                  <List
+                    onClick={() => navigate(`/perfumedetail?perfume=${el.perfumeId}`)}
+                  >
                     <img src={`${el.perfumeImage}`} />
                     <ListText>
                       <div className="list-text__title">{el.perfumeName}</div>

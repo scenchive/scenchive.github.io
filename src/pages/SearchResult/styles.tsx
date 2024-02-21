@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
+
 export const Container = styled.div`
   label: container;
   width: 100%;
@@ -20,6 +23,12 @@ export const Main = styled.div`
   align-items: start;
   padding: 20px 0;
   font-family: Noto Sans Kr;
+
+  ${mediaQuery} {
+    width: 100%;
+    padding: 20px 20px;
+    box-sizing: border-box;
+  }
 `;
 
 export const Content = styled.div`
