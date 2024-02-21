@@ -24,7 +24,6 @@ const SearchResult = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState<string | null>(null);
   const [querySearch, setQuerySearch] = useSearchParams();
-  const [search, setSearch] = useState("");
   const [resultBrands, setResultBrands] = useState<Array<Brands> | null>(null);
   const [resultPerfumes, setResultPerfumes] = useState<Array<Perfumes> | null>(
     null
@@ -66,7 +65,7 @@ const SearchResult = () => {
 
   useEffect(() => {
     if (token !== null) getSearchResult("result");
-  }, [token]);
+  }, [token, querySearch.get("search")]);
 
   useEffect(() => {
     if (token !== null && perfumesPage !== -1) getSearchResult("more");
@@ -80,9 +79,9 @@ const SearchResult = () => {
   const getSearchResult = async (type: string) => {
     await axios
       .get(
-        `/search?name=${
-          type === "search" ? search : querySearch.get("search")
-        }&page=${type !== "more" ? 0 : perfumesPage}`,
+        `/search?name=${querySearch.get("search")}&page=${
+          type !== "more" ? 0 : perfumesPage
+        }`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -147,7 +146,9 @@ const SearchResult = () => {
               {resultPerfumes?.map((el) => {
                 return (
                   <List
-                    onClick={() => navigate(`/perfumedetail?perfume=${el.perfumeId}`)}
+                    onClick={() =>
+                      navigate(`/perfumedetail?perfume=${el.perfumeId}`)
+                    }
                   >
                     <img src={`${el.perfumeImage}`} />
                     <ListText>
