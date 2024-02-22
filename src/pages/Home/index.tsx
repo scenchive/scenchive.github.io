@@ -10,9 +10,13 @@ import {
   ContentText,
   Selected,
   Options,
+  PerfumeBox,
+  ColorPick,
+  SlickSlider,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Color from "color-thief-react";
 import Header from "../../components/Header/index";
 import Search from "../../components/Search/index";
 
@@ -34,6 +38,27 @@ const Home = () => {
   const [username, setUsername] = useState("");
   const [perfumes, setPerfumes] = useState<Perfumes[]>([]);
   const [perfumeIndex, setPerfumeIndex] = useState(0);
+  const [randomPerfumes, setRandomPerfumes] = useState<Perfumes[]>([]);
+
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 500,
+    autoplaySpeed: 3000,
+    initialSlide: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
   useEffect(() => {
     getToken();
@@ -41,6 +66,9 @@ const Home = () => {
 
   useEffect(() => {
     if (token) getUsername();
+    else {
+      getRandomPerfume();
+    }
   }, [token]);
 
   useEffect(() => {
@@ -83,13 +111,19 @@ const Home = () => {
     else setPerfumeIndex(perfumeIndex + dir);
   };
 
+  const getRandomPerfume = async () => {
+    await axios.get(`/randomperfume`).then((res) => {
+      setRandomPerfumes(res.data);
+    });
+  };
+
   return (
     <>
       <Container>
         <Header />
         <Search />
         {token ? (
-          <Main>
+          <Main width={"60%"}>
             <MainTop>
               <div className="main-top__text">'{username}'님을 위한</div>
               <Select>
@@ -143,7 +177,44 @@ const Home = () => {
               />
             </MainBottom>
           </Main>
-        ) : null}
+        ) : (
+          <Main width={"60%"}>
+            <MainTop>
+              <span className="main-top__text--big">“</span>&nbsp;나와 맞는
+              &nbsp;
+              <span>향수</span>를 찾아보세요.
+              <span className="main-top__text--big">”</span>
+            </MainTop>
+            <MainBottom>
+              <SlickSlider {...sliderSettings}>
+                {randomPerfumes.map((el, index) => (
+                  <PerfumeBox index={index} style={{ display: "flex" }}>
+                    <div>
+                      <img src={el.perfumeImage} />
+                    </div>
+                    <div className="perfume-box__text">{el.perfumeName}</div>
+                    <Color
+                      src={`https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${encodeURIComponent(
+                        el.perfumeImage
+                      )}`}
+                      crossOrigin="anonymous"
+                      format={"hex"}
+                    >
+                      {({ data, loading }) => {
+                        if (loading) return <div>{loading}</div>;
+                        return (
+                          <div>
+                            <ColorPick index={index} color={data} />
+                          </div>
+                        );
+                      }}
+                    </Color>
+                  </PerfumeBox>
+                ))}
+              </SlickSlider>
+            </MainBottom>
+          </Main>
+        )}
       </Container>
     </>
   );

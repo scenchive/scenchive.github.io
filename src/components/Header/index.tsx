@@ -9,6 +9,7 @@ import {
   MenuItem,
   MenuItemSmall,
   MenuSmall,
+  MenuSmallTop,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
 
@@ -55,10 +56,16 @@ const Header = () => {
       </Menu>
       {toggle && (
         <MenuSmall>
+          {!token && (
+            <MenuSmallTop>
+              <div onClick={() => navigate("/login")}>로그인</div>
+              <div>|</div>
+              <div onClick={() => navigate("/signupstep1")}>회원가입</div>
+            </MenuSmallTop>
+          )}
           {menuItems.map((item, index) => {
             return (
               <MenuItemSmall border={index !== 2}>
-                <img src={item.img} />
                 <div>{item.name}</div>
               </MenuItemSmall>
             );

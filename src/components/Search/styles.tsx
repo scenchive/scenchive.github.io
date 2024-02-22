@@ -66,7 +66,7 @@ export const Input = styled.input`
 
   ${mediaQuery} {
     height: 30px;
-    padding: 0 15px;
+    padding: 0 28px 0 15px;
 
     &::placeholder {
       font-size: 1rem;

@@ -7,7 +7,7 @@ import {
   ListDetail,
   SearchList,
 } from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 interface Perfumes {
@@ -33,9 +33,13 @@ const Search = () => {
   const [searchPerfumes, setSearchPerfumes] = useState<Array<Perfumes> | null>(
     null
   );
+  const [toggle, setToggle] = useState(false);
+  const [querySearch, setQuerySearch] = useSearchParams();
 
   useEffect(() => {
     getToken();
+    if (querySearch.get("search"))
+      setSearch(JSON.stringify(querySearch.get("search")).split('"')[1]);
   }, []);
 
   useEffect(() => {
@@ -71,7 +75,10 @@ const Search = () => {
   };
 
   const handleEnterClick = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") navigate(`/searchresult?search=${search}`);
+    if (e.key === "Enter") {
+      navigate(`/searchresult?search=${search}`);
+      setToggle(false);
+    }
   };
 
   return (
@@ -81,20 +88,23 @@ const Search = () => {
           type="text"
           className="search__input"
           placeholder="향수 이름 혹은 브랜드 명을 검색하세요"
+          value={search}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setSearch(e.target.value);
+            setToggle(true);
           }}
-          onKeyDown={(e) => {
-            handleEnterClick(e);
-          }}
+          onKeyDown={(e) => handleEnterClick(e)}
         />
         <img
           src="/assets/icon/icon_search_color.svg"
           className="search__img"
-          onClick={() => navigate(`/searchresult?search=${search}`)}
+          onClick={() => {
+            navigate(`/searchresult?search=${search}`);
+            setToggle(false);
+          }}
         />
       </InputBox>
-      {(searchPerfumes !== null || searchBrands !== null) && (
+      {toggle && (searchPerfumes !== null || searchBrands !== null) && (
         <SearchList>
           {searchBrands !== null && (
             <ListContent>
@@ -102,9 +112,11 @@ const Search = () => {
               {searchBrands.map((el) => {
                 return (
                   <ListDetail
-                    onClick={() =>
-                      navigate(`/searchresult?search=${el.brandName_kr}`)
-                    }
+                    onClick={() => {
+                      navigate(`/searchresult?search=${el.brandName_kr}`);
+                      setToggle(false);
+                      setSearch(el.brandName_kr);
+                    }}
                   >
                     <img src="/assets/icon/icon_search.svg" />
                     <div className="list-detail__name">{el.brandName_kr}</div>
@@ -120,9 +132,11 @@ const Search = () => {
               {searchPerfumes.map((el) => {
                 return (
                   <ListDetail
-                    onClick={() =>
-                      navigate(`/searchresult?search=${el.perfumeName}`)
-                    }
+                    onClick={() => {
+                      navigate(`/searchresult?search=${el.perfumeName}`);
+                      setToggle(false);
+                      setSearch(el.perfumeName);
+                    }}
                   >
                     <img src="/assets/icon/icon_search.svg" />
                     <div className="list-detail__name">{el.perfumeName}</div>
