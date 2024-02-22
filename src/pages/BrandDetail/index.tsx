@@ -1,27 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  Container,
-  Header,
-  HeaderLeft,
-  HeaderRight,
-  HeaderText,
-  Top,
-  TopText,
-  Title,
-  Menu,
-  MenuList,
-  Text,
-  Card,
-  Cards,
-  CardText,
-  PageNation,
-  PageButton,
-} from "./styles";
+import { Container, Top, TopText, Text, Lists, List, ListText } from "./styles";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import Header from "../../components/Header";
+import Search from "../../components/Search";
 
 interface Perfumes {
-  id: number;
+  perfumeId: number;
   perfumeName: string;
   perfumeImage: string;
   brandName: string;
@@ -37,13 +22,41 @@ const BrandDetail = () => {
   const [perfumes, setPerfumes] = useState<Array<Perfumes> | null>(null);
   const [num, setNum] = useState(0);
   const [perfumesPage, setPerfumesPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const view = useRef<HTMLDivElement>(null);
+
+  //무한 스크롤 target이 감지되면 호출되는 함수
+  const callback = () => {
+    if (perfumesPage !== -1) setPerfumesPage(perfumesPage + 1);
+  };
+
+  const options = {
+    root: view.current,
+    threshold: 1.0,
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    if (entries[0].isIntersecting) {
+      callback();
+      observer.unobserve(entries[0].target);
+    }
+  }, options);
+
+  useEffect(() => {
+    if (target) {
+      setLoading(true);
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target, loading]);
 
   useEffect(() => {
     getToken();
   }, []);
 
   useEffect(() => {
-    if (token) {
+    if (token && perfumesPage !== -1) {
       getPerfumes();
     }
   }, [token, perfumesPage]);
@@ -62,90 +75,50 @@ const BrandDetail = () => {
         }
       )
       .then((res) => {
-        setPerfumes(res.data.perfumes);
-        setNum(res.data.totalBrandPerfumeCount);
+        if (res.data) {
+          setPerfumes((prev) =>
+            prev !== null ? [...prev, ...res.data?.perfumes] : res.data.perfumes
+          );
+          setNum(res.data.totalBrandPerfumeCount);
+        } else setPerfumesPage(-1);
+        setLoading(false);
       });
   };
 
-  const setPage = (num: number) => {
-    setPerfumesPage(num);
-  };
-
   return (
-    <>
-      <Header>
-        <HeaderLeft>
-          <Title onClick={() => navigate("/")}>
-            <div className="title__kr">센카이브</div>
-            <div className="title__en">Scenchive</div>
-          </Title>
-          <Menu>
-            <MenuList>마이페이지</MenuList>
-            <MenuList>필터 추천</MenuList>
-            <MenuList>게시판</MenuList>
-          </Menu>
-        </HeaderLeft>
-        <HeaderRight>
-          {!token ? (
-            <>
-              <HeaderText onClick={() => navigate("/login")}>로그인</HeaderText>
-              <HeaderText>|</HeaderText>
-              <HeaderText onClick={() => navigate("/signupstep1")}>
-                회원가입
-              </HeaderText>
-            </>
-          ) : (
-            <img src="/assets/icon/icon_notice.svg" />
-          )}
-        </HeaderRight>
-      </Header>
-      <Container>
-        <Top>
-          <img src={location.state.brandImage} />
-          <TopText>
-            <div className="top-text__title">{querySearch.get("name")}</div>
-            <div className="top-text__sub-title">
-              {location.state.brandName_kr}
-            </div>
-          </TopText>
-        </Top>
-        <Text>총 {num}개</Text>
-        <Cards>
-          {perfumes?.map((el, index) => {
-            return (
-              <Card>
-                <img src={el.perfumeImage} />
-                <CardText>
-                  <div className="card-text__title">{el.perfumeName}</div>
-                </CardText>
-              </Card>
-            );
-          })}
-        </Cards>
-        <PageNation>
-          <img
-            src="/assets/icon/icon_arrow_left.svg"
-            onClick={() => setPerfumesPage(perfumesPage - 1)}
-          />
-          {new Array(Math.ceil(num / 10)).fill(0).map((el, index) => {
-            return (
-              <PageButton
-                onClick={() => setPage(index)}
-                style={{
-                  border: perfumesPage === index ? "2px solid #bf8dff" : undefined,
-                }}
-              >
-                {index + 1}
-              </PageButton>
-            );
-          })}
-          <img
-            src="/assets/icon/icon_arrow_right.svg"
-            onClick={() => setPerfumesPage(perfumesPage + 1)}
-          />
-        </PageNation>
-      </Container>
-    </>
+    <Container>
+      <Header />
+      <Search />
+      <Top>
+        <img src={location.state.brandImage} />
+        <TopText>
+          <div className="top-text__title">{querySearch.get("name")}</div>
+          <div className="top-text__sub-title">
+            {location.state.brandName_kr}
+          </div>
+        </TopText>
+      </Top>
+      <Text>총 {num}개</Text>
+      <Lists ref={view}>
+        {perfumes?.map((el) => {
+          return (
+            <List
+              onClick={() => navigate(`/perfumedetail?perfume=${el.perfumeId}`)}
+            >
+              <img src={`${el.perfumeImage}`} />
+              <ListText>
+                <div className="list-text__title">{el.perfumeName}</div>
+                <div className="list-text__sub-title">{el.brandName}</div>
+                <div className="list-text__sub-title">{el.brandName_kr}</div>
+              </ListText>
+            </List>
+          );
+        })}
+        {perfumes && (
+          <div ref={setTarget} style={{ width: "100%", height: "1px" }} />
+        )}
+      </Lists>
+    </Container>
   );
 };
 
