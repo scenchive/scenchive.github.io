@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
+
 export const Container = styled.div`
   label: container;
   width: 100%;
@@ -17,6 +20,10 @@ export const Top = styled.div`
   font-size: 2rem;
   color: #d67070;
   margin: 30px 0;
+
+  ${mediaQuery} {
+    width: calc(100% - 40px);
+  }
 `;
 
 export const Main = styled.div`
@@ -25,6 +32,10 @@ export const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  ${mediaQuery} {
+    width: calc(100% - 40px);
+  }
 `;
 
 export const Content = styled.div`
@@ -34,6 +45,10 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   margin: 20px 0;
+
+  ${mediaQuery} {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.div`
@@ -43,13 +58,23 @@ export const Title = styled.div`
   font-size: 1.4rem;
   display: flex;
   justify-content: center;
+
+  ${mediaQuery} {
+    width: 15%;
+  }
+
 `;
 
 export const Keywords = styled.div`
   width: 60%;
   display: flex;
   flex-wrap: wrap;
+
+  ${mediaQuery} {
+    width: 85%;
+  }
 `;
+
 export const Keyword = styled.div<{ isSelected: boolean }>`
   label: keyword;
   width: fit-content;
