@@ -62,7 +62,6 @@ export const Title = styled.div`
   ${mediaQuery} {
     width: 15%;
   }
-
 `;
 
 export const Keywords = styled.div`
@@ -80,7 +79,7 @@ export const Keyword = styled.div<{ isSelected: boolean }>`
   width: fit-content;
   font-family: Noto Sans Kr;
   font-size: 1.2rem;
-  border: 1.5px solid #e3a6a1;
+  border: 1.5px solid ${(props) => (props.isSelected ? "#D67070" : "#e3a6a1")};
   align-self: flex-start;
   padding: 6px 10px 6.5px 10px;
   border-radius: 30px;
@@ -90,6 +89,7 @@ export const Keyword = styled.div<{ isSelected: boolean }>`
   margin: 5px;
   cursor: pointer;
   &:hover {
+    border-color: #d67070;
     background-color: #d67070;
     color: white;
   }
