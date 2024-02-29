@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
+
 export const Container = styled.div`
   label: container;
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,86 +13,123 @@ export const Container = styled.div`
 `;
 
 export const Top = styled.div`
+  width: 70%;
+  border-bottom: 1px solid #d67070;
+  font-family: Gowun Batang;
+  font-size: 2rem;
+  color: #d67070;
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  margin: 50px 0 10px 0;
+
+  ${mediaQuery} {
+    width: calc(100% - 40px);
+    margin: 30px 0 10px 0;
+  }
+`;
+
+export const KeywordBox = styled.div`
+  label: keyword-box;
+  width: 70%;
+  display: flex;
+  justify-content: start;
   margin-bottom: 50px;
+
+  ${mediaQuery} {
+    width: calc(100% - 40px);
+    margin-bottom: 30px;
+  }
 `;
 
 export const Keyword = styled.div`
   label: keyword;
   width: fit-content;
-  font-size: 12px;
-  font-weight: 450;
-  border: 1.5px solid #a281ff;
-  align-self: flex-start;
-  padding: 6px 10px 6.5px 10px;
+  display: flex;
+  align-items: start;
+  font-family: Noto Sans Kr;
+  font-size: 1.2rem;
+  padding: 5px 15px;
+  box-sizing: border-box;
   border-radius: 30px;
-  background-color: #b592ff;
+  background-color: #d67070;
   color: white;
   box-shadow: 2px 3px 2.5px #d9d9d9;
-  margin-bottom: 5px;
   margin: 5px;
 `;
 
 export const Cards = styled.div`
   label: cards;
-  width: 80%;
+  width: 70%;
+  height: 270px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px 10px;
+
+  ${mediaQuery} {
+    width: calc(100% - 40px);
+    height: 950px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 10px;
+  }
 `;
 
 export const Card = styled.div`
   label: card;
   width: 100%;
-  height: 300px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   box-sizing: border-box;
   box-shadow: 0px 0px 1px #a9a9a9;
-  border-radius: 12px;
+  font-family: Noto Sans Kr;
+  padding: 0 5px;
+  box-sizing: border-box;
   img {
-    width: 100%;
+    height: 100px;
     margin-bottom: 5px;
-    min-height: 60%;
+  }
+
+  ${mediaQuery} {
+    height: 180px;
+
+    img {
+      height: 80px;
+    }
   }
 `;
 
 export const CardText = styled.div`
+  height: 100px;
   display: flex;
   flex-direction: column;
+  justify-content: start;
+
   .card-text__title {
-    font-size: 14px;
-    margin-bottom: 20px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
   }
   .card-text__brand {
+    height: 20px;
     color: #a9a9a9;
-    font-size: 12px;
+    font-size: 1.2rem;
   }
-`;
 
-export const PageNation = styled.div`
-  label: pagenation;
-  width: 60%;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 70px;
-  img {
-    margin: 0 5px;
+  ${mediaQuery} {
+    height: 50px;
+
+    .card-text__title {
+      height: 30px;
+      font-size: 1.2rem;
+    }
+    .card-text__brand {
+      height: 15px;
+      font-size: 1rem;
+    }
   }
-`;
-
-export const PageButton = styled.div`
-  width: 30px;
-  height: 30px;
-  border: 1px solid #bf8dff;
-  margin: 0px 2px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  line-height: 14px;
 `;

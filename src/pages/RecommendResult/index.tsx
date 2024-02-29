@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   CardText,
   Cards,
   Container,
   Keyword,
-  PageButton,
-  PageNation,
+  KeywordBox,
   Top,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import Header from "../../components/Header";
+import Search from "../../components/Search";
 
 interface Perfumes {
   id: number;
@@ -21,29 +22,67 @@ interface Perfumes {
   ratingAvg: number;
 }
 
+interface Keyword {
+  id: number;
+  ptag_name: string;
+  ptag_kr: string;
+  ptagtype_id: number;
+}
+
 const RecommendResult = () => {
   const [token, setToken] = useState<string | null>(null);
   const [querySearch, setQuerySearch] = useSearchParams();
+  const option = querySearch.get("option");
   const navigate = useNavigate();
   const keywordIds = querySearch.get("id")?.split(",").map(Number);
   let keywordString = "";
-  const [perfumes, setPerfumes] = useState<Array<Perfumes> | null>(null);
-  const [num, setNum] = useState(0);
+  const [perfumes, setPerfumes] = useState<Array<Perfumes> | []>([]);
+  const [keywords, setKeywords] = useState<Array<Keyword> | []>([]);
   const [perfumesPage, setPerfumesPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const view = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getToken();
   }, []);
 
   useEffect(() => {
+    if (token !== null) getKeyword();
+  }, [token]);
+
+  useEffect(() => {
     keywordIds?.map((el) => (keywordString += `keywordId=${el}&`));
   }, [keywordIds]);
 
   useEffect(() => {
-    if (token && num / 10 >= perfumesPage) {
-      getPerfumes();
+    if (target) {
+      setLoading(true);
+      observer.observe(target);
     }
+    return () => observer && observer.disconnect();
+  }, [target, loading]);
+
+  useEffect(() => {
+    if (token !== null && perfumesPage !== -1) getPerfumes();
   }, [token, perfumesPage]);
+
+  //무한 스크롤 target이 감지되면 호출되는 함수
+  const callback = () => {
+    if (perfumesPage !== -1) setPerfumesPage(perfumesPage + 1);
+  };
+
+  const options = {
+    root: view.current,
+    threshold: 1.0,
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    if (entries[0].isIntersecting) {
+      callback();
+      observer.unobserve(entries[0].target);
+    }
+  }, options);
 
   const getToken = () => {
     const token = localStorage.getItem("my-token");
@@ -56,24 +95,39 @@ const RecommendResult = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        setPerfumes(res.data.perfumes);
-        setNum(res.data.totalPerfumeCount);
+        if (res.data.perfumes) {
+          setPerfumes((prev) => [...prev, ...res.data.perfumes]);
+        } else {
+          setPerfumesPage(-1);
+        }
+        setLoading(false);
       });
   };
 
-  const setPage = (num: number) => {
-    setPerfumesPage(num);
+  const getKeyword = async () => {
+    await axios
+      .get(`/perfumes/recommend/${option}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setKeywords(res.data);
+      });
   };
 
   return (
     <Container>
-      <Top>
+      <Header />
+      <Search />
+      <Top>결과</Top>
+      <KeywordBox>
         {keywordIds?.map((el) => {
-          return <Keyword># {el}</Keyword>;
+          return (
+            <Keyword># {keywords[el < 36 ? el - 1 : el - 11]?.ptag_kr}</Keyword>
+          );
         })}
-      </Top>
+      </KeywordBox>
       <Cards>
-        {perfumes?.map((el, index) => {
+        {perfumes?.map((el) => {
           return (
             <Card>
               <img src={el.perfumeImage} />
@@ -85,30 +139,8 @@ const RecommendResult = () => {
             </Card>
           );
         })}
+        <div ref={setTarget} style={{ width: "100%", height: "280px" }} />
       </Cards>
-      <PageNation>
-        <img
-          src="/assets/icon/icon_arrow_left.svg"
-          onClick={() => setPerfumesPage(perfumesPage - 1)}
-        />
-        {new Array(Math.ceil(num / 10)).fill(0).map((el, index) => {
-          return (
-            <PageButton
-              onClick={() => setPage(index)}
-              style={{
-                border:
-                  perfumesPage === index ? "2px solid #bf8dff" : undefined,
-              }}
-            >
-              {index + 1}
-            </PageButton>
-          );
-        })}
-        <img
-          src="/assets/icon/icon_arrow_right.svg"
-          onClick={() => setPerfumesPage(perfumesPage + 1)}
-        />
-      </PageNation>
     </Container>
   );
 };

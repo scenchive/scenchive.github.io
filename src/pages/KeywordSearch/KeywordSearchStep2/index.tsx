@@ -101,7 +101,11 @@ const KeywordSearchStep2 = () => {
    */
   const handleResultButtonClick = () => {
     if (keywordCount[0] > 0 && keywordCount[1] > 0 && keywordCount[2] > 0)
-      navigate(`/recommendresult?id=${selectedKeywords}`);
+      navigate(
+        `/recommendresult?option=${
+          option === 1 ? "type" : "tpo"
+        }&id=${selectedKeywords}`
+      );
     else alert("항목 당 한 개 이상의 키워드를 선택해주세요.");
   };
 
