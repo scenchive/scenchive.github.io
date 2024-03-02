@@ -16,6 +16,7 @@ import RecommendResult from "./pages/RecommendResult";
 import Commmunity from "./pages/Community";
 import CommunityWrite from "./pages/CommunityWrite";
 import CommunityDetail from "./pages/CommunityDetail";
+import Notice from "./pages/Notice";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/community" element={<Commmunity />} />
         <Route path="/communitywrite" element={<CommunityWrite />} />
         <Route path="/communitydetail" element={<CommunityDetail />} />
+        <Route path="/notice" element={<Notice />} />
       </Routes>
     </div>
   );
