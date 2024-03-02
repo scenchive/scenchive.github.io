@@ -32,7 +32,7 @@ export const Logo = styled.div`
   cursor: pointer;
 
   .logo__kr {
-    font-size: 2.7rem;
+    font-size: 2.6rem;
     margin-right: 5px;
   }
 

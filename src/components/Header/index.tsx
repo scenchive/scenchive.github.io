@@ -22,8 +22,8 @@ const Header = () => {
   const [token, setToken] = useState<string | null>(null);
   const [toggle, setToggle] = useState(false);
   const menuItems = [
-    { name: "마이페이지", url: "", img: "/assets/icon/icon_mypage.svg" },
-    { name: "필터 추천", url: "", img: "/assets/icon/icon_filter.svg" },
+    { name: "마이페이지", url: "/mypage", img: "/assets/icon/icon_mypage.svg" },
+    { name: "필터 추천", url: "/keywordsearchstep1", img: "/assets/icon/icon_filter.svg" },
     { name: "커뮤니티", url: "/community", img: "/assets/icon/icon_board.svg" },
   ];
 
