@@ -35,7 +35,7 @@ const Notice = () => {
   const [notices, setNotices] = useState<Array<Notice> | []>([]);
   const [unread, setUnread] = useState(0);
   const [count, setCount] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     getToken();
@@ -45,7 +45,7 @@ const Notice = () => {
     if (token !== null) {
       getNotice();
     }
-  }, [token]);
+  }, [token, page]);
 
   const getToken = () => {
     const token = localStorage.getItem("my-token");
@@ -55,7 +55,7 @@ const Notice = () => {
   //알림 목록 가져오는 api
   const getNotice = async () => {
     await axios
-      .get("/notification", {
+      .get(`/notification?page=${page}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -87,7 +87,15 @@ const Notice = () => {
             createdAt: "2024-01-21 22:08:39",
             check: true,
           },
-
+          {
+            id: 6,
+            boardId: 8,
+            boardTitle: "글제목입니다.",
+            message: "댓글입니다.",
+            createdAt: "2024-01-21 22:08:39",
+            check: true,
+          },
+          
         ]);
       });
   };

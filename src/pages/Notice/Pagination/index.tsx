@@ -10,7 +10,7 @@ interface Props {
 const Pagination = ({ count, page, setPage }: Props) => {
   const number = new Array(count).fill(0);
   const handleArrowClick = (dir: number) => {
-    if (page + dir > 0 && page + dir <= count) setPage(page + dir);
+    if (page + dir >= 0 && page + dir < count) setPage(page + dir);
   };
 
   return (
@@ -21,8 +21,8 @@ const Pagination = ({ count, page, setPage }: Props) => {
       />
       {number.map((el, index) => (
         <Number
-          onClick={() => setPage(index + 1)}
-          selected={page === index + 1}
+          onClick={() => setPage(index)}
+          selected={page === index}
         >
           {index + 1}
         </Number>
