@@ -9,6 +9,7 @@ import {
   UserName,
   UploadTime,
   BoardContent,
+  BoardImage,
   WriteCommentArea,
   CommentInput,
   CommentButton,
@@ -329,6 +330,7 @@ const CommunityDetail = () => {
 
         <BoardContent>
           {boardDetail?.body}
+         <BoardImage src={boardDetail?.imageUrl}/>
         </BoardContent>
 
         <WriteCommentArea>
