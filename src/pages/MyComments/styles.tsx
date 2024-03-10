@@ -19,6 +19,7 @@ export const Main=styled.div`
   margin-top:80px;
   display:flex;
   flex-direction:column;
+  margin-bottom: 200px;
 
   ${mediaQuery} {
     width: 100%;
@@ -27,8 +28,9 @@ export const Main=styled.div`
   }
 `
 
-export const MenuArea=styled.div`
-  label: menu-area;
+
+export const PageTitleArea=styled.div`
+  label: page-title-area;
   width: 100%;
   height: 3.1rem;
   display:flex;
@@ -37,13 +39,15 @@ export const MenuArea=styled.div`
   border-bottom: 2px solid #D67070;
 `
 
-export const CommunityMenu=styled.div`
-  label: community-menu;
+export const PageTitle=styled.div`
+  label: page-title;
   width:fit-content;
   height: auto;
-  font-size: 1.8rem;
+  color: #D67070;
+  font-family: Noto Sans KR;
+  font-size: 2rem;
+  font-weight: 600;
   align-self: self-end;
-  margin-left:10px;
   margin-right:10px;
   cursor:pointer;
 `
@@ -75,10 +79,34 @@ export const RowNumber=styled.div`
 
 export const RowMenu=styled.div`
   label: row-menu;
-  width: 15%;
+  width: 90%;
   color: #616161;
   font-size: 1.2rem;
   font-family: Noto Sans KR;
+`
+
+export const ContentArea = styled.div`
+  label: content-area;
+  width: 85%;
+  display:flex;
+  flex-direction: column;
+  text-align: start;
+`
+
+export const CommentContent = styled.div`
+  label: comment-content;
+  color: #616161;
+  font-size: 1.3rem;
+  font-family: Noto Sans KR;
+
+`
+
+export const CommentBoardTitle = styled.div`
+  label: comment-board-title;
+  color: #B2B2B2;
+  font-size: 1rem;
+  font-family: Noto Sans KR;
+
 `
 
 export const RowTitle=styled.div`

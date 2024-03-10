@@ -19,6 +19,7 @@ export const Main=styled.div`
   margin-top:80px;
   display:flex;
   flex-direction:column;
+  margin-bottom: 200px;
 
   ${mediaQuery} {
     width: 100%;
