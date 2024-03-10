@@ -214,9 +214,6 @@ const Signup = () => {
           console.log('계정 생성 성공');
           signupKeyword();
         }
-        else {
-          console.log('data', data)
-        }
       }
       ).catch((error) => {
         console.log(error)
@@ -243,7 +240,6 @@ const Signup = () => {
         }
       }
       ).catch((res) => {
-        console.log(res)
         console.log('키워드 저장에 실패했습니다.')
         alert('회원가입에 실패했습니다.');
       }
