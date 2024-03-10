@@ -49,8 +49,8 @@ const Header = () => {
         <div className="logo__en">Scenchive</div>
       </Logo>
       <Menu>
-        {menuItems.map((item) => {
-          return <MenuItem  onClick={() => navigate(item?.url)}>{item.name}</MenuItem>;
+        {menuItems.map((item, index) => {
+          return <MenuItem key={index} onClick={() => navigate(item?.url)}>{item.name}</MenuItem>;
         })}
       </Menu>
       {toggle && (

@@ -1,29 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Container,
-  Header,
-  HeaderLeft,
-  HeaderRight,
-  HeaderText,
-  Title,
-  Menu,
-  MenuList,
-  ContentArea,
+  Main,
+  PageTitle,
   InputRow,
   RowTitle,
   TitleInput,
   MenuInputArea,
   CommunityMenu,
   CommunityContentInput,
+  ImageUplaodArea,
+  ImageUploadButtonDesign,
   ImageUploadButton,
   WriteButton,
-
-
-
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-
+import Header from "../../components/Header";
+import Search from "../../components/Search";
 
 
 interface BoardType {
@@ -34,6 +28,7 @@ interface BoardType {
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [myToken, setMyToken] = useState<string | null>();
   const [querySearch, setQuerySearch] = useSearchParams();
   const [communityTitle, setCommunityTitle] = useState<string>();
@@ -52,11 +47,8 @@ const CommunityDetail = () => {
 
   const onSelectFile = (e: any) => {
     e.preventDefault();
-    e.persist();
-    setCommunityImage(e.target.files[0]
-    );
+    setCommunityImage(e.target.files[0]);
   }
-
 
   const uploadCommunity = () => {
     if (communityTitle && communityContent && selectedMenu) {
@@ -79,7 +71,6 @@ const CommunityDetail = () => {
       if (myToken) {
         axios.post('/board', data, { headers: { 'Authorization': `Bearer ${myToken}` } })
           .then((res) => {
-            console.log('res', res)
             navigate('/community');
           })
           .catch((err) => {
@@ -91,6 +82,9 @@ const CommunityDetail = () => {
     }
   }
 
+  const onCickImageUploadHandler = (): void => {
+    imageInputRef.current?.click();
+  };
 
   useEffect(() => {
     let token = localStorage.getItem('my-token');
@@ -111,65 +105,47 @@ const CommunityDetail = () => {
     }
   }, [])
 
-
-
-
-
   useEffect(() => {
   }, [myToken])
 
 
-  return (<>
+  return (
+    <>
+      <Container>
+        <Header />
+        <Search />
+        <Main>
+          <PageTitle>게시글 작성</PageTitle>
+          <InputRow>
+            <RowTitle>제목</RowTitle>
+            <TitleInput onChange={(e) => setCommunityTitle(e.target.value)} placeholder="제목을 입력해주세요." />
+          </InputRow>
+          <InputRow>
+            <RowTitle>구분</RowTitle>
+            <MenuInputArea>
+              <CommunityMenu isSelected={selectedMenu === "fake"} onClick={() => setSelectedMenu('fake')}>정/가품</CommunityMenu>
+              <CommunityMenu isSelected={selectedMenu === "qna"} onClick={() => setSelectedMenu("qna")}>Q & A</CommunityMenu>
+              <CommunityMenu isSelected={selectedMenu === "free"} onClick={() => setSelectedMenu('free')}>자유</CommunityMenu>
+            </MenuInputArea>
+          </InputRow>
+          <CommunityContentInput onChange={(e) => setCommunityContent(e.target.value)} />
 
-    <Container>
-      <Header>
-        <HeaderLeft>
-          <Title>
-            <div className="title__kr">센카이브</div>
-            <div className="title__en">Scenchive</div>
-          </Title>
-          <Menu>
-            <MenuList>마이페이지</MenuList>
-            <MenuList>필터 추천</MenuList>
-            <MenuList onClick={() => navigate("/community")}>게시판</MenuList>
-          </Menu>
-        </HeaderLeft>
-        <HeaderRight>
-          {!myToken ? (
-            <>
-              <HeaderText onClick={() => navigate("/login")}>로그인</HeaderText>
-              <HeaderText>|</HeaderText>
-              <HeaderText onClick={() => navigate("/signupstep1")}>
-                회원가입
-              </HeaderText>
-            </>
-          ) : (
-            <img src="/assets/icon/icon_notice.svg" />
-          )}
-        </HeaderRight>
-      </Header>
-      <ContentArea>
-        <InputRow>
-          <RowTitle>제목</RowTitle>
-          <TitleInput onChange={(e) => setCommunityTitle(e.target.value)} placeholder="제목을 입력해주세요." />
-        </InputRow>
-        <InputRow>
-          <RowTitle>구분</RowTitle>
-          <MenuInputArea>
-            <CommunityMenu isSelected={selectedMenu === "fake"} onClick={() => setSelectedMenu('fake')}>정/가품</CommunityMenu>
-            <CommunityMenu isSelected={selectedMenu === "qna"} onClick={() => setSelectedMenu("qna")}>Q & A</CommunityMenu>
-            <CommunityMenu isSelected={selectedMenu === "free"} onClick={() => setSelectedMenu('free')}>자유</CommunityMenu>
-          </MenuInputArea>
-        </InputRow>
-        <CommunityContentInput onChange={(e) => setCommunityContent(e.target.value)} />
-        <ImageUploadButton
-          type="file" name="images" accept=".png, .jpg, image/*"
-          onChange={onSelectFile}
-        />
-        <WriteButton onClick={() => uploadCommunity()}>작성하기</WriteButton>
-      </ContentArea>
-    </Container>
-  </>
+          <ImageUplaodArea >
+            <ImageUploadButtonDesign onClick={onCickImageUploadHandler}>
+              <span style={{ color: "#616161", fontSize: "1.2rem", fontFamily: "Noto Sans KR", marginRight: "10px" }}>이미지</span> {communityImage?.name ? communityImage.name : "업로드하기"}
+            </ImageUploadButtonDesign>
+            <ImageUploadButton
+              type="file" name="images" accept=".png, .jpg, image/*"
+              ref={imageInputRef}
+              id="images"
+              onChange={onSelectFile}
+            />
+          </ImageUplaodArea>
+
+          <WriteButton onClick={() => uploadCommunity()}>작성하기</WriteButton>
+        </Main>
+      </Container>
+    </>
   );
 };
 
