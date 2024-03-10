@@ -89,7 +89,7 @@ const Login = () => {
         
         <JoinArea>
           <JoinTitle>아직 센카이브 회원이 아니신가요?</JoinTitle>
-          <JoinButton onClick={()=>navigate("/signupstep1")}>회원가입</JoinButton>
+          <JoinButton onClick={()=>navigate("/signup")}>회원가입</JoinButton>
         </JoinArea>
       </Content>
     </>

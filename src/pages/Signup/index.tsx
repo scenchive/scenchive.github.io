@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  Header,
   Content,
   PfpArea,
   PreviewProfileImage,
@@ -13,16 +12,44 @@ import {
   AnswerArea,
   AnswerRow,
   AlertMessage,
-  GoToStep2Button,
-}
+  KeywordArea,
+  AreaTitle,
+  Keywords,
+  KeywordButton,
+  SignupButton,
   // @ts-ignore
-  from './styles.tsx';
+} from "./styles";
 // import ApiService from "../ApiService.js";
 import axios from "axios";
+import Header from "../../components/Header/index";
 
-const SignupStep1 = () => {
+
+interface FRAGRANCEWHEELKEYWORDSTYPE {
+  id: number;
+  utag: string;
+  utag_kr: string,
+  utagtype_id: number
+}
+
+interface MOODKEYWORDSTYPE {
+  id: number;
+  utag: string;
+  utag_kr: string,
+  utagtype_id: number
+}
+
+interface KEYWORDTAGSTYPE {
+  id: number;
+  utag: string;
+  utag_kr: string;
+  utagtype_id: number
+}
+
+
+const Signup = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const imageRef = useRef<any>();
   const [profileImage, setProfileImage] = useState<any>("/assets/icon/icon-profile-picture.svg");
   const [profileImageName, setProfileImageName] = useState<string>("/assets/icon/icon-profile-picture.svg");
   const [previewImage, setPreviewImage] = useState<any>();
@@ -35,28 +62,25 @@ const SignupStep1 = () => {
   const [nameMessage, setNameMessage] = useState<string>("");
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>();
   const [passwordMessage, setPasswordMessage] = useState<string>("");
-  const imageRef = useRef<any>();
+
+  const [fragranceWheelKeywords, setFragranceWheelKeywords] = useState<FRAGRANCEWHEELKEYWORDSTYPE[]>([]);
+  const [moodKeywords, setMoodKeywords] = useState<MOODKEYWORDSTYPE[]>([]);
+  const [keywordTagsArray, setKeywordTagsArray] = useState<KEYWORDTAGSTYPE[]>([]);
+  let addOrDeleteKeywordArray: { id: number; utag: string; utag_kr: string; utagtype_id: number; }[] = [];
+
+
+  const goToLogin = () => {
+    navigate("/login");
+  }
 
   const goToHome = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
+
   const goBack = () => {
     navigate(-1);
-  }
-  const goToStep2 = () => {
-    if (profileImageName.length > 0 &&isEmailValid===true && isNameValid===true && isPasswordValid===true) {
-      navigate("/signupstep2", {
-        state: {
-          profileImage: profileImage,
-          email: email,
-          name: name,
-          password: password,
-        }
-      });
-    } else {
-      alert('모든 항목을 입력해 주세요.')
-    }
-  }
+  };
+
 
   const getUploadImage = () => {
     if (imageRef.current.files[0]) {
@@ -73,6 +97,7 @@ const SignupStep1 = () => {
       setProfileImage(profileImage)
     }
   }
+
 
   const onChangeEmail = (e: { target: { value: string; }; }) => {
     const currentEmail = e.target.value;
@@ -128,9 +153,122 @@ const SignupStep1 = () => {
     }
   }
 
+
+
+  const getKeywords = async () => {
+    await axios.get('/survey')
+      .then((res) => {
+        let fragranceWheelKeywordsArray: KEYWORDTAGSTYPE[] = [];
+        let moodKeywordsArray: KEYWORDTAGSTYPE[] = [];
+        res.data.map((el: KEYWORDTAGSTYPE) => el.utagtype_id === 1 ? fragranceWheelKeywordsArray.push(el) : moodKeywordsArray.push(el))
+        setFragranceWheelKeywords(fragranceWheelKeywordsArray);
+        setMoodKeywords(moodKeywordsArray);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+
+  const addOrDeleteKeyword = (el: { id: number; utag: string; utag_kr: string; utagtype_id: number; }) => {
+    if (keywordTagsArray.length > 0) {
+      let exists = false;
+      keywordTagsArray.map((item) => {
+        if (item.id === el.id) {
+          exists = true;
+        }
+      })
+      if (exists) {
+        addOrDeleteKeywordArray = keywordTagsArray.filter(keyword => keyword.id !== el.id)
+        setKeywordTagsArray(addOrDeleteKeywordArray)
+      } else if (!exists) {
+        setKeywordTagsArray((prevState) => [...prevState, el])
+      }
+    }
+    else {
+      setKeywordTagsArray((prevState) => [...prevState, el])
+    }
+  }
+
+
+
+  const signupAccount = async () => {
+    const formData = new FormData();
+    if (profileImage === "/assets/icon/icon-profile-picture.svg") {
+      formData.append('image', "")
+    } else {
+      formData.append('image', profileImage)
+    }
+    const data = {
+      email: email,
+      name: name,
+      password: password,
+    }
+    formData.append('memberForm', new Blob([JSON.stringify(data)], { type: 'application/json' }))
+
+    await axios.post('/signup', formData,
+      { headers: { 'Content-Type': 'multipart/form-data', accept: 'application/json' } }
+    )
+      .then((res) => {
+        if (res.data === '회원가입이 성공적으로 완료되었습니다.') {
+          console.log('계정 생성 성공');
+          signupKeyword();
+        }
+        else {
+          console.log('data', data)
+        }
+      }
+      ).catch((error) => {
+        console.log(error)
+        console.log('계정 생성에 실패했습니다.');
+        alert('회원가입에 실패했습니다.');
+
+      }
+      )
+
+  }
+
+
+  const signupKeyword = async () => {
+    const keyword_data = {
+      name: name,
+      utags: keywordTagsArray,
+    }
+    await axios.post('/survey', keyword_data)
+      .then((res) => {
+        if (res.data[0].utagId > 0) {
+          console.log('키워드 저장 성공');
+          alert('회원가입에 성공했습니다.');
+          goToLogin();
+        }
+      }
+      ).catch((res) => {
+        console.log(res)
+        console.log('키워드 저장에 실패했습니다.')
+        alert('회원가입에 실패했습니다.');
+      }
+      )
+
+  }
+
+  const Signup = () => {
+    if (keywordTagsArray.length > 0) {
+      signupAccount();
+    } else {
+      alert('키워드를 1개 이상 선택해주세요.')
+    }
+  }
+
+  useEffect(() => {
+    getKeywords();
+  }, []);
+
+
+
+
   return (
-    <div>
-      <Header>가입하기</Header>
+    <>
+      <Header />
       <Content>
         <PfpArea>
           <PreviewProfileImage
@@ -168,10 +306,33 @@ const SignupStep1 = () => {
 
         </InfoArea>
 
-        <GoToStep2Button onClick={goToStep2}>다음</GoToStep2Button>
+
+        <KeywordArea>
+          <AreaTitle>선호하는 향 계열</AreaTitle>
+          <Keywords>
+            {fragranceWheelKeywords.map((el) =>
+              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161", backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#E3A6A1" : "#F5D0CD" }}>
+                {el.utag_kr}
+              </KeywordButton>
+            )}
+          </Keywords>
+        </KeywordArea>
+        <KeywordArea>
+          <AreaTitle>선호하는 분위기</AreaTitle>
+          <Keywords>
+            {moodKeywords.map((el) =>
+              <KeywordButton key={el.id} onClick={() => addOrDeleteKeyword(el)} style={{ color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161", backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#E3A6A1" : "#F5D0CD" }} >
+                {el.utag_kr}
+              </KeywordButton>
+            )}
+          </Keywords>
+        </KeywordArea>
+
+        <SignupButton onClick={Signup}>가입하기</SignupButton>
+
       </Content>
-    </div>
+    </>
   );
 };
 
-export default SignupStep1;
+export default Signup;
