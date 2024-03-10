@@ -26,6 +26,7 @@ import PerfumeCell from "./PerfumeCell";
 import PerfumeCellModifyModal from "./PerfumeCellModifyModal";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
+import UserModifyModal from "./UserModifyMoal";
 
 interface KeywordType {
   id: number;
@@ -53,6 +54,7 @@ const MyPage = () => {
   const [fragranceWheelKeywords, setFragranceWheelKeywords] = useState<KeywordType[]>([]);
   const [moodKeywords, setMoodKeywords] = useState<KeywordType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isModalOpen2, setIsModalOpen2] = useState<boolean>(false);
   const [clickedTabMenu, setClickedTabMenu] = useState<string>('북마크한 향수');
   const [bookmarkList, setBookmarkList] = useState<PerfumeType[]>();
   const [recommendList, setRecommendList] = useState<PerfumeType[]>();
@@ -175,7 +177,11 @@ const MyPage = () => {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (modalBackground.current && !modalBackground.current.contains(e.target as Node)) {
-        setIsModalOpen(false);
+        if (isModalOpen === true) {
+          setIsModalOpen(false);
+        } else if (isModalOpen2 === true) {
+          setIsModalOpen2(false);
+        }
       }
     };
     window.addEventListener('mousedown', handleClick);
@@ -197,6 +203,19 @@ const MyPage = () => {
         myToken={myToken}
       />
       : null}
+
+    {isModalOpen2 === true ?
+      <UserModifyModal
+      oldName={name}
+      setName={setName}
+      ModalBackground={modalBackground}
+      isModalOpen2={isModalOpen2}
+      setIsModalOpen2={setIsModalOpen2}
+      myToken={myToken}
+      />
+      : null}
+
+
     <Container>
       <Header />
       <Search />
@@ -208,7 +227,7 @@ const MyPage = () => {
             <div className="name_text">{name}</div>
             <div className="email_text">{email}</div>
             <ButtonArea>
-              <div style={{ display: "flex", flexDirection: "row" }}>
+              <div onClick={() => setIsModalOpen2(true)} style={{ display: "flex", flexDirection: "row" }}>
                 <SettingIcon src="/assets/icon/icon_settings.svg" />
                 <ProfileButton isPink={false}>
                   프로필 수정하기</ProfileButton>
@@ -238,8 +257,8 @@ const MyPage = () => {
         </TabButtonArea>
         <ListArea>
           {clickedTabMenu === '북마크한 향수' ?
-            bookmarkList?.length ? bookmarkList.map((el) => <PerfumeCell key={el.perfume_id} Perfume={el} />) 
-            :
+            bookmarkList?.length ? bookmarkList.map((el) => <PerfumeCell key={el.perfume_id} Perfume={el} />)
+              :
               <NoticeComment>북마크한 향수가 없습니다.</NoticeComment>
             : recommendList?.length ? recommendList?.map((el) => <PerfumeCell key={el.perfume_id} Perfume={el} />)
               : <NoticeComment>맞춤 추천을 받기 위해서 마음에 드는 향수를 북마크해주세요.</NoticeComment>}
