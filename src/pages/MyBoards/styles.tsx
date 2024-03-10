@@ -27,8 +27,8 @@ export const Main=styled.div`
   }
 `
 
-export const MenuArea=styled.div`
-  label: menu-area;
+export const PageTitleArea=styled.div`
+  label: page-title-area;
   width: 100%;
   height: 3.1rem;
   display:flex;
@@ -37,13 +37,15 @@ export const MenuArea=styled.div`
   border-bottom: 2px solid #D67070;
 `
 
-export const CommunityMenu=styled.div`
-  label: community-menu;
+export const PageTitle=styled.div`
+  label: page-title;
   width:fit-content;
   height: auto;
-  font-size: 1.8rem;
+  color: #D67070;
+  font-family: Noto Sans KR;
+  font-size: 2rem;
+  font-weight: 600;
   align-self: self-end;
-  margin-left:10px;
   margin-right:10px;
   cursor:pointer;
 `
