@@ -1,19 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Container,
-  Header,
-  HeaderLeft,
-  HeaderRight,
-  HeaderText,
-  Title,
-  Menu,
-  MenuList,
-  ContentArea,
-  PageName,
+  Main,
   ProfileArea,
   ProfileImage,
   NameEmailArea,
-  ChangeInfoButton,
+  ButtonArea,
+  ProfileButton,
+  SettingIcon,
   KeywordArea,
   KeywordAreaTitle,
   MyKeywordsArea,
@@ -21,6 +15,8 @@ import {
   TabButtonArea,
   BookmarkedTabButton,
   RecommendTabButton,
+  ListArea,
+  NoticeComment,
 
 } from "./styles";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +24,8 @@ import axios from "axios";
 import ApiService from "../../ApiServices";
 import PerfumeCell from "./PerfumeCell";
 import PerfumeCellModifyModal from "./PerfumeCellModifyModal";
+import Header from "../../components/Header";
+import Search from "../../components/Search";
 
 interface KeywordType {
   id: number;
@@ -72,7 +70,6 @@ const MyPage = () => {
   const goToLogin = () => {
     navigate("/login")
   }
-
 
   useEffect(() => {
     let token = localStorage.getItem('my-token');
@@ -201,42 +198,26 @@ const MyPage = () => {
       />
       : null}
     <Container>
-      <Header>
-        <HeaderLeft>
-          <Title>
-            <div className="title__kr">센카이브</div>
-            <div className="title__en">Scenchive</div>
-          </Title>
-          <Menu>
-            <MenuList>마이페이지</MenuList>
-            <MenuList>필터 추천</MenuList>
-            <MenuList>게시판</MenuList>
-          </Menu>
-        </HeaderLeft>
-        <HeaderRight>
-          {!myToken ? (
-            <>
-              <HeaderText onClick={() => navigate("/login")}>로그인</HeaderText>
-              <HeaderText>|</HeaderText>
-              <HeaderText onClick={() => navigate("/signupstep1")}>
-                회원가입
-              </HeaderText>
-            </>
-          ) : (
-            <img src="/assets/icon/icon_notice.svg" />
-          )}
-        </HeaderRight>
-      </Header>
+      <Header />
+      <Search />
 
-
-      <ContentArea>
-        <PageName>마이페이지</PageName>
+      <Main>
         <ProfileArea>
           <ProfileImage src={imageUrl} />
           <NameEmailArea>
             <div className="name_text">{name}</div>
             <div className="email_text">{email}</div>
-            <ChangeInfoButton>프로필 수정하기</ChangeInfoButton>
+            <ButtonArea>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <SettingIcon src="/assets/icon/icon_settings.svg" />
+                <ProfileButton isPink={false}>
+                  프로필 수정하기</ProfileButton>
+              </div>
+              <div className="split">|</div>
+              <ProfileButton onClick={() => navigate("/myBoards")} isPink={true}>내가 작성한 게시글</ProfileButton>
+              <div className="split">|</div>
+              <ProfileButton onClick={() => navigate("/myComments")} isPink={true}>내가 작성한 댓글</ProfileButton>
+            </ButtonArea>
           </NameEmailArea>
         </ProfileArea>
 
@@ -255,13 +236,15 @@ const MyPage = () => {
             맞춤 추천 향수
           </RecommendTabButton>
         </TabButtonArea>
-        {clickedTabMenu === '북마크한 향수' ?
-          bookmarkList?.length ? bookmarkList.map((el) => <PerfumeCell key={el.perfume_id} Perfume={el} />) :
-            <div>북마크한 향수가 없습니다.</div>
-          : recommendList?.length ? recommendList?.map((el) => <PerfumeCell key={el.perfume_id} Perfume={el} />)
-            : <div>맞춤 추천을 받기 위해서 마음에 드는 향수를 북마크해주세요.</div>}
-
-      </ContentArea>
+        <ListArea>
+          {clickedTabMenu === '북마크한 향수' ?
+            bookmarkList?.length ? bookmarkList.map((el) => <PerfumeCell key={el.perfume_id} Perfume={el} />) 
+            :
+              <NoticeComment>북마크한 향수가 없습니다.</NoticeComment>
+            : recommendList?.length ? recommendList?.map((el) => <PerfumeCell key={el.perfume_id} Perfume={el} />)
+              : <NoticeComment>맞춤 추천을 받기 위해서 마음에 드는 향수를 북마크해주세요.</NoticeComment>}
+        </ListArea>
+      </Main>
     </Container>
   </>
   );

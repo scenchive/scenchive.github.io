@@ -21,7 +21,7 @@ const Header = () => {
   const [token, setToken] = useState<string | null>(null);
   const [toggle, setToggle] = useState(false);
   const menuItems = [
-    { name: "마이페이지", url: "", img: "/assets/icon/icon_mypage.svg" },
+    { name: "마이페이지", url: "/mypage", img: "/assets/icon/icon_mypage.svg" },
     { name: "필터 추천", url: "", img: "/assets/icon/icon_filter.svg" },
     { name: "커뮤니티", url: "/community", img: "/assets/icon/icon_board.svg" },
   ];
@@ -57,7 +57,7 @@ const Header = () => {
         <MenuSmall>
           {menuItems.map((item, index) => {
             return (
-              <MenuItemSmall border={index !== 2}>
+              <MenuItemSmall onClick={() => navigate(item?.url)} border={index !== 2} key={index}>
                 <img src={item.img} />
                 <div>{item.name}</div>
               </MenuItemSmall>

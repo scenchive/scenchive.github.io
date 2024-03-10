@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import {
   ModalBackgroundArea,
   ModalArea,
+  ModalTitle,
   SectionArea,
   KeywordTitle,
   KeywordArea,
   KeywordCell,
-  ButtonArea,
   ModifyButton,
   CancelButton,
 
@@ -29,7 +29,7 @@ const PerfumeCellModifyModal = (props: {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
   userKeyword: KeywordType[] | undefined,
   setUserKeyword: React.Dispatch<React.SetStateAction<KeywordType[] | undefined>>,
-  myToken:string|null|undefined,
+  myToken: string | null | undefined,
 }) => {
 
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const PerfumeCellModifyModal = (props: {
 
   const modifyMyKeywords = () => {
     let modify_body = keywordTagsArray;
-    axios.put('/keyword',modify_body, { headers: { 'Authorization': `Bearer ${props.myToken}` } })
+    axios.put('/keyword', modify_body, { headers: { 'Authorization': `Bearer ${props.myToken}` } })
       .then((data) => {
         if (data?.data === 'update') {
           alert('향세포가 수정되었습니다.');
@@ -90,13 +90,18 @@ const PerfumeCellModifyModal = (props: {
       <ModalBackgroundArea isModalOpen={props.isModalOpen} ref={props.ModalBackground}>
       </ModalBackgroundArea>
       <ModalArea isModalOpen={props.isModalOpen} ref={props.ModalBackground}>
+        <CancelButton onClick={() => props.setIsModalOpen(false)} src="/assets/icon/icon_modal_x.svg"/>
+        <ModalTitle>나의 향수 세포 수정</ModalTitle>
         <SectionArea>
-          <KeywordTitle>계열</KeywordTitle>
+          <KeywordTitle>선호하는 향 계열</KeywordTitle>
           <KeywordArea>
             {props.fragranceWheelKeywords?.map((el) =>
 
               <KeywordCell key={el.id} style={{
-                backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+                backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#D67070" : "#F5D0CD",
+                color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
+                border: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "1.5px solid #D67070" : "1.5px solid #E3A6A1",
+
               }}
                 onClick={() => addOrDeleteKeyword(el)}
               >
@@ -107,24 +112,22 @@ const PerfumeCellModifyModal = (props: {
         </SectionArea>
 
         <SectionArea style={{ marginTop: "30px" }}>
-          <KeywordTitle>분위기</KeywordTitle>
+          <KeywordTitle>선호하는 분위기</KeywordTitle>
           <KeywordArea>
             {props.moodKeywords?.map((el) =>
               <KeywordCell key={el.id} style={{
-                backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+                backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#D67070" : "#F5D0CD",
+                color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
+                border: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "1.5px solid #D67070" : "1.5px solid #E3A6A1",
               }}
                 onClick={() => addOrDeleteKeyword(el)}
-
               >
                 {el.utag_kr}
               </KeywordCell>
             )}
           </KeywordArea>
         </SectionArea>
-        <ButtonArea>
-          <ModifyButton onClick={()=>modifyMyKeywords()}>수정</ModifyButton>
-          <CancelButton onClick={() => props.setIsModalOpen(false)}>취소</CancelButton>
-        </ButtonArea>
+        <ModifyButton onClick={() => modifyMyKeywords()}>수정</ModifyButton>
       </ModalArea>
     </div>
   );
