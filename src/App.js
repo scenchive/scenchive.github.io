@@ -10,13 +10,15 @@ import PerfumeDetail from "./pages/PerfumeDetail/index.tsx";
 import MyPage from "./pages/MyPage/index.tsx";
 import MyActivity from "./pages/MyActivity/index.tsx"
 import WriteReview from "./pages/WriteReview";
-import KeywordSearch from "./pages/KeywordSearch";
+import KeywordSearchStep1 from "./pages/KeywordSearch/KeywordSearchStep1/index.tsx";
+import KeywordSearchStep2 from "./pages/KeywordSearch/KeywordSearchStep2/index.tsx";
 import RecommendResult from "./pages/RecommendResult";
 import Commmunity from "./pages/Community";
 import CommunityWrite from "./pages/CommunityWrite";
 import CommunityDetail from "./pages/CommunityDetail";
 import MyBoards from "./pages/MyBoards";
 import MyComments from "./pages/MyComments";
+import Notice from "./pages/Notice";
 
 function App() {
   return (
@@ -32,7 +34,8 @@ function App() {
         <Route path="/perfumedetail" element={<PerfumeDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/writereview" element={<WriteReview />} />
-        <Route path="/keywordsearch" element={<KeywordSearch />} />
+        <Route path="/keywordsearchstep1" element={<KeywordSearchStep1 />} />
+        <Route path="/keywordsearchstep2" element={<KeywordSearchStep2 />} />
         <Route path="/recommendresult" element={<RecommendResult />} />
         <Route path="/perfumedetail" element={<PerfumeDetail/>}/>
         <Route path="/myactivity" element={<MyActivity/>}/>
@@ -42,6 +45,7 @@ function App() {
         <Route path="/community" element={<Commmunity/>}/>
         <Route path="/communitywrite" element={<CommunityWrite/>}/>
         <Route path="/communitydetail" element={<CommunityDetail/>}/>
+        <Route path="/notice" element={<Notice />} />
       </Routes>
     </div>
   );

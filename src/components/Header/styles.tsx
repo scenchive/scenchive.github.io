@@ -32,7 +32,7 @@ export const Logo = styled.div`
   cursor: pointer;
 
   .logo__kr {
-    font-size: 2.7rem;
+    font-size: 2.6rem;
     margin-right: 5px;
   }
 
@@ -96,13 +96,14 @@ export const MenuSmall = styled.div`
   display: none;
 
   ${mediaQuery} {
-    width: 130px;
+    width: 150px;
     height: fit-content;
     display: flex;
     flex-direction: column;
     padding: 0;
     background-color: white;
     border: 1px solid #e3a6a1;
+    border-radius: 5px;
     position: absolute;
     top: 60px;
     left: 5px;
@@ -110,16 +111,38 @@ export const MenuSmall = styled.div`
   }
 `;
 
+export const MenuSmallTop = styled.div`
+  width: 100%;
+  height: 30px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5px;
+  box-sizing: border-box;
+  font-family: Noto Sans Kr;
+  font-family: Gowun Batang;
+  background-color: #e3a6a1;
+  font-size: 1.2rem;
+  & > div {
+    margin: 0 2px;
+    opacity: 1;
+  }
+`;
 export const MenuItemSmall = styled.div<{ border: boolean }>`
   label: menu-item-small;
   display: none;
 
   ${mediaQuery} {
+    height: 25px;
     display: flex;
     justify-content: space-between;
+    justify-content: center;
     align-items: center;
     color: #e3a6a1;
-    padding: 5px 10px;
+    padding: 5px 20px;
+    //font-family: Noto Sans Kr;
+    font-family: Gowun Batang;
     border-bottom: ${(props) => (props.border ? "1px solid #e3a6a1" : "none")};
     cursor:pointer;
 
@@ -146,6 +169,7 @@ export const HeaderRight = styled.div`
 
   ${mediaQuery} {
     width: 20%;
+
     img {
       width: 20px;
     }
@@ -156,4 +180,10 @@ export const HeaderRightText = styled.div`
   font-family: Noto Sans Kr;
   padding: 0 3px;
   font-size: 1.7rem;
+
+  ${mediaQuery} {
+    display: none;
+    /* font-size: 1rem;
+    padding: 0 1px; */
+  }
 `;

@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
+
 export const Container = styled.div`
   label: container;
   width: 100%;
@@ -9,179 +12,115 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-  min-width: 992px;
   margin-bottom: 50px;
-`;
-
-export const Header = styled.div`
-  label: header;
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 50px;
-  box-sizing: border-box;
-  color: #bf8dff;
-  font-family: NanumSquareRound;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  box-shadow: 0px 5px 5px #f6f2ff;
-`;
-
-export const HeaderLeft = styled.div`
-  label: header-left;
-  width: fit-content;
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-`;
-
-export const Title = styled.div`
-  label: title;
-  width: fit-content;
-  display: flex;
-  align-items: end;
-  .title__kr {
-    font-size: 30px;
-    margin-right: 10px;
-  }
-  .title__en {
-    font-size: 15px;
-    padding-bottom: 5px;
-  }
-`;
-
-export const Menu = styled.div`
-  label: menu;
-  display: flex;
-  margin-left: 50px;
-  font-size: 17px;
-`;
-
-export const MenuList = styled.div`
-  label: menu-list;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 10px;
-  line-height: 49px;
-`;
-
-export const HeaderRight = styled.div`
-  label: header-right;
-  display: flex;
-  align-items: center;
-`;
-
-export const HeaderText = styled.div`
-  label: header-text;
-  padding: 0 5px;
-  font-size: 15px;
 `;
 
 export const Top = styled.div`
   label: top;
   width: 30%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 120px;
-  margin-bottom: 50px;
+  margin-top: 40px;
+  margin-bottom: 10px;
   position: relative;
-  padding: 5px 0;
   box-sizing: border-box;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px #a9a9a9;
+  font-family: Noto Sans Kr;
   img {
     height: 100px;
+    margin-bottom: 10px;
   }
-`;
-
-export const Text = styled.div`
-  width: 80%;
-  font-size: 14px;
-  color: #a9a9a9;
-  text-align: start;
-  margin-bottom: 5px;
-`;
-
-export const Cards = styled.div`
-  label: cards;
-  width: 80%;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px 10px;
 `;
 
 export const TopText = styled.div`
   label: list-text;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   margin-left: 10px;
   .top-text__title {
     width: fit-content;
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 1.4rem;
     text-align: left;
     margin-bottom: 5px;
+    color: #242424;
   }
   .top-text__sub-title {
     color: #a9a9a9;
-    font-size: 12px;
+    font-size: 1.2rem;
   }
 `;
 
-export const Card = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+export const Text = styled.div`
+  width: 70%;
+  font-size: 1.4rem;
+  color: #616161;
+  text-align: start;
+  margin-bottom: 5px;
+  padding: 5px 5px;
   box-sizing: border-box;
-  img {
-    width: 100%;
-    box-shadow: 0px 0px 1px #a9a9a9;
-    border-radius: 12px;
-    margin-bottom: 5px;
-    min-height: 90%;
+  border-bottom: 1px solid #bc5f6a;
+
+  ${mediaQuery} {
+    width: calc(100% - 40px);
   }
 `;
 
-export const CardText = styled.div`
+export const Lists = styled.div`
+  label: lists;
+  width: 70%;
+  height: fit-content;
+  max-height: 1000px;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
   display: flex;
   flex-direction: column;
-  .card-text__title {
-    font-size: 14px;
-  }
-  .card-text__sub-title {
-    color: #a9a9a9;
-    font-size: 12px;
+
+  ${mediaQuery} {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 20px;
   }
 `;
 
-export const PageNation = styled.div`
-  label: pagenation;
-  width: 60%;
-  height: 30px;
+export const List = styled.div`
+  label: list;
+  width: 100%;
+  height: 100px;
+  padding: 10px 0;
+  box-sizing: border-box;
+  margin: 3px 0;
+  box-sizing: border-box;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
   img {
-    margin: 0 5px;
+    width: auto;
+    height: 80px;
   }
 `;
-export const PageButton = styled.div`
-  width: 30px;
-  height: 30px;
-  border: 1px solid #bf8dff;
-  margin: 0px 2px;
+
+export const ListText = styled.div`
+  label: list-text;
   display: flex;
+  flex-direction: column;
+  align-items: start;
   justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  line-height: 14px;
+  margin-left: 10px;
+  .list-text__title {
+    width: fit-content;
+    white-space: nowrap;
+    font-size: 1.4rem;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+  .list-text__sub-title {
+    color: #a9a9a9;
+    font-size: 1.2rem;
+  }
 `;
