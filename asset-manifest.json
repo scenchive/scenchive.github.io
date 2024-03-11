@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "http://scenchive.github.io/scenchive.github.io/static/css/main.c52e56f6.css",
-    "main.js": "http://scenchive.github.io/scenchive.github.io/static/js/main.819a2360.js",
-    "static/js/787.c07db748.chunk.js": "http://scenchive.github.io/scenchive.github.io/static/js/787.c07db748.chunk.js",
-    "static/media/logo.svg": "http://scenchive.github.io/scenchive.github.io/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "static/media/slick.svg": "http://scenchive.github.io/scenchive.github.io/static/media/slick.2630a3e3eab21c607e21.svg",
-    "static/media/slick.eot": "http://scenchive.github.io/scenchive.github.io/static/media/slick.a4e97f5a2a64f0ab1323.eot",
-    "static/media/slick.ttf": "http://scenchive.github.io/scenchive.github.io/static/media/slick.c94f7671dcc99dce43e2.ttf",
-    "static/media/slick.woff": "http://scenchive.github.io/scenchive.github.io/static/media/slick.295183786cd8a1389865.woff",
-    "index.html": "http://scenchive.github.io/scenchive.github.io/index.html",
-    "main.c52e56f6.css.map": "http://scenchive.github.io/scenchive.github.io/static/css/main.c52e56f6.css.map",
-    "main.819a2360.js.map": "http://scenchive.github.io/scenchive.github.io/static/js/main.819a2360.js.map",
-    "787.c07db748.chunk.js.map": "http://scenchive.github.io/scenchive.github.io/static/js/787.c07db748.chunk.js.map"
+    "main.css": "/scenchive.github.io/static/css/main.5816285b.css",
+    "main.js": "/scenchive.github.io/static/js/main.3bebaa03.js",
+    "static/js/787.c07db748.chunk.js": "/scenchive.github.io/static/js/787.c07db748.chunk.js",
+    "static/media/logo.svg": "/scenchive.github.io/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "static/media/slick.svg": "/scenchive.github.io/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/scenchive.github.io/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/scenchive.github.io/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/scenchive.github.io/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/scenchive.github.io/index.html",
+    "main.5816285b.css.map": "/scenchive.github.io/static/css/main.5816285b.css.map",
+    "main.3bebaa03.js.map": "/scenchive.github.io/static/js/main.3bebaa03.js.map",
+    "787.c07db748.chunk.js.map": "/scenchive.github.io/static/js/787.c07db748.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c52e56f6.css",
-    "static/js/main.819a2360.js"
+    "static/css/main.5816285b.css",
+    "static/js/main.3bebaa03.js"
   ]
 }
