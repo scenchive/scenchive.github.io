@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-const breakpoint = "768px";
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const NoteArea=styled.div`

@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const breakpoint = "768px";
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 const colors = ["#F5D0CD", "#E3A6A1", "#D67070"];
 

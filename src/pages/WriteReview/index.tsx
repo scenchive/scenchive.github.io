@@ -128,8 +128,8 @@ const WriteReview = () => {
           setFragranceWheelKeywords(fragranceWheelKeywordsArray);
           setMoodKeywords(moodKeywordsArray);
           setPlaceKeywords(placeArray)
-        }).catch((res) => {
-          console.log(res)
+        }).catch((error) => {
+          console.log(error)
         })
     }
   }
@@ -148,15 +148,13 @@ const WriteReview = () => {
         content: content,
         ptagIds: ptagIdsArray,
       }
-      console.log('dataaa')
-      console.log(data)
+  
       if (myToken && myToken.length > 0) {
         axios.post('/review/', data, { headers: { 'Authorization': `Bearer ${myToken}` } })
           .then((res) => {
-            console.log('res', res)
             goToPerfumeDetail();
-          }).catch((res) => {
-            console.log(res)
+          }).catch((error) => {
+            console.log(error)
           })
       }
     } else {
@@ -228,7 +226,7 @@ const WriteReview = () => {
               <Answer onClick={() => setRating(5)} style={{ backgroundColor: rating === 5 ? "#E3A6A1" : "white", color: rating === 5 ? "#FFFFFF" : "#B3B3B3" }}>5점</Answer>
               <Answer onClick={() => setRating(4)} style={{ backgroundColor: rating === 4 ? "#E3A6A1" : "white", color: rating === 4 ? "#FFFFFF" : "#B3B3B3" }}>4점</Answer>
               <Answer onClick={() => setRating(3)} style={{ backgroundColor: rating === 3 ? "#E3A6A1" : "white", color: rating === 3 ? "#FFFFFF" : "#B3B3B3" }}>3점</Answer>
-              <Answer onClick={() => setRating(2)} style={{ backgroundColor: rating === 4 ? "#E3A6A1" : "white", color: rating === 2 ? "#FFFFFF" : "#B3B3B3" }}>2점</Answer>
+              <Answer onClick={() => setRating(2)} style={{ backgroundColor: rating === 2 ? "#E3A6A1" : "white", color: rating === 2 ? "#FFFFFF" : "#B3B3B3" }}>2점</Answer>
               <Answer onClick={() => setRating(1)} style={{ backgroundColor: rating === 1 ? "#E3A6A1" : "white", color: rating === 1 ? "#FFFFFF" : "#B3B3B3" }}>1점</Answer>
 
             </AnswerRow>

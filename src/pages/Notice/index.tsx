@@ -61,42 +61,8 @@ const Notice = () => {
       .then((res) => {
         setUnread(res.data.unreadNotifications);
         setCount(res.data.unreadNotifications + res.data.readNotifications);
-        //setNotices(res.data.notificationDtoList);
-        setNotices([
-          {
-            id: 6,
-            boardId: 8,
-            boardTitle: "글제목입니다.",
-            message: "댓글입니다.",
-            createdAt: "2024-01-21 22:08:39",
-            check: false,
-          },
-          {
-            id: 6,
-            boardId: 8,
-            boardTitle: "글제목입니다.",
-            message: "댓글입니다.",
-            createdAt: "2024-01-21 22:08:39",
-            check: true,
-          },
-          {
-            id: 6,
-            boardId: 8,
-            boardTitle: "글제목입니다.",
-            message: "댓글입니다.",
-            createdAt: "2024-01-21 22:08:39",
-            check: true,
-          },
-          {
-            id: 6,
-            boardId: 8,
-            boardTitle: "글제목입니다.",
-            message: "댓글입니다.",
-            createdAt: "2024-01-21 22:08:39",
-            check: true,
-          },
-          
-        ]);
+        setNotices(res.data.notificationDtoList);
+       
       });
   };
 

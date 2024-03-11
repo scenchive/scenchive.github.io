@@ -131,7 +131,7 @@ const Community = () => {
       <Main>
 
         <MenuArea>
-          <CommunityMenu onClick={() => setSelectedMenu("전체")} style={{ color: selectedMenu === "전체" ? "#D67070 " : "#B3B3B3", fontSize:  selectedMenu === "전체" ? ".rem" : "1.4rem", fontWeight:   selectedMenu === "전체" ? "600" : "normal"}}>전체</CommunityMenu>
+          <CommunityMenu onClick={() => setSelectedMenu("전체")} style={{ color: selectedMenu === "전체" ? "#D67070 " : "#B3B3B3", fontSize:  selectedMenu === "전체" ? "2rem" : "1.4rem", fontWeight:   selectedMenu === "전체" ? "600" : "normal"}}>전체</CommunityMenu>
           <CommunityMenu onClick={() => setSelectedMenu("정/가품")} style={{ color: selectedMenu === "정/가품" ? "#D67070 " : "#B3B3B3", fontSize:  selectedMenu === "정/가품" ? "2rem" : "1.4rem", fontWeight:   selectedMenu === "정/가품" ? "600" : "normal"}}>정/가품</CommunityMenu>
           <CommunityMenu onClick={() => setSelectedMenu("Q & A")} style={{ color: selectedMenu === "Q & A" ? "#D67070 " : "#B3B3B3", fontSize:  selectedMenu === "Q & A" ? "2rem" : "1.4rem" , fontWeight:   selectedMenu === "Q & A" ? "600" : "normal"}}>Q & A</CommunityMenu>
           <CommunityMenu onClick={() => setSelectedMenu("자유")} style={{ color: selectedMenu === "자유" ? "#D67070 " : "#B3B3B3" , fontSize:  selectedMenu === "자유" ? "2rem" : "1.4rem", fontWeight:   selectedMenu === "자유" ? "600" : "normal"}}>자유</CommunityMenu>
@@ -149,27 +149,27 @@ const Community = () => {
             selectedMenu === "전체" ?
               boardList?.map((el, index) =>
                 <CommunityRow key={index} onClick={() => navigate('/communitydetail?detail=' + el?.id)}>
-                  <RowNumber>{index + 1}</RowNumber>
+                  <RowNumber>{el?.id}</RowNumber>
                   <RowMenu>{el?.boardtype_name === "fake" ? "정/가품" : el?.boardtype_name === "qna" ? "Q & A" : "자유"}</RowMenu>
                   <RowTitle>{el?.title}</RowTitle>
                 </CommunityRow>)
               : selectedMenu === "정/가품" ?
                 fakeBoardList?.map((el, index) => el?.boardtype_name === "fake" ?
                   <CommunityRow key={index} onClick={() => navigate('/communitydetail?detail=' + el?.id)}>
-                    <RowNumber>{index + 1}</RowNumber>
+                    <RowNumber>{el?.id}</RowNumber>
                     <RowMenu>정/가품</RowMenu>
                     <RowTitle>{el?.title}</RowTitle>
                   </CommunityRow> : null)
                 : selectedMenu === "Q & A" ?
                   qnaBoardList?.map((el, index) => el?.boardtype_name === "qna" ?
                     <CommunityRow key={index} onClick={() => navigate('/communitydetail?detail=' + el?.id)}>
-                      <RowNumber>{index + 1}</RowNumber>
+                      <RowNumber>{el?.id}</RowNumber>
                       <RowMenu>Q & A</RowMenu>
                       <RowTitle>{el?.title}</RowTitle>
                     </CommunityRow> : null)
                   : freeBoardList?.map((el, index) => el?.boardtype_name === "free" ?
                     <CommunityRow key={index} onClick={() => navigate('/communitydetail?detail=' + el?.id)}>
-                      <RowNumber>{index + 1}</RowNumber>
+                      <RowNumber>{el?.id}</RowNumber>
                       <RowMenu>자유</RowMenu>
                       <RowTitle>{el?.title}</RowTitle>
                     </CommunityRow> : null)

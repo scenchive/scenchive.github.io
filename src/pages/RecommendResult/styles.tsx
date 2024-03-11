@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const breakpoint = "768px";
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
@@ -86,6 +86,7 @@ export const Card = styled.div`
   font-family: Noto Sans Kr;
   padding: 0 5px;
   box-sizing: border-box;
+  cursor:pointer;
   img {
     height: 100px;
     margin-bottom: 5px;

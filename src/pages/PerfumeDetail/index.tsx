@@ -211,7 +211,6 @@ const PerfumeDetail = () => {
     if (perfumeId && myToken) {
       await axios.get(`/review/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
-          console.log('res', res?.data)
           setReviewList(res?.data)
           setReviewTotal(res.data.length)
         });
