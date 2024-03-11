@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-
+const breakpoint = "768px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
   label:container;
@@ -9,94 +10,28 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  min-width: 992px;
   align-items:center; 
 `;
 
-export const Header = styled.div`
-  label:header;
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 50px;
-  box-sizing: border-box;
-  color: #bf8dff;
-  font-family: NanumSquareRound;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  box-shadow: 0px 5px 5px #f6f2ff;
-`;
-
-export const HeaderLeft = styled.div`
-  width: fit-content;
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-`;
-
-export const Title = styled.div`
-  width: fit-content;
-  display: flex;
-  align-items: end;
-  .title__kr {
-    font-size: 30px;
-    margin-right: 10px;
-  }
-  .title__en {
-    font-size: 15px;
-    padding-bottom: 5px;
-  }
-`;
-
-export const Menu = styled.div`
-  display: flex;
-  margin-left: 50px;
-  font-size: 17px;
-`;
-
-export const MenuList = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 10px;
-  line-height: 49px;
-`;
-
-export const HeaderRight = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const HeaderText = styled.div`
-  padding: 0 5px;
-  font-size: 15px;
-`;
-
-export const ContentArea = styled.div`
-  label:content-area;
+export const Main = styled.div`
+  label: main;
+  width:60%;
+  margin-top:40px;
   display:flex;
   flex-direction:column;
-  width:60%;
-  margin-top:130px;
-  justify-content: center;
- 
 
-`
-export const PageName = styled.div`
-  label: page-name;
-  font-size: 20px;
-  color:#616161;
+  ${mediaQuery} {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
 `
 
 export const ProfileArea = styled.div`
   label: profile-area;
   display:flex;
   flex-direction:row;
-  margin-left:auto;
+
   margin-right:auto;
   margin-top:30px;
 `
@@ -134,15 +69,45 @@ export const NameEmailArea = styled.div`
   }
 `
 
-export const ChangeInfoButton = styled.button`
-  label:change-info-button;
-  color:#A2A2A2;
-  font-size:12px;
+export const ButtonArea = styled.div`
+  label: button-area;
+  display: flex;
+  flex-direction: row;
+
+
+  .split{
+    color:#A2A2A2;
+    font-size:1.2rem;
+    font-family: Noto Sans KR;
+    border:none;
+    margin-top:12px;
+    margin-left: 10px;
+    margin-right: 10px;
+    cursor:pointer;
+  }
+`
+
+export const ProfileButton = styled.div<{ isPink: boolean | undefined }>`
+  label: profile-button;
+  height: 20px;
+  color:${(props) => (props?.isPink === true ? "#E3A6A1" : "#A2A2A2")};
+  font-size:1.2rem;
+  font-family: Noto Sans KR;
   margin-top:12px;
   border:none;
   padding:0px;
   background-color:transparent;
   cursor:pointer;
+`
+
+export const SettingIcon= styled.img`
+  label: setting-icon;
+  width: 14px;
+  height: 15px;
+  margin-top:12px;
+  margin-right: 3px;
+  align-self: center;
+  object-fit: cover;
 `
 
 
@@ -167,20 +132,24 @@ export const MyKeywordsArea = styled.div`
   height:auto;
   display:flex;
   flex-direction:row;
-  margin-bottom:55px;
+  margin-bottom:25px;
   flex-flow:wrap;
 `
 
 export const Keyword = styled.div<{ isModify: boolean | undefined }>`
   label:keyword;
   width: fit-content;
-  padding:11px 16px;
-  border:1.5px solid #A281FF;
-  background-color:${(props) => (props.isModify === true ? "#B592FF" : "#F7F4FF")};
+  font-family: Noto Sans KR;
+  font-size: 1.2rem;
+  padding:5px 10px;
+  border:1.5px solid #E3A6A1;
+  background-color:${(props) => (props.isModify === true ? "#F5D0CD" : "#D67070")};
+  margin-right: 2px;
+  margin-bottom: 3px;
   border-radius:30px;
   white-space:nowrap;
   cursor:${(props) => (props.isModify === true ? "pointer" : null)};
-  color:${(props) => (props.isModify === true ? "#FFFFFF" : "#616161")};
+  color:${(props) => (props.isModify === true ? "#616161" : "#FFFFFF")};
 `
 
 export const TabButtonArea = styled.div`
@@ -194,19 +163,39 @@ export const TabButtonArea = styled.div`
 export const BookmarkedTabButton = styled.div<{ clickedTabMenu: string }>`
   label:bookmarked-button;
   width:50%;
-  color:${(props) => (props.clickedTabMenu === "북마크한 향수" ? "#FFFFFF" : "#A9A9A9")};
-  background-color:${(props) => (props.clickedTabMenu === "북마크한 향수" ? "#A281FF" : "#E6E4FF")};
-  font-size:16px;
+  color: #FFFFFF;
+  background-color:${(props) => (props.clickedTabMenu === "북마크한 향수" ? "#E3A6A1" : "#F5D0CD")};
+  font-size:1.5rem;
+  font-family: Noto Sans KR;
   padding-top:11px;
   padding-bottom:11px;
-
+  cursor: pointer;
 `
+
 export const RecommendTabButton = styled.div<{ clickedTabMenu: string }>`
   label:recommend-button;
   width:50%;
-  color:${(props) => (props.clickedTabMenu === "맞춤 추천 향수" ? "#FFFFFF" : "#A9A9A9")};
-  background-color:${(props) => (props.clickedTabMenu === "맞춤 추천 향수" ? "#A281FF" : "#E6E4FF")};
-  font-size:16px;
+  color: #FFFFFF;
+  background-color:${(props) => (props.clickedTabMenu === "맞춤 추천 향수" ? "#E3A6A1" : "#F5D0CD")};
+  font-size:1.5rem;
+  font-family: Noto Sans KR;
   padding-top:11px;
   padding-bottom:11px;
+  cursor:pointer;
+`
+
+export const ListArea = styled.div`
+  label: list-area;
+  display:flex;
+  flex-wrap:wrap;
+  margin-top: 10px;
+  margin-bottom: 200px;
+`
+
+export const NoticeComment = styled.div`
+  label: notice-comment;
+  color: #929292;
+  font-size:1.4rem;
+  font-family: Noto Sans KR;
+  margin-top: 50px;
 `

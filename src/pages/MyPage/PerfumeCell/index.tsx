@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   CellArea,
   PerfumeImage,
-  PerfumeNameKorean,
   PerfumeNameEnglish,
   BrandNameKorean,
   BrandNameEnglish,
@@ -19,7 +18,6 @@ interface PerfumeType{
 
 const PerfumeCell = (props:{Perfume:PerfumeType}) => {
   const navigate = useNavigate();
-  console.log('params',props.Perfume)
   /**
    * @todo 실제 로그인 여부 확인
    */
@@ -36,10 +34,9 @@ const PerfumeCell = (props:{Perfume:PerfumeType}) => {
 
 
   return (
-    <CellArea>
-      <PerfumeImage/>
-      <PerfumeNameKorean>{props.Perfume.brandName_kr}</PerfumeNameKorean>
-      <PerfumeNameEnglish>{props.Perfume.perfume_name}</PerfumeNameEnglish>
+    <CellArea onClick={()=>navigate(`/perfumedetail?perfume=${props?.Perfume?.perfume_id}`)}>
+      <PerfumeImage src={props?.Perfume?.perfumeImage}/>
+      <PerfumeNameEnglish  >{props.Perfume.perfume_name}</PerfumeNameEnglish>
       <BrandNameKorean>{props.Perfume.brandName_kr}</BrandNameKorean>
       <BrandNameEnglish>{props.Perfume.brand_name}</BrandNameEnglish>
     </CellArea>

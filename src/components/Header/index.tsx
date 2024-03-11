@@ -50,8 +50,8 @@ const Header = () => {
         <div className="logo__en">Scenchive</div>
       </Logo>
       <Menu>
-        {menuItems.map((item) => {
-          return <MenuItem  onClick={() => navigate(item?.url)}>{item.name}</MenuItem>;
+        {menuItems.map((item, index) => {
+          return <MenuItem key={index} onClick={() => navigate(item?.url)}>{item.name}</MenuItem>;
         })}
       </Menu>
       {toggle && (
@@ -65,7 +65,8 @@ const Header = () => {
           )}
           {menuItems.map((item, index) => {
             return (
-              <MenuItemSmall border={index !== 2}>
+              <MenuItemSmall onClick={() => navigate(item?.url)} border={index !== 2} key={index}>
+                <img src={item.img} />
                 <div>{item.name}</div>
               </MenuItemSmall>
             );

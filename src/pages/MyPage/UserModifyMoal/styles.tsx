@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const ModalBackgroundArea=styled.div<{ isModalOpen: boolean | undefined }>`
+export const ModalBackgroundArea = styled.div<{ isModalOpen: boolean | undefined }>`
     label: modal-background-area;
     width:100%;
     height:100%;
@@ -8,10 +8,10 @@ export const ModalBackgroundArea=styled.div<{ isModalOpen: boolean | undefined }
     top:0;
     background-color:${(props) => (props.isModalOpen === true ? "#000000" : null)};
     opacity:${(props) => (props.isModalOpen === true ? "0.79" : null)};
-    z-index:${(props) => (props.isModalOpen === true ? "1000": null)};
+    z-index:${(props) => (props.isModalOpen === true ? "1000" : null)};
 `
 
-export const ModalArea=styled.div<{ isModalOpen: boolean | undefined }>`
+export const ModalArea = styled.div<{ isModalOpen: boolean | undefined }>`
     label: modal-area;
     width:60%;
     position:absolute;
@@ -22,8 +22,7 @@ export const ModalArea=styled.div<{ isModalOpen: boolean | undefined }>`
     background-color:#FFFFFF;
     margin:100px auto 200px auto;   
     padding:50px;
-    flex-flow:wrap;
-    z-index:${(props) => (props.isModalOpen === true ? "1000": null)};
+    z-index:${(props) => (props.isModalOpen === true ? "1000" : null)};
 `
 
 export const ModalTitle = styled.div`
@@ -33,49 +32,47 @@ export const ModalTitle = styled.div`
     font-family: Noto Sans KR;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 `
 
-export const SectionArea=styled.div`
-    label:section-area;
-    width:fit-content;
-    display:flex;
-    flex-direction:column;
-`
-
-export const KeywordTitle=styled.div`
-    label: keyword-title;
-    color: #616161;
-    font-size: 1.5rem;
-    font-family: Noto Sans KR;
-    margin-right:auto;
-    margin-bottom:15px;
-`
-
-export const KeywordArea=styled.div`
-    label: keyword-area;
-    display:flex;
-    flex-direction:row;
-    flex-flow:wrap;
+export const NameArea = styled.div`
+    label: name-area;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
 `
 
-export const KeywordCell=styled.div`
-    label: keyword-cell;
+export const NameTitle = styled.div`
+    label: name-title;
     width: fit-content;
-    font-size: 1.3rem;
+    color: #616161;
+    font-size: 1.4rem;
     font-family: Noto Sans KR;
-    padding: 4px 10px 5px;
-    color:#616161;
-    border: 1.5px solid #E3A6A1;
-    border-radius:30px;
-    background-color:#F6F2FF;
-    margin-bottom:5px;
-    margin-right:3px;
-    cursor:pointer;
+    margin-right: 10px;
+
 `
 
-export const ModifyButton=styled.div`
+export const NameInput = styled.input`
+    label: name-input;
+    width: 60%;
+    height :20px;
+    color:#B2B2B2;
+    font-size: 1.1rem;
+    font-family: Noto Sans KR;
+    border-bottom: 1.5px solid #DFDFDF;
+    border-top: none;
+    border-left:none;
+    border-right:none;
+
+    :focus{
+        outline:none;
+    }
+
+`
+
+export const ModifyButton = styled.div`
     label:modify-button;
     width:fit-content;
     color: #FFFFFF;
@@ -83,18 +80,18 @@ export const ModifyButton=styled.div`
     font-size: 1.6rem;
     background-color: #D67070;
     padding: 5px 38px 6px;
-    margin-top: 40px;
+    margin-top: 60px;
     margin-left:auto;
     margin-right:auto;
     border-radius: 2px;
     cursor:pointer;
 `
 
-export const CancelButton=styled.img`
+export const CancelButton = styled.img`
     label:cancel-button;
     width:15px;
     height: 15px;
     position: absolute;
     right: 50px;
-    cursor: pointer;
+    cursor:pointer;
 `

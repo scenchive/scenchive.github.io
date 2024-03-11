@@ -85,12 +85,14 @@ export const Menu = styled.div`
 `;
 
 export const MenuItem = styled.div`
+  label: menu-item;
   padding: 0 10px;
   font-size: 1.7rem;
   cursor: pointer;
 `;
 
 export const MenuSmall = styled.div`
+  label: menu-small;
   display: none;
 
   ${mediaQuery} {
@@ -128,6 +130,7 @@ export const MenuSmallTop = styled.div`
   }
 `;
 export const MenuItemSmall = styled.div<{ border: boolean }>`
+  label: menu-item-small;
   display: none;
 
   ${mediaQuery} {
@@ -141,6 +144,7 @@ export const MenuItemSmall = styled.div<{ border: boolean }>`
     //font-family: Noto Sans Kr;
     font-family: Gowun Batang;
     border-bottom: ${(props) => (props.border ? "1px solid #e3a6a1" : "none")};
+    cursor:pointer;
 
     img {
       width: 15px;

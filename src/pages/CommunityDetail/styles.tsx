@@ -97,7 +97,17 @@ export const BoardContent=styled.div`
   font-family: Noto Sans KR;
   text-align:start;
   margin-top:20px;
-  margin-bottom:100px;
+ 
+`
+
+export const BoardImage= styled.img`
+  label: board-image;
+  width: 300px;
+  height: 300px;
+  display: block;
+  margin-bottom: 20px;
+  margin-top: 50px;
+  object-fit: contain;
 `
 
 export const WriteCommentArea=styled.div`
