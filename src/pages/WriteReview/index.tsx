@@ -128,8 +128,8 @@ const WriteReview = () => {
           setFragranceWheelKeywords(fragranceWheelKeywordsArray);
           setMoodKeywords(moodKeywordsArray);
           setPlaceKeywords(placeArray)
-        }).catch((res) => {
-          console.log(res)
+        }).catch((error) => {
+          console.log(error)
         })
     }
   }
@@ -148,15 +148,13 @@ const WriteReview = () => {
         content: content,
         ptagIds: ptagIdsArray,
       }
-      console.log('dataaa')
-      console.log(data)
+  
       if (myToken && myToken.length > 0) {
         axios.post('/review/', data, { headers: { 'Authorization': `Bearer ${myToken}` } })
           .then((res) => {
-            console.log('res', res)
             goToPerfumeDetail();
-          }).catch((res) => {
-            console.log(res)
+          }).catch((error) => {
+            console.log(error)
           })
       }
     } else {

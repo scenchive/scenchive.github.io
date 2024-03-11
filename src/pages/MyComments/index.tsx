@@ -65,7 +65,6 @@ const MyComments = () => {
     if (myToken && myToken.length > 0) {
       axios.get('/user/content', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
-          console.log('res', res)
           setUserCommentList(res?.data?.comments)
         }).catch((res) => {
           alert('로그인 후 이용 가능합니다.')

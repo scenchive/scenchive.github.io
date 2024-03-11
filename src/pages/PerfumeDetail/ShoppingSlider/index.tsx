@@ -38,7 +38,6 @@ const ShoppingSlider = (
    * @todo 실제 로그인 여부 확인
    */
   const isLogin = false;
-  console.log('props', props?.shoppingList)
 
   const settings = {
     dots: false,

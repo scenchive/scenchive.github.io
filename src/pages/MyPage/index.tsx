@@ -21,7 +21,6 @@ import {
 } from "./styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import ApiService from "../../ApiServices";
 import PerfumeCell from "./PerfumeCell";
 import PerfumeCellModifyModal from "./PerfumeCellModifyModal";
 import Header from "../../components/Header";
@@ -102,7 +101,6 @@ const MyPage = () => {
           setImageUrl(res.data.imageUrl);
           setName(res.data.name);
         }).catch((res) => {
-          console.log(res)
           alert('로그인 후 이용 가능합니다.')
           goToHome();
         })
@@ -118,7 +116,6 @@ const MyPage = () => {
             setUserKeyword(res.data);
           }
         }).catch((res) => {
-          console.log(res)
           alert('로그인 후 이용 가능합니다.')
           goToHome();
         })
@@ -131,8 +128,8 @@ const MyPage = () => {
       axios.get('/bookmark?page=0', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setBookmarkList(res.data.perfumes);
-        }).catch((res) => {
-          console.log(res)
+        }).catch((error) => {
+          console.log(error)
         })
     }
   }
@@ -143,8 +140,8 @@ const MyPage = () => {
       axios.get('/bookmark/recommend', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setRecommendList(res.data.perfumes);
-        }).catch((res) => {
-          console.log(res)
+        }).catch((error) => {
+          console.log(error)
         })
     }
   }
@@ -159,8 +156,8 @@ const MyPage = () => {
           res.data.map((el: KeywordType) => el.utagtype_id === 1 ? fragranceWheelKeywordsArray.push(el) : moodKeywordsArray.push(el))
           setFragranceWheelKeywords(fragranceWheelKeywordsArray);
           setMoodKeywords(moodKeywordsArray);
-        }).catch((res) => {
-          console.log(res)
+        }).catch((error) => {
+          console.log(error)
         })
     }
   }
@@ -171,11 +168,10 @@ const MyPage = () => {
       axios.post('/service-logout',{}, { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           localStorage.removeItem('my-token');
-          console.log('res', res)
           alert("로그아웃되었습니다.");
           navigate('/login')
-        }).catch((res) => {
-          console.log(res)
+        }).catch((error) => {
+          console.log(error)
         })
     }
   }
