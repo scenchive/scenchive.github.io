@@ -23,7 +23,7 @@ import Notice from "./pages/Notice";
 function App() {
   return (
     <div className="App">
-      <Routes>
+      <Routes  basename={process.env.PUBLIC_URL}>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         {/* <Route path="/signupstep1" element={<SignupStep1 />} />
