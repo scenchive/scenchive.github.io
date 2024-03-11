@@ -165,6 +165,21 @@ const MyPage = () => {
     }
   }
 
+  // 로그아웃 api
+  const logout = () => {
+    if (myToken && myToken.length > 0) {
+      axios.post('/service-logout',{}, { headers: { 'Authorization': `Bearer ${myToken}` } })
+        .then((res) => {
+          localStorage.removeItem('my-token');
+          console.log('res', res)
+          alert("로그아웃되었습니다.");
+          navigate('/login')
+        }).catch((res) => {
+          console.log(res)
+        })
+    }
+  }
+
 
   useEffect(() => {
     getUserProfile();
@@ -206,12 +221,12 @@ const MyPage = () => {
 
     {isModalOpen2 === true ?
       <UserModifyModal
-      oldName={name}
-      setName={setName}
-      ModalBackground={modalBackground}
-      isModalOpen2={isModalOpen2}
-      setIsModalOpen2={setIsModalOpen2}
-      myToken={myToken}
+        oldName={name}
+        setName={setName}
+        ModalBackground={modalBackground}
+        isModalOpen2={isModalOpen2}
+        setIsModalOpen2={setIsModalOpen2}
+        myToken={myToken}
       />
       : null}
 
@@ -236,6 +251,9 @@ const MyPage = () => {
               <ProfileButton onClick={() => navigate("/myBoards")} isPink={true}>내가 작성한 게시글</ProfileButton>
               <div className="split">|</div>
               <ProfileButton onClick={() => navigate("/myComments")} isPink={true}>내가 작성한 댓글</ProfileButton>
+              <div className="split">|</div>
+              <ProfileButton onClick={()=>logout()} isPink={false}>
+              로그아웃 </ProfileButton>
             </ButtonArea>
           </NameEmailArea>
         </ProfileArea>
