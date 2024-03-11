@@ -120,16 +120,16 @@ const RecommendResult = () => {
       <Search />
       <Top>결과</Top>
       <KeywordBox>
-        {keywordIds?.map((el) => {
+        {keywordIds?.map((el, index) => {
           return (
-            <Keyword># {keywords[el < 36 ? el - 1 : el - 11]?.ptag_kr}</Keyword>
+            <Keyword key={index}># {keywords[el < 36 ? el - 1 : el - 11]?.ptag_kr}</Keyword>
           );
         })}
       </KeywordBox>
       <Cards>
         {perfumes?.map((el) => {
           return (
-            <Card>
+            <Card key={el.id} onClick={()=>navigate('/perfumedetail?perfume='+el.id)}>
               <img src={el.perfumeImage} />
               <CardText>
                 <div className="card-text__title">{el.perfumeName}</div>
