@@ -1,197 +1,241 @@
 import styled from "@emotion/styled";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const breakpoint = "565px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
+const colors = ["#F5D0CD", "#E3A6A1", "#D67070"];
 
 export const Container = styled.div`
+  label: container;
   width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  align-items: center;
   position: relative;
-  min-width: 992px;
 `;
 
-export const Header = styled.div`
-  width: 100%;
-  height: 120px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 50px;
-  box-sizing: border-box;
-  color: #bf8dff;
-  font-family: NanumSquareRound;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  box-shadow: 0px 5px 5px #f6f2ff;
-`;
-
-export const HeaderLeft = styled.div`
-  width: fit-content;
-  margin-right: 20px;
-  display: flex;
-  align-items: center;
-`;
-
-export const Title = styled.div`
-  width: fit-content;
-  display: flex;
-  align-items: end;
-  .title__kr {
-    font-size: 40px;
-    margin-right: 10px;
-  }
-  .title__en {
-    font-size: 20px;
-    padding-bottom: 5px;
-  }
-`;
-
-export const Menu = styled.div`
-  display: flex;
-  margin-left: 50px;
-  font-size: 22px;
-`;
-
-export const MenuList = styled.div`
+export const Main = styled.div<{ width: string }>`
+  label: main;
+  width: ${(props) => props.width};
+  max-width: 700px;
+  height: calc(100vh - 170px);
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 0 10px;
-  line-height: 49px;
-`;
-
-export const HeaderRight = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const HeaderText = styled.div`
-  padding: 0 5px;
-  font-size: 20px;
-`;
-
-export const Top = styled.div`
-  width: 100%;
-  display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 180px;
-`;
+  font-family: Gowun Batang;
 
-export const Search = styled.div`
-  width: 80%;
-  position: relative;
-  margin-bottom: 80px;
-  .search__input {
-    border: 1px #dabdff solid;
-    border-radius: 30px;
-    height: 60px;
+  ${mediaQuery} {
     width: 100%;
     padding: 0 20px;
     box-sizing: border-box;
   }
-  .search__input::placeholder {
-    color: #b2b2b2;
-    font-size: 17px;
-  }
-  .search__input:focus {
-    outline: 1.5px #dabdff solid;
-  }
-  .search__img {
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    right: 15px;
-    top: 17px;
-  }
-`;
-
-export const Main = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
 `;
 
 export const MainTop = styled.div`
+  label: main-top;
+  width: 100%;
+  height: 40px;
   display: flex;
-  height: 50px;
-  font-family: NanumSquareRound;
-  font-size: 30px;
+  justify-content: center;
+  font-size: 3rem;
   align-items: start;
+  word-wrap: break-word;
+  margin-bottom: 50px;
+
   .main-top__text {
-    color: #c597ff;
+    color: #e3a6a1;
     line-height: 42px;
+    font-weight: 700;
   }
-  margin-bottom: 80px;
+
+  span {
+    color: #bc5f6a;
+  }
+
+  .main-top__text--big {
+    font-size: 4.5rem;
+  }
+
+  ${mediaQuery} {
+    font-size: 1.8rem;
+    margin: 50px 0 30px 0;
+    .main-top__text--big {
+      font-size: 2.5rem;
+    }
+  }
 `;
 
 export const Select = styled.div`
-  font-family: NanumSquareRound;
-  font-size: 25px;
+  label: select;
   width: 100px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+  color: #bc5f6a;
+  font-weight: 700;
+
+  ${mediaQuery} {
+    width: 67px;
+    margin: 0 10px;
+  }
+`;
+
+export const Selected = styled.div`
+  label: selected;
+  width: 100%;
+  font-size: 2.5rem;
   height: fit-content;
-  margin: 0 10px;
   position: relative;
-  border: 1px solid #dedddd;
-  border-radius: 5px;
-  padding: 5px 5px 5px 0;
-  img {
-    width: 12px;
-    position: absolute;
-    top: 20px;
-    right: 7px;
+  border: 1px solid #bc5f6a;
+  border-radius: 10px;
+
+  ${mediaQuery} {
+    font-size: 1.8rem;
+    padding: 2px 0;
+  }
+`;
+
+export const Options = styled.div`
+  label: options;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+
+  ${mediaQuery} {
+    font-size: 1.1rem;
   }
 `;
 
 export const Option = styled.div`
+  label: option;
   padding: 3px 0;
   box-sizing: border-box;
 `;
 
 export const MainBottom = styled.div`
+  label: main-bottom;
+  width: 100%;
   display: flex;
+  justify-content: center;
+  font-family: Noto Sans KR;
   & > img {
     width: 20px;
+
+    ${mediaQuery} {
+      width: 15px;
+    }
   }
 `;
 
 export const MainBottomContent = styled.div`
+  label: main-bottom-content;
+  width: 100%;
+  height: 200px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin: 0 30px;
   & > img {
-    width: 200px;
-    height: 250px;
-    margin-right: 20px;
+    width: 50%;
+    max-width: 150px;
   }
-  margin: 0 50px;
+
+  ${mediaQuery} {
+    margin: 0 10px;
+  }
+`;
+
+export const SlickSlider = styled(Slider)`
+  label: slick-slider;
+  width: 600px;
+
+  ${mediaQuery} {
+    display: block;
+    width: 200px;
+  }
 `;
 
 export const ContentText = styled.div`
+  label: content-text;
   display: flex;
   flex-direction: column;
   align-items: start;
+  font-size: 1.5rem;
 
   .content-text__name {
-    font-size: 25px;
+    font-size: 2rem;
     margin-bottom: 10px;
+    text-align: start;
   }
   .content-text__brand-kr {
-    font-size: 20px;
     color: #a5a5a5;
   }
   .content-text__brand-en {
-    font-size: 20px;
     color: #a5a5a5;
   }
-  .content-text__rate{
-    img{
+  .content-text__rate {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    img {
       margin-right: 5px;
       width: 20px;
     }
-    display: flex;
-    margin-top: 10px;
-    font-size: 20px;
   }
+
+  ${mediaQuery} {
+    font-size: 1.2rem;
+    .content-text__name {
+      font-size: 1.6rem;
+    }
+    .content-text__rate {
+      img {
+        margin-right: 3px;
+        width: 15px;
+      }
+    }
+  }
+`;
+
+export const PerfumeBox = styled.div<{ index: number }>`
+  label: prefume-box;
+  width: 200px;
+  height: 100%;
+
+  img {
+    width: 180px;
+    margin: 0 5px;
+  }
+
+  .perfume-box__text {
+    width: 200px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 1.5rem;
+  }
+
+  & > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+export const ColorPick = styled.div<{
+  color: string | undefined;
+  index: number;
+}>`
+  width: 30px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: ${(props) =>
+    props.color === undefined ? colors[props.index % 3] : props.color};
 `;
