@@ -24,7 +24,7 @@ import { BrowserRouter } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter basename={'/'}>
+      {/* <BrowserRouter basename={'/'}> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
@@ -49,7 +49,7 @@ function App() {
           <Route path="/communitydetail" element={<CommunityDetail />} />
           <Route path="/notice" element={<Notice />} />
         </Routes>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </div>
   );
 }
