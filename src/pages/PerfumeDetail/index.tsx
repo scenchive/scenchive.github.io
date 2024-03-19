@@ -4,6 +4,7 @@ import {
   Main,
   PerfumeNameKR,
   PerfumeArea,
+  MobileBrandPerfumeInformationArea,
   PerfumeImageArea,
   PerfumeImage,
   Bookmark,
@@ -13,6 +14,7 @@ import {
   BrandDetailPageIcon,
   BrandNameEN,
   PerfumeRating,
+  MobilePerfumeInformationArea,
   ButtonArea,
   MenuButton,
 
@@ -35,6 +37,7 @@ interface PerfumeDetailGroup {
   id: number;
   perfumeImage: string;
   perfumeName: string;
+  brandImage: string;
 }
 
 interface PerfumeRatingGroup {
@@ -102,10 +105,10 @@ const PerfumeDetail = () => {
   /* 토큰 유효성 검사 호출 api */
   useEffect(() => {
     let perfumeIdProps: null | string | number = querySearch.get("perfume")
-    if (perfumeIdProps !== null && perfumeIdProps!=="") {
+    if (perfumeIdProps !== null && perfumeIdProps !== "") {
       perfumeIdProps = parseInt(perfumeIdProps);
       setPerfumeId(perfumeIdProps)
-    }else{
+    } else {
       navigate('/notfound')
     }
     let token = localStorage.getItem('my-token');
@@ -256,42 +259,65 @@ const PerfumeDetail = () => {
 
       <Main>
         <PerfumeArea>
-          <PerfumeImageArea>
-            <PerfumeImage src={perfumeDetail?.perfumeImage ? perfumeDetail?.perfumeImage : "/assets/icon/icon-perfume-pic.png"} />
-            <Bookmark onClick={handleBookmark} src={isBookmark === true ? "/assets/icon/icon_bookmark_Y.svg" : "/assets/icon/icon_bookmark_N.svg"} />
-          </PerfumeImageArea>
-
-          <PerfumeInformationArea>
-            <BrandArea 
-            // onClick={() =>
-            //   navigate(`/branddetail?name=${perfumeDetail?.brandName}`, {
-            //     state: {
-            //       brandName_kr: perfumeDetail?.brandName_kr,
-            //       brandImage: perfumeDetail?.brandImage,
-            //     },
-            // }} 
+          <MobileBrandPerfumeInformationArea>
+            <BrandArea
+              onClick={() =>
+                navigate(`/branddetail?name=${perfumeDetail?.brandName}`, {
+                  state: {
+                    brandName_kr: perfumeDetail?.brandName_kr,
+                    brandImage: perfumeDetail?.brandImage,
+                  },
+                })}
             >
               <BrandNameKR>
                 {perfumeDetail?.brandName_kr} ( {perfumeDetail?.brandName})
               </BrandNameKR>
               <BrandDetailPageIcon src={"/assets/icon/icon_brand_page.svg"} />
             </BrandArea>
-          <PerfumeNameKR>{perfumeDetail?.perfumeName}</PerfumeNameKR>
+            <PerfumeNameKR>{perfumeDetail?.perfumeName}</PerfumeNameKR>
+            <PerfumeRating>
+              <StarRating ratesResArr={ratesResArr} /> {perfumeRating?.ratingAvg} ({reveiwTotal}건)
+            </PerfumeRating>
+          </MobileBrandPerfumeInformationArea>
+          <PerfumeImageArea>
+            <PerfumeImage src={perfumeDetail?.perfumeImage ? perfumeDetail?.perfumeImage : "/assets/icon/icon-perfume-pic.png"} />
+            <Bookmark onClick={handleBookmark} src={isBookmark === true ? "/assets/icon/icon_bookmark_Y.svg" : "/assets/icon/icon_bookmark_N.svg"} />
+          </PerfumeImageArea>
 
-          <PerfumeRating>
-            <StarRating ratesResArr={ratesResArr} /> {perfumeRating?.ratingAvg} ({reveiwTotal}건)
-          </PerfumeRating>
+          <PerfumeInformationArea>
+            <BrandArea
+              onClick={() =>
+                navigate(`/branddetail?name=${perfumeDetail?.brandName}`, {
+                  state: {
+                    brandName_kr: perfumeDetail?.brandName_kr,
+                    brandImage: perfumeDetail?.brandImage,
+                  },
+                })}
+            >
+              <BrandNameKR>
+                {perfumeDetail?.brandName_kr} ( {perfumeDetail?.brandName})
+              </BrandNameKR>
+              <BrandDetailPageIcon src={"/assets/icon/icon_brand_page.svg"} />
+            </BrandArea>
+            <PerfumeNameKR>{perfumeDetail?.perfumeName}</PerfumeNameKR>
 
-          <PerfumeRatingBlock perfumeRating={perfumeRating} />
-        </PerfumeInformationArea>
-      </PerfumeArea>
-      <NoteInformationBlock PerfumeNote={perfumeNote} myToken={myToken} />
+            <PerfumeRating>
+              <StarRating ratesResArr={ratesResArr} /> {perfumeRating?.ratingAvg} ({reveiwTotal}건)
+            </PerfumeRating>
 
-      <ShoppingInformationTab shoppingList={shoppingList} />
+            <PerfumeRatingBlock perfumeRating={perfumeRating} />
+          </PerfumeInformationArea>
+          <MobilePerfumeInformationArea>
+            <PerfumeRatingBlock perfumeRating={perfumeRating} />
+          </MobilePerfumeInformationArea>
+        </PerfumeArea>
+        <NoteInformationBlock PerfumeNote={perfumeNote} myToken={myToken} />
 
-      <ReviewBlock PerfumeNote={perfumeNote} myToken={myToken} reviewList={reviewList} />
-    </Main>
-  </Container>
+        <ShoppingInformationTab shoppingList={shoppingList} />
+
+        <ReviewBlock PerfumeNote={perfumeNote} myToken={myToken} reviewList={reviewList} />
+      </Main>
+    </Container>
   </>
   );
 };

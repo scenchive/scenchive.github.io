@@ -80,21 +80,23 @@ const ShoppingSlider = (
   return (
     <div style={{ width: "calc( 100% - 40px )" }}>
       {props?.shoppingList ? props?.shoppingList.length <= 5 ?
-        props?.shoppingList.map((item, index) => (
-          <ShoppingCell key={'less' + index} onClick={() => window.open(item?.link)}>
-            <ShoppingImage src={item?.image} />
-            <ShoppingInfo>
-              <MallName>{item?.mallName}</MallName>
-              <GoodsTitle>{item?.cleanedTitle}</GoodsTitle>
-              <Price>{item?.lprice.toLocaleString('ko-KR')} 원</Price>
-            </ShoppingInfo>
-          </ShoppingCell>
-        ))
+        <div style={{display:"flex", flexDirection:"row"}}>
+          {props?.shoppingList.map((item, index) => (
+            <ShoppingCell key={'less' + index} onClick={() => window.open(item?.link)}>
+              <ShoppingImage src={item?.image} />
+              <ShoppingInfo>
+                <MallName>{item?.mallName}</MallName>
+                <GoodsTitle>{item?.cleanedTitle}</GoodsTitle>
+                <Price>{item?.lprice.toLocaleString('ko-KR')} 원</Price>
+              </ShoppingInfo>
+            </ShoppingCell>
+          ))}
+        </div>
         :
         <SliderContainer>
           <Slider {...settings}>
             {props?.shoppingList?.map((item, index) => (
-              <ShoppingCell style={{width: "calc ( 100% - 40px )"}} key={'more' + index} onClick={() => window.open(item?.link)}>
+              <ShoppingCell style={{ width: "calc ( 100% - 40px )" }} key={'more' + index} onClick={() => window.open(item?.link)}>
                 <ShoppingImage src={item?.image} />
                 <ShoppingInfo>
                   <MallName>{item?.mallName}</MallName>

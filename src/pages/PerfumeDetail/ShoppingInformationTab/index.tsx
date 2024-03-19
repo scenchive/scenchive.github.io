@@ -88,21 +88,6 @@ const ShoppingInformationTab = (
 
       <ShoppingSlider shoppingList={props?.shoppingList}/>
 
-
-
-      {/* {props?.shoppingList!==null && props?.shoppingList!==undefined ? props?.shoppingList.map((el,index)=>
-      <ShoppingInformationRow key={index} onClick={()=>window.open(`${el.link}`)}>
-        <PerfumeImage src={el?.image}/>
-        <ShoppingInformationArea>
-          <ProductName>{el?.cleanedTitle}</ProductName>
-          <ShoppingMallName>{el?.mallName}</ShoppingMallName>
-          <Price>{el?.lprice}</Price>
-        </ShoppingInformationArea>
-      </ShoppingInformationRow>
-      ):
-      <div>"구매 정보가 없습니다."</div>
-    } */}
-
     </ShoppingInformationTabArea>
 
   );

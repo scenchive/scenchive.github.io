@@ -9,6 +9,10 @@ export const NoteArea=styled.div`
   margin-top: 52px;
   padding-top: 40px;
   padding-bottom: 40px;
+
+  ${mediaQuery} {
+    margin-top: 20px;
+  }
 `
 
 export const ImageNoteUp=styled.img`
@@ -40,6 +44,10 @@ export const NoteTitle=styled.div`
   font-family: Noto Sans KR;
   margin-top:40px;
   margin-bottom:15px;
+
+  ${mediaQuery} {
+  margin-top: 20px;
+  }
 `
 
 export const NoteInformation=styled.div`
