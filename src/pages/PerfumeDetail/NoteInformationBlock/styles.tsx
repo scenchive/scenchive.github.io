@@ -6,7 +6,7 @@ export const NoteArea=styled.div`
   label: note-area;
   width: 100%;
   position: relative;
-  margin-top: 72px;
+  margin-top: 52px;
   padding-top: 40px;
   padding-bottom: 40px;
 `
