@@ -30,7 +30,7 @@ export const PerfumeNameEnglish = styled.div`
     color: #2E2E2E;
     font-size: 1.2rem;
     font-family: Noto Sans KR;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-word;
