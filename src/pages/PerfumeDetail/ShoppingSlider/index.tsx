@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
+  SliderContainer,
   ShoppingCell,
   ShoppingImage,
   ShoppingInfo,
@@ -44,29 +45,43 @@ const ShoppingSlider = (
     autoplay: false,
     infinite: false,
     slidesToShow: 5,
-    slidesToScroll: 1,
-    prevArrow: <img src={"/assets/icon/icon_arrow_left.svg"}/> ,
-    nextArrow: <img src={"/assets/icon/icon_arrow_right.svg"}/>,
-
-  }
+    slidesToScroll: 5,
+    initialSlide: 0,
+    prevArrow: <img src={"/assets/icon/icon_arrow_left.svg"} style={{ width: "20px", height: "20px" }} />,
+    nextArrow: <img src={"/assets/icon/icon_arrow_right.svg"} style={{ width: "20px", height: "20px" }} />,
+    responsive: [
+      {
+        breakpoint: 850,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: true,
+          dots: false,
+        }
+      },
+      {
+        breakpoint: 650,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
 
   return (
-    <div style={{ width: "100%", display:"flex", flexDirection:"row" }}>
-      {props?.shoppingList ? props?.shoppingList.length <=5 ?
-      props?.shoppingList.map((item, index)=>(
-        <ShoppingCell key={index} onClick={()=>window.open(item?.link)}>
-        <ShoppingImage src={item?.image} />
-        <ShoppingInfo>
-          <MallName>{item?.mallName}</MallName>
-          <GoodsTitle>{item?.cleanedTitle}</GoodsTitle>
-          <Price>{item?.lprice.toLocaleString('ko-KR')} 원</Price>
-        </ShoppingInfo>
-      </ShoppingCell>
-      ))
-    : 
-        <Slider {...settings}>
-        {props?.shoppingList?.map((item, index) => (
-          <ShoppingCell key={index} onClick={()=>window.open(item?.link)}>
+    <div style={{ width: "calc( 100% - 40px )" }}>
+      {props?.shoppingList ? props?.shoppingList.length <= 5 ?
+        props?.shoppingList.map((item, index) => (
+          <ShoppingCell key={'less' + index} onClick={() => window.open(item?.link)}>
             <ShoppingImage src={item?.image} />
             <ShoppingInfo>
               <MallName>{item?.mallName}</MallName>
@@ -74,10 +89,24 @@ const ShoppingSlider = (
               <Price>{item?.lprice.toLocaleString('ko-KR')} 원</Price>
             </ShoppingInfo>
           </ShoppingCell>
-        ))}
-      </Slider>
-      : <div> 구매 정보가 없습니다. </div>
-  }
+        ))
+        :
+        <SliderContainer>
+          <Slider {...settings}>
+            {props?.shoppingList?.map((item, index) => (
+              <ShoppingCell style={{width: "calc ( 100% - 40px )"}} key={'more' + index} onClick={() => window.open(item?.link)}>
+                <ShoppingImage src={item?.image} />
+                <ShoppingInfo>
+                  <MallName>{item?.mallName}</MallName>
+                  <GoodsTitle>{item?.cleanedTitle}</GoodsTitle>
+                  <Price>{item?.lprice.toLocaleString('ko-KR')} 원</Price>
+                </ShoppingInfo>
+              </ShoppingCell>
+            ))}
+          </Slider>
+        </SliderContainer>
+        : <div> 구매 정보가 없습니다. </div>
+      }
 
 
     </div>
