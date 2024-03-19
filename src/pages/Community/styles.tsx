@@ -52,6 +52,7 @@ export const CommunityArea=styled.div`
   label: community-area;
   display:flex;
   flex-direction:column;
+  margin-bottom: 100px;
 `
 
 export const CommunityRow=styled.div`
