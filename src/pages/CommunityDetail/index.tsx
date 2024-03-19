@@ -285,6 +285,13 @@ const CommunityDetail = () => {
 
   useEffect(() => {
     let boardIdProps: string | null = querySearch.get("detail")
+    if (boardIdProps !== null && boardIdProps!=="") {
+      setBoardId(boardIdProps)
+    }else{
+      navigate('/notfound')
+    }
+
+
     setBoardId(boardIdProps);
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {

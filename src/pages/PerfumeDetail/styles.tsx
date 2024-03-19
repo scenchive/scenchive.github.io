@@ -110,6 +110,7 @@ export const BrandArea=styled.div`
   height: 22px;
   display: flex;
   flex-direction: row;
+  cursor:pointer;
   ${mediaQuery} {
 
 

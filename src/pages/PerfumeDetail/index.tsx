@@ -102,9 +102,11 @@ const PerfumeDetail = () => {
   /* 토큰 유효성 검사 호출 api */
   useEffect(() => {
     let perfumeIdProps: null | string | number = querySearch.get("perfume")
-    if (perfumeIdProps !== null) {
+    if (perfumeIdProps !== null && perfumeIdProps!=="") {
       perfumeIdProps = parseInt(perfumeIdProps);
       setPerfumeId(perfumeIdProps)
+    }else{
+      navigate('/notfound')
     }
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
@@ -260,28 +262,36 @@ const PerfumeDetail = () => {
           </PerfumeImageArea>
 
           <PerfumeInformationArea>
-            <BrandArea>
+            <BrandArea 
+            // onClick={() =>
+            //   navigate(`/branddetail?name=${perfumeDetail?.brandName}`, {
+            //     state: {
+            //       brandName_kr: perfumeDetail?.brandName_kr,
+            //       brandImage: perfumeDetail?.brandImage,
+            //     },
+            // }} 
+            >
               <BrandNameKR>
                 {perfumeDetail?.brandName_kr} ( {perfumeDetail?.brandName})
               </BrandNameKR>
               <BrandDetailPageIcon src={"/assets/icon/icon_brand_page.svg"} />
             </BrandArea>
-            <PerfumeNameKR>{perfumeDetail?.perfumeName}</PerfumeNameKR>
+          <PerfumeNameKR>{perfumeDetail?.perfumeName}</PerfumeNameKR>
 
-            <PerfumeRating>
-              <StarRating ratesResArr={ratesResArr} /> {perfumeRating?.ratingAvg} ({reveiwTotal}건)
-            </PerfumeRating>
+          <PerfumeRating>
+            <StarRating ratesResArr={ratesResArr} /> {perfumeRating?.ratingAvg} ({reveiwTotal}건)
+          </PerfumeRating>
 
-            <PerfumeRatingBlock perfumeRating={perfumeRating} />
-          </PerfumeInformationArea>
-        </PerfumeArea>
-        <NoteInformationBlock PerfumeNote={perfumeNote} myToken={myToken} />
+          <PerfumeRatingBlock perfumeRating={perfumeRating} />
+        </PerfumeInformationArea>
+      </PerfumeArea>
+      <NoteInformationBlock PerfumeNote={perfumeNote} myToken={myToken} />
 
-        <ShoppingInformationTab shoppingList={shoppingList} />
+      <ShoppingInformationTab shoppingList={shoppingList} />
 
-        <ReviewBlock PerfumeNote={perfumeNote} myToken={myToken} reviewList={reviewList} />
-      </Main>
-    </Container>
+      <ReviewBlock PerfumeNote={perfumeNote} myToken={myToken} reviewList={reviewList} />
+    </Main>
+  </Container>
   </>
   );
 };

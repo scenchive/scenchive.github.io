@@ -19,6 +19,7 @@ import CommunityDetail from "./pages/CommunityDetail";
 import MyBoards from "./pages/MyBoards";
 import MyComments from "./pages/MyComments";
 import Notice from "./pages/Notice";
+import NotFound from "./pages/NotFound";
 import { BrowserRouter } from "react-router-dom";
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
           <Route path="/communitywrite" element={<CommunityWrite />} />
           <Route path="/communitydetail" element={<CommunityDetail />} />
           <Route path="/notice" element={<Notice />} />
+          <Route path="/notfound" element={<NotFound/>}/>
         </Routes>
       {/* </BrowserRouter> */}
     </div>
