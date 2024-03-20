@@ -20,7 +20,7 @@ import {
 
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import PerfumeCell from "./PerfumeCell";
 import PerfumeCellModifyModal from "./PerfumeCellModifyModal";
 import Header from "../../components/Header";
@@ -79,7 +79,7 @@ const MyPage = () => {
   useEffect(() => {
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
-      axios.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
+      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);
@@ -99,7 +99,7 @@ const MyPage = () => {
   // 프로필 데이터 가져오는 api
   const getUserProfile = () => {
     if (myToken && myToken.length > 0) {
-      axios.get('/profile', { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/profile', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setEmail(res.data.email);
           setImageUrl(res.data.imageUrl);
@@ -114,7 +114,7 @@ const MyPage = () => {
   // 유저 키워드 가져오는 api
   const getUserKeyword = () => {
     if (myToken && myToken.length > 0) {
-      axios.get('/keyword', { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/keyword', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           if (res.data) {
             setUserKeyword(res.data);
@@ -129,7 +129,7 @@ const MyPage = () => {
   // 북마크 목록 가져오는 api
   const getBookmarkList = async () => {
     if (myToken && myToken.length > 0) {
-      await axios.get('/bookmark?page=' + bookmarkPage, { headers: { 'Authorization': `Bearer ${myToken}` } })
+      await api.get('/bookmark?page=' + bookmarkPage, { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           if (res?.data) {
             if (!totalBookmarkPerfumeCount) {
@@ -153,7 +153,7 @@ const MyPage = () => {
   // 맞춤 추천 향수 가져오는 api
   const getRecommendList = () => {
     if (myToken && myToken.length > 0) {
-      axios.get('/bookmark/recommend', { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/bookmark/recommend', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setRecommendList(res.data.perfumes);
         }).catch((error) => {
@@ -165,7 +165,7 @@ const MyPage = () => {
   // 향수 세포 키워드 가져오는 api
   const getKeywordList = () => {
     if (myToken && myToken.length > 0) {
-      axios.get('/survey', { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/survey', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           let fragranceWheelKeywordsArray: KeywordType[] = [];
           let moodKeywordsArray: KeywordType[] = [];
@@ -181,7 +181,7 @@ const MyPage = () => {
   // 로그아웃 api
   const logout = () => {
     if (myToken && myToken.length > 0) {
-      axios.post('/service-logout', {}, { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.post('/service-logout', {}, { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           localStorage.removeItem('my-token');
           alert("로그아웃되었습니다.");

@@ -15,7 +15,7 @@ import {
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 import Pagination from "./Pagination";
-import axios from "axios";
+import {api} from "../../api";
 
 interface Notice {
   id: number;
@@ -54,7 +54,7 @@ const Notice = () => {
 
   //알림 목록 가져오는 api
   const getNotice = async () => {
-    await axios
+    await api
       .get(`/notification?page=${page}`, {
         headers: { Authorization: `Bearer ${token}` },
       })

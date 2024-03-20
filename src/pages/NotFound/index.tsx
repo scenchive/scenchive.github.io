@@ -8,7 +8,7 @@ import {
 
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header/index";
 import Search from "../../components/Search/index";
 

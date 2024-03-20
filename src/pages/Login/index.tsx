@@ -15,7 +15,7 @@ import {
   // @ts-ignore
 } from "./styles";
 // import ApiService from "../ApiService.js";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header/index";
 
 const Login = () => {
@@ -38,12 +38,14 @@ const Login = () => {
         email: email,
         password: password,
       }
-      await axios.post('/login', data)
+      await api.post('/login', data)
         .then((res) => {
           if (res.data.token) {
             console.log('로그인 성공했습니다.')
             localStorage.setItem('my-token', res.data.token)
             goToHome();
+          }else{
+            alert('로그인에 실패하였습니다.');
           }
 
         })

@@ -15,7 +15,7 @@ import {
   WriteButton,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 
@@ -69,7 +69,7 @@ const CommunityDetail = () => {
       data.append("requestDto", new Blob([JSON.stringify(requestDto)], { type: "application/json" }))
 
       if (myToken) {
-        axios.post('/board', data, { headers: { 'Authorization': `Bearer ${myToken}` } })
+        api.post('/board', data, { headers: { 'Authorization': `Bearer ${myToken}` } })
           .then((res) => {
             navigate('/community');
           })
@@ -89,7 +89,7 @@ const CommunityDetail = () => {
   useEffect(() => {
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
-      axios.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
+      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);
