@@ -105,6 +105,7 @@ export const Options = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 1.5rem;
+  cursor: pointer;
 
   ${mediaQuery} {
     font-size: 1.1rem;

@@ -14,7 +14,7 @@ import {
 } from "./styles";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
-import Pagination from "./Pagination";
+import Pagination from "../../components/Pagination";
 import axios from "axios";
 
 interface Notice {
@@ -62,8 +62,19 @@ const Notice = () => {
         setUnread(res.data.unreadNotifications);
         setCount(res.data.unreadNotifications + res.data.readNotifications);
         setNotices(res.data.notificationDtoList);
-       
       });
+  };
+
+  const readNotice = async (read: boolean, id: number) => {
+    if (!read) {
+      await axios.post(
+        `/notification/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+    }
   };
 
   return (
@@ -86,7 +97,10 @@ const Notice = () => {
             <>
               <Lists>
                 {notices.map((el) => (
-                  <List read={el.check}>
+                  <List
+                    read={el.check}
+                    onClick={() => readNotice(el.check, el.id)}
+                  >
                     <ListNumber>{el.id}</ListNumber>
                     <ListContent>
                       <div>{el.boardTitle}</div>
