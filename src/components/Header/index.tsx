@@ -85,7 +85,7 @@ const Header = () => {
         </HeaderRight>
       ) : (
         <HeaderRight>
-          <img src="/assets/icon/icon_notice.svg" />
+          <img src="/assets/icon/icon_notice.svg" onClick={()=>navigate('/notice')}/>
         </HeaderRight>
       )}
     </Container>

@@ -41,7 +41,7 @@ export const MainTop = styled.div`
   height: 40px;
   display: flex;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 2.3rem;
   align-items: start;
   word-wrap: break-word;
   margin-bottom: 50px;

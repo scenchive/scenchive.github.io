@@ -111,6 +111,9 @@ const Home = () => {
     else setPerfumeIndex(perfumeIndex + dir);
   };
 
+  /**
+   * 랜덤 향수 가져오는 api
+   */
   const getRandomPerfume = async () => {
     await axios.get(`/randomperfume`).then((res) => {
       setRandomPerfumes(res.data);
@@ -122,7 +125,7 @@ const Home = () => {
       <Container>
         <Header />
         <Search />
-        {token ? (
+        {token && perfumes.length>0? (
           <Main width={"60%"}>
             <MainTop>
               <div className="main-top__text">'{username}'님을 위한</div>
