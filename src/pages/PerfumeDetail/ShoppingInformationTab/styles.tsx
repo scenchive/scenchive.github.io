@@ -1,4 +1,7 @@
 import styled from "@emotion/styled";
+const breakpoint = "565px";
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
+
 
 
 export const ShoppingInformationTabArea = styled.div`
@@ -22,6 +25,10 @@ export const ShoppingTabTitle = styled.div`
   margin-top: 50px;
   margin-right:auto;
   margin-bottom:20px;
+
+  ${mediaQuery} {
+    margin-top: 0px;
+  } 
 `
 
 export const WarningBox = styled.div`

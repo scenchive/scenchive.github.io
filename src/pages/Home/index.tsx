@@ -15,7 +15,7 @@ import {
   SlickSlider,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Color from "color-thief-react";
 import Header from "../../components/Header/index";
 import Search from "../../components/Search/index";
@@ -81,7 +81,7 @@ const Home = () => {
   };
 
   const getUsername = async () => {
-    await axios
+    await api
       .get(`/username`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -89,7 +89,7 @@ const Home = () => {
   };
 
   const getPerfumeData = async () => {
-    await axios
+    await api
       .get(`/recommend?season=${option + 36}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -115,7 +115,7 @@ const Home = () => {
    * 랜덤 향수 가져오는 api
    */
   const getRandomPerfume = async () => {
-    await axios.get(`/randomperfume`).then((res) => {
+    await api.get(`/randomperfume`).then((res) => {
       setRandomPerfumes(res.data);
     });
   };

@@ -14,7 +14,7 @@ import {
 
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../../api";
 import ShoppingSlider from "../ShoppingSlider";
 
 
@@ -58,7 +58,7 @@ const ShoppingInformationTab = (
     }
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
-      axios.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
+      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);
@@ -87,21 +87,6 @@ const ShoppingInformationTab = (
       </WarningBox>
 
       <ShoppingSlider shoppingList={props?.shoppingList}/>
-
-
-
-      {/* {props?.shoppingList!==null && props?.shoppingList!==undefined ? props?.shoppingList.map((el,index)=>
-      <ShoppingInformationRow key={index} onClick={()=>window.open(`${el.link}`)}>
-        <PerfumeImage src={el?.image}/>
-        <ShoppingInformationArea>
-          <ProductName>{el?.cleanedTitle}</ProductName>
-          <ShoppingMallName>{el?.mallName}</ShoppingMallName>
-          <Price>{el?.lprice}</Price>
-        </ShoppingInformationArea>
-      </ShoppingInformationRow>
-      ):
-      <div>"구매 정보가 없습니다."</div>
-    } */}
 
     </ShoppingInformationTabArea>
 

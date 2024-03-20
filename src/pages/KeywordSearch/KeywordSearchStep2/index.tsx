@@ -10,7 +10,7 @@ import {
   Keywords,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../../api";
 import Header from "../../../components/Header";
 import Search from "../../../components/Search";
 
@@ -57,7 +57,7 @@ const KeywordSearchStep2 = () => {
    */
   const getKeyword = async () => {
     const opt = option === 1 ? "type" : "tpo";
-    await axios
+    await api
       .get(`perfumes/recommend/${opt}`, {
         headers: { Authorization: `Bearer ${token}` },
       })

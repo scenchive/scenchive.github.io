@@ -24,7 +24,7 @@ import {
 
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header/index";
 import KeywordModal from "./KeywordModal";
 import Search from "../../components/Search";
@@ -89,7 +89,7 @@ const WriteReview = () => {
     }
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
-      axios.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
+      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);
@@ -109,7 +109,7 @@ const WriteReview = () => {
   /* 향수 이름, 브랜드, 이미지 호출 api */
   const getPerfumeDetail = async () => {
     if (perfumeId && myToken) {
-      await axios.get(`/fullinfo/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+      await api.get(`/fullinfo/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
           setPerfumeDetail(res.data)
         });
@@ -119,7 +119,7 @@ const WriteReview = () => {
   // 향수 세포 키워드 가져오는 api
   const getKeywordList = () => {
     if (myToken && myToken.length > 0) {
-      axios.get('/perfumes/recommend/tpo', { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/perfumes/recommend/tpo', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           let fragranceWheelKeywordsArray: KeywordType[] = [];
           let moodKeywordsArray: KeywordType[] = [];
@@ -150,7 +150,7 @@ const WriteReview = () => {
       }
   
       if (myToken && myToken.length > 0) {
-        axios.post('/review/', data, { headers: { 'Authorization': `Bearer ${myToken}` } })
+        api.post('/review/', data, { headers: { 'Authorization': `Bearer ${myToken}` } })
           .then((res) => {
             goToPerfumeDetail();
           }).catch((error) => {

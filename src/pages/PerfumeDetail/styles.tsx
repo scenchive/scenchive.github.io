@@ -41,8 +41,6 @@ export const PerfumeNameKR=styled.div`
   ${mediaQuery} {
     
   }
-  
-
 `
 
 export const PerfumeArea=styled.div`
@@ -51,6 +49,22 @@ export const PerfumeArea=styled.div`
   flex-direction:row;
   margin-top: 50px;
 
+  ${mediaQuery} {
+    display: flex;
+    flex-direction:column;
+  }
+`
+
+export const MobileBrandPerfumeInformationArea= styled.div`
+  label: mobile-brand-perfume-information-area;
+  display: none;
+  ${mediaQuery} {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-bottom: 20px;
+  }
+  
 `
 
 export const PerfumeImageArea=styled.div`
@@ -64,15 +78,15 @@ export const PerfumeImageArea=styled.div`
     width:200px;
     height:200px;
     position: relative;
-    margin-right:15px;
+    align-self: center;
     
   }
 `
 
 export const PerfumeImage=styled.img`
   label:perfume-image;
-  width:250px;
-  height:250px;
+  width:200px;
+  height:200px;
   object-fit:scale-down;
   box-shadow: 2px 2px 10px 2px #EAEAEA;
   
@@ -102,7 +116,10 @@ export const PerfumeInformationArea=styled.div`
   display:flex;
   flex-direction:column;
   text-align:left;
+  ${mediaQuery} {
+    display: none;
 
+  }
 `
 
 export const BrandArea=styled.div`
@@ -110,6 +127,7 @@ export const BrandArea=styled.div`
   height: 22px;
   display: flex;
   flex-direction: row;
+  cursor:pointer;
   ${mediaQuery} {
 
 
@@ -154,6 +172,22 @@ export const PerfumeRating=styled.div`
   color: #2E2E2E;
   font-weight: 500;
 
+  ${mediaQuery} {
+    margin-top: 12px;
+  }
+`
+
+export const MobilePerfumeInformationArea = styled.div`
+  label: mobile-perfume-information-area;
+  display: none;
+  
+  ${mediaQuery} {
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    margin-top: 15px;
+
+  }
 `
 
 

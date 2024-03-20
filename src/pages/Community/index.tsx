@@ -12,7 +12,7 @@ import {
   WriteButton,
 } from "./styles";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 import Pagination from "../../components/Pagination";
@@ -47,12 +47,7 @@ const Community = () => {
   useEffect(() => {
     let token = localStorage.getItem("my-token");
     if (token && token.length > 0) {
-      axios
-        .post(
-          "/token-validation",
-          {},
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
+      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);
@@ -71,8 +66,7 @@ const Community = () => {
   const getCommunity = () => {
     if (myToken && myToken.length > 0) {
       if (selectedMenu === "전체") {
-        setCount(18);
-        axios
+        api
           .get(`/boards?page=${page}`, {
             headers: { Authorization: `Bearer ${myToken}` },
           })
@@ -85,7 +79,7 @@ const Community = () => {
             goToHome();
           });
       } else if (selectedMenu === "정/가품") {
-        axios
+        api
           .get(`/boardtype/1?page=${page}`, {
             headers: { Authorization: `Bearer ${myToken}` },
           })
@@ -98,7 +92,7 @@ const Community = () => {
             goToHome();
           });
       } else if (selectedMenu === "Q & A") {
-        axios
+        api
           .get(`/boardtype/2?page=${page}`, {
             headers: { Authorization: `Bearer ${myToken}` },
           })
@@ -111,7 +105,7 @@ const Community = () => {
             goToHome();
           });
       } else {
-        axios
+        api
           .get(`/boardtype/3?page=${page}`, {
             headers: { Authorization: `Bearer ${myToken}` },
           })

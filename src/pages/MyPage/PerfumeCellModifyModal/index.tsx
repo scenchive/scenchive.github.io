@@ -12,7 +12,7 @@ import {
 
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../../api";
 
 interface KeywordType {
   id: number;
@@ -61,7 +61,7 @@ const PerfumeCellModifyModal = (props: {
 
   const modifyMyKeywords = () => {
     let modify_body = keywordTagsArray;
-    axios.put('/keyword', modify_body, { headers: { 'Authorization': `Bearer ${props.myToken}` } })
+    api.put('/keyword', modify_body, { headers: { 'Authorization': `Bearer ${props.myToken}` } })
       .then((data) => {
         if (data?.data === 'update') {
           alert('향세포가 수정되었습니다.');

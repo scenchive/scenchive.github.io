@@ -9,7 +9,8 @@ export const CellArea = styled.div`
     display: flex;
     flex-direction: column;
     padding: 20px 10px ;
-    cursor: pointer;   
+    cursor: pointer;
+    align-items: center;
 
 `
 
@@ -29,8 +30,7 @@ export const PerfumeNameEnglish = styled.div`
     color: #2E2E2E;
     font-size: 1.2rem;
     font-family: Noto Sans KR;
-    text-align: start;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-word;
@@ -45,7 +45,6 @@ export const BrandNameKorean = styled.div`
     color: #A9A9A9;
     font-size: 1rem;
     font-family: Noto Sans KR;
-    text-align: start;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-word;
@@ -59,7 +58,6 @@ export const BrandNameEnglish = styled.div`
     color: #A9A9A9;
     font-size: 1rem;
     font-family: Noto Sans KR;
-    text-align: start;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-word;

@@ -4,6 +4,7 @@ import {
   Main,
   PerfumeNameKR,
   PerfumeArea,
+  MobileBrandPerfumeInformationArea,
   PerfumeImageArea,
   PerfumeImage,
   Bookmark,
@@ -13,12 +14,13 @@ import {
   BrandDetailPageIcon,
   BrandNameEN,
   PerfumeRating,
+  MobilePerfumeInformationArea,
   ButtonArea,
   MenuButton,
 
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header/index";
 import Search from "../../components/Search/index";
 import StarRating from "./StarRating/index";
@@ -35,6 +37,7 @@ interface PerfumeDetailGroup {
   id: number;
   perfumeImage: string;
   perfumeName: string;
+  brandImage: string;
 }
 
 interface PerfumeRatingGroup {
@@ -102,13 +105,15 @@ const PerfumeDetail = () => {
   /* 토큰 유효성 검사 호출 api */
   useEffect(() => {
     let perfumeIdProps: null | string | number = querySearch.get("perfume")
-    if (perfumeIdProps !== null) {
+    if (perfumeIdProps !== null && perfumeIdProps !== "") {
       perfumeIdProps = parseInt(perfumeIdProps);
       setPerfumeId(perfumeIdProps)
+    } else {
+      navigate('/notfound')
     }
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
-      axios.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
+      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);
@@ -128,7 +133,7 @@ const PerfumeDetail = () => {
   /* 향수 이름, 브랜드, 이미지 호출 api */
   const getPerfumeDetail = async () => {
     if (perfumeId && myToken) {
-      await axios.get(`/fullinfo/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+      await api.get(`/fullinfo/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
           setPerfumeDetail(res.data);
           setPerfumeName(res.data.perfumeName)
@@ -139,7 +144,7 @@ const PerfumeDetail = () => {
   /* 향수 북마크 유무 확인 api */
   const getBookmark = async () => {
     if (perfumeId && myToken) {
-      await axios.get(`/checkmarked?perfumeId=` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+      await api.get(`/checkmarked?perfumeId=` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
           if (res.data === "이미 북마크한 향수입니다.") {
             setIsBookmark(true);
@@ -154,13 +159,13 @@ const PerfumeDetail = () => {
   const handleBookmark = () => {
     if (perfumeId && myToken) {
       if (isBookmark === false) {
-        axios.post(`/bookmark?perfumeId=` + perfumeId, {}, { headers: { Authorization: `Bearer ${myToken}` } })
+        api.post(`/bookmark?perfumeId=` + perfumeId, {}, { headers: { Authorization: `Bearer ${myToken}` } })
           .then((res) => {
             setIsBookmark(true);
 
           });
       } else {
-        axios.delete(`/bookmark?perfumeId=` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+        api.delete(`/bookmark?perfumeId=` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
           .then((res) => {
             setIsBookmark(false);
           });
@@ -172,7 +177,7 @@ const PerfumeDetail = () => {
   /* 향수 전체평점, 계절 평점, 기타 평점 호출 api */
   const getPerfumeRating = async () => {
     if (perfumeId && myToken) {
-      await axios.get(`/perfumerating/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+      await api.get(`/perfumerating/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
           setPerfumeRating(res.data);
         });
@@ -199,7 +204,7 @@ const PerfumeDetail = () => {
   /* 향수 노트 정보 호출 api, BasicInformationTab 컴포넌트에서 이용*/
   const getPerfumeNote = async () => {
     if (perfumeId && myToken) {
-      await axios.get(`/notesinfo/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+      await api.get(`/notesinfo/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
           setPerfumeNote(res.data)
         });
@@ -209,7 +214,7 @@ const PerfumeDetail = () => {
   /* 시향 후기 호출 api */
   const getReview = async () => {
     if (perfumeId && myToken) {
-      await axios.get(`/review/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+      await api.get(`/review/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
           setReviewList(res?.data)
           setReviewTotal(res.data.length)
@@ -220,7 +225,7 @@ const PerfumeDetail = () => {
   /* 구매 정보 호출 api */
   const getShopping = async () => {
     if (perfumeName && myToken) {
-      await axios.get(`/product/search?query=` + perfumeName, { headers: { Authorization: `Bearer ${myToken}` } })
+      await api.get(`/product/search?query=` + perfumeName, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
           setShoppingList(res?.data)
         });
@@ -254,13 +259,41 @@ const PerfumeDetail = () => {
 
       <Main>
         <PerfumeArea>
+          <MobileBrandPerfumeInformationArea>
+            <BrandArea
+              onClick={() =>
+                navigate(`/branddetail?name=${perfumeDetail?.brandName}`, {
+                  state: {
+                    brandName_kr: perfumeDetail?.brandName_kr,
+                    brandImage: perfumeDetail?.brandImage,
+                  },
+                })}
+            >
+              <BrandNameKR>
+                {perfumeDetail?.brandName_kr} ( {perfumeDetail?.brandName})
+              </BrandNameKR>
+              <BrandDetailPageIcon src={"/assets/icon/icon_brand_page.svg"} />
+            </BrandArea>
+            <PerfumeNameKR>{perfumeDetail?.perfumeName}</PerfumeNameKR>
+            <PerfumeRating>
+              <StarRating ratesResArr={ratesResArr} /> {perfumeRating?.ratingAvg} ({reveiwTotal}건)
+            </PerfumeRating>
+          </MobileBrandPerfumeInformationArea>
           <PerfumeImageArea>
             <PerfumeImage src={perfumeDetail?.perfumeImage ? perfumeDetail?.perfumeImage : "/assets/icon/icon-perfume-pic.png"} />
             <Bookmark onClick={handleBookmark} src={isBookmark === true ? "/assets/icon/icon_bookmark_Y.svg" : "/assets/icon/icon_bookmark_N.svg"} />
           </PerfumeImageArea>
 
           <PerfumeInformationArea>
-            <BrandArea>
+            <BrandArea
+              onClick={() =>
+                navigate(`/branddetail?name=${perfumeDetail?.brandName}`, {
+                  state: {
+                    brandName_kr: perfumeDetail?.brandName_kr,
+                    brandImage: perfumeDetail?.brandImage,
+                  },
+                })}
+            >
               <BrandNameKR>
                 {perfumeDetail?.brandName_kr} ( {perfumeDetail?.brandName})
               </BrandNameKR>
@@ -274,6 +307,9 @@ const PerfumeDetail = () => {
 
             <PerfumeRatingBlock perfumeRating={perfumeRating} />
           </PerfumeInformationArea>
+          <MobilePerfumeInformationArea>
+            <PerfumeRatingBlock perfumeRating={perfumeRating} />
+          </MobilePerfumeInformationArea>
         </PerfumeArea>
         <NoteInformationBlock PerfumeNote={perfumeNote} myToken={myToken} />
 

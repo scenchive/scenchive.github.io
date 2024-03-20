@@ -9,7 +9,7 @@ import {
   Top,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 
@@ -90,7 +90,7 @@ const RecommendResult = () => {
   };
 
   const getPerfumes = async () => {
-    await axios
+    await api
       .get(`/perfumes/recommend?${keywordString}page=${perfumesPage}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -105,7 +105,7 @@ const RecommendResult = () => {
   };
 
   const getKeyword = async () => {
-    await axios
+    await api
       .get(`/perfumes/recommend/${option}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
