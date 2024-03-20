@@ -15,7 +15,8 @@ import {
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 import Pagination from "../../components/Pagination";
-import {api} from "../../api";
+import { api } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 interface Notice {
   id: number;
@@ -31,6 +32,7 @@ interface Notice {
  * @author 신정은
  */
 const Notice = () => {
+  const navigate = useNavigate();
   const [token, setToken] = useState<string | null>(null);
   const [notices, setNotices] = useState<Array<Notice> | []>([]);
   const [unread, setUnread] = useState(0);
@@ -65,15 +67,17 @@ const Notice = () => {
       });
   };
 
+  //알림 읽기 api
   const readNotice = async (read: boolean, id: number) => {
     if (!read) {
-      await axios.post(
+      await api.post(
         `/notification/${id}`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      navigate(`/communitydetail?detail=${id}`);
     }
   };
 

@@ -51,7 +51,7 @@ const Home = () => {
     initialSlide: 1,
     responsive: [
       {
-        breakpoint: 768,
+        breakpoint: 565,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,

@@ -57,7 +57,7 @@ export const MainTop = styled.div`
   }
 
   .main-top__text--big {
-    font-size: 4.5rem;
+    font-size: 3.2rem;
   }
 
   ${mediaQuery} {
