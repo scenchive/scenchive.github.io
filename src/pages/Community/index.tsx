@@ -12,7 +12,7 @@ import {
   WriteButton,
 } from "./styles";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 
@@ -49,7 +49,7 @@ const Community = () => {
   useEffect(() => {
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
-      axios.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
+      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);
@@ -67,7 +67,7 @@ const Community = () => {
 
   const getCommunity = () => {
     if (myToken && myToken.length > 0) {
-      axios.get('/boards?page=0', { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/boards?page=0', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setBoardCount(res?.data?.totalBoardCount);
           setBoardList(res?.data?.boards)
@@ -76,7 +76,7 @@ const Community = () => {
           goToHome();
         })
 
-      axios.get('/boardtype/1?page=0', { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/boardtype/1?page=0', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setQnaBoardCount(res?.data?.totalBoardCount);
           setQnaBoardList(res?.data?.boards)
@@ -85,7 +85,7 @@ const Community = () => {
           goToHome();
         })
 
-      axios.get('/boardtype/2?page=0', { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/boardtype/2?page=0', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setFakeBoardCount(res?.data?.totalBoardCount);
           setFakeBoardList(res?.data?.boards)
@@ -94,7 +94,7 @@ const Community = () => {
           goToHome();
         })
 
-      axios.get('/boardtype/3?page=0', { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/boardtype/3?page=0', { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setFreeBoardCount(res?.data?.totalBoardCount);
           setFreeBoardList(res?.data?.boards)

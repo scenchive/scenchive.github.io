@@ -26,8 +26,8 @@ export const SeasonCell=styled.div `
 
 export const SeasonIcon=styled.img`
   label: season-icon;
-  width: 45px;
-  height: 35px;
+  width: 40px;
+  height: 30px;
   object-fit: scale-down;
   margin-bottom: 3px;
   
@@ -50,11 +50,11 @@ export const SeasonRating=styled.div`
 export const StatusBarArea=styled.div`
   label: status-bar-area;
   width: 100%;
-  height: 10px; 
+  height: 8px; 
   border-radius:10px;
   overflow: hidden;
   position: relative;
-  margin-top: 5px;
+  margin-top: 3px;
   background-color: #D9D9D9;
   ${mediaQuery} {
     height: 8px;
@@ -64,7 +64,7 @@ export const StatusBarArea=styled.div`
 export const StatusBar=styled.div<{backgroundColor:string, statusWidth:number}>`
   label: status-bar;
   width: ${(props)=>props.statusWidth}%;
-  height: 10px;
+  height: 8px;
   background-color: ${(props)=>props.backgroundColor};
   border-radius: 10px;
   position: absolute;
@@ -79,7 +79,7 @@ export const OtherRatingArea=styled.div`
   label: other-rating-area;
   display:flex;
   flex-direction:row;
-  margin-top: 20px;
+  margin-top: 5px;
   ${mediaQuery} {
     margin-top: 10px;
   }

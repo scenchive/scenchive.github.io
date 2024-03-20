@@ -8,7 +8,7 @@ import {
   SearchList,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 
 interface Perfumes {
   id: number;
@@ -62,7 +62,7 @@ const Search = () => {
   };
 
   const getSearchResult = async () => {
-    await axios
+    await api
       .get(`/search?name=${search}&page=0`, {
         headers: { Authorization: `Bearer ${token}` },
       })

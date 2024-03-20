@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Container, Top, TopText, Text, Lists, List, ListText } from "./styles";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 
@@ -67,7 +67,7 @@ const BrandDetail = () => {
   };
 
   const getPerfumes = async () => {
-    await axios
+    await api
       .get(
         `/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`,
         {

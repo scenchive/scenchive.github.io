@@ -10,7 +10,7 @@ import {
   CancelButton,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../../api";
 
 
 const UserModifyModal = (props: {
@@ -28,7 +28,7 @@ const UserModifyModal = (props: {
 
   const modifyInformation = () => {
     if (props?.oldName && props?.oldName !== name) {
-      axios.put('/member/name', { 'name': name }, { headers: { 'Authorization': `Bearer ${props.myToken}` } })
+      api.put('/member/name', { 'name': name }, { headers: { 'Authorization': `Bearer ${props.myToken}` } })
         .then((data) => {
           if (data?.data === '닉네임이 변경되었습니다.') {
             alert('닉네임이 변경되었습니다.');

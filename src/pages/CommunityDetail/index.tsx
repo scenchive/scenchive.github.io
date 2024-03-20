@@ -25,7 +25,7 @@ import {
   DeletedComment,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 
@@ -76,7 +76,7 @@ const CommunityDetail = () => {
   // 게시글 get api
   const getUserInformation = (token: string | null) => {
     if (token) {
-      axios.get('/profile', { headers: { 'Authorization': `Bearer ${token}` } })
+      api.get('/profile', { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           setUserInformation(res?.data)
         })
@@ -90,7 +90,7 @@ const CommunityDetail = () => {
   // 게시글 get api
   const getBoard = () => {
     if (myToken) {
-      axios.get('/board/' + boardId, { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/board/' + boardId, { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setBoardDetail(res?.data)
         })
@@ -103,7 +103,7 @@ const CommunityDetail = () => {
   // 댓글 get api
   const getComment = () => {
     if (myToken) {
-      axios.get('/comments/board/' + boardId, { headers: { 'Authorization': `Bearer ${myToken}` } })
+      api.get('/comments/board/' + boardId, { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
           setCommentList(res?.data)
         })
@@ -118,7 +118,7 @@ const CommunityDetail = () => {
   const writeComment = () => {
     if (comment) {
       if (myToken) {
-        axios.post('/comments/board/' + boardId, { content: comment }, { headers: { 'Authorization': `Bearer ${myToken}` } })
+        api.post('/comments/board/' + boardId, { content: comment }, { headers: { 'Authorization': `Bearer ${myToken}` } })
           .then((res) => {
             alert('댓글이 등록되었습니다.')
             setComment('');
@@ -137,7 +137,7 @@ const CommunityDetail = () => {
   const writeReplyComment = () => {
     if (isReplyOn && replyComment) {
       if (myToken) {
-        axios.post('/comments/board/' + boardId + '/reply/' + isReplyOn, { content: replyComment }, { headers: { 'Authorization': `Bearer ${myToken}` } })
+        api.post('/comments/board/' + boardId + '/reply/' + isReplyOn, { content: replyComment }, { headers: { 'Authorization': `Bearer ${myToken}` } })
           .then((res) => {
             alert('대댓글이 등록되었습니다.')
             setReplyComment('');
@@ -169,7 +169,7 @@ const CommunityDetail = () => {
     if (commentId) {
       if (myToken) {
         if (window.confirm("정말 삭제하시겠습니까")) {
-          axios.delete('/comments/' + commentId, { headers: { 'Authorization': `Bearer ${myToken}` } })
+          api.delete('/comments/' + commentId, { headers: { 'Authorization': `Bearer ${myToken}` } })
             .then((res) => {
               alert('댓글이 삭제되었습니다.')
               getComment();
@@ -285,10 +285,17 @@ const CommunityDetail = () => {
 
   useEffect(() => {
     let boardIdProps: string | null = querySearch.get("detail")
+    if (boardIdProps !== null && boardIdProps!=="") {
+      setBoardId(boardIdProps)
+    }else{
+      navigate('/notfound')
+    }
+
+
     setBoardId(boardIdProps);
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
-      axios.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
+      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);

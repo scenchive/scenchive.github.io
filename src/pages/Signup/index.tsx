@@ -20,7 +20,7 @@ import {
   // @ts-ignore
 } from "./styles";
 // import ApiService from "../ApiService.js";
-import axios from "axios";
+import {api} from "../../api";
 import Header from "../../components/Header/index";
 
 
@@ -156,7 +156,7 @@ const Signup = () => {
 
 
   const getKeywords = async () => {
-    await axios.get('/survey')
+    await api.get('/survey')
       .then((res) => {
         let fragranceWheelKeywordsArray: KEYWORDTAGSTYPE[] = [];
         let moodKeywordsArray: KEYWORDTAGSTYPE[] = [];
@@ -206,7 +206,7 @@ const Signup = () => {
     }
     formData.append('memberForm', new Blob([JSON.stringify(data)], { type: 'application/json' }))
 
-    await axios.post('/signup', formData,
+    await api.post('/signup', formData,
       { headers: { 'Content-Type': 'multipart/form-data', accept: 'application/json' } }
     )
       .then((res) => {
@@ -231,7 +231,7 @@ const Signup = () => {
       name: name,
       utags: keywordTagsArray,
     }
-    await axios.post('/survey', keyword_data)
+    await api.post('/survey', keyword_data)
       .then((res) => {
         if (res.data[0].utagId > 0) {
           console.log('키워드 저장 성공');
