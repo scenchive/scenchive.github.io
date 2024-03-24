@@ -109,7 +109,7 @@ const PerfumeDetail = () => {
       perfumeIdProps = parseInt(perfumeIdProps);
       setPerfumeId(perfumeIdProps)
     } else {
-      navigate('/notfound')
+      navigate('*')
     }
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
