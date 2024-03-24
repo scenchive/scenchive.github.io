@@ -64,7 +64,6 @@ const Search = () => {
   const getSearchResult = async () => {
     await api
       .get(`/search?name=${search}&page=0`, {
-        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         if (res.data.brandsNum === 0) setSearchBrands(null);

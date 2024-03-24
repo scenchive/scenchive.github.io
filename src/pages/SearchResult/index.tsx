@@ -64,11 +64,16 @@ const SearchResult = () => {
   }, []);
 
   useEffect(() => {
-    if (token !== null) getSearchResult("result");
-  }, [token, querySearch.get("search")]);
+    // if (token !== null) 
+    getSearchResult("result");
+  }, [querySearch.get("search")]);
+// }, [token, querySearch.get("search")]);
+
 
   useEffect(() => {
-    if (token !== null && perfumesPage !== -1) getSearchResult("more");
+    // if (token !== null && perfumesPage !== -1) 
+    if (perfumesPage !== -1) 
+    getSearchResult("more");
   }, [perfumesPage]);
 
   const getToken = () => {
@@ -82,9 +87,6 @@ const SearchResult = () => {
         `/search?name=${querySearch.get("search")}&page=${
           type !== "more" ? 0 : perfumesPage
         }`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
       )
       .then((res) => {
         if (type === "result") {
