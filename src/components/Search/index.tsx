@@ -109,9 +109,10 @@ const Search = () => {
           {searchBrands !== null && (
             <ListContent>
               <div className="list-content__title">브랜드</div>
-              {searchBrands.map((el) => {
+              {searchBrands.map((el, index) => {
                 return (
                   <ListDetail
+                    key={'list_'+index}
                     onClick={() => {
                       navigate(`/searchresult?search=${el.brandName_kr}`);
                       setToggle(false);
