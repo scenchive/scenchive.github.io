@@ -43,7 +43,6 @@ const ReviewBlock = (
   const [querySearch, setQuerySearch] = useSearchParams();
   const [perfumeId, setPerfumeId] = useState<number | null | undefined>();
 
-
   return (
     <ReviewArea>
       <ReviewHeaderArea>
@@ -55,7 +54,7 @@ const ReviewBlock = (
         </WriteReviewButton>
       </ReviewHeaderArea>
 
-      {props?.reviewList?.map((el, index) => (
+      {props?.reviewList ? props?.reviewList?.map((el, index) => (
         <ReviewRow key={index}>
           <UserInformationArea>
             <UserProfilePicture src={el.imageUrl ? el.imageUrl : "/assets/icon/icon-profile-picture.svg"} />
@@ -65,7 +64,7 @@ const ReviewBlock = (
           </UserInformationArea>
           {el.content}
         </ReviewRow>
-      ))}
+      )):"시향 후기가 없습니다. 시향 후기를 작성해주세요"}
 
     </ReviewArea>
   );

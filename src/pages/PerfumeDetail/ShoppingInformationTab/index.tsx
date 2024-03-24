@@ -46,33 +46,6 @@ const ShoppingInformationTab = (
     navigate("/")
   }
 
-  const goToLogin = () => {
-    navigate("/login")
-  }
-
-  useEffect(() => {
-    let perfumeIdProps: null | string | number = querySearch.get("perfume")
-    if (perfumeIdProps !== null) {
-      perfumeIdProps = parseInt(perfumeIdProps);
-      setPerfumeId(perfumeIdProps)
-    }
-    let token = localStorage.getItem('my-token');
-    if (token && token.length > 0) {
-      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
-        .then((res) => {
-          if (res.data.length > 0) {
-            setMyToken(token);
-          } else {
-            goToLogin();
-          }
-        })
-        .catch((err) => {
-          goToLogin();
-        })
-    } else {
-      goToLogin();
-    }
-  }, [])
 
   return (
     <ShoppingInformationTabArea>
