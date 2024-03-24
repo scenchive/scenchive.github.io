@@ -42,7 +42,7 @@ const KeywordSearchStep2 = () => {
   }, []);
 
   useEffect(() => {
-    if (token && option) {
+    if (option) {
       getKeyword();
     }
   }, [token, option]);
@@ -59,7 +59,6 @@ const KeywordSearchStep2 = () => {
     const opt = option === 1 ? "type" : "tpo";
     await api
       .get(`perfumes/recommend/${opt}`, {
-        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         setKeywords(res.data);

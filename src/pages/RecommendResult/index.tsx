@@ -9,7 +9,7 @@ import {
   Top,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../api";
+import { api } from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 
@@ -48,8 +48,8 @@ const RecommendResult = () => {
   }, []);
 
   useEffect(() => {
-    if (token !== null) getKeyword();
-  }, [token]);
+    getKeyword();
+  }, []);
 
   useEffect(() => {
     keywordIds?.map((el) => (keywordString += `keywordId=${el}&`));
@@ -64,7 +64,7 @@ const RecommendResult = () => {
   }, [target, loading]);
 
   useEffect(() => {
-    if (token !== null && perfumesPage !== -1) getPerfumes();
+    if (perfumesPage !== -1) getPerfumes();
   }, [token, perfumesPage]);
 
   //무한 스크롤 target이 감지되면 호출되는 함수
@@ -92,7 +92,6 @@ const RecommendResult = () => {
   const getPerfumes = async () => {
     await api
       .get(`/perfumes/recommend?${keywordString}page=${perfumesPage}`, {
-        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         if (res.data.perfumes) {
@@ -107,7 +106,6 @@ const RecommendResult = () => {
   const getKeyword = async () => {
     await api
       .get(`/perfumes/recommend/${option}`, {
-        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         setKeywords(res.data);
@@ -129,7 +127,7 @@ const RecommendResult = () => {
       <Cards>
         {perfumes?.map((el) => {
           return (
-            <Card key={el.id} onClick={()=>navigate('/perfumedetail?perfume='+el.id)}>
+            <Card key={el.id} onClick={() => navigate('/perfumedetail?perfume=' + el.id)}>
               <img src={el.perfumeImage} />
               <CardText>
                 <div className="card-text__title">{el.perfumeName}</div>
