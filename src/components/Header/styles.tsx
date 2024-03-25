@@ -58,6 +58,7 @@ export const Logo = styled.div`
 
 export const HeaderLeft = styled.div`
   display: none;
+  cursor:pointer;
 
   ${mediaQuery} {
     display: block;
@@ -124,6 +125,7 @@ export const MenuSmallTop = styled.div`
   font-family: Gowun Batang;
   background-color: #e3a6a1;
   font-size: 1.2rem;
+  cursor: pointer;
   & > div {
     margin: 0 2px;
     opacity: 1;
