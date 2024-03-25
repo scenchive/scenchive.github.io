@@ -38,7 +38,7 @@ export const Top = styled.div`
   }
   .top__detail {
     font-size: 1.4rem;
-    
+
     ${mediaQuery} {
       font-size: 1.2rem;
     }
@@ -79,6 +79,7 @@ export const Lists = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 export const List = styled.div<{ read: boolean }>`

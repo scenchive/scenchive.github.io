@@ -141,10 +141,9 @@ export const MenuItemSmall = styled.div<{ border: boolean }>`
     align-items: center;
     color: #e3a6a1;
     padding: 5px 20px;
-    //font-family: Noto Sans Kr;
     font-family: Gowun Batang;
     border-bottom: ${(props) => (props.border ? "1px solid #e3a6a1" : "none")};
-    cursor:pointer;
+    cursor: pointer;
 
     img {
       width: 15px;
@@ -165,6 +164,11 @@ export const HeaderRight = styled.div`
 
   img {
     width: 25px;
+    cursor: pointer;
+  }
+
+  div {
+    cursor: pointer;
   }
 
   ${mediaQuery} {
@@ -181,9 +185,11 @@ export const HeaderRightText = styled.div`
   padding: 0 3px;
   font-size: 1.7rem;
 
+  &:nth-child(2) {
+    cursor: default;
+  }
+
   ${mediaQuery} {
     display: none;
-    /* font-size: 1rem;
-    padding: 0 1px; */
   }
 `;

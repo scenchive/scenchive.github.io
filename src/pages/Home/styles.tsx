@@ -41,7 +41,7 @@ export const MainTop = styled.div`
   height: 40px;
   display: flex;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 2.3rem;
   align-items: start;
   word-wrap: break-word;
   margin-bottom: 50px;
@@ -57,7 +57,7 @@ export const MainTop = styled.div`
   }
 
   .main-top__text--big {
-    font-size: 4.5rem;
+    font-size: 3.2rem;
   }
 
   ${mediaQuery} {
@@ -105,6 +105,7 @@ export const Options = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 1.5rem;
+  cursor: pointer;
 
   ${mediaQuery} {
     font-size: 1.1rem;

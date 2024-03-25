@@ -22,6 +22,7 @@ export const Container = styled.div`
 export const InputBox = styled.div`
   label: input-box;
   width: calc(50% - 50px);
+  min-width: 590px;
   height: 40px;
   position: relative;
 
@@ -31,17 +32,20 @@ export const InputBox = styled.div`
     position: absolute;
     right: 15px;
     top: 12px;
+    cursor: pointer;
   }
 
   ${mediaQuery} {
     height: 30px;
     width: 70%;
+    min-width: 70%;
 
     img {
       width: 15px;
       height: 15px;
       top: 8px;
       right: 12px;
+      
     }
   }
 `;
@@ -123,9 +127,12 @@ export const ListDetail = styled.div`
   justify-content: space-between;
   padding: 6px 0;
   border-bottom: 1px solid #f5d0cd;
+  cursor: pointer;
+
   img {
     width: 15px;
   }
+
   .list-detail__name {
     width: calc(100% - 30px);
     margin: 0 10px;
