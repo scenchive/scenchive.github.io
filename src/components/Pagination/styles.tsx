@@ -8,6 +8,7 @@ export const Container = styled.div`
   margin: 80px 0;
   img {
     margin: 0 10px;
+    cursor: pointer;
   }
 `;
 
@@ -16,4 +17,5 @@ export const Number = styled.div<{ selected: boolean }>`
   color: ${(props) => (props.selected ? "#000000" : "#B2B2B2")};
   margin: 0 5px;
   font-size: 1.5rem;
+  cursor: pointer;
 `;

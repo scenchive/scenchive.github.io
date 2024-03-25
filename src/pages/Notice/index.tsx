@@ -14,8 +14,9 @@ import {
 } from "./styles";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
-import Pagination from "./Pagination";
-import {api} from "../../api";
+import Pagination from "../../components/Pagination";
+import { api } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 interface Notice {
   id: number;
@@ -31,6 +32,7 @@ interface Notice {
  * @author 신정은
  */
 const Notice = () => {
+  const navigate = useNavigate();
   const [token, setToken] = useState<string | null>(null);
   const [notices, setNotices] = useState<Array<Notice> | []>([]);
   const [unread, setUnread] = useState(0);
@@ -62,8 +64,21 @@ const Notice = () => {
         setUnread(res.data.unreadNotifications);
         setCount(res.data.unreadNotifications + res.data.readNotifications);
         setNotices(res.data.notificationDtoList);
-       
       });
+  };
+
+  //알림 읽기 api
+  const readNotice = async (read: boolean, id: number) => {
+    if (!read) {
+      await api.post(
+        `/notification/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      navigate(`/communitydetail?detail=${id}`);
+    }
   };
 
   return (
@@ -86,7 +101,10 @@ const Notice = () => {
             <>
               <Lists>
                 {notices.map((el) => (
-                  <List read={el.check}>
+                  <List
+                    read={el.check}
+                    onClick={() => readNotice(el.check, el.id)}
+                  >
                     <ListNumber>{el.id}</ListNumber>
                     <ListContent>
                       <div>{el.boardTitle}</div>

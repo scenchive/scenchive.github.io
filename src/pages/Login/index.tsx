@@ -41,29 +41,26 @@ const Login = () => {
       await api.post('/login', data)
         .then((res) => {
           if (res.data.token) {
-            console.log('로그인 성공했습니다.')
-            localStorage.setItem('my-token', res.data.token)
+            console.log("로그인 성공했습니다.");
+            localStorage.setItem("my-token", res.data.token);
             goToHome();
           }else{
             alert('로그인에 실패하였습니다.');
           }
-
         })
         .catch((err) => {
-          console.log('err', err)
-        })
-
+          console.log("err", err);
+        });
     } else {
-      alert("모든 항목을 입력해주세요.")
+      alert("모든 항목을 입력해주세요.");
     }
-  }
+  };
 
-
-  const handleOnKeyPress = (e: { key: string; }) => {
-    if (e.key === 'Enter') {
+  const handleOnKeyPress = (e: { key: string }) => {
+    if (e.key === "Enter") {
       Login();
     }
-  }
+  };
   return (
     <>
       <Header />
@@ -75,23 +72,33 @@ const Login = () => {
         <LoginArea>
           <RowArea>
             <QuestionRow>이메일</QuestionRow>
-            <AnswerRow type="text"
+            <AnswerRow
+              type="text"
               placeholder="이메일을 입력해주세요."
-              onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setEmail(e.target.value)} onKeyPress={handleOnKeyPress} />
+              onChange={(e: {
+                target: { value: React.SetStateAction<string> };
+              }) => setEmail(e.target.value)}
+              onKeyPress={handleOnKeyPress}
+            />
           </RowArea>
           <RowArea>
             <QuestionRow>비밀번호</QuestionRow>
-            <AnswerRow type="password"
+            <AnswerRow
+              type="password"
               placeholder="비밀번호를 입력해주세요."
-              onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setPassword(e.target.value)} onKeyPress={handleOnKeyPress} />
+              onChange={(e: {
+                target: { value: React.SetStateAction<string> };
+              }) => setPassword(e.target.value)}
+              onKeyPress={handleOnKeyPress}
+            />
           </RowArea>
         </LoginArea>
 
         <LoginButton onClick={Login}>로그인</LoginButton>
-        
+
         <JoinArea>
           <JoinTitle>아직 센카이브 회원이 아니신가요?</JoinTitle>
-          <JoinButton onClick={()=>navigate("/signup")}>회원가입</JoinButton>
+          <JoinButton onClick={() => navigate("/signup")}>회원가입</JoinButton>
         </JoinArea>
       </Content>
     </>
