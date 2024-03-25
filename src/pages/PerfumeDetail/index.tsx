@@ -215,8 +215,8 @@ const PerfumeDetail = () => {
 
   /* 시향 후기 호출 api */
   const getReview = async () => {
-    if (perfumeId!==undefined && myToken) {
-      await api.get(`/review/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+    if (perfumeId!==undefined ) {
+      await api.get(`/reviews/` + perfumeId )
         .then((res) => {
           setReviewList(res?.data)
           setReviewTotal(res.data.length)
@@ -321,7 +321,7 @@ const PerfumeDetail = () => {
 
         <ShoppingInformationTab shoppingList={shoppingList} />
 
-        <ReviewBlock PerfumeNote={perfumeNote} myToken={myToken} reviewList={reviewList} />
+        <ReviewBlock PerfumeNote={perfumeNote}  reviewList={reviewList} />
       </Main>
     </Container>
   </>

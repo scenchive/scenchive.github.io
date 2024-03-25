@@ -111,7 +111,7 @@ const Search = () => {
               {searchBrands.map((el, index) => {
                 return (
                   <ListDetail
-                    key={'list_'+index}
+                    key={'brandlist_'+index}
                     onClick={() => {
                       navigate(`/searchresult?search=${el.brandName_kr}`);
                       setToggle(false);
@@ -129,9 +129,10 @@ const Search = () => {
           {searchPerfumes !== null && (
             <ListContent>
               <div className="list-content__title">향수</div>
-              {searchPerfumes.map((el) => {
+              {searchPerfumes.map((el, index) => {
                 return (
                   <ListDetail
+                  key={'perfumelist+'+index}
                     onClick={() => {
                       navigate(`/searchresult?search=${el.perfumeName}`);
                       setToggle(false);
