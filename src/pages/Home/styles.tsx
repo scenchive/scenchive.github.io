@@ -17,11 +17,11 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const Main = styled.div<{ width: string }>`
+export const Main = styled.div`
   label: main;
-  width: ${(props) => props.width};
+  width: 100%;
   max-width: 700px;
-  height: calc(100vh - 170px);
+  min-height: 450px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -37,7 +37,6 @@ export const Main = styled.div<{ width: string }>`
 
 export const MainTop = styled.div`
   label: main-top;
-  width: 100%;
   height: 40px;
   display: flex;
   justify-content: center;
@@ -61,8 +60,12 @@ export const MainTop = styled.div`
   }
 
   ${mediaQuery} {
+    height: fit-content;
     font-size: 1.8rem;
-    margin: 50px 0 30px 0;
+    .main-top__text {
+      line-height: 30px;
+      word-break: keep-all;
+    }
     .main-top__text--big {
       font-size: 2.5rem;
     }
@@ -120,14 +123,17 @@ export const Option = styled.div`
 
 export const MainBottom = styled.div`
   label: main-bottom;
-  width: 100%;
+  width: 60%;
   display: flex;
   justify-content: center;
   font-family: Noto Sans KR;
   & > img {
     width: 20px;
+  }
 
-    ${mediaQuery} {
+  ${mediaQuery} {
+    width: 100%;
+    & > img {
       width: 15px;
     }
   }
