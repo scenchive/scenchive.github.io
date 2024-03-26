@@ -35,10 +35,7 @@ const ShoppingSlider = (
   const [querySearch, setQuerySearch] = useSearchParams();
   const [perfumeId, setPerfumeId] = useState<number | null | undefined>();
 
-  /**
-   * @todo 실제 로그인 여부 확인
-   */
-  const isLogin = false;
+
 
   const settings = {
     dots: false,
