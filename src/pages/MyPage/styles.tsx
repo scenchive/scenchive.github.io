@@ -31,20 +31,23 @@ export const ProfileArea = styled.div`
   label: profile-area;
   display:flex;
   flex-direction:row;
-
   margin-right:auto;
   margin-top:30px;
 `
 
 export const ProfileImage = styled.img`
-  label:profile-image
-  min-width:100px;
-  max-width:30%;
-  height:auto;
+  label:profile-image;
+  width:100px;
+  height:100px;
   max-width:100px;
   border-radius:20px;
   object-fit:cover;
   box-shadow: 0.1px 0.1px 3px 1px #DDDDDD;
+  
+  ${mediaQuery} {
+    width:60px;
+    height:60px;
+  }
 `
 
 export const NameEmailArea = styled.div`
@@ -55,39 +58,83 @@ export const NameEmailArea = styled.div`
   flex-direction:column;
   margin-top:auto;
   margin-bottom:auto;
-  .name_text{
-    color:#616161;
-    font-size:20px;
-    line-height:17px;
+
+  ${mediaQuery} {
+    margin-left:10px;
   }
+`
+
+export const NameEmailAreaTop = styled.div`
+  label: name-email-area-top;
+  width: -webkit-fill-available;
+  display:flex;
+  flex-direction:column;
+
   .email_text{
     color:#616161;
     font-size: 18px;
     font-weight:400;
     line-height:17px;
     margin-top:5px;
+    text-align: left;
   }
 `
+
+export const UserInformationArea = styled.div`
+  label: user-information-area;
+  display:flex;
+  flex-direction: row;
+  text-align:left;
+    .name_text{
+    color:#616161;
+    font-size:20px;
+    line-height:17px;
+  }
+
+`
+
+export const MobileLogoutButton = styled.div`
+  label: mobile-logout-button;
+  display:none;
+
+  ${mediaQuery} {
+    display: block;
+    font-family: Noto Sans KR;
+    font-size: 1rem;
+    color: #A2A2A2;
+    margin-top:auto;
+    margin-left: 20px;
+  }
+`
+
 
 export const ButtonArea = styled.div`
   label: button-area;
   display: flex;
   flex-direction: row;
+`
 
+interface ProfileButton {
+  isPink: boolean | undefined;
+  isLogin: boolean | undefined;
+}
 
-  .split{
-    color:#A2A2A2;
-    font-size:1.2rem;
-    font-family: Noto Sans KR;
-    border:none;
-    margin-top:12px;
-    margin-left: 10px;
-    margin-right: 10px;
-    cursor:pointer;
+export const Splitter = styled.div<ProfileButton>`
+  label: splitter;
+  color:#A2A2A2;
+  font-size:1.2rem;
+  font-family: Noto Sans KR;
+  border:none;
+  margin-top:12px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  ${mediaQuery} {
+    display: ${(props) => (props?.isLogin === true ? "none" : "block")};
   }
 `
 
-export const ProfileButton = styled.div<{ isPink: boolean | undefined }>`
+export const ProfileButton = styled.div<ProfileButton>`
   label: profile-button;
   height: 20px;
   color:${(props) => (props?.isPink === true ? "#E3A6A1" : "#A2A2A2")};
@@ -98,9 +145,14 @@ export const ProfileButton = styled.div<{ isPink: boolean | undefined }>`
   padding:0px;
   background-color:transparent;
   cursor:pointer;
+  word-break: keep-all;
+
+  ${mediaQuery} {
+    display: ${(props) => (props?.isLogin === true ? "none" : "block")};
+  }
 `
 
-export const SettingIcon= styled.img`
+export const SettingIcon = styled.img`
   label: setting-icon;
   width: 14px;
   height: 15px;
