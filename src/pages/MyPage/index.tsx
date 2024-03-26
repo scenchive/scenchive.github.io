@@ -5,7 +5,11 @@ import {
   ProfileArea,
   ProfileImage,
   NameEmailArea,
+  NameEmailAreaTop,
+  UserInformationArea,
+  MobileLogoutButton,
   ButtonArea,
+  Splitter,
   ProfileButton,
   SettingIcon,
   KeywordArea,
@@ -20,7 +24,7 @@ import {
 
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import {api} from "../../api";
+import { api } from "../../api";
 import PerfumeCell from "./PerfumeCell";
 import PerfumeCellModifyModal from "./PerfumeCellModifyModal";
 import Header from "../../components/Header";
@@ -131,11 +135,11 @@ const MyPage = () => {
     if (myToken && myToken.length > 0) {
       await api.get('/bookmark?page=' + bookmarkPage, { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
-          if (res?.data?.perfumes.length>0) {
+          if (res?.data?.perfumes.length > 0) {
             if (!totalBookmarkPerfumeCount) {
               setTotalBookmarkPerfumeCount(res?.data?.totalBookmarkPerfumeCount);
             }
-            let newBookmarkList=bookmarkList?.concat(...res?.data?.perfumes)
+            let newBookmarkList = bookmarkList?.concat(...res?.data?.perfumes)
             setBookmarkList((prev) => {
               if (prev) { return [...prev, ...res?.data?.perfumes] }
               else { return res?.data?.perfumes }
@@ -278,20 +282,30 @@ const MyPage = () => {
         <ProfileArea>
           <ProfileImage src={imageUrl} />
           <NameEmailArea>
-            <div className="name_text">{name}</div>
-            <div className="email_text">{email}</div>
+            <NameEmailAreaTop>
+              <UserInformationArea>
+                <div className="name_text">{name}</div>
+                <MobileLogoutButton>
+                로그아웃 
+                </MobileLogoutButton>
+              </UserInformationArea>
+  
+                <div className="email_text">{email}</div>
+
+            </NameEmailAreaTop>
+
             <ButtonArea>
               <div onClick={() => setIsModalOpen2(true)} style={{ display: "flex", flexDirection: "row" }}>
                 <SettingIcon src="/assets/icon/icon_settings.svg" />
-                <ProfileButton isPink={false}>
+                <ProfileButton isPink={false} isLogin={false}>
                   프로필 수정하기</ProfileButton>
               </div>
-              <div className="split">|</div>
-              <ProfileButton onClick={() => navigate("/myBoards")} isPink={true}>내가 작성한 게시글</ProfileButton>
-              <div className="split">|</div>
-              <ProfileButton onClick={() => navigate("/myComments")} isPink={true}>내가 작성한 댓글</ProfileButton>
-              <div className="split">|</div>
-              <ProfileButton onClick={() => logout()} isPink={false}>
+              <Splitter isPink={false} isLogin={false} >|</Splitter>
+              <ProfileButton onClick={() => navigate("/myBoards")} isPink={true} isLogin={false}>내가 작성한 게시글</ProfileButton>
+              <Splitter isPink={false} isLogin={false}>|</Splitter>
+              <ProfileButton onClick={() => navigate("/myComments")} isPink={true} isLogin={false}>내가 작성한 댓글</ProfileButton>
+              <Splitter isPink={false} isLogin={true}>|</Splitter>
+              <ProfileButton onClick={() => logout()} isPink={false} isLogin={true}>
                 로그아웃 </ProfileButton>
             </ButtonArea>
           </NameEmailArea>
