@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, Main, Content, List, Lists, ListText } from "./styles";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../api";
+import { api } from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 
@@ -64,17 +64,11 @@ const SearchResult = () => {
   }, []);
 
   useEffect(() => {
-    // if (token !== null) 
-    getSearchResult("result");
-  }, [querySearch.get("search")]);
-// }, [token, querySearch.get("search")]);
+    if (perfumesPage !== -1) {
+      getSearchResult("result");
+    }
+  }, [querySearch.get("search"), perfumesPage]);
 
-
-  useEffect(() => {
-    // if (token !== null && perfumesPage !== -1) 
-    if (perfumesPage !== -1) 
-    getSearchResult("more");
-  }, [perfumesPage]);
 
   const getToken = () => {
     const token = localStorage.getItem("my-token");
@@ -84,8 +78,7 @@ const SearchResult = () => {
   const getSearchResult = async (type: string) => {
     await api
       .get(
-        `/search?name=${querySearch.get("search")}&page=${
-          type !== "more" ? 0 : perfumesPage
+        `/search?name=${querySearch.get("search")}&page=${type !== "more" ? 0 : perfumesPage
         }`,
       )
       .then((res) => {
@@ -97,17 +90,20 @@ const SearchResult = () => {
           else setResultPerfumes(res.data.perfumes);
         } else if (type === "more") {
           //무한스크롤
-          if (res.data)
+          if (res.data) {
             setResultPerfumes((prev) =>
               prev !== null
                 ? [...prev, ...res.data?.perfumes]
                 : res.data.perfumes
             );
+          }
           else setPerfumesPage(-1);
           setLoading(false);
         }
       });
   };
+
+
 
   return (
     <Container>
@@ -118,9 +114,10 @@ const SearchResult = () => {
           <Content>
             <div className="content__title">브랜드</div>
             <Lists>
-              {resultBrands.map((el) => {
+              {resultBrands.map((el, index) => {
                 return (
                   <List
+                    key={'brand_' + index}
                     onClick={() =>
                       navigate(`/branddetail?name=${el.brandName}`, {
                         state: {
@@ -145,9 +142,10 @@ const SearchResult = () => {
           <Content>
             <div className="content__title">향수</div>
             <Lists ref={view}>
-              {resultPerfumes?.map((el) => {
+              {resultPerfumes?.map((el, index) => {
                 return (
                   <List
+                    key={'perfume_' + index}
                     onClick={() =>
                       navigate(`/perfumedetail?perfume=${el.perfumeId}`)
                     }
