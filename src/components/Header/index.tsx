@@ -60,7 +60,7 @@ const Header = () => {
             <MenuSmallTop>
               <div onClick={() => navigate("/login")}>로그인</div>
               <div>|</div>
-              <div onClick={() => navigate("/signup")}>회원가입</div>
+              <div onClick={() => navigate("/signupstep1")}>회원가입</div>
             </MenuSmallTop>
           )}
           {menuItems.map((item, index) => {
