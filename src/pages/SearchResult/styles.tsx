@@ -77,6 +77,7 @@ export const List = styled.div`
   margin: 3px 0;
   box-sizing: border-box;
   display: flex;
+  cursor: pointer;
   img {
     width: auto;
     height: 70px;
