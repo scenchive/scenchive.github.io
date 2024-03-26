@@ -18,21 +18,7 @@ interface PerfumeType{
 
 const PerfumeCell = (props:{Perfume:PerfumeType}) => {
   const navigate = useNavigate();
-  /**
-   * @todo 실제 로그인 여부 확인
-   */
-  const isLogin = false;
-
-  const goToHome = () => {
-    navigate("/")
-  }
-
-  const goToLogin = () => {
-    navigate("/login")
-  }
-
-
-
+  
   return (
     <CellArea onClick={()=>navigate(`/perfumedetail?perfume=${props?.Perfume?.perfume_id}`)}>
       <PerfumeImage src={props?.Perfume?.perfumeImage}/>
