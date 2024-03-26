@@ -3,14 +3,14 @@ const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
-  label:container;
+  label: container;
   width: 100%;
-  min-height:800px;
+  min-height: 800px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   position: relative;
-  align-items:center; 
+  align-items: center;
 `;
 
 export const Main = styled.div`
@@ -30,8 +30,7 @@ export const Main = styled.div`
   }
 `;
 
-
-export const PerfumeNameKR=styled.div`
+export const PerfumeNameKR = styled.div`
   label: perfume-name-kr;
   color: #242424;
   font-size: 1.7rem;
@@ -39,102 +38,96 @@ export const PerfumeNameKR=styled.div`
   margin-top: 4px;
 
   ${mediaQuery} {
-    
   }
-`
+`;
 
-export const PerfumeArea=styled.div`
+export const PerfumeArea = styled.div`
   label: perfume-area;
-  display:flex;
-  flex-direction:row;
+  display: flex;
+  flex-direction: row;
   margin-top: 50px;
 
   ${mediaQuery} {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
   }
-`
+`;
 
-export const MobileBrandPerfumeInformationArea= styled.div`
+export const MobileBrandPerfumeInformationArea = styled.div`
   label: mobile-brand-perfume-information-area;
   display: none;
   ${mediaQuery} {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
   }
-  
-`
+`;
 
-export const PerfumeImageArea=styled.div`
+export const PerfumeImageArea = styled.div`
   label: perfume-image-area;
-  width:250px;
-  height:250px;
+  width: 250px;
+  height: 250px;
   position: relative;
-  margin-right:15px;
+  margin-right: 15px;
 
   ${mediaQuery} {
-    width:200px;
-    height:200px;
+    width: 200px;
+    height: 200px;
     position: relative;
     align-self: center;
-    
   }
-`
+`;
 
-export const PerfumeImage=styled.img`
-  label:perfume-image;
-  width:200px;
-  height:200px;
-  object-fit:scale-down;
-  box-shadow: 2px 2px 10px 2px #EAEAEA;
-  
+export const PerfumeImage = styled.img`
+  label: perfume-image;
+  width: 200px;
+  height: 200px;
+  object-fit: scale-down;
+  box-shadow: 2px 2px 10px 2px #eaeaea;
+
   ${mediaQuery} {
-    width:200px;
-    height:200px;
+    width: 200px;
+    height: 200px;
     box-sizing: border-box;
   }
-`
+`;
 
-export const Bookmark=styled.img`
+export const Bookmark = styled.img`
   label: bookmark;
   width: 37.33px;
   height: 59.94px;
   position: absolute;
   top: 0px;
-  left: 20px;
+  left: 45px;
   cursor: pointer;
+
   ${mediaQuery} {
-
-
+    left: 20px;
   }
-`
+`;
 
-export const PerfumeInformationArea=styled.div`
+export const PerfumeInformationArea = styled.div`
   label: perfume-information;
-  display:flex;
-  flex-direction:column;
-  text-align:left;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
   ${mediaQuery} {
     display: none;
-
   }
-`
+`;
 
-export const BrandArea=styled.div`
+export const BrandArea = styled.div`
   label: brand-area;
   height: 22px;
   display: flex;
   flex-direction: row;
-  cursor:pointer;
+  cursor: pointer;
   ${mediaQuery} {
-
-
   }
-`
+`;
 
-export const BrandNameKR=styled.span`
+export const BrandNameKR = styled.span`
   label: brand-name-kr;
   color: #616161;
   font-size: 1.3rem;
@@ -143,10 +136,9 @@ export const BrandNameKR=styled.span`
 
   ${mediaQuery} {
   }
+`;
 
-`
-
-export const BrandDetailPageIcon=styled.img`
+export const BrandDetailPageIcon = styled.img`
   label: brand-detail-page-icon;
   width: 13px;
   height: 13px;
@@ -155,119 +147,116 @@ export const BrandDetailPageIcon=styled.img`
 
   ${mediaQuery} {
   }
-`
+`;
 
-export const BrandNameEN=styled.div`
+export const BrandNameEN = styled.div`
   label: brand-name-en;
+`;
 
-`
-
-export const PerfumeRating=styled.div`
+export const PerfumeRating = styled.div`
   label: perfume-rating;
-  display:flex;
+  display: flex;
   flex-direction: row;
   margin-top: 5px;
   font-family: Noto Sans KR;
   font-size: 1.1rem;
-  color: #2E2E2E;
+  color: #2e2e2e;
   font-weight: 500;
 
   ${mediaQuery} {
     margin-top: 12px;
   }
-`
+`;
 
 export const MobilePerfumeInformationArea = styled.div`
   label: mobile-perfume-information-area;
   display: none;
-  
+
   ${mediaQuery} {
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     margin-top: 15px;
-
   }
-`
+`;
 
-
-export const SeasonCell=styled.div `
+export const SeasonCell = styled.div`
   label: season-cell;
   width: 65px;
   height: 70px;
   text-align: center;
   margin-right: 10px;
-  
+
   ${mediaQuery} {
   }
-`
+`;
 
-export const SeasonIcon=styled.img`
+export const SeasonIcon = styled.img`
   label: season-icon;
   width: 45px;
   height: 35px;
   object-fit: scale-down;
   margin-bottom: 3px;
-  
+
   ${mediaQuery} {
   }
-`
+`;
 
-export const SeasonRating=styled.div`
+export const SeasonRating = styled.div`
   label: season-rating;
   color: #616161;
-  font-size:1rem;
+  font-size: 1rem;
   font-family: Noto Sans KR;
   font-weight: 500;
+`;
 
-`
-
-export const StatusBarArea=styled.div`
+export const StatusBarArea = styled.div`
   label: status-bar-area;
   width: 100%;
-  height: 10px; 
-  border-radius:10px;
+  height: 10px;
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
   margin-top: 5px;
-  background-color: #D9D9D9;
-`
+  background-color: #d9d9d9;
+`;
 
-export const StatusBar=styled.div<{backgroundColor:string, statusWidth:number}>`
+export const StatusBar = styled.div<{
+  backgroundColor: string;
+  statusWidth: number;
+}>`
   label: status-bar;
-  width: ${(props)=>props.statusWidth}%;
+  width: ${(props) => props.statusWidth}%;
   height: 10px;
-  background-color: ${(props)=>props.backgroundColor};
+  background-color: ${(props) => props.backgroundColor};
   border-radius: 10px;
   position: absolute;
   z-index: 10;
-`
+`;
 
-
-export const OtherRatingArea=styled.div`
+export const OtherRatingArea = styled.div`
   label: other-rating-area;
-  display:flex;
-  flex-direction:row;
+  display: flex;
+  flex-direction: row;
   margin-top: 20px;
-`
+`;
 
-export const ButtonArea=styled.div`
+export const ButtonArea = styled.div`
   label: button-area;
-  display:flex;
-  flex-direction:row;
-  
-`
+  display: flex;
+  flex-direction: row;
+`;
 
-export const MenuButton=styled.div`
+export const MenuButton = styled.div`
   label: menu-button;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  width:50%;
-  height:30px;
-  margin-top:50px;
-  cursor:pointer;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 30px;
+  margin-top: 50px;
+  cursor: pointer;
+`;
 
 // export const BasicInformationButton=styled.div`
 
