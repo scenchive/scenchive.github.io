@@ -195,6 +195,11 @@ const Home = () => {
                     key={"perfumebox_" + index}
                     index={index}
                     style={{ display: "flex" }}
+                    onClick={() =>
+                      navigate(
+                        `/perfumedetail?perfume=${el.id}`
+                      )
+                    }
                   >
                     <div>
                       <img src={el.perfumeImage} />
