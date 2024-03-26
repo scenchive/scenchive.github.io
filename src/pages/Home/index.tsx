@@ -190,7 +190,7 @@ const Home = () => {
             </MainTop>
             <MainBottom>
               <SlickSlider {...sliderSettings}>
-                {randomPerfumes.map((el, index) => (
+                {randomPerfumes?.map((el, index) => (
                   <PerfumeBox key={'perfumebox_'+index} index={index} style={{ display: "flex" }}>
                     <div>
                       <img src={el.perfumeImage} />

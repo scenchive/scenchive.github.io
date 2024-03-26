@@ -77,7 +77,7 @@ export const Box = styled.div<{ borderColor: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  cursor:pointer;
   ${mediaQuery} {
     font-size: 1.5rem;
   }
