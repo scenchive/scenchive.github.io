@@ -64,7 +64,6 @@ const Search = () => {
   const getSearchResult = async () => {
     await api
       .get(`/search?name=${search}&page=0`, {
-        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         if (res.data.brandsNum === 0) setSearchBrands(null);
@@ -109,9 +108,10 @@ const Search = () => {
           {searchBrands !== null && (
             <ListContent>
               <div className="list-content__title">브랜드</div>
-              {searchBrands.map((el) => {
+              {searchBrands.map((el, index) => {
                 return (
                   <ListDetail
+                    key={'brandlist_'+index}
                     onClick={() => {
                       navigate(`/searchresult?search=${el.brandName_kr}`);
                       setToggle(false);
@@ -129,9 +129,10 @@ const Search = () => {
           {searchPerfumes !== null && (
             <ListContent>
               <div className="list-content__title">향수</div>
-              {searchPerfumes.map((el) => {
+              {searchPerfumes.map((el, index) => {
                 return (
                   <ListDetail
+                  key={'perfumelist+'+index}
                     onClick={() => {
                       navigate(`/searchresult?search=${el.perfumeName}`);
                       setToggle(false);

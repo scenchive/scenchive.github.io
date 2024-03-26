@@ -20,7 +20,7 @@ import {
 
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../api";
+import { api } from "../../api";
 import Header from "../../components/Header/index";
 import Search from "../../components/Search/index";
 import StarRating from "./StarRating/index";
@@ -109,31 +109,29 @@ const PerfumeDetail = () => {
       perfumeIdProps = parseInt(perfumeIdProps);
       setPerfumeId(perfumeIdProps)
     } else {
-      navigate('/notfound')
+      navigate('*')
     }
+
     let token = localStorage.getItem('my-token');
     if (token && token.length > 0) {
       api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);
-          } else {
-            goToLogin();
           }
         })
-        .catch((err) => {
-          goToLogin();
-        })
-    } else {
-      goToLogin();
+      
     }
+    //  else {
+    // goToLogin();
+    // }
   }, [])
 
 
   /* 향수 이름, 브랜드, 이미지 호출 api */
   const getPerfumeDetail = async () => {
-    if (perfumeId && myToken) {
-      await api.get(`/fullinfo/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+    if (perfumeId!==undefined ) {
+      await api.get(`/fullinfo/` + perfumeId)
         .then((res) => {
           setPerfumeDetail(res.data);
           setPerfumeName(res.data.perfumeName)
@@ -143,7 +141,7 @@ const PerfumeDetail = () => {
 
   /* 향수 북마크 유무 확인 api */
   const getBookmark = async () => {
-    if (perfumeId && myToken) {
+    if (perfumeId!==undefined && myToken) {
       await api.get(`/checkmarked?perfumeId=` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
         .then((res) => {
           if (res.data === "이미 북마크한 향수입니다.") {
@@ -152,12 +150,13 @@ const PerfumeDetail = () => {
             setIsBookmark(false);
           }
         });
-    }
+    } 
+   
   };
 
   /* 향수 북마크 설정/삭제 api */
   const handleBookmark = () => {
-    if (perfumeId && myToken) {
+    if (perfumeId!==undefined && myToken) {
       if (isBookmark === false) {
         api.post(`/bookmark?perfumeId=` + perfumeId, {}, { headers: { Authorization: `Bearer ${myToken}` } })
           .then((res) => {
@@ -171,13 +170,16 @@ const PerfumeDetail = () => {
           });
       }
     }
+    else {
+      goToLogin();
+    }
   }
 
 
   /* 향수 전체평점, 계절 평점, 기타 평점 호출 api */
   const getPerfumeRating = async () => {
-    if (perfumeId && myToken) {
-      await api.get(`/perfumerating/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+    if (perfumeId!==undefined ) {
+      await api.get(`/perfumerating/` + perfumeId)
         .then((res) => {
           setPerfumeRating(res.data);
         });
@@ -203,8 +205,8 @@ const PerfumeDetail = () => {
 
   /* 향수 노트 정보 호출 api, BasicInformationTab 컴포넌트에서 이용*/
   const getPerfumeNote = async () => {
-    if (perfumeId && myToken) {
-      await api.get(`/notesinfo/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+    if (perfumeId!==undefined ) {
+      await api.get(`/notesinfo/` + perfumeId)
         .then((res) => {
           setPerfumeNote(res.data)
         });
@@ -213,8 +215,8 @@ const PerfumeDetail = () => {
 
   /* 시향 후기 호출 api */
   const getReview = async () => {
-    if (perfumeId && myToken) {
-      await api.get(`/review/` + perfumeId, { headers: { Authorization: `Bearer ${myToken}` } })
+    if (perfumeId!==undefined ) {
+      await api.get(`/reviews/` + perfumeId )
         .then((res) => {
           setReviewList(res?.data)
           setReviewTotal(res.data.length)
@@ -224,21 +226,25 @@ const PerfumeDetail = () => {
 
   /* 구매 정보 호출 api */
   const getShopping = async () => {
-    if (perfumeName && myToken) {
-      await api.get(`/product/search?query=` + perfumeName, { headers: { Authorization: `Bearer ${myToken}` } })
+    if (perfumeName ) {
+      await api.get(`/product/search?query=` + perfumeName)
         .then((res) => {
           setShoppingList(res?.data)
         });
     }
   }
 
+ 
+
   useEffect(() => {
-    getPerfumeDetail();
     getBookmark();
+    getPerfumeDetail();
     getPerfumeRating();
     getPerfumeNote();
     getReview();
-  }, [myToken])
+  }, [myToken, perfumeId])
+
+
 
   useEffect(() => {
     getShopping();
@@ -276,7 +282,7 @@ const PerfumeDetail = () => {
             </BrandArea>
             <PerfumeNameKR>{perfumeDetail?.perfumeName}</PerfumeNameKR>
             <PerfumeRating>
-              <StarRating ratesResArr={ratesResArr} /> {perfumeRating?.ratingAvg} ({reveiwTotal}건)
+              <StarRating ratesResArr={ratesResArr}/> {perfumeRating?.ratingAvg} ({reveiwTotal}건)
             </PerfumeRating>
           </MobileBrandPerfumeInformationArea>
           <PerfumeImageArea>
@@ -315,7 +321,7 @@ const PerfumeDetail = () => {
 
         <ShoppingInformationTab shoppingList={shoppingList} />
 
-        <ReviewBlock PerfumeNote={perfumeNote} myToken={myToken} reviewList={reviewList} />
+        <ReviewBlock PerfumeNote={perfumeNote}  reviewList={reviewList} />
       </Main>
     </Container>
   </>

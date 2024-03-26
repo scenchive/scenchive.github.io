@@ -8,7 +8,6 @@ interface Props {
 }
 
 const Pagination = ({ count, page, setPage }: Props) => {
-  console.log("d", count, page);
   const number = new Array(count).fill(0);
   const handleArrowClick = (dir: number) => {
     if (page + dir >= 0 && page + dir < count) setPage(page + dir);

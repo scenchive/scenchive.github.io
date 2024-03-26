@@ -49,7 +49,7 @@ function App() {
           <Route path="/communitywrite" element={<CommunityWrite />} />
           <Route path="/communitydetail" element={<CommunityDetail />} />
           <Route path="/notice" element={<Notice />} />
-          <Route path="/notfound" element={<NotFound/>}/>
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       {/* </BrowserRouter> */}
     </div>

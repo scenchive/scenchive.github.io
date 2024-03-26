@@ -288,7 +288,7 @@ const CommunityDetail = () => {
     if (boardIdProps !== null && boardIdProps!=="") {
       setBoardId(boardIdProps)
     }else{
-      navigate('/notfound')
+      navigate('*')
     }
 
 

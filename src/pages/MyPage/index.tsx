@@ -131,7 +131,7 @@ const MyPage = () => {
     if (myToken && myToken.length > 0) {
       await api.get('/bookmark?page=' + bookmarkPage, { headers: { 'Authorization': `Bearer ${myToken}` } })
         .then((res) => {
-          if (res?.data) {
+          if (res?.data?.perfumes.length>0) {
             if (!totalBookmarkPerfumeCount) {
               setTotalBookmarkPerfumeCount(res?.data?.totalBookmarkPerfumeCount);
             }

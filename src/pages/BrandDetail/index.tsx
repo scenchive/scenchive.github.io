@@ -56,7 +56,7 @@ const BrandDetail = () => {
   }, []);
 
   useEffect(() => {
-    if (token && perfumesPage !== -1) {
+    if (perfumesPage !== -1) {
       getPerfumes();
     }
   }, [token, perfumesPage]);
@@ -70,9 +70,6 @@ const BrandDetail = () => {
     await api
       .get(
         `/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
       )
       .then((res) => {
         if (res.data) {
