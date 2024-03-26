@@ -49,13 +49,14 @@ export const PerfumeNameKR = styled.div`
 
 export const PerfumeInformationArea = styled.div`
   label: perfume-information-area;
-  width: 100%;
+  width: calc( 100% - 26px );
   display: flex;
   flex-direction: row;
   align-items: center;
   border: 1px solid #dfdfdf;
-  padding-top: 13px;
-  padding-bottom: 13px;
+  padding: 13px;
+  word-break:keep-all;
+  text-align:left;
 
   ${mediaQuery} {
   }
