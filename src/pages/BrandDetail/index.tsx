@@ -17,7 +17,6 @@ interface Perfumes {
 const BrandDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [token, setToken] = useState<string | null>(null);
   const [querySearch, setQuerySearch] = useSearchParams();
   const [perfumes, setPerfumes] = useState<Array<Perfumes> | null>(null);
   const [num, setNum] = useState(0);
@@ -52,19 +51,10 @@ const BrandDetail = () => {
   }, [target, loading]);
 
   useEffect(() => {
-    getToken();
-  }, []);
-
-  useEffect(() => {
     if (perfumesPage !== -1) {
       getPerfumes();
     }
-  }, [token, perfumesPage]);
-
-  const getToken = () => {
-    const token = localStorage.getItem("my-token");
-    setToken(token);
-  };
+  }, [perfumesPage]);
 
   const getPerfumes = async () => {
     await api

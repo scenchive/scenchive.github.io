@@ -22,7 +22,6 @@ interface Brands {
 
 const SearchResult = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState<string | null>(null);
   const [querySearch, setQuerySearch] = useSearchParams();
   const [resultBrands, setResultBrands] = useState<Array<Brands> | null>(null);
   const [resultPerfumes, setResultPerfumes] = useState<Array<Perfumes> | null>(
@@ -60,26 +59,21 @@ const SearchResult = () => {
   }, [target, loading]);
 
   useEffect(() => {
-    getToken();
-  }, []);
+    getSearchResult("result");
+  }, [querySearch.get("search")]);
 
   useEffect(() => {
-    if (perfumesPage !== -1) {
-      getSearchResult("result");
+    if (perfumesPage !== -1 && perfumesPage > 0) {
+      getSearchResult("more");
     }
-  }, [querySearch.get("search"), perfumesPage]);
-
-
-  const getToken = () => {
-    const token = localStorage.getItem("my-token");
-    setToken(token);
-  };
+  }, [perfumesPage]);
 
   const getSearchResult = async (type: string) => {
     await api
       .get(
-        `/search?name=${querySearch.get("search")}&page=${type !== "more" ? 0 : perfumesPage
-        }`,
+        `/search?name=${querySearch.get("search")}&page=${
+          type !== "more" ? 0 : perfumesPage
+        }`
       )
       .then((res) => {
         if (type === "result") {
@@ -96,14 +90,11 @@ const SearchResult = () => {
                 ? [...prev, ...res.data?.perfumes]
                 : res.data.perfumes
             );
-          }
-          else setPerfumesPage(-1);
+          } else setPerfumesPage(-1);
           setLoading(false);
         }
       });
   };
-
-
 
   return (
     <Container>
@@ -117,7 +108,7 @@ const SearchResult = () => {
               {resultBrands.map((el, index) => {
                 return (
                   <List
-                    key={'brand_' + index}
+                    key={"brand_" + index}
                     onClick={() =>
                       navigate(`/branddetail?name=${el.brandName}`, {
                         state: {
@@ -145,7 +136,7 @@ const SearchResult = () => {
               {resultPerfumes?.map((el, index) => {
                 return (
                   <List
-                    key={'perfume_' + index}
+                    key={"perfume_" + index}
                     onClick={() =>
                       navigate(`/perfumedetail?perfume=${el.perfumeId}`)
                     }
