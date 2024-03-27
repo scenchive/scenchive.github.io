@@ -15,7 +15,7 @@ import {
   SlickSlider,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import {api} from "../../api";
+import { api } from "../../api";
 import Color from "color-thief-react";
 import Header from "../../components/Header/index";
 import Search from "../../components/Search/index";
@@ -125,8 +125,8 @@ const Home = () => {
       <Container>
         <Header />
         <Search />
-        {token && perfumes.length>0? (
-          <Main width={"60%"}>
+        {token && perfumes.length > 0 ? (
+          <Main>
             <MainTop>
               <div className="main-top__text">'{username}'님을 위한</div>
               <Select>
@@ -181,7 +181,7 @@ const Home = () => {
             </MainBottom>
           </Main>
         ) : (
-          <Main width={"60%"}>
+          <Main>
             <MainTop>
               <span className="main-top__text--big">“</span>&nbsp;나와 맞는
               &nbsp;
@@ -191,7 +191,16 @@ const Home = () => {
             <MainBottom>
               <SlickSlider {...sliderSettings}>
                 {randomPerfumes?.map((el, index) => (
-                  <PerfumeBox key={'perfumebox_'+index} index={index} style={{ display: "flex" }}>
+                  <PerfumeBox
+                    key={"perfumebox_" + index}
+                    index={index}
+                    style={{ display: "flex" }}
+                    onClick={() =>
+                      navigate(
+                        `/perfumedetail?perfume=${el.id}`
+                      )
+                    }
+                  >
                     <div>
                       <img src={el.perfumeImage} />
                     </div>

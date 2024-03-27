@@ -1,7 +1,20 @@
+import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
 const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
+
+const fade = keyframes`
+    0%{
+        opacity:100;
+    }
+    50%{
+        opacity:0;
+    }
+    100%{
+        opacity:100;
+    }
+  `;
 
 export const Container = styled.div`
   label: container;
@@ -102,4 +115,16 @@ export const ListText = styled.div`
     color: #a9a9a9;
     font-size: 1.2rem;
   }
+`;
+
+export const Loading = styled.div`
+  label: loading;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Noto Sans Kr;
+  font-size: 2rem;
+  color: #7f8386;
+  animation: ${fade} 2s ease-in-out infinite;
 `;

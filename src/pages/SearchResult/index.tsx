@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Container, Main, Content, List, Lists, ListText } from "./styles";
+import {
+  Container,
+  Main,
+  Content,
+  List,
+  Lists,
+  ListText,
+  Loading,
+} from "./styles";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { api } from "../../api";
 import Header from "../../components/Header";
@@ -22,13 +30,13 @@ interface Brands {
 
 const SearchResult = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState<string | null>(null);
   const [querySearch, setQuerySearch] = useSearchParams();
   const [resultBrands, setResultBrands] = useState<Array<Brands> | null>(null);
   const [resultPerfumes, setResultPerfumes] = useState<Array<Perfumes> | null>(
     null
   );
   const [perfumesPage, setPerfumesPage] = useState(0);
+  const [resultLoading, setResultLoading] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
@@ -60,26 +68,21 @@ const SearchResult = () => {
   }, [target, loading]);
 
   useEffect(() => {
-    getToken();
-  }, []);
+    getSearchResult("result");
+  }, [querySearch.get("search")]);
 
   useEffect(() => {
-    if (perfumesPage !== -1) {
-      getSearchResult("result");
+    if (perfumesPage !== -1 && perfumesPage > 0) {
+      getSearchResult("more");
     }
-  }, [querySearch.get("search"), perfumesPage]);
-
-
-  const getToken = () => {
-    const token = localStorage.getItem("my-token");
-    setToken(token);
-  };
+  }, [perfumesPage]);
 
   const getSearchResult = async (type: string) => {
     await api
       .get(
-        `/search?name=${querySearch.get("search")}&page=${type !== "more" ? 0 : perfumesPage
-        }`,
+        `/search?name=${querySearch.get("search")}&page=${
+          type !== "more" ? 0 : perfumesPage
+        }`
       )
       .then((res) => {
         if (type === "result") {
@@ -88,6 +91,7 @@ const SearchResult = () => {
           else setResultBrands(res.data.brands);
           if (res.data.perfumesNum === 0) setResultPerfumes(null);
           else setResultPerfumes(res.data.perfumes);
+          setResultLoading(false);
         } else if (type === "more") {
           //무한스크롤
           if (res.data) {
@@ -96,83 +100,93 @@ const SearchResult = () => {
                 ? [...prev, ...res.data?.perfumes]
                 : res.data.perfumes
             );
-          }
-          else setPerfumesPage(-1);
+          } else setPerfumesPage(-1);
           setLoading(false);
         }
       });
   };
 
-
-
   return (
     <Container>
       <Header />
       <Search />
-      <Main>
-        {resultBrands !== null && (
-          <Content>
-            <div className="content__title">브랜드</div>
-            <Lists>
-              {resultBrands.map((el, index) => {
-                return (
-                  <List
-                    key={'brand_' + index}
-                    onClick={() =>
-                      navigate(`/branddetail?name=${el.brandName}`, {
-                        state: {
-                          brandName_kr: el.brandName_kr,
-                          brandImage: el.brandImage,
-                        },
-                      })
-                    }
-                  >
-                    <img src={el.brandImage} />
-                    <ListText>
-                      <div className="list-text__title">{el.brandName_kr}</div>
-                      <div className="list-text__sub-title">{el.brandName}</div>
-                    </ListText>
-                  </List>
-                );
-              })}
-            </Lists>
-          </Content>
-        )}
-        {resultPerfumes !== null && (
-          <Content>
-            <div className="content__title">향수</div>
-            <Lists ref={view}>
-              {resultPerfumes?.map((el, index) => {
-                return (
-                  <List
-                    key={'perfume_' + index}
-                    onClick={() =>
-                      navigate(`/perfumedetail?perfume=${el.perfumeId}`)
-                    }
-                  >
-                    <img src={`${el.perfumeImage}`} />
-                    <ListText>
-                      <div className="list-text__title">{el.perfumeName}</div>
-                      <div className="list-text__sub-title">{el.brandName}</div>
-                      <div className="list-text__sub-title">
-                        {el.brandName_kr}
-                      </div>
-                    </ListText>
-                  </List>
-                );
-              })}
-              {resultPerfumes && (
-                <div ref={setTarget} style={{ width: "100%", height: "1px" }} />
-              )}
-            </Lists>
-          </Content>
-        )}
-        {resultBrands === null && resultPerfumes === null && (
-          <Content>
-            <div className="content__none">검색결과가 없습니다.</div>
-          </Content>
-        )}
-      </Main>
+      {resultLoading ? (
+        <Loading>LOADING...</Loading>
+      ) : (
+        <Main>
+          {resultBrands !== null && (
+            <Content>
+              <div className="content__title">브랜드</div>
+              <Lists>
+                {resultBrands.map((el, index) => {
+                  return (
+                    <List
+                      key={"brand_" + index}
+                      onClick={() =>
+                        navigate(`/branddetail?name=${el.brandName}`, {
+                          state: {
+                            brandName_kr: el.brandName_kr,
+                            brandImage: el.brandImage,
+                          },
+                        })
+                      }
+                    >
+                      <img src={el.brandImage} />
+                      <ListText>
+                        <div className="list-text__title">
+                          {el.brandName_kr}
+                        </div>
+                        <div className="list-text__sub-title">
+                          {el.brandName}
+                        </div>
+                      </ListText>
+                    </List>
+                  );
+                })}
+              </Lists>
+            </Content>
+          )}
+          {resultPerfumes !== null && (
+            <Content>
+              <div className="content__title">향수</div>
+              <Lists ref={view}>
+                {resultPerfumes?.map((el, index) => {
+                  return (
+                    <List
+                      key={"perfume_" + index}
+                      onClick={() =>
+                        navigate(`/perfumedetail?perfume=${el.perfumeId}`)
+                      }
+                    >
+                      <img src={`${el.perfumeImage}`} />
+                      <ListText>
+                        <div className="list-text__title">{el.perfumeName}</div>
+                        <div className="list-text__sub-title">
+                          {el.brandName}
+                        </div>
+                        <div className="list-text__sub-title">
+                          {el.brandName_kr}
+                        </div>
+                      </ListText>
+                    </List>
+                  );
+                })}
+                {resultPerfumes && (
+                  <div
+                    ref={setTarget}
+                    style={{ width: "100%", height: "1px" }}
+                  />
+                )}
+              </Lists>
+            </Content>
+          )}
+          {resultBrands === null && resultPerfumes === null && (
+            <Content>
+              <div className="content__none">검색결과가 없습니다.</div>
+            </Content>
+          )}
+        </Main>
+      )}
     </Container>
   );
 };
