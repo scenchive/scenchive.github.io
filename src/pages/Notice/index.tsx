@@ -77,8 +77,8 @@ const Notice = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      navigate(`/communitydetail?detail=${id}`);
     }
+    navigate(`/communitydetail?detail=${id}`);
   };
 
   return (
