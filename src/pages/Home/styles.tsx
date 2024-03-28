@@ -184,6 +184,7 @@ export const ContentText = styled.div`
   }
   .content-text__brand-en {
     color: #a5a5a5;
+    text-align: left;
   }
   .content-text__rate {
     display: flex;
