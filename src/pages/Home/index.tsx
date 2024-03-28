@@ -15,7 +15,7 @@ import {
   SlickSlider,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../api";
+import { api,  } from "../../api";
 import Color from "color-thief-react";
 import Header from "../../components/Header/index";
 import Search from "../../components/Search/index";
@@ -65,35 +65,39 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (token) getUsername();
-    else {
+    if (token && token?.length > 0) {
+      getUsername();
+    } else {
       getRandomPerfume();
     }
   }, [token]);
 
   useEffect(() => {
-    if (token) getPerfumeData();
+    if (token && token?.length > 0) getPerfumeData();
   }, [option, token]);
 
   const getToken = () => {
     const token = localStorage.getItem("my-token");
-    setToken(token);
+    if (token && token?.length > 0) {
+      setToken(token);
+    }
   };
 
-  const getUsername = async () => {
-    await api
-      .get(`/username`, {
+  const getUsername = () => {
+    api.get(`/username`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => setUsername(res.data));
+      .then((res) => setUsername(res.data))
+      .catch((error) => {
+        console.log('error', error);
+      })
   };
 
   const getPerfumeData = async () => {
-    await api
-      .get(`/recommend?season=${option + 36}`, {
+    await api.get(`/recommend?season=${option + 36}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => setPerfumes(res.data));
+      .then((res) => setPerfumes(res?.data));
   };
 
   const handleSelectClick = () => {
@@ -106,8 +110,8 @@ const Home = () => {
   };
 
   const handleSwipeClick = (dir: number) => {
-    if (perfumeIndex + dir === perfumes.length) setPerfumeIndex(0);
-    else if (perfumeIndex + dir === -1) setPerfumeIndex(perfumes.length - 1);
+    if (perfumeIndex + dir === perfumes?.length) setPerfumeIndex(0);
+    else if (perfumeIndex + dir === -1) setPerfumeIndex(perfumes?.length - 1);
     else setPerfumeIndex(perfumeIndex + dir);
   };
 
@@ -125,7 +129,7 @@ const Home = () => {
       <Container>
         <Header />
         <Search />
-        {token && perfumes.length > 0 ? (
+        {token && perfumes?.length > 0 ? (
           <Main>
             <MainTop>
               <div className="main-top__text">'{username}'님을 위한</div>

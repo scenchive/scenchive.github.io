@@ -50,7 +50,7 @@ const Search = () => {
         setSearchBrands(null);
         setSearchPerfumes(null);
       }
-    }, 200);
+    }, 500);
     return () => {
       clearTimeout(debounce);
     };

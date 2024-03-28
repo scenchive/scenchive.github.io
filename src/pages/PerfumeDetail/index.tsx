@@ -113,18 +113,23 @@ const PerfumeDetail = () => {
     }
 
     let token = localStorage.getItem('my-token');
-    if (token && token.length > 0) {
+
+    if (token && token?.length > 0) {
+
       api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
         .then((res) => {
           if (res.data.length > 0) {
             setMyToken(token);
           }
+        }
+        )
+        .catch((err) => {
+          console.log(err)
         })
 
     }
-    //  else {
-    // goToLogin();
-    // }
+    else {
+    }
   }, [])
 
 
