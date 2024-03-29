@@ -16,7 +16,7 @@ api.interceptors.response.use(
   async (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('my-token');
-      // window.location.replace("/login");   
+      window.location.replace("/login");   
     }
   }
 )
