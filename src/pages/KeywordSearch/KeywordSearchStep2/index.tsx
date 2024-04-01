@@ -10,7 +10,7 @@ import {
   Keywords,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../../api";
+import { api } from "../../../api";
 import Header from "../../../components/Header";
 import Search from "../../../components/Search";
 
@@ -55,14 +55,11 @@ const KeywordSearchStep2 = () => {
   /**
    * 키워드 가져오는 api 호출 함수
    */
-  const getKeyword = async () => {
+  const getKeyword = () => {
     const opt = option === 1 ? "type" : "tpo";
-    await api
-      .get(`perfumes/recommend/${opt}`, {
-      })
-      .then((res) => {
-        setKeywords(res.data);
-      });
+    api.get(`perfumes/recommend/${opt}`, {}).then((res) => {
+      setKeywords(res.data);
+    });
   };
 
   /**
