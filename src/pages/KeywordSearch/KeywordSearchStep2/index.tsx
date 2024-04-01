@@ -26,7 +26,6 @@ interface Keywords {
  * @author 신정은
  */
 const KeywordSearchStep2 = () => {
-  const [token, setToken] = useState<string | null>(null);
   const [querySearch, setQuerySearch] = useSearchParams();
   //1 : 계열/분위기/계절 or 2 : TPO
   const option = Number(querySearch.get("option"));
@@ -37,20 +36,13 @@ const KeywordSearchStep2 = () => {
   const [selectedKeywords, setSelectedKeywords] = useState<Array<number>>([]);
   const [keywordCount, setKeywordCount] = useState([0, 0, 0]);
 
-  useEffect(() => {
-    getToken();
-  }, []);
 
   useEffect(() => {
     if (option) {
       getKeyword();
     }
-  }, [token, option]);
+  }, [option]);
 
-  const getToken = () => {
-    const token = localStorage.getItem("my-token");
-    setToken(token);
-  };
 
   /**
    * 키워드 가져오는 api 호출 함수

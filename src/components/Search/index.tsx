@@ -27,7 +27,6 @@ interface Brands {
 
 const Search = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [searchBrands, setSearchBrands] = useState<Array<Brands> | null>(null);
   const [searchPerfumes, setSearchPerfumes] = useState<Array<Perfumes> | null>(
@@ -37,7 +36,6 @@ const Search = () => {
   const [querySearch, setQuerySearch] = useSearchParams();
 
   useEffect(() => {
-    getToken();
     if (querySearch.get("search"))
       setSearch(JSON.stringify(querySearch.get("search")).split('"')[1]);
   }, []);
@@ -55,11 +53,6 @@ const Search = () => {
       clearTimeout(debounce);
     };
   }, [search]);
-
-  const getToken = () => {
-    const token = localStorage.getItem("my-token");
-    setToken(token);
-  };
 
   const getSearchResult = () => {
     api.get(`/search?name=${search}&page=0`, {}).then((res) => {

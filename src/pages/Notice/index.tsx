@@ -32,16 +32,12 @@ interface Notice {
  * @author 신정은
  */
 const Notice = () => {
+  const token = localStorage.getItem("my-token");
   const navigate = useNavigate();
-  const [token, setToken] = useState<string | null>(null);
   const [notices, setNotices] = useState<Array<Notice> | []>([]);
   const [unread, setUnread] = useState(0);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
-
-  useEffect(() => {
-    getToken();
-  }, []);
 
   useEffect(() => {
     if (token !== null) {
@@ -49,10 +45,6 @@ const Notice = () => {
     }
   }, [token, page]);
 
-  const getToken = () => {
-    const token = localStorage.getItem("my-token");
-    setToken(token);
-  };
 
   //알림 목록 가져오는 api
   const getNotice = () => {
