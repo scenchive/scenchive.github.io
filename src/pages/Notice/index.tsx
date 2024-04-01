@@ -55,8 +55,8 @@ const Notice = () => {
   };
 
   //알림 목록 가져오는 api
-  const getNotice = async () => {
-    await api
+  const getNotice = () => {
+    api
       .get(`/notification?page=${page}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -68,9 +68,9 @@ const Notice = () => {
   };
 
   //알림 읽기 api
-  const readNotice = async (read: boolean, id: number) => {
+  const readNotice = (read: boolean, id: number, boardId: number) => {
     if (!read) {
-      await api.post(
+      api.post(
         `/notification/${id}`,
         {},
         {
@@ -78,7 +78,7 @@ const Notice = () => {
         }
       );
     }
-    navigate(`/communitydetail?detail=${id}`);
+    navigate(`/communitydetail?detail=${boardId}`);
   };
 
   return (
@@ -103,7 +103,7 @@ const Notice = () => {
                 {notices.map((el) => (
                   <List
                     read={el.check}
-                    onClick={() => readNotice(el.check, el.id)}
+                    onClick={() => readNotice(el.check, el.id, el.boardId)}
                   >
                     <ListNumber>{el.id}</ListNumber>
                     <ListContent>
