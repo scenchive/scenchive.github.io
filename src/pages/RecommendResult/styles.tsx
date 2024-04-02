@@ -34,10 +34,13 @@ export const KeywordBox = styled.div`
   display: flex;
   justify-content: start;
   margin-bottom: 50px;
+  flex-flow: wrap;
 
   ${mediaQuery} {
     width: calc(100% - 40px);
     margin-bottom: 30px;
+    flex-flow: wrap;
+
   }
 `;
 
@@ -54,7 +57,9 @@ export const Keyword = styled.div`
   background-color: #d67070;
   color: white;
   box-shadow: 2px 3px 2.5px #d9d9d9;
-  margin: 5px;
+  margin: 2px;
+  white-space: nowrap;
+
 `;
 
 export const Cards = styled.div`
