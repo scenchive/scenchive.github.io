@@ -285,7 +285,7 @@ const MyPage = () => {
             <NameEmailAreaTop>
               <UserInformationArea>
                 <div className="name_text">{name}</div>
-                <MobileLogoutButton>
+                <MobileLogoutButton onClick={() => logout()} >
                 로그아웃 
                 </MobileLogoutButton>
               </UserInformationArea>

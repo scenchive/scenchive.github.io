@@ -77,7 +77,7 @@ const BrandDetail = () => {
       <Header />
       <Search />
       <Top>
-        {/* <img src={location.state.brandImage} /> */}
+        <img src={location.state.brandImage} />
         <TopText>
           <div className="top-text__title">{querySearch.get("name")}</div>
           <div className="top-text__sub-title">
