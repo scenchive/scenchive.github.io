@@ -11,6 +11,7 @@ interface Perfumes {
   perfumeImage: string;
   brandName: string;
   brandName_kr: string;
+  brandImage:string;
   ratingAvg: number;
 }
 
@@ -77,7 +78,7 @@ const BrandDetail = () => {
       <Header />
       <Search />
       <Top>
-        <img src={location.state.brandImage} />
+        {perfumes && perfumes[0]?.brandImage && <img src={location.state.brandImage} /> }
         <TopText>
           <div className="top-text__title">{querySearch.get("name")}</div>
           <div className="top-text__sub-title">
