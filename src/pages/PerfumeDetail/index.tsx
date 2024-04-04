@@ -231,8 +231,8 @@ const PerfumeDetail = () => {
 
   /* 구매 정보 호출 api */
   const getShopping = async () => {
-    if (perfumeName) {
-      await api.get(`/product/search?query=` + perfumeName)
+    if (perfumeName && perfumeDetail?.brandName_kr) {
+      await api.get(`/product/search?query=` + `${perfumeDetail?.brandName_kr} ${perfumeName}`)
         .then((res) => {
           setShoppingList(res?.data)
         });
