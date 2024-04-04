@@ -32,16 +32,12 @@ interface Notice {
  * @author 신정은
  */
 const Notice = () => {
+  const token = localStorage.getItem("my-token");
   const navigate = useNavigate();
-  const [token, setToken] = useState<string | null>(null);
   const [notices, setNotices] = useState<Array<Notice> | []>([]);
   const [unread, setUnread] = useState(0);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
-
-  useEffect(() => {
-    getToken();
-  }, []);
 
   useEffect(() => {
     if (token !== null) {
@@ -49,14 +45,10 @@ const Notice = () => {
     }
   }, [token, page]);
 
-  const getToken = () => {
-    const token = localStorage.getItem("my-token");
-    setToken(token);
-  };
 
   //알림 목록 가져오는 api
-  const getNotice = async () => {
-    await api
+  const getNotice = () => {
+    api
       .get(`/notification?page=${page}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -68,9 +60,9 @@ const Notice = () => {
   };
 
   //알림 읽기 api
-  const readNotice = async (read: boolean, id: number) => {
+  const readNotice = (read: boolean, id: number, boardId: number) => {
     if (!read) {
-      await api.post(
+      api.post(
         `/notification/${id}`,
         {},
         {
@@ -78,7 +70,7 @@ const Notice = () => {
         }
       );
     }
-    navigate(`/communitydetail?detail=${id}`);
+    navigate(`/communitydetail?detail=${boardId}`);
   };
 
   return (
@@ -103,7 +95,7 @@ const Notice = () => {
                 {notices.map((el) => (
                   <List
                     read={el.check}
-                    onClick={() => readNotice(el.check, el.id)}
+                    onClick={() => readNotice(el.check, el.id, el.boardId)}
                   >
                     <ListNumber>{el.id}</ListNumber>
                     <ListContent>

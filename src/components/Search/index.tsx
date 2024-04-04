@@ -8,7 +8,7 @@ import {
   SearchList,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../api";
+import { api } from "../../api";
 
 interface Perfumes {
   id: number;
@@ -27,7 +27,6 @@ interface Brands {
 
 const Search = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [searchBrands, setSearchBrands] = useState<Array<Brands> | null>(null);
   const [searchPerfumes, setSearchPerfumes] = useState<Array<Perfumes> | null>(
@@ -37,7 +36,6 @@ const Search = () => {
   const [querySearch, setQuerySearch] = useSearchParams();
 
   useEffect(() => {
-    getToken();
     if (querySearch.get("search"))
       setSearch(JSON.stringify(querySearch.get("search")).split('"')[1]);
   }, []);
@@ -56,21 +54,13 @@ const Search = () => {
     };
   }, [search]);
 
-  const getToken = () => {
-    const token = localStorage.getItem("my-token");
-    setToken(token);
-  };
-
-  const getSearchResult = async () => {
-    await api
-      .get(`/search?name=${search}&page=0`, {
-      })
-      .then((res) => {
-        if (res.data.brandsNum === 0) setSearchBrands(null);
-        else setSearchBrands(res.data.brands.slice(0, 5));
-        if (res.data.perfumesNum === 0) setSearchPerfumes(null);
-        else setSearchPerfumes(res.data.perfumes.slice(0, 5));
-      });
+  const getSearchResult = () => {
+    api.get(`/search?name=${search}&page=0`, {}).then((res) => {
+      if (res.data.brandsNum === 0) setSearchBrands(null);
+      else setSearchBrands(res.data.brands.slice(0, 5));
+      if (res.data.perfumesNum === 0) setSearchPerfumes(null);
+      else setSearchPerfumes(res.data.perfumes.slice(0, 5));
+    });
   };
 
   const handleEnterClick = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -111,7 +101,7 @@ const Search = () => {
               {searchBrands.map((el, index) => {
                 return (
                   <ListDetail
-                    key={'brandlist_'+index}
+                    key={"brandlist_" + index}
                     onClick={() => {
                       navigate(`/searchresult?search=${el.brandName_kr}`);
                       setToggle(false);
@@ -132,7 +122,7 @@ const Search = () => {
               {searchPerfumes.map((el, index) => {
                 return (
                   <ListDetail
-                  key={'perfumelist+'+index}
+                    key={"perfumelist+" + index}
                     onClick={() => {
                       navigate(`/searchresult?search=${el.perfumeName}`);
                       setToggle(false);

@@ -123,12 +123,7 @@ const SearchResult = () => {
                     <List
                       key={"brand_" + index}
                       onClick={() =>
-                        navigate(`/branddetail?name=${el.brandName}`, {
-                          state: {
-                            brandName_kr: el.brandName_kr,
-                            brandImage: el.brandImage,
-                          },
-                        })
+                        navigate(`/branddetail?name=${el.brandName}`)
                       }
                     >
                       <img src={el.brandImage} />
