@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Container, Top, TopText, Text, Lists, List, ListText } from "./styles";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../api";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { api } from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 
@@ -11,13 +11,12 @@ interface Perfumes {
   perfumeImage: string;
   brandName: string;
   brandName_kr: string;
-  brandImage:string;
+  brandImage: string;
   ratingAvg: number;
 }
 
 const BrandDetail = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [querySearch, setQuerySearch] = useSearchParams();
   const [perfumes, setPerfumes] = useState<Array<Perfumes> | null>(null);
   const [num, setNum] = useState(0);
@@ -59,9 +58,7 @@ const BrandDetail = () => {
 
   const getPerfumes = async () => {
     await api
-      .get(
-        `/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`,
-      )
+      .get(`/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`)
       .then((res) => {
         if (res.data) {
           setPerfumes((prev) =>
@@ -78,11 +75,13 @@ const BrandDetail = () => {
       <Header />
       <Search />
       <Top>
-        {perfumes && perfumes[0]?.brandImage && <img src={location.state.brandImage} /> }
+        {perfumes && perfumes[0]?.brandImage && (
+          <img src={perfumes[0].brandImage} />
+        )}
         <TopText>
           <div className="top-text__title">{querySearch.get("name")}</div>
           <div className="top-text__sub-title">
-            {location.state.brandName_kr}
+            {perfumes && perfumes[0]?.brandName_kr}
           </div>
         </TopText>
       </Top>

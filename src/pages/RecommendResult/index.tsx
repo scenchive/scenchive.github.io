@@ -30,7 +30,6 @@ interface Keyword {
 }
 
 const RecommendResult = () => {
-  const [token, setToken] = useState<string | null>(null);
   const [querySearch, setQuerySearch] = useSearchParams();
   const option = querySearch.get("option");
   const navigate = useNavigate();
@@ -42,10 +41,6 @@ const RecommendResult = () => {
   const [loading, setLoading] = useState(false);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const view = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    getToken();
-  }, []);
 
   useEffect(() => {
     getKeyword();
@@ -65,7 +60,7 @@ const RecommendResult = () => {
 
   useEffect(() => {
     if (perfumesPage !== -1) getPerfumes();
-  }, [token, perfumesPage]);
+  }, [perfumesPage]);
 
   //무한 스크롤 target이 감지되면 호출되는 함수
   const callback = () => {
@@ -84,15 +79,9 @@ const RecommendResult = () => {
     }
   }, options);
 
-  const getToken = () => {
-    const token = localStorage.getItem("my-token");
-    setToken(token);
-  };
-
-  const getPerfumes = async () => {
-    await api
-      .get(`/perfumes/recommend?${keywordString}page=${perfumesPage}`, {
-      })
+  const getPerfumes = () => {
+    api
+      .get(`/perfumes/recommend?${keywordString}page=${perfumesPage}`, {})
       .then((res) => {
         if (res.data.perfumes) {
           setPerfumes((prev) => [...prev, ...res.data.perfumes]);
@@ -103,13 +92,10 @@ const RecommendResult = () => {
       });
   };
 
-  const getKeyword = async () => {
-    await api
-      .get(`/perfumes/recommend/${option}`, {
-      })
-      .then((res) => {
-        setKeywords(res.data);
-      });
+  const getKeyword = () => {
+    api.get(`/perfumes/recommend/${option}`, {}).then((res) => {
+      setKeywords(res.data);
+    });
   };
 
   return (
@@ -120,14 +106,19 @@ const RecommendResult = () => {
       <KeywordBox>
         {keywordIds?.map((el, index) => {
           return (
-            <Keyword key={index}># {keywords[el < 36 ? el - 1 : el - 11]?.ptag_kr}</Keyword>
+            <Keyword key={index}>
+              # {keywords[el < 36 ? el - 1 : el - 11]?.ptag_kr}
+            </Keyword>
           );
         })}
       </KeywordBox>
       <Cards>
         {perfumes?.map((el) => {
           return (
-            <Card key={el.id} onClick={() => navigate('/perfumedetail?perfume=' + el.id)}>
+            <Card
+              key={el.id}
+              onClick={() => navigate("/perfumedetail?perfume=" + el.id)}
+            >
               <img src={el.perfumeImage} />
               <CardText>
                 <div className="card-text__title">{el.perfumeName}</div>
