@@ -34,12 +34,14 @@ export const ShoppingCell = styled.div`
 export const ShoppingImage = styled.img`
   label: shopping-image;
   width: calc( 100% - 10px );
-  height: auto;
-  max-height: 150px;
+  height: 110px;
   border-radius: 4px;
   object-fit: cover;
+  border: 1px solid #ebebeb;
 
   ${mediaQuery} {
+    object-fit: contain;
+    border: none;
 
   }
 `;
@@ -50,7 +52,7 @@ export const ShoppingInfo = styled.div`
   font-size: 1.4rem;
   font-family: Noto Sans KR;
   color: #242424;
-
+  margin-top: 3px;
 
   ${mediaQuery} {
 
