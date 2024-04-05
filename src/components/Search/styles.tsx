@@ -81,6 +81,7 @@ export const Input = styled.input`
 export const SearchList = styled.div`
   label: search-list;
   width: calc(50% - 50px);
+  min-width: 590px;
   height: fit-content;
   position: absolute;
   top: 65px;
@@ -99,6 +100,7 @@ export const SearchList = styled.div`
 
   ${mediaQuery} {
     width: 70%;
+    min-width: 70%;
     top: 50px;
   }
 `;

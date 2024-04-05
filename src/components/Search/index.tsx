@@ -55,7 +55,7 @@ const Search = () => {
   }, [search]);
 
   const getSearchResult = () => {
-    api.get(`/search?name=${search}&page=0`, {}).then((res) => {
+    api.get(`/search?name=${encodeURI(search)}&page=0`, {}).then((res) => {
       if (res.data.brandsNum === 0) setSearchBrands(null);
       else setSearchBrands(res.data.brands.slice(0, 5));
       if (res.data.perfumesNum === 0) setSearchPerfumes(null);
