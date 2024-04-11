@@ -38,7 +38,7 @@ const Home = () => {
   const options = ["봄", "여름", "가을", "겨울"];
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [perfumeLoading, setPerfumeLoading] = useState(true);
+  const [contentLoading, setContentLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [perfumes, setPerfumes] = useState<Perfumes[]>([]);
   const [perfumeIndex, setPerfumeIndex] = useState(0);
@@ -119,7 +119,7 @@ const Home = () => {
       })
       .then((res) => {
         setPerfumes(res?.data);
-        setPerfumeLoading(false);
+        setContentLoading(false);
       });
   };
 
@@ -142,9 +142,12 @@ const Home = () => {
    * 랜덤 향수 가져오는 api
    */
   const getRandomPerfume = () => {
-    api.get(`/randomperfume`).then((res) => {
-      setRandomPerfumes(res.data);
-    });
+    api
+      .get(`/randomperfume`)
+      .then((res) => {
+        setRandomPerfumes(res.data);
+      })
+      .then((res) => setContentLoading(false));
   };
 
   return (
@@ -152,7 +155,7 @@ const Home = () => {
       <Container>
         <Header />
         <Search />
-        {!isLoading && !perfumeLoading ? (
+        {!isLoading && !contentLoading ? (
           isLogin && perfumes?.length > 0 ? (
             <Main>
               <MainTop>
