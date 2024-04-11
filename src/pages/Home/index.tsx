@@ -38,6 +38,7 @@ const Home = () => {
   const options = ["봄", "여름", "가을", "겨울"];
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [perfumeLoading, setPerfumeLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [perfumes, setPerfumes] = useState<Perfumes[]>([]);
   const [perfumeIndex, setPerfumeIndex] = useState(0);
@@ -116,7 +117,10 @@ const Home = () => {
       .get(`/recommend?season=${option + 36}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => setPerfumes(res?.data));
+      .then((res) => {
+        setPerfumes(res?.data);
+        setPerfumeLoading(false);
+      });
   };
 
   const handleSelectClick = () => {
@@ -148,7 +152,7 @@ const Home = () => {
       <Container>
         <Header />
         <Search />
-        {!isLoading ? (
+        {!isLoading && !perfumeLoading ? (
           isLogin && perfumes?.length > 0 ? (
             <Main>
               <MainTop>
