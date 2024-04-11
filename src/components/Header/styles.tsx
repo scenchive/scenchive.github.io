@@ -58,7 +58,7 @@ export const Logo = styled.div`
 
 export const HeaderLeft = styled.div`
   display: none;
-  cursor:pointer;
+  cursor: pointer;
 
   ${mediaQuery} {
     display: block;
@@ -85,10 +85,12 @@ export const Menu = styled.div`
   }
 `;
 
-export const MenuItem = styled.div`
+export const MenuItem = styled.div<{ selected: boolean }>`
   label: menu-item;
-  padding: 0 10px;
+  padding: 7px 0;
+  margin: 0 10px;
   font-size: 1.7rem;
+  border-bottom:${(props) => (props.selected ? "1px solid white" : "none")};
   cursor: pointer;
 `;
 

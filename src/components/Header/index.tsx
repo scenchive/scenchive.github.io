@@ -11,7 +11,7 @@ import {
   MenuSmall,
   MenuSmallTop,
 } from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 /**
@@ -20,19 +20,28 @@ import axios from "axios";
  */
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const token = localStorage.getItem("my-token");
   const [toggle, setToggle] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const menuItems = [
-    { name: "마이페이지", url: "/mypage", img: "/assets/icon/icon_mypage.svg" },
+    {
+      name: "마이페이지",
+      url: ["/mypage"],
+      img: "/assets/icon/icon_mypage.svg",
+    },
     {
       name: "필터 추천",
-      url: "/keywordsearchstep1",
+      url: ["/keywordsearchstep1", "/keywordsearchstep2", "/recommendresult"],
       img: "/assets/icon/icon_filter.svg",
     },
-    { name: "커뮤니티", url: "/community", img: "/assets/icon/icon_board.svg" },
+    {
+      name: "커뮤니티",
+      url: ["/community"],
+      img: "/assets/icon/icon_board.svg",
+    },
   ];
 
   useEffect(() => {
@@ -74,7 +83,11 @@ const Header = () => {
       <Menu>
         {menuItems.map((item, index) => {
           return (
-            <MenuItem key={index} onClick={() => navigate(item?.url)}>
+            <MenuItem
+              key={index}
+              selected={item.url.includes(location.pathname)}
+              onClick={() => navigate(item.url[0])}
+            >
               {item.name}
             </MenuItem>
           );
@@ -92,7 +105,7 @@ const Header = () => {
           {menuItems.map((item, index) => {
             return (
               <MenuItemSmall
-                onClick={() => navigate(item?.url)}
+                onClick={() => navigate(item.url[0])}
                 border={index !== 2}
                 key={index}
               >
