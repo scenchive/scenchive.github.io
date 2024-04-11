@@ -231,7 +231,13 @@ const Home = () => {
                       }
                     >
                       <div>
-                        <img src={el.perfumeImage} />
+                        <img
+                          src={el.perfumeImage}
+                          onError={(e) => {
+                            e.currentTarget.src =
+                              "/assets/image/image_perfume.svg";
+                          }}
+                        />
                       </div>
                       <div className="perfume-box__text">{el.perfumeName}</div>
                       <Color
