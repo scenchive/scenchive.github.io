@@ -4,6 +4,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { api } from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
+import KakaoMapArea from "./KakaoMapArea";
+import axios from "axios";
+import { BrandNameKR } from "../WriteReview/styles";
 
 interface Perfumes {
   perfumeId: number;
@@ -15,14 +18,33 @@ interface Perfumes {
   ratingAvg: number;
 }
 
+interface Store {
+  address_name: string;
+  category_group_code: string;
+  category_group_name: string;
+  distance: string;
+  id: string;
+  phone: string;
+  place_name: string;
+  place_url: string;
+  road_address_name: string;
+  x: string;
+  y: string;
+}
+
 const BrandDetail = () => {
   const navigate = useNavigate();
   const [querySearch, setQuerySearch] = useSearchParams();
   const [perfumes, setPerfumes] = useState<Array<Perfumes> | null>(null);
   const [num, setNum] = useState(0);
   const [perfumesPage, setPerfumesPage] = useState(0);
+  const [toggleStore, setToggleStore] = useState<boolean>(false);
+  const [storeList, setStoreList] = useState<Array<Store>>();
+  const [storeTotalCount, setStoreTotalCount] = useState<number>();
+  const [storePage, setStorePage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const [mapNumber, setMapNumber]=useState<number>();
   const view = useRef<HTMLDivElement>(null);
 
   //무한 스크롤 target이 감지되면 호출되는 함수
@@ -56,6 +78,18 @@ const BrandDetail = () => {
     }
   }, [perfumesPage]);
 
+  useEffect(() => {
+    if (perfumes && perfumes[0]?.brandName_kr) {
+      if (storeList && storeTotalCount) {
+        if (storeList.length < storeTotalCount) {
+          getStoreList(perfumes[0]?.brandName_kr);
+        }
+      } else {
+        getStoreList(perfumes[0]?.brandName_kr);
+      }
+    }
+  }, [storePage, perfumes])
+
   const getPerfumes = async () => {
     await api
       .get(`/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`)
@@ -69,6 +103,23 @@ const BrandDetail = () => {
         setLoading(false);
       });
   };
+
+  const getStoreList = async (brandName_kr: string) => {
+    if (perfumes && perfumes[0]?.brandName_kr) {
+      const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${brandName_kr}&page=${storePage}`;
+      const result = await axios(url, { headers: { 'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAOMAP_REST_API_KEY}` } });
+      setStoreList(prevState => {
+        if (prevState && prevState.length > 0) {
+          return [...prevState, ...result.data.documents];
+        } else {
+          return result.data.documents;
+        }
+      });
+      setStorePage(storePage + 1)
+      setStoreTotalCount(result.data.meta.total_count);
+    }
+  }
+
 
   return (
     <Container>
@@ -85,12 +136,20 @@ const BrandDetail = () => {
           </div>
         </TopText>
       </Top>
+
+
+      {storeList && storeTotalCount
+        && <KakaoMapArea toggleStore={toggleStore} setToggleStore={setToggleStore} storeList={storeList} storeTotalCount={storeTotalCount} mapNumber={mapNumber} setMapNumber={setMapNumber} />
+      }
+
+
       <Text>총 {num}개</Text>
       <Lists ref={view}>
-        {perfumes?.map((el) => {
+        {perfumes?.map((el, index) => {
           return (
             <List
               onClick={() => navigate(`/perfumedetail?perfume=${el.perfumeId}`)}
+              key={'list_' + index}
             >
               <img src={`${el.perfumeImage}`} />
               <ListText>

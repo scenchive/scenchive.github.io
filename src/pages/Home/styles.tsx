@@ -214,6 +214,7 @@ export const PerfumeBox = styled.div<{ index: number }>`
   label: prefume-box;
   width: 200px;
   height: 100%;
+  cursor:pointer;
 
   img {
     width: 180px;
