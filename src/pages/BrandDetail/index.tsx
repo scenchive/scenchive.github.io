@@ -44,7 +44,7 @@ const BrandDetail = () => {
   const [storePage, setStorePage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
-  const [mapNumber, setMapNumber]=useState<number>();
+  const [mapNumber, setMapNumber] = useState<number>();
   const view = useRef<HTMLDivElement>(null);
 
   //무한 스크롤 target이 감지되면 호출되는 함수
@@ -108,15 +108,19 @@ const BrandDetail = () => {
     if (perfumes && perfumes[0]?.brandName_kr) {
       const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${brandName_kr}&page=${storePage}`;
       const result = await axios(url, { headers: { 'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAOMAP_REST_API_KEY}` } });
-      setStoreList(prevState => {
-        if (prevState && prevState.length > 0) {
-          return [...prevState, ...result.data.documents];
-        } else {
-          return result.data.documents;
-        }
-      });
-      setStorePage(storePage + 1)
-      setStoreTotalCount(result.data.meta.total_count);
+      if (result?.data?.documents?.length > 0) {
+        setStoreList(prevState => {
+          if (prevState && prevState.length > 0) {
+            return [...prevState, ...result.data.documents];
+          } else {
+            return result.data.documents;
+          }
+        });
+        setStorePage(storePage + 1)
+        setStoreTotalCount(result.data.meta.total_count);
+      } else {
+        console.log('오프라인 매장이 없습니다.')
+      }
     }
   }
 
