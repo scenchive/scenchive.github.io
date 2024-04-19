@@ -22,6 +22,7 @@ interface Store {
   address_name: string;
   category_group_code: string;
   category_group_name: string;
+  category_name: string;
   distance: string;
   id: string;
   phone: string;
@@ -80,15 +81,13 @@ const BrandDetail = () => {
 
   useEffect(() => {
     if (perfumes && perfumes[0]?.brandName_kr) {
-      if (storeList && storeTotalCount) {
-        if (storeList.length < storeTotalCount) {
-          getStoreList(perfumes[0]?.brandName_kr);
-        }
+      if (perfumes[0]?.brandName_kr === "샤넬") {
+        getStoreList("샤넬화장품")
       } else {
-        getStoreList(perfumes[0]?.brandName_kr);
+        getStoreList(perfumes[0]?.brandName_kr)
       }
     }
-  }, [storePage, perfumes])
+  }, [perfumes, storePage])
 
   const getPerfumes = async () => {
     await api
@@ -104,26 +103,35 @@ const BrandDetail = () => {
       });
   };
 
-  const getStoreList = async (brandName_kr: string) => {
-    if (perfumes && perfumes[0]?.brandName_kr) {
-      const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${brandName_kr}&page=${storePage}`;
+  const getStoreList = async (searchQuery: string) => {
+    if (perfumes && searchQuery) {
+      const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}&page=${storePage}&size=10&sort=accuracy`;
       const result = await axios(url, { headers: { 'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAOMAP_REST_API_KEY}` } });
       if (result?.data?.documents?.length > 0) {
+        let newList=result.data?.documents.filter((el: any)=> el?.category_name.includes('화장품') 
+        || el?.category_name.includes('향수') 
+        || el?.category_name.includes('미용'))
         setStoreList(prevState => {
           if (prevState && prevState.length > 0) {
-            return [...prevState, ...result.data.documents];
+            return [...prevState, ...newList];
           } else {
-            return result.data.documents;
+            return newList;
           }
         });
-        setStorePage(storePage + 1)
-        setStoreTotalCount(result.data.meta.total_count);
+        if (result?.data?.meta?.total_count===storeList?.length 
+          || result?.data?.meta?.pageable ===45 
+          || result?.data?.meta?.is_end === true ) {
+          setStoreTotalCount(storeList?.length);
+          return;
+        } else {
+          setStorePage(storePage + 1)
+
+        }
       } else {
         console.log('오프라인 매장이 없습니다.')
       }
     }
   }
-
 
   return (
     <Container>
