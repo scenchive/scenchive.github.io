@@ -41,6 +41,7 @@ const BrandDetail = () => {
   const [perfumesPage, setPerfumesPage] = useState(0);
   const [toggleStore, setToggleStore] = useState<boolean>(false);
   const [storeList, setStoreList] = useState<Array<Store>>();
+  const [isStoreLoading, setIsStoreLoading] = useState<boolean>(true);
   const [storeTotalCount, setStoreTotalCount] = useState<number>();
   const [storePage, setStorePage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
@@ -81,10 +82,12 @@ const BrandDetail = () => {
 
   useEffect(() => {
     if (perfumes && perfumes[0]?.brandName_kr) {
-      if (perfumes[0]?.brandName_kr === "샤넬") {
-        getStoreList("샤넬화장품")
-      } else {
-        getStoreList(perfumes[0]?.brandName_kr)
+      if (storeList===undefined || storeList?.length !== storeTotalCount) {
+        if (perfumes[0]?.brandName_kr === "샤넬") {
+          getStoreList("샤넬화장품")
+        } else {
+          getStoreList(perfumes[0]?.brandName_kr)
+        }
       }
     }
   }, [perfumes, storePage])
@@ -103,25 +106,33 @@ const BrandDetail = () => {
       });
   };
 
+
+  useEffect(() => {
+    if (storeList && storeList.length > 0) {
+      setStoreTotalCount(storeList.length);
+      setIsStoreLoading(false);
+    }
+  }, [storeList, storeTotalCount])
+
   const getStoreList = async (searchQuery: string) => {
     if (perfumes && searchQuery) {
       const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}&page=${storePage}&size=10&sort=accuracy`;
       const result = await axios(url, { headers: { 'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAOMAP_REST_API_KEY}` } });
       if (result?.data?.documents?.length > 0) {
-        let newList=result.data?.documents.filter((el: any)=> el?.category_name.includes('화장품') 
-        || el?.category_name.includes('향수') 
-        || el?.category_name.includes('미용'))
+        let newList = result.data?.documents.filter((el: any) => el?.category_name.includes('화장품')
+          || el?.category_name.includes('향수')
+          || el?.category_name.includes('미용'))
         setStoreList(prevState => {
           if (prevState && prevState.length > 0) {
             return [...prevState, ...newList];
           } else {
             return newList;
           }
-        });
-        if (result?.data?.meta?.total_count===storeList?.length 
-          || result?.data?.meta?.pageable ===45 
-          || result?.data?.meta?.is_end === true ) {
-          setStoreTotalCount(storeList?.length);
+        }
+        );
+        if (result?.data?.meta?.total_count === storeList?.length
+          || result?.data?.meta?.pageable === 45
+          || result?.data?.meta?.is_end === true) {
           return;
         } else {
           setStorePage(storePage + 1)
@@ -150,7 +161,7 @@ const BrandDetail = () => {
       </Top>
 
 
-      {storeList && storeTotalCount
+      {isStoreLoading !== true && storeList !== undefined && storeList.length > 0 && storeTotalCount
         && <KakaoMapArea toggleStore={toggleStore} setToggleStore={setToggleStore} storeList={storeList} storeTotalCount={storeTotalCount} mapNumber={mapNumber} setMapNumber={setMapNumber} />
       }
 
