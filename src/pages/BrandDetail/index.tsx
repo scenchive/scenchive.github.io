@@ -22,6 +22,7 @@ interface Store {
   address_name: string;
   category_group_code: string;
   category_group_name: string;
+  category_name: string;
   distance: string;
   id: string;
   phone: string;
@@ -40,6 +41,7 @@ const BrandDetail = () => {
   const [perfumesPage, setPerfumesPage] = useState(0);
   const [toggleStore, setToggleStore] = useState<boolean>(false);
   const [storeList, setStoreList] = useState<Array<Store>>();
+  const [isStoreLoading, setIsStoreLoading] = useState<boolean>(true);
   const [storeTotalCount, setStoreTotalCount] = useState<number>();
   const [storePage, setStorePage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
@@ -80,15 +82,15 @@ const BrandDetail = () => {
 
   useEffect(() => {
     if (perfumes && perfumes[0]?.brandName_kr) {
-      if (storeList && storeTotalCount) {
-        if (storeList.length < storeTotalCount) {
-          getStoreList(perfumes[0]?.brandName_kr);
+      if (storeList===undefined || storeList?.length !== storeTotalCount) {
+        if (perfumes[0]?.brandName_kr === "샤넬") {
+          getStoreList("샤넬화장품")
+        } else {
+          getStoreList(perfumes[0]?.brandName_kr)
         }
-      } else {
-        getStoreList(perfumes[0]?.brandName_kr);
       }
     }
-  }, [storePage, perfumes])
+  }, [perfumes, storePage])
 
   const getPerfumes = async () => {
     await api
@@ -104,26 +106,43 @@ const BrandDetail = () => {
       });
   };
 
-  const getStoreList = async (brandName_kr: string) => {
-    if (perfumes && perfumes[0]?.brandName_kr) {
-      const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${brandName_kr}&page=${storePage}`;
+
+  useEffect(() => {
+    if (storeList && storeList.length > 0) {
+      setStoreTotalCount(storeList.length);
+      setIsStoreLoading(false);
+    }
+  }, [storeList, storeTotalCount])
+
+  const getStoreList = async (searchQuery: string) => {
+    if (perfumes && searchQuery) {
+      const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}&page=${storePage}&size=10&sort=accuracy`;
       const result = await axios(url, { headers: { 'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAOMAP_REST_API_KEY}` } });
       if (result?.data?.documents?.length > 0) {
+        let newList = result.data?.documents.filter((el: any) => el?.category_name.includes('화장품')
+          || el?.category_name.includes('향수')
+          || el?.category_name.includes('미용'))
         setStoreList(prevState => {
           if (prevState && prevState.length > 0) {
-            return [...prevState, ...result.data.documents];
+            return [...prevState, ...newList];
           } else {
-            return result.data.documents;
+            return newList;
           }
-        });
-        setStorePage(storePage + 1)
-        setStoreTotalCount(result.data.meta.total_count);
+        }
+        );
+        if (result?.data?.meta?.total_count === storeList?.length
+          || result?.data?.meta?.pageable === 45
+          || result?.data?.meta?.is_end === true) {
+          return;
+        } else {
+          setStorePage(storePage + 1)
+
+        }
       } else {
         console.log('오프라인 매장이 없습니다.')
       }
     }
   }
-
 
   return (
     <Container>
@@ -142,7 +161,7 @@ const BrandDetail = () => {
       </Top>
 
 
-      {storeList && storeTotalCount
+      {isStoreLoading !== true && storeList !== undefined && storeList.length > 0 && storeTotalCount
         && <KakaoMapArea toggleStore={toggleStore} setToggleStore={setToggleStore} storeList={storeList} storeTotalCount={storeTotalCount} mapNumber={mapNumber} setMapNumber={setMapNumber} />
       }
 
