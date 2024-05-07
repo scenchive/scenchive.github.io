@@ -1,40 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Container, Top, TopText, Text, Lists, List, ListText } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { api } from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 import KakaoMapArea from "./KakaoMapArea";
 import axios from "axios";
-import { BrandNameKR } from "../WriteReview/styles";
-
-interface Perfumes {
-  perfumeId: number;
-  perfumeName: string;
-  perfumeImage: string;
-  brandName: string;
-  brandName_kr: string;
-  brandImage: string;
-  ratingAvg: number;
-}
-
-interface Store {
-  address_name: string;
-  category_group_code: string;
-  category_group_name: string;
-  category_name: string;
-  distance: string;
-  id: string;
-  phone: string;
-  place_name: string;
-  place_url: string;
-  road_address_name: string;
-  x: string;
-  y: string;
-}
+import { Perfumes, Store } from "../../common/types";
+import BrandPerfumeListRow from "./BrandPerfumeListRow";
+import useApi from "../../hooks/useApi";
 
 const BrandDetail = () => {
   const navigate = useNavigate();
+  /**
+* useApi 커스텀 훅을 사용하여 데이터를 get, post, delete하는 작업과 관련된 변수들입니다.
+*  @author 김민지
+*/
+  const { data: brandPerfumeList, loading: brandPerfumeListLoading, error: brandPerfumeListError, fetchApi: fetchBrandPerfumeList } = useApi<any>();
+
   const [querySearch, setQuerySearch] = useSearchParams();
   const [perfumes, setPerfumes] = useState<Array<Perfumes> | null>(null);
   const [num, setNum] = useState(0);
@@ -74,6 +56,17 @@ const BrandDetail = () => {
     return () => observer && observer.disconnect();
   }, [target, loading]);
 
+
+  const getPerfumes = async () => {
+    const data = await fetchBrandPerfumeList("get", `/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`, {})
+    if (data) {
+      setPerfumes((prev) => prev !== null ? [...prev, ...data?.perfumes] : data.perfumes);
+      setNum(data?.totalBrandPerfumeCount)
+    } else {
+      setPerfumesPage(-1);
+    }
+  };
+
   useEffect(() => {
     if (perfumesPage !== -1) {
       getPerfumes();
@@ -82,7 +75,7 @@ const BrandDetail = () => {
 
   useEffect(() => {
     if (perfumes && perfumes[0]?.brandName_kr) {
-      if (storeList===undefined || storeList?.length !== storeTotalCount) {
+      if (storeList === undefined || storeList?.length !== storeTotalCount) {
         if (perfumes[0]?.brandName_kr === "샤넬") {
           getStoreList("샤넬화장품")
         } else {
@@ -91,21 +84,6 @@ const BrandDetail = () => {
       }
     }
   }, [perfumes, storePage])
-
-  const getPerfumes = async () => {
-    await api
-      .get(`/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`)
-      .then((res) => {
-        if (res.data) {
-          setPerfumes((prev) =>
-            prev !== null ? [...prev, ...res.data?.perfumes] : res.data.perfumes
-          );
-          setNum(res.data.totalBrandPerfumeCount);
-        } else setPerfumesPage(-1);
-        setLoading(false);
-      });
-  };
-
 
   useEffect(() => {
     if (storeList && storeList.length > 0) {
@@ -136,7 +114,6 @@ const BrandDetail = () => {
           return;
         } else {
           setStorePage(storePage + 1)
-
         }
       } else {
         console.log('오프라인 매장이 없습니다.')
@@ -149,9 +126,7 @@ const BrandDetail = () => {
       <Header />
       <Search />
       <Top>
-        {perfumes && perfumes[0]?.brandImage && (
-          <img src={perfumes[0].brandImage} />
-        )}
+        {perfumes && perfumes[0]?.brandImage && (<img src={perfumes[0].brandImage} />)}
         <TopText>
           <div className="top-text__title">{querySearch.get("name")}</div>
           <div className="top-text__sub-title">
@@ -160,27 +135,22 @@ const BrandDetail = () => {
         </TopText>
       </Top>
 
-
       {isStoreLoading !== true && storeList !== undefined && storeList.length > 0 && storeTotalCount
         && <KakaoMapArea toggleStore={toggleStore} setToggleStore={setToggleStore} storeList={storeList} storeTotalCount={storeTotalCount} mapNumber={mapNumber} setMapNumber={setMapNumber} />
       }
-
 
       <Text>총 {num}개</Text>
       <Lists ref={view}>
         {perfumes?.map((el, index) => {
           return (
-            <List
-              onClick={() => navigate(`/perfumedetail?perfume=${el.perfumeId}`)}
-              key={'list_' + index}
-            >
-              <img src={`${el.perfumeImage}`} />
-              <ListText>
-                <div className="list-text__title">{el.perfumeName}</div>
-                <div className="list-text__sub-title">{el.brandName}</div>
-                <div className="list-text__sub-title">{el.brandName_kr}</div>
-              </ListText>
-            </List>
+            <BrandPerfumeListRow key={'perfumeListRow_' + index}
+              perfumeId={el?.perfumeId}
+              index={index}
+              perfumeImage={el?.perfumeImage}
+              perfumeName={el?.perfumeName}
+              brandName={el?.brandName}
+              brandNameKR={el?.brandName_kr}
+            />
           );
         })}
         {perfumes && (
