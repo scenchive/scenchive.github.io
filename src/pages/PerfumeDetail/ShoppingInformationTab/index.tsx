@@ -16,16 +16,7 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {api} from "../../../api";
 import ShoppingSlider from "../ShoppingSlider";
-
-
-interface ShoppingInformation {
-  cleanedTitle: string;
-  link: string;
-  image: string;
-  lprice: number;
-  mallName: string;
-}
-
+import {ShoppingInformation} from "../../../common/types";
 
 const ShoppingInformationTab = React.memo(
   (props: {

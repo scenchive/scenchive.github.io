@@ -6,39 +6,14 @@ import {
   NoteTitle,
   NoteInformation,
   NoteInformationArea,
-
-
 } from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../../api";
-
-interface PerfumeNoteGroup {
-  perfumeId: number;
-  perfumeName: string;
-  brandName: string;
-  top: string[];
-  middle: string[];
-  base: string[];
-}
-
-interface ReviewInformation {
-  name: string;
-  content: string;
-  created_at: string;
-  imageUrl: string;
-}
+import {PerfumeNoteGroup} from "../../../common/types"
 
 const NoteInformationBlock = (
   props: {
     PerfumeNote: PerfumeNoteGroup | null | undefined
     , myToken: string | null | undefined
   }) => {
-  const navigate = useNavigate();
-  const [myToken, setMyToken] = useState<string | null | undefined>(props?.myToken);
-  const [perfumeNumber, setPerfumeNumber] = useSearchParams();
-  const [querySearch, setQuerySearch] = useSearchParams();
-  const [perfumeId, setPerfumeId] = useState<number | null | undefined>();
-
 
   return (
     <NoteArea>

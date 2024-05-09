@@ -7,21 +7,8 @@ import {
   StatusBarArea,
   StatusBar,
   OtherRatingArea,
-
 } from "./styles";
-
-interface PerfumeRatingGroup {
-  perfumeId: number;
-  ratingAvg: number;
-  longevityAvg: number;
-  sillageAvg: number;
-  seasonAvg: {
-    spring: number;
-    summer: number;
-    fall: number;
-    winter: number;
-  }
-}
+import {PerfumeRatingGroup} from "../../../common/types";
 
 const PerfumeRatingBlock = (props: { perfumeRating: PerfumeRatingGroup | undefined, }) => {
 

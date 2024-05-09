@@ -13,23 +13,8 @@ import {
 
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../../api";
+import {PerfumeNoteGroup, ReviewInformation} from "../../../common/types"
 
-interface PerfumeNoteGroup {
-  perfumeId: number;
-  perfumeName: string;
-  brandName: string;
-  top: string[];
-  middle: string[];
-  base: string[];
-}
-
-interface ReviewInformation {
-  name: string;
-  content: string;
-  created_at: string;
-  imageUrl: string;
-}
 
 const ReviewBlock = (
   props: {
@@ -37,10 +22,6 @@ const ReviewBlock = (
     , reviewList: ReviewInformation[] | undefined
   }) => {
   const navigate = useNavigate();
-  const [perfumeNumber, setPerfumeNumber] = useSearchParams();
-  const [querySearch, setQuerySearch] = useSearchParams();
-  const [perfumeId, setPerfumeId] = useState<number | null | undefined>();
-
 
   return (
     <ReviewArea>

@@ -2,14 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   StarRatingArea,
   StarIcon,
-
 } from "./styles";
-
-
 
 const StarRating = (props: { ratesResArr: number[] }) => {
   const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last'];
-
   return (
     <StarRatingArea>
       {STAR_IDX_ARR.map((item, idx) =>
