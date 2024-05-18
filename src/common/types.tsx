@@ -54,8 +54,8 @@ export interface Perfumes {
     brandName_kr: string;
     brandImage: string;
     ratingAvg: number;
-  }
-  
+}
+
 export interface Store {
     address_name: string;
     category_group_code: string;
@@ -69,4 +69,11 @@ export interface Store {
     road_address_name: string;
     x: string;
     y: string;
-  }
+}
+
+// Community
+export interface BoardType {
+    id: number;
+    boardtype_name: string;
+    title: string;
+}
