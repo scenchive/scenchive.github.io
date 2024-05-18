@@ -65,14 +65,21 @@ export const Keyword = styled.div`
 export const Cards = styled.div`
   label: cards;
   width: 70%;
-  height: 270px;
+  // height: 270px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px 10px;
 
+  ${`@media(max-width:670px)`} {
+    width: 70%;
+    // height: 950px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 10px;
+  }
+
   ${mediaQuery} {
     width: calc(100% - 40px);
-    height: 950px;
+    // height: 950px;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px 10px;
   }
@@ -97,6 +104,14 @@ export const Card = styled.div`
     margin-bottom: 5px;
   }
 
+  ${`@media(max-width:670px)`} {
+    height: 180px;
+
+    img {
+      height: 80px;
+    }
+  }
+
   ${mediaQuery} {
     height: 180px;
 
@@ -118,12 +133,25 @@ export const CardText = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 1.4rem;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   .card-text__brand {
     height: 20px;
     color: #a9a9a9;
     font-size: 1.2rem;
+  }
+
+  ${`@media(max-width:670px)`} {
+    height: 50px;
+
+    .card-text__title {
+      height: 30px;
+      font-size: 1.2rem;
+    }
+    .card-text__brand {
+      height: 15px;
+      font-size: 1rem;
+    }
   }
 
   ${mediaQuery} {
