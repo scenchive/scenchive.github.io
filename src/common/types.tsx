@@ -77,3 +77,31 @@ export interface BoardType {
     boardtype_name: string;
     title: string;
 }
+
+// CommunityDetail
+export interface BoardDetail {
+    boardtype_name: string;
+    body: string;
+    imageUrl: string;
+    modified_at: string;
+    name: string;
+    title: string;
+}
+
+export interface Comment {
+    id: number;
+    memberId: number;
+    memberName: string;
+    content: string;
+    createdAt: string;
+    deleted: boolean;
+    parentId: number | null;
+    imageUrl: string;
+}
+
+export interface User {
+    userId: number;
+    email: string;
+    name: string;
+    imageUrl: string;
+}
