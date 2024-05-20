@@ -88,10 +88,12 @@ export const Keyword = styled.div<{ isSelected: boolean }>`
   box-shadow: 2px 3px 2.5px #d9d9d9;
   margin: 5px;
   cursor: pointer;
-  &:hover {
-    border-color: #d67070;
-    background-color: #d67070;
-    color: white;
+  @media (hover: hover) {
+    &:hover {
+      border-color: #d67070;
+      background-color: #d67070;
+      color: white;
+    }
   }
 `;
 
