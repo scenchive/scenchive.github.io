@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Container,
   Main,
@@ -12,68 +12,51 @@ import {
   WriteButton,
 } from "./styles";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../api";
+import { api } from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
+import useApi from "../../hooks/useApi";
+import { MyBoardsBoardType } from "../../common/types";
 
-interface BoardType {
-  id: number;
-  boardtype: string;
-  title: string;
-}
+
 
 const MyBoards = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const { data: checkToken, loading: checkTokenLoading, error: checkTokenError, fetchApi: fetchCheckToken } = useApi<string>();
+  const { data: userContentList, loading: userContentListLoading, error: userContentListError, fetchApi: fetchUserContentList } = useApi<any>();
   const [myToken, setMyToken] = useState<string | null>();
-  const [userContentList, setUserContentList] = useState<BoardType[]>();
-
-
-
-  const goToHome = () => {
-    navigate("/")
-  }
+  let token = localStorage.getItem("my-token");
 
   const goToLogin = () => {
     navigate("/login")
   }
 
-  useEffect(() => {
-    let token = localStorage.getItem('my-token');
+  /* 
+  * 토큰 유효성 검사 api를 호출합니다.
+  * @author 김민지
+  */
+  const validateToken = useCallback(async () => {
     if (token && token.length > 0) {
-      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
-        .then((res) => {
-          if (res.data.length > 0) {
-            setMyToken(token);
-          } else {
-            goToLogin();
-          }
-        })
-        .catch((err) => {
-          goToLogin();
-        })
+      const res = await fetchCheckToken("post", "/token-validation", {});
+      if (res?.length > 0) {
+        setMyToken(token);
+        /* 
+        * 작성한 게시물 get api를 호출합니다.
+        * @author 김민지
+        */
+        fetchUserContentList('get', '/user/content');
+      } else if (checkTokenError) {
+        goToLogin();
+      }
     } else {
+      alert('로그인 후 이용 가능합니다.')
       goToLogin();
     }
-  }, [])
-
-  const getUserContent = () => {
-    if (myToken && myToken.length > 0) {
-      api.get('/user/content', { headers: { 'Authorization': `Bearer ${myToken}` } })
-        .then((res) => {
-          setUserContentList(res?.data?.boards)
-        }).catch((res) => {
-          alert('로그인 후 이용 가능합니다.')
-          goToHome();
-        })
-    }
-
-  }
+  }, [token]);
 
   useEffect(() => {
-    getUserContent();
-  }, [myToken])
-
+    validateToken();
+  }, [validateToken])
 
   return (<>
     <Container>
@@ -91,10 +74,10 @@ const MyBoards = () => {
             <RowTitle style={{ fontSize: "1.4rem", fontWeight: "500" }}>내용</RowTitle>
           </CommunityRow>
           {
-            userContentList?.map((el, index) =>
+            userContentList !== undefined && userContentList?.boards?.map((el: MyBoardsBoardType, index: number) =>
               <CommunityRow key={index} onClick={() => navigate('/communitydetail?detail=' + el?.id)}>
                 <RowNumber>{index + 1}</RowNumber>
-                <RowMenu>{el?.boardtype=== "fake" ? "정/가품" : el?.boardtype=== "qna" ? "Q & A" : "자유"}</RowMenu>
+                <RowMenu>{el?.boardtype === "fake" ? "정/가품" : el?.boardtype === "qna" ? "Q & A" : "자유"}</RowMenu>
                 <RowTitle>{el?.title}</RowTitle>
               </CommunityRow>)
           }

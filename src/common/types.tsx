@@ -105,3 +105,11 @@ export interface User {
     name: string;
     imageUrl: string;
 }
+
+// MyBoards
+export interface MyBoardsBoardType {
+    id: number;
+    boardtype: string;
+    title: string;
+  }
+  
