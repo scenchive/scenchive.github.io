@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Container,
   Main,
@@ -10,76 +10,52 @@ import {
   RowMenu,
   ContentArea,
   CommentContent,
-  CommentBoardTitle,
-
-  
+  CommentBoardTitle, 
 } from "./styles";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../api";
+import {useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
+import useApi from "../../hooks/useApi";
+import { CommentType } from "../../common/types";
 
-interface CommentType {
-  commentId: number;
-  commentContent: string;
-  boardId: number;
-  boardTitle: string;
-  commentModifiedAt: string;
-}
 
 const MyComments = () => {
   const navigate = useNavigate();
-  const {state}=useLocation();
+  const { data: checkToken, loading: checkTokenLoading, error: checkTokenError, fetchApi: fetchCheckToken } = useApi<any>();
+  const { data: userCommentList, loading: userCommentListLoading, error: userCommentListError, fetchApi: fetchUserCommentList } = useApi<any>();
   const [myToken, setMyToken] = useState<string | null>();
-  const [userCommentList, setUserCommentList] = useState<CommentType[]>();
-
-
-  const goToHome = () => {
-    navigate("/")
-  }
+  let token = localStorage.getItem("my-token");
 
   const goToLogin = () => {
     navigate("/login")
   }
 
-  useEffect(() => {
-    let token = localStorage.getItem('my-token');
+  /* 
+  * 토큰 유효성 검사 api를 호출합니다.
+  * @author 김민지
+  */
+  const validateToken = useCallback(async () => {
     if (token && token.length > 0) {
-      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
-        .then((res) => {
-          if (res.data.length > 0) {
-            setMyToken(token);
-          } else {
-            goToLogin();
-          }
-        })
-        .catch((err) => {
-          goToLogin();
-        })
+      const res = await fetchCheckToken("post", "/token-validation", {});
+      if (res?.length > 0) {
+        setMyToken(token);
+        /* 
+        * 유저 댓글 목록 get api를 호출합니다.
+        * @author 김민지
+        */
+        fetchUserCommentList('get', '/user/content',{})
+      } else if (checkTokenError) {
+        goToLogin();
+      }
     } else {
+      alert('로그인 후 이용 가능합니다.')
       goToLogin();
     }
-  }, [])
-
-  const getUserComment = () => {
-    if (myToken && myToken.length > 0) {
-      api.get('/user/content', { headers: { 'Authorization': `Bearer ${myToken}` } })
-        .then((res) => {
-          setUserCommentList(res?.data?.comments)
-        }).catch((res) => {
-          alert('로그인 후 이용 가능합니다.')
-          goToHome();
-        })
-    }
-
-  }
-
+  }, [token]);
 
   useEffect(() => {
-    getUserComment();
-  }, [myToken])
-
-  
+    validateToken();
+  }, [validateToken])
 
   return (<>
     <Container>
@@ -96,8 +72,8 @@ const MyComments = () => {
             <RowNumber style={{fontSize:"1.4rem", fontWeight:"500"}}>번호</RowNumber>
             <RowMenu style={{fontSize:"1.4rem", fontWeight:"500"}}>내용</RowMenu>
           </CommunityRow>
-          {
-            userCommentList?.map((el, index) =>
+
+          {userCommentList!==undefined && userCommentList.comments?.map((el:CommentType, index:number) =>
               <CommunityRow key={index} onClick={() => navigate('/communitydetail?detail=' + el?.boardId)}>
                 <RowNumber>{index + 1}</RowNumber>
                 <ContentArea>
@@ -107,11 +83,9 @@ const MyComments = () => {
                   <CommentBoardTitle>
                     {el.boardTitle}
                   </CommentBoardTitle>
-
                 </ContentArea>
-      
-              </CommunityRow>)
-          }
+              </CommunityRow>)}
+              
         </CommunityArea>
       </Main>
     </Container>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import {
   Container,
   Main,
@@ -11,134 +11,103 @@ import {
   RowTitle,
   WriteButton,
 } from "./styles";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../api";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
 import Pagination from "../../components/Pagination";
+import useApi from "../../hooks/useApi";
+import { BoardType } from "../../common/types";
 
-interface BoardType {
-  id: number;
-  boardtype_name: string;
-  title: string;
-}
 
 const Community = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const { data: checkToken, loading: checkTokenLoading, error: checkTokenError, fetchApi: fetchCheckToken } = useApi<any>();
+  const { data: communityList, loading: communityListLoading, error: communityListError, fetchApi: fetchCommunityList } = useApi<any>();
+  const { data: communityTypeList, loading: communityTypeListLoading, error: communityTypeListError, fetchApi: fetchCommunityTypeList } = useApi<any>();
+
   const [myToken, setMyToken] = useState<string | null>();
-  const [querySearch, setQuerySearch] = useSearchParams();
   const [selectedMenu, setSelectedMenu] = useState<string>("전체");
   const [boardList, setBoardList] = useState<BoardType[]>([]);
-  const [fakeBoardList, setFakeBoardList] = useState<BoardType[]>();
-  const [qnaBoardList, setQnaBoardList] = useState<BoardType[]>();
-  const [freeBoardList, setFreeBoardList] = useState<BoardType[]>();
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
-
-  const goToHome = () => {
-    navigate("/");
-  };
+  let token = localStorage.getItem("my-token");
 
   const goToLogin = () => {
     navigate("/login");
   };
 
-  useEffect(() => {
-    let token = localStorage.getItem("my-token");
+  const menuItems = [
+    { label: "전체", value: "전체" },
+    { label: "정/가품", value: "정/가품" },
+    { label: "Q & A", value: "Q & A" },
+    { label: "자유", value: "자유" },
+  ]
+
+
+  /* 
+  * 토큰 유효성 검사 api를 호출합니다.
+  * @author 김민지
+  */
+  const validateToken = useCallback(async () => {
     if (token && token.length > 0) {
-      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
-        .then((res) => {
-          if (res.data.length > 0) {
-            setMyToken(token);
-          } else {
-            goToLogin();
-          }
-        })
-        .catch((err) => {
-          goToLogin();
-        });
+      const res = await fetchCheckToken("post", "/token-validation", {});
+      if (res?.length > 0) {
+        setMyToken(token);
+      } else if (checkTokenError) {
+        goToLogin();
+      }
     } else {
       goToLogin();
     }
-  }, []);
+  }, [token]);
 
-  const getCommunity = () => {
+  useEffect(() => {
+    validateToken();
+  }, [validateToken])
+
+
+  /* 
+  * 커뮤니티 목록 api를 호출합니다.
+  *  @author 김민지
+  */
+  const getCommunity = useCallback(async () => {
     if (myToken && myToken.length > 0) {
-      if (selectedMenu === "전체") {
-        api
-          .get(`/boards?page=${page}`, {
-            headers: { Authorization: `Bearer ${myToken}` },
-          })
-          .then((res) => {
-            setCount(res?.data?.totalBoardCount);
-            setBoardList(res?.data?.boards);
-          })
-          .catch((res) => {
-            alert("로그인 후 이용 가능합니다.");
-            goToHome();
-          });
-      } else if (selectedMenu === "정/가품") {
-        api
-          .get(`/boardtype/1?page=${page}`, {
-            headers: { Authorization: `Bearer ${myToken}` },
-          })
-          .then((res) => {
-            setCount(res?.data?.totalBoardCount);
-            setQnaBoardList(res?.data?.boards);
-          })
-          .catch((res) => {
-            alert("로그인 후 이용 가능합니다.");
-            goToHome();
-          });
-      } else if (selectedMenu === "Q & A") {
-        api
-          .get(`/boardtype/2?page=${page}`, {
-            headers: { Authorization: `Bearer ${myToken}` },
-          })
-          .then((res) => {
-            setCount(res?.data?.totalBoardCount);
-            setFakeBoardList(res?.data?.boards);
-          })
-          .catch((res) => {
-            alert("로그인 후 이용 가능합니다.");
-            goToHome();
-          });
+      let data;
+      if (selectedMenu === '전체') {
+        data = await fetchCommunityList("get", `/boards?page=${page}`, {});
       } else {
-        api
-          .get(`/boardtype/3?page=${page}`, {
-            headers: { Authorization: `Bearer ${myToken}` },
-          })
-          .then((res) => {
-            setCount(res?.data?.totalBoardCount);
-            setFreeBoardList(res?.data?.boards);
-          })
-          .catch((res) => {
-            alert("로그인 후 이용 가능합니다.");
-            goToHome();
-          });
+        const typeMap: { [key: string]: number } = {
+          "정/가품": 2,
+          "Q & A": 1,
+          "자유": 3,
+        };
+        data = await fetchCommunityTypeList("get", `/boardtype/${typeMap[selectedMenu]}?page=${page}`, {});
+
       }
+      setCount(data?.totalBoardCount || 0);
+      setBoardList(data?.boards || []);
     }
-  };
+  }, [myToken, selectedMenu, page]);
 
   useEffect(() => {
     getCommunity();
-    setPage(0);
-  }, [myToken, selectedMenu]);
+  }, [getCommunity]);
+
 
   useEffect(() => {
     if (state) {
-      if (state === "fake") {
-        setSelectedMenu("정/가품");
-      } else if (state === "qna") {
-        setSelectedMenu("Q & A");
-      } else {
-        setSelectedMenu("자유");
-      }
+      const menuMap: { [key: string]: string } = {
+        fake: "정/가품",
+        qna: "Q & A",
+        free: "자유",
+      };
+      setSelectedMenu(menuMap[state] || "전체");
     } else {
       setSelectedMenu("전체");
     }
   }, [state]);
+
 
   return (
     <>
@@ -147,46 +116,19 @@ const Community = () => {
         <Search />
         <Main>
           <MenuArea>
-            <CommunityMenu
-              onClick={() => setSelectedMenu("전체")}
-              style={{
-                color: selectedMenu === "전체" ? "#D67070 " : "#B3B3B3",
-                fontSize: selectedMenu === "전체" ? "2rem" : "1.4rem",
-                fontWeight: selectedMenu === "전체" ? "600" : "normal",
-              }}
-            >
-              전체
-            </CommunityMenu>
-            <CommunityMenu
-              onClick={() => setSelectedMenu("정/가품")}
-              style={{
-                color: selectedMenu === "정/가품" ? "#D67070 " : "#B3B3B3",
-                fontSize: selectedMenu === "정/가품" ? "2rem" : "1.4rem",
-                fontWeight: selectedMenu === "정/가품" ? "600" : "normal",
-              }}
-            >
-              정/가품
-            </CommunityMenu>
-            <CommunityMenu
-              onClick={() => setSelectedMenu("Q & A")}
-              style={{
-                color: selectedMenu === "Q & A" ? "#D67070 " : "#B3B3B3",
-                fontSize: selectedMenu === "Q & A" ? "2rem" : "1.4rem",
-                fontWeight: selectedMenu === "Q & A" ? "600" : "normal",
-              }}
-            >
-              Q & A
-            </CommunityMenu>
-            <CommunityMenu
-              onClick={() => setSelectedMenu("자유")}
-              style={{
-                color: selectedMenu === "자유" ? "#D67070 " : "#B3B3B3",
-                fontSize: selectedMenu === "자유" ? "2rem" : "1.4rem",
-                fontWeight: selectedMenu === "자유" ? "600" : "normal",
-              }}
-            >
-              자유
-            </CommunityMenu>
+            {menuItems.map((menu) => (
+              <CommunityMenu
+                key={menu.value}
+                onClick={() => { setSelectedMenu(menu.value); setPage(0); }}
+                style={{
+                  color: selectedMenu === menu.value ? "#D67070" : "#B3B3B3",
+                  fontSize: selectedMenu === menu.value ? "2rem" : "1.4rem",
+                  fontWeight: selectedMenu === menu.value ? "600" : "normal",
+                }}
+              >
+                {menu.label}
+              </CommunityMenu>
+            ))}
             <WriteButton onClick={() => navigate("/communitywrite")}>
               작성하기
             </WriteButton>
@@ -203,72 +145,19 @@ const Community = () => {
                 제목
               </RowTitle>
             </CommunityRow>
-            {selectedMenu === "전체"
-              ? boardList?.map((el, index) => (
-                  <CommunityRow
-                    key={index}
-                    onClick={() =>
-                      navigate("/communitydetail?detail=" + el?.id)
-                    }
-                  >
-                    <RowNumber>{el?.id}</RowNumber>
-                    <RowMenu>
-                      {el?.boardtype_name === "fake"
-                        ? "정/가품"
-                        : el?.boardtype_name === "qna"
-                        ? "Q & A"
-                        : "자유"}
-                    </RowMenu>
-                    <RowTitle>{el?.title}</RowTitle>
-                  </CommunityRow>
-                ))
-              : selectedMenu === "정/가품"
-              ? fakeBoardList?.map((el, index) =>
-                  el?.boardtype_name === "fake" ? (
-                    <CommunityRow
-                      key={index}
-                      onClick={() =>
-                        navigate("/communitydetail?detail=" + el?.id)
-                      }
-                    >
-                      <RowNumber>{el?.id}</RowNumber>
-                      <RowMenu>정/가품</RowMenu>
-                      <RowTitle>{el?.title}</RowTitle>
-                    </CommunityRow>
-                  ) : null
-                )
-              : selectedMenu === "Q & A"
-              ? qnaBoardList?.map((el, index) =>
-                  el?.boardtype_name === "qna" ? (
-                    <CommunityRow
-                      key={index}
-                      onClick={() =>
-                        navigate("/communitydetail?detail=" + el?.id)
-                      }
-                    >
-                      <RowNumber>{el?.id}</RowNumber>
-                      <RowMenu>Q & A</RowMenu>
-                      <RowTitle>{el?.title}</RowTitle>
-                    </CommunityRow>
-                  ) : null
-                )
-              : freeBoardList?.map((el, index) =>
-                  el?.boardtype_name === "free" ? (
-                    <CommunityRow
-                      key={index}
-                      onClick={() =>
-                        navigate("/communitydetail?detail=" + el?.id)
-                      }
-                    >
-                      <RowNumber>{el?.id}</RowNumber>
-                      <RowMenu>자유</RowMenu>
-                      <RowTitle>{el?.title}</RowTitle>
-                    </CommunityRow>
-                  ) : null
-                )}
+            {boardList.map((el, index) => (
+              <CommunityRow key={index} onClick={() => navigate(`/communitydetail?detail=${el?.id}`)}>
+                <RowNumber>{el?.id}</RowNumber>
+                <RowMenu>
+                  {el?.boardtype_name === "fake" ? "정/가품" : el?.boardtype_name === "qna" ? "Q & A" : "자유"}
+                </RowMenu>
+                <RowTitle>{el?.title}</RowTitle>
+              </CommunityRow>
+            ))}
+
           </CommunityArea>
           <Pagination
-            count={Math.floor(count / 10) + 1}
+            count={Math.floor((count - 1) / 10) + 1}
             page={page}
             setPage={setPage}
           />

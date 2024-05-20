@@ -5,7 +5,7 @@ interface UseApiReturnType<T> {
     data: T | undefined;
     loading: boolean;
     error: any;
-    fetchApi: (method: string, url: string, requestBody?: any) => Promise<T>;
+    fetchApi: (method: string, url: string, requestBody?: any, header?:any) => Promise<T>;
 }
 
 function useApi<T>(): UseApiReturnType<T> {
@@ -13,7 +13,7 @@ function useApi<T>(): UseApiReturnType<T> {
     const [data, setData] = useState<T | undefined>(undefined);
     const [error, setError] = useState(null);
 
-    const fetchApi = async (method: string, url: string, requestBody?: any) => {
+    const fetchApi = async (method: string, url: string, requestBody?: any, header?:any) => {
         setLoading(true);
 
         try {
@@ -25,7 +25,7 @@ function useApi<T>(): UseApiReturnType<T> {
                     setLoading(false);
                     return response.data;
                 case "post":
-                    response = await api.post(url, requestBody, { headers: { Authorization: `Bearer ${localStorage.getItem("my-token")}` } });
+                    response = await api.post(url, requestBody, { headers: header?header:{ Authorization: `Bearer ${localStorage.getItem("my-token")}` } });
                     setData(response?.data);
                     setLoading(false);
                     return response.data;

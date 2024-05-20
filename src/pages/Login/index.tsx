@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
@@ -14,12 +14,11 @@ import {
   JoinButton,
   // @ts-ignore
 } from "./styles";
-// import ApiService from "../ApiService.js";
-import {api} from "../../api";
 import Header from "../../components/Header/index";
+import useApi from "../../hooks/useApi";
 
 const Login = () => {
-  const location = useLocation();
+  const { data: login, loading: loginLoading, error: loginError, fetchApi: fetchLogin } = useApi<any>();
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -28,29 +27,13 @@ const Login = () => {
     navigate("/");
   };
 
-  const goBack = () => {
-    navigate(-1);
-  };
-
-  const Login = async () => {
+  const handleLogin = async () => {
     if (email.length > 0 && password.length > 0) {
       const data = {
         email: email,
         password: password,
       }
-      await api.post('/login', data)
-        .then((res) => {
-          if (res.data.token) {
-            console.log("로그인 성공했습니다.");
-            localStorage.setItem("my-token", res.data.token);
-            goToHome();
-          }else{
-            alert('로그인에 실패하였습니다.');
-          }
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
+      await fetchLogin('post', '/login', data);
     } else {
       alert("모든 항목을 입력해주세요.");
     }
@@ -58,9 +41,21 @@ const Login = () => {
 
   const handleOnKeyPress = (e: { key: string }) => {
     if (e.key === "Enter") {
-      Login();
+      handleLogin();
     }
   };
+
+  useEffect(()=>{
+    if (login?.token){
+      localStorage.setItem("my-token", login.token);
+      goToHome();
+    }
+
+    if (loginError){
+      alert('로그인에 실패하였습니다.');
+    }
+  },[handleLogin])
+
   return (
     <>
       <Header />
@@ -94,7 +89,7 @@ const Login = () => {
           </RowArea>
         </LoginArea>
 
-        <LoginButton onClick={Login}>로그인</LoginButton>
+        <LoginButton onClick={handleLogin}>로그인</LoginButton>
 
         <JoinArea>
           <JoinTitle>아직 센카이브 회원이 아니신가요?</JoinTitle>

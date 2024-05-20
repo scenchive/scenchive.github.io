@@ -96,6 +96,7 @@ export const UserInformationArea = styled.div`
 export const MobileLogoutButton = styled.div`
   label: mobile-logout-button;
   display:none;
+  cursor:pointer;
 
   ${mediaQuery} {
     display: block;
@@ -146,6 +147,7 @@ export const ProfileButton = styled.div<ProfileButton>`
   background-color:transparent;
   cursor:pointer;
   word-break: keep-all;
+  cursor:pointer;
 
   ${mediaQuery} {
     display: ${(props) => (props?.isLogin === true ? "none" : "block")};
