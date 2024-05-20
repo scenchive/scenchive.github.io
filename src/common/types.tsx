@@ -113,3 +113,12 @@ export interface MyBoardsBoardType {
     title: string;
   }
   
+
+// MyComments
+export interface CommentType {
+    commentId: number;
+    commentContent: string;
+    boardId: number;
+    boardTitle: string;
+    commentModifiedAt: string;
+  }
