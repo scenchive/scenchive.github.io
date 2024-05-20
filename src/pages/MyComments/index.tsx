@@ -72,8 +72,8 @@ const MyComments = () => {
             <RowNumber style={{fontSize:"1.4rem", fontWeight:"500"}}>번호</RowNumber>
             <RowMenu style={{fontSize:"1.4rem", fontWeight:"500"}}>내용</RowMenu>
           </CommunityRow>
-          {
-            userCommentList!==undefined && userCommentList.comments?.map((el:CommentType, index:number) =>
+
+          {userCommentList!==undefined && userCommentList.comments?.map((el:CommentType, index:number) =>
               <CommunityRow key={index} onClick={() => navigate('/communitydetail?detail=' + el?.boardId)}>
                 <RowNumber>{index + 1}</RowNumber>
                 <ContentArea>
@@ -83,11 +83,9 @@ const MyComments = () => {
                   <CommentBoardTitle>
                     {el.boardTitle}
                   </CommentBoardTitle>
-
                 </ContentArea>
-      
-              </CommunityRow>)
-          }
+              </CommunityRow>)}
+              
         </CommunityArea>
       </Main>
     </Container>
