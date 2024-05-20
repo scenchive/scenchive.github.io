@@ -111,7 +111,7 @@ export interface MyBoardsBoardType {
     id: number;
     boardtype: string;
     title: string;
-}  
+}
 
 // MyComments
 export interface CommentType {
@@ -129,11 +129,33 @@ export interface KeywordType {
     utag_kr: string;
     utagtype_id: number;
 }
-  
+
 export interface PerfumeType {
     perfume_id: number;
     perfume_name: string;
     perfumeImage: string;
     brand_name: string;
     brandName_kr: string;
+}
+
+// Signup
+export interface FRAGRANCEWHEELKEYWORDSTYPE {
+    id: number;
+    utag: string;
+    utag_kr: string,
+    utagtype_id: number
+}
+
+export interface MOODKEYWORDSTYPE {
+    id: number;
+    utag: string;
+    utag_kr: string,
+    utagtype_id: number
+}
+
+export interface KEYWORDTAGSTYPE {
+    id: number;
+    utag: string;
+    utag_kr: string;
+    utagtype_id: number
 }
