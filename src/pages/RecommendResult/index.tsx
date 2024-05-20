@@ -129,7 +129,7 @@ const RecommendResult = () => {
             </Card>
           );
         })}
-        <div ref={setTarget} style={{ width: "100%", height: "280px" }} />
+        <div ref={setTarget} style={{ width: "100%", height: "180px" }} />
       </Cards>
     </Container>
   );
