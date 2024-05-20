@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Container,
   Main,
@@ -15,9 +15,10 @@ import {
   WriteButton,
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {api} from "../../api";
+import { api } from "../../api";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
+import useApi from "../../hooks/useApi";
 
 
 interface BoardType {
@@ -28,18 +29,16 @@ interface BoardType {
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
+  const { data: checkToken, loading: checkTokenLoading, error: checkTokenError, fetchApi: fetchCheckToken } = useApi<any>();
+  const { data: postCommunity, loading: postCommunityLoading, error: postCommunityError, fetchApi: fetchPostCommunity } = useApi<any>();
+
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [myToken, setMyToken] = useState<string | null>();
-  const [querySearch, setQuerySearch] = useSearchParams();
   const [communityTitle, setCommunityTitle] = useState<string>();
   const [selectedMenu, setSelectedMenu] = useState<string>("전체");
   const [communityContent, setCommunityContent] = useState<string>();
   const [communityImage, setCommunityImage] = useState<any>('');
-
-
-  const goToHome = () => {
-    navigate("/")
-  }
+  let token = localStorage.getItem("my-token");
 
   const goToLogin = () => {
     navigate("/login")
@@ -50,35 +49,64 @@ const CommunityDetail = () => {
     setCommunityImage(e.target.files[0]);
   }
 
-  const uploadCommunity = () => {
-    if (communityTitle && communityContent && selectedMenu) {
-      let data = new FormData();
-      if (communityImage !== "") {
-        data.append('image', communityImage);
-      } else if (communityImage === "") {
-        data.append('image', "");
-      }
-      let requestDto = {
-        title: communityTitle,
-        body: communityContent,
-        boardtype: {
-          id: selectedMenu === 'fake' ? 1 : selectedMenu === "qna" ? 2 : 3,
-          boardtype_name: selectedMenu,
-        }
-      }
-      data.append("requestDto", new Blob([JSON.stringify(requestDto)], { type: "application/json" }))
-
-      if (myToken) {
-        api.post('/board', data, { headers: { 'Authorization': `Bearer ${myToken}` } })
-          .then((res) => {
-            navigate('/community');
-          })
-          .catch((err) => {
-            console.error('err', err)
-          })
+  /* 
+* 토큰 유효성 검사 api를 호출합니다.
+* @author 김민지
+*/
+  const validateToken = useCallback(async () => {
+    if (token && token.length > 0) {
+      const res = await fetchCheckToken("post", "/token-validation", {});
+      if (res?.length > 0) {
+        setMyToken(token);
+      } else if (checkTokenError) {
+        goToLogin();
       }
     } else {
+      goToLogin();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    validateToken();
+  }, [validateToken])
+
+  const uploadCommunity = async () => {
+    if (!communityTitle || !communityContent || !selectedMenu) {
       alert('모든 항목을 입력해 주세요.')
+      return;
+    }
+
+    let data = new FormData();
+    if (communityImage !== "") {
+      data.append('image', communityImage);
+    } else if (communityImage === "") {
+      data.append('image', "");
+    }
+
+    let requestDto = {
+      title: communityTitle,
+      body: communityContent,
+      boardtype: {
+        id: selectedMenu === 'fake' ? 1 : selectedMenu === "qna" ? 2 : 3,
+        boardtype_name: selectedMenu,
+      }
+    }
+    data.append("requestDto", new Blob([JSON.stringify(requestDto)], { type: "application/json" }))
+
+    if (myToken) {
+      try {
+        let res = await fetchPostCommunity("post", "/board", data)
+        if (res) {
+          alert('게시글이 정상적으로 업로드되었습니다.')
+          navigate('/community');
+        }
+      } catch (error) {
+        alert('게시글 업로드에 실패했습니다. 다시 시도해 주세요.')
+      }
+    } else {
+      alert('로그인이 필요합니다.')
+      goToLogin();
+      return;
     }
   }
 
@@ -86,28 +114,11 @@ const CommunityDetail = () => {
     imageInputRef.current?.click();
   };
 
-  useEffect(() => {
-    let token = localStorage.getItem('my-token');
-    if (token && token.length > 0) {
-      api.post('/token-validation', {}, { headers: { 'Authorization': `Bearer ${token}` } })
-        .then((res) => {
-          if (res.data.length > 0) {
-            setMyToken(token);
-          } else {
-            goToLogin();
-          }
-        })
-        .catch((err) => {
-          goToLogin();
-        })
-    } else {
-      goToLogin();
-    }
-  }, [])
-
-  useEffect(() => {
-  }, [myToken])
-
+  const menuOptions = [
+    { key: 'fake', label: '정/가품' },
+    { key: 'qna', label: 'Q & A' },
+    { key: 'free', label: '자유' }
+  ];
 
   return (
     <>
@@ -123,9 +134,15 @@ const CommunityDetail = () => {
           <InputRow>
             <RowTitle>구분</RowTitle>
             <MenuInputArea>
-              <CommunityMenu isSelected={selectedMenu === "fake"} onClick={() => setSelectedMenu('fake')}>정/가품</CommunityMenu>
-              <CommunityMenu isSelected={selectedMenu === "qna"} onClick={() => setSelectedMenu("qna")}>Q & A</CommunityMenu>
-              <CommunityMenu isSelected={selectedMenu === "free"} onClick={() => setSelectedMenu('free')}>자유</CommunityMenu>
+              {menuOptions.map((option) => (
+                <CommunityMenu
+                  key={option.key}
+                  isSelected={selectedMenu === option.key}
+                  onClick={() => setSelectedMenu(option.key)}
+                >
+                  {option.label}
+                </CommunityMenu>
+              ))}
             </MenuInputArea>
           </InputRow>
           <CommunityContentInput onChange={(e) => setCommunityContent(e.target.value)} />
