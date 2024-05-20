@@ -159,3 +159,20 @@ export interface KEYWORDTAGSTYPE {
     utag_kr: string;
     utagtype_id: number
 }
+
+
+// WriteReview
+export interface WriteReviewPerfumeDetailGroup {
+    brandName: string;
+    brandName_kr: string;
+    id: number;
+    perfumeImage: string;
+    perfumeName: string;
+}
+
+export interface WriteReviewKeywordType {
+    id: number;
+    ptag: string;
+    ptag_kr: string;
+    ptagtype_id: number;
+}
