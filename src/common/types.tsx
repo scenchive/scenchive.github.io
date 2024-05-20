@@ -111,8 +111,7 @@ export interface MyBoardsBoardType {
     id: number;
     boardtype: string;
     title: string;
-  }
-  
+}  
 
 // MyComments
 export interface CommentType {
@@ -121,4 +120,20 @@ export interface CommentType {
     boardId: number;
     boardTitle: string;
     commentModifiedAt: string;
-  }
+}
+
+// MyPage
+export interface KeywordType {
+    id: number;
+    utag: string;
+    utag_kr: string;
+    utagtype_id: number;
+}
+  
+export interface PerfumeType {
+    perfume_id: number;
+    perfume_name: string;
+    perfumeImage: string;
+    brand_name: string;
+    brandName_kr: string;
+}
