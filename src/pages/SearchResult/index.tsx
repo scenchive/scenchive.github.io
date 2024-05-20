@@ -49,6 +49,7 @@ const SearchResult = () => {
 
   const options = {
     root: view.current,
+    rootMargin: "10px",
     threshold: 1.0,
   };
 

@@ -69,6 +69,7 @@ const RecommendResult = () => {
 
   const options = {
     root: view.current,
+    rootMargin: "10px",
     threshold: 1.0,
   };
 
