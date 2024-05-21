@@ -69,6 +69,7 @@ const RecommendResult = () => {
 
   const options = {
     root: view.current,
+    rootMargin: "10px",
     threshold: 1.0,
   };
 
@@ -128,7 +129,7 @@ const RecommendResult = () => {
             </Card>
           );
         })}
-        <div ref={setTarget} style={{ width: "100%", height: "280px" }} />
+        <div ref={setTarget} style={{ width: "100%", height: "180px" }} />
       </Cards>
     </Container>
   );

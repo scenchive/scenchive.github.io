@@ -12,10 +12,15 @@ import useApi from "../../hooks/useApi";
 const BrandDetail = () => {
   const navigate = useNavigate();
   /**
-* useApi 커스텀 훅을 사용하여 데이터를 get, post, delete하는 작업과 관련된 변수들입니다.
-*  @author 김민지
-*/
-  const { data: brandPerfumeList, loading: brandPerfumeListLoading, error: brandPerfumeListError, fetchApi: fetchBrandPerfumeList } = useApi<any>();
+   * useApi 커스텀 훅을 사용하여 데이터를 get, post, delete하는 작업과 관련된 변수들입니다.
+   *  @author 김민지
+   */
+  const {
+    data: brandPerfumeList,
+    loading: brandPerfumeListLoading,
+    error: brandPerfumeListError,
+    fetchApi: fetchBrandPerfumeList,
+  } = useApi<any>();
 
   const [querySearch, setQuerySearch] = useSearchParams();
   const [perfumes, setPerfumes] = useState<Array<Perfumes> | null>(null);
@@ -38,6 +43,7 @@ const BrandDetail = () => {
 
   const options = {
     root: view.current,
+    rootMargin: "10px",
     threshold: 1.0,
   };
 
@@ -56,15 +62,21 @@ const BrandDetail = () => {
     return () => observer && observer.disconnect();
   }, [target, loading]);
 
-
   const getPerfumes = async () => {
-    const data = await fetchBrandPerfumeList("get", `/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`, {})
+    const data = await fetchBrandPerfumeList(
+      "get",
+      `/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`,
+      {}
+    );
     if (data) {
-      setPerfumes((prev) => prev !== null ? [...prev, ...data?.perfumes] : data.perfumes);
-      setNum(data?.totalBrandPerfumeCount)
+      setPerfumes((prev) =>
+        prev !== null ? [...prev, ...data?.perfumes] : data.perfumes
+      );
+      setNum(data?.totalBrandPerfumeCount);
     } else {
       setPerfumesPage(-1);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -77,56 +89,66 @@ const BrandDetail = () => {
     if (perfumes && perfumes[0]?.brandName_kr) {
       if (storeList === undefined || storeList?.length !== storeTotalCount) {
         if (perfumes[0]?.brandName_kr === "샤넬") {
-          getStoreList("샤넬화장품")
+          getStoreList("샤넬화장품");
         } else {
-          getStoreList(perfumes[0]?.brandName_kr)
+          getStoreList(perfumes[0]?.brandName_kr);
         }
       }
     }
-  }, [perfumes, storePage])
+  }, [perfumes, storePage]);
 
   useEffect(() => {
     if (storeList && storeList.length > 0) {
       setStoreTotalCount(storeList.length);
       setIsStoreLoading(false);
     }
-  }, [storeList, storeTotalCount])
+  }, [storeList, storeTotalCount]);
 
   const getStoreList = async (searchQuery: string) => {
     if (perfumes && searchQuery) {
       const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}&page=${storePage}&size=10&sort=accuracy`;
-      const result = await axios(url, { headers: { 'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAOMAP_REST_API_KEY}` } });
+      const result = await axios(url, {
+        headers: {
+          Authorization: `KakaoAK ${process.env.REACT_APP_KAKAOMAP_REST_API_KEY}`,
+        },
+      });
       if (result?.data?.documents?.length > 0) {
-        let newList = result.data?.documents.filter((el: any) => el?.category_name.includes('화장품')
-          || el?.category_name.includes('향수')
-          || el?.category_name.includes('미용'))
-        setStoreList(prevState => {
+        let newList = result.data?.documents.filter(
+          (el: any) =>
+            el?.category_name.includes("화장품") ||
+            el?.category_name.includes("향수") ||
+            el?.category_name.includes("미용")
+        );
+        setStoreList((prevState) => {
           if (prevState && prevState.length > 0) {
             return [...prevState, ...newList];
           } else {
             return newList;
           }
-        }
-        );
-        if (result?.data?.meta?.total_count === storeList?.length
-          || result?.data?.meta?.pageable === 45
-          || result?.data?.meta?.is_end === true) {
+        });
+        if (
+          result?.data?.meta?.total_count === storeList?.length ||
+          result?.data?.meta?.pageable === 45 ||
+          result?.data?.meta?.is_end === true
+        ) {
           return;
         } else {
-          setStorePage(storePage + 1)
+          setStorePage(storePage + 1);
         }
       } else {
-        console.log('오프라인 매장이 없습니다.')
+        console.log("오프라인 매장이 없습니다.");
       }
     }
-  }
+  };
 
   return (
     <Container>
       <Header />
       <Search />
       <Top>
-        {perfumes && perfumes[0]?.brandImage && (<img src={perfumes[0].brandImage} />)}
+        {perfumes && perfumes[0]?.brandImage && (
+          <img src={perfumes[0].brandImage} />
+        )}
         <TopText>
           <div className="top-text__title">{querySearch.get("name")}</div>
           <div className="top-text__sub-title">
@@ -135,15 +157,26 @@ const BrandDetail = () => {
         </TopText>
       </Top>
 
-      {isStoreLoading !== true && storeList !== undefined && storeList.length > 0 && storeTotalCount
-        && <KakaoMapArea toggleStore={toggleStore} setToggleStore={setToggleStore} storeList={storeList} storeTotalCount={storeTotalCount} mapNumber={mapNumber} setMapNumber={setMapNumber} />
-      }
+      {isStoreLoading !== true &&
+        storeList !== undefined &&
+        storeList.length > 0 &&
+        storeTotalCount && (
+          <KakaoMapArea
+            toggleStore={toggleStore}
+            setToggleStore={setToggleStore}
+            storeList={storeList}
+            storeTotalCount={storeTotalCount}
+            mapNumber={mapNumber}
+            setMapNumber={setMapNumber}
+          />
+        )}
 
       <Text>총 {num}개</Text>
       <Lists ref={view}>
         {perfumes?.map((el, index) => {
           return (
-            <BrandPerfumeListRow key={'perfumeListRow_' + index}
+            <BrandPerfumeListRow
+              key={"perfumeListRow_" + index}
               perfumeId={el?.perfumeId}
               index={index}
               perfumeImage={el?.perfumeImage}

@@ -36,13 +36,11 @@ const KeywordSearchStep2 = () => {
   const [selectedKeywords, setSelectedKeywords] = useState<Array<number>>([]);
   const [keywordCount, setKeywordCount] = useState([0, 0, 0]);
 
-
   useEffect(() => {
     if (option) {
       getKeyword();
     }
   }, [option]);
-
 
   /**
    * 키워드 가져오는 api 호출 함수
@@ -111,6 +109,7 @@ const KeywordSearchStep2 = () => {
               .map((el) => {
                 return (
                   <Keyword
+                    key={el.id}
                     onClick={() => handleClickKeyword(el.id, 1)}
                     isSelected={isSelected(el.id)}
                   >
@@ -128,6 +127,7 @@ const KeywordSearchStep2 = () => {
               .map((el) => {
                 return (
                   <Keyword
+                    key={el.id}
                     onClick={() => handleClickKeyword(el.id, 2)}
                     isSelected={isSelected(el.id)}
                   >
@@ -145,6 +145,7 @@ const KeywordSearchStep2 = () => {
               .map((el) => {
                 return (
                   <Keyword
+                    key={el.id}
                     onClick={() => handleClickKeyword(el.id, el.ptagtype_id)}
                     isSelected={isSelected(el.id)}
                   >
