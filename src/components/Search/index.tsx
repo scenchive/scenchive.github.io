@@ -9,6 +9,7 @@ import {
 } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { api } from "../../api";
+import useUserTypeStore from "../../stores/useUserAuthority";
 
 interface Perfumes {
   id: number;
@@ -26,6 +27,7 @@ interface Brands {
 }
 
 const Search = () => {
+  const { userType } = useUserTypeStore();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [searchBrands, setSearchBrands] = useState<Array<Brands> | null>(null);
@@ -71,7 +73,7 @@ const Search = () => {
   };
 
   return (
-    <Container>
+    <Container isAdmin={userType === "ROLE_ADMIN"}>
       <InputBox>
         <Input
           type="text"

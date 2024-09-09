@@ -1,6 +1,11 @@
+// @ts-ignore
 import React, { useCallback, useRef } from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Header from "../../components/Header/index";
+import useApi from "../../hooks/useApi";
+import useUserTypeStore from "../../stores/useUserAuthority";
+
 import {
   Content,
   ContentLogo,
@@ -12,13 +17,19 @@ import {
   JoinArea,
   JoinTitle,
   JoinButton,
-  // @ts-ignore
 } from "./styles";
-import Header from "../../components/Header/index";
-import useApi from "../../hooks/useApi";
 
 const Login = () => {
-  const { data: login, loading: loginLoading, error: loginError, fetchApi: fetchLogin } = useApi<any>();
+  const { setUserType, userType } = useUserTypeStore(); // Zustand에서 setUserType 가져오기
+
+  const {
+    data: login,
+    loading: loginLoading,
+    error: loginError,
+    fetchApi: fetchLogin,
+  } = useApi<any>();
+  const { fetchApi: fetchUserType } = useApi<any>();
+
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -32,8 +43,8 @@ const Login = () => {
       const data = {
         email: email,
         password: password,
-      }
-      await fetchLogin('post', '/login', data);
+      };
+      await fetchLogin("post", "/login", data);
     } else {
       alert("모든 항목을 입력해주세요.");
     }
@@ -45,16 +56,26 @@ const Login = () => {
     }
   };
 
-  useEffect(()=>{
-    if (login?.token){
+  const fetchUserTypeData = async () => {
+    const userTypeData = await fetchUserType("get", `/user/${email}`);
+    if (userTypeData && userTypeData.authorityDtoSet) {
+      const authorityName = userTypeData.authorityDtoSet[0].authorityName;
+      console.log("authorityName", authorityName);
+      setUserType(authorityName);
+    }
+    goToHome();
+  };
+
+  useEffect(() => {
+    if (login?.token) {
       localStorage.setItem("my-token", login.token);
-      goToHome();
+      fetchUserTypeData();
     }
 
-    if (loginError){
-      alert('로그인에 실패하였습니다.');
+    if (loginError) {
+      alert("로그인에 실패하였습니다.");
     }
-  },[handleLogin])
+  }, [login?.token, loginError]);
 
   return (
     <>

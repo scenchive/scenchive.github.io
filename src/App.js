@@ -18,34 +18,37 @@ import CommunityDetail from "./pages/CommunityDetail";
 import MyBoards from "./pages/MyBoards";
 import MyComments from "./pages/MyComments";
 import Notice from "./pages/Notice";
+import AddBrand from "./pages/Admin/AddBrand";
+import AddPerfume from "./pages/Admin/AddPerfume";
 import NotFound from "./pages/NotFound";
-import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/searchresult" element={<SearchResult />} />
-          <Route path="/branddetail" element={<BrandDetail />} />
-          <Route path="/perfumedetail" element={<PerfumeDetail />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/writereview" element={<WriteReview />} />
-          <Route path="/keywordsearchstep1" element={<KeywordSearchStep1 />} />
-          <Route path="/keywordsearchstep2" element={<KeywordSearchStep2 />} />
-          <Route path="/recommendresult" element={<RecommendResult />} />
-          <Route path="/perfumedetail" element={<PerfumeDetail />} />
-          <Route path="/myboards" element={<MyBoards />} />
-          <Route path="/mycomments" element={<MyComments />} />
-          <Route path="/writereview" element={<WriteReview />} />
-          <Route path="/community" element={<Commmunity />} />
-          <Route path="/communitywrite" element={<CommunityWrite />} />
-          <Route path="/communitydetail" element={<CommunityDetail />} />
-          <Route path="/notice" element={<Notice />} />
-          <Route path="*" element={<NotFound/>}/>
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/searchresult" element={<SearchResult />} />
+        <Route path="/branddetail" element={<BrandDetail />} />
+        <Route path="/perfumedetail" element={<PerfumeDetail />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/writereview" element={<WriteReview />} />
+        <Route path="/keywordsearchstep1" element={<KeywordSearchStep1 />} />
+        <Route path="/keywordsearchstep2" element={<KeywordSearchStep2 />} />
+        <Route path="/recommendresult" element={<RecommendResult />} />
+        <Route path="/perfumedetail" element={<PerfumeDetail />} />
+        <Route path="/myboards" element={<MyBoards />} />
+        <Route path="/mycomments" element={<MyComments />} />
+        <Route path="/writereview" element={<WriteReview />} />
+        <Route path="/community" element={<Commmunity />} />
+        <Route path="/communitywrite" element={<CommunityWrite />} />
+        <Route path="/communitydetail" element={<CommunityDetail />} />
+        <Route path="/notice" element={<Notice />} />
+        <Route path="/admin/addbrand" element={<AddBrand />} />
+        <Route path="/admin/addPerfume" element={<AddPerfume />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }

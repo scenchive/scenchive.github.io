@@ -3,11 +3,11 @@ import styled from "@emotion/styled";
 const breakpoint = "768px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
-export const Container = styled.div`
+export const Container = styled.div<{ isAdmin: boolean }>`
   label: container;
   width: 100%;
   height: 70px;
-  background-color: #e3a6a1;
+  background-color: ${(props) => (props.isAdmin ? "#19B3B1" : "#e3a6a1")};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -90,7 +90,7 @@ export const MenuItem = styled.div<{ selected: boolean }>`
   padding: 7px 0;
   margin: 0 10px;
   font-size: 1.7rem;
-  border-bottom:${(props) => (props.selected ? "1px solid white" : "none")};
+  border-bottom: ${(props) => (props.selected ? "1px solid white" : "none")};
   cursor: pointer;
 `;
 

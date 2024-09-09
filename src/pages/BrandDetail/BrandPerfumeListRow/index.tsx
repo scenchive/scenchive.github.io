@@ -2,16 +2,20 @@ import React, { useEffect, useState, useRef } from "react";
 import { Container, Top, TopText, Text, Lists, List, ListText } from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-
-
-const BrandPerfumeListRow = (props:{perfumeId: number, index: number, perfumeImage: string, perfumeName: string, brandName:string, brandNameKR: string}) => {
+const BrandPerfumeListRow = (props: {
+  perfumeId: number;
+  index: number;
+  perfumeImage: string;
+  perfumeName: string;
+  brandName: string;
+  brandNameKR: string;
+}) => {
   const navigate = useNavigate();
 
   return (
-
     <List
       onClick={() => navigate(`/perfumedetail?perfume=${props?.perfumeId}`)}
-      key={'list_' + props?.index}
+      key={"list_" + props?.index}
     >
       <img src={`${props?.perfumeImage}`} />
       <ListText>
@@ -20,7 +24,6 @@ const BrandPerfumeListRow = (props:{perfumeId: number, index: number, perfumeIma
         <div className="list-text__sub-title">{props?.brandNameKR}</div>
       </ListText>
     </List>
-
   );
 };
 

@@ -13,12 +13,14 @@ import {
 } from "./styles";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import useUserTypeStore, { resetUserType } from "../../stores/useUserAuthority";
 
 /**
  * 헤더 공통 컴포넌트입니다.
  *  @author 신정은
  */
 const Header = () => {
+  const { userType } = useUserTypeStore();
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("my-token");
@@ -42,6 +44,18 @@ const Header = () => {
       url: ["/community"],
       img: "/assets/icon/icon_board.svg",
     },
+    {
+      name: "브랜드 추가",
+      url: ["/admin/addbrand"],
+      img: "/assets/icon/icon_admin.svg",
+      visibleFor: "ROLE_ADMIN",
+    },
+    {
+      name: "향수 추가",
+      url: ["/admin/addperfume"],
+      img: "/assets/icon/icon_admin.svg",
+      visibleFor: "ROLE_ADMIN",
+    },
   ];
 
   useEffect(() => {
@@ -64,6 +78,7 @@ const Header = () => {
       .catch((err) => {
         setIsLoading(false);
         setIsLogin(false);
+        resetUserType();
       });
   };
 
@@ -71,8 +86,15 @@ const Header = () => {
     setToggle(!toggle);
   };
 
+  const filteredMenuItems = menuItems.filter(
+    (item) =>
+      !item.visibleFor ||
+      item.visibleFor !== "ROLE_ADMIN" ||
+      userType === "ROLE_ADMIN"
+  );
+
   return (
-    <Container>
+    <Container isAdmin={userType === "ROLE_ADMIN"}>
       <HeaderLeft onClick={() => handleMenuClick()}>
         <img src="/assets/icon/icon_menu.svg" />
       </HeaderLeft>
@@ -81,7 +103,7 @@ const Header = () => {
         <div className="logo__en">Scenchive</div>
       </Logo>
       <Menu>
-        {menuItems.map((item, index) => {
+        {filteredMenuItems.map((item, index) => {
           return (
             <MenuItem
               key={index}
@@ -102,18 +124,16 @@ const Header = () => {
               <div onClick={() => navigate("/signup")}>회원가입</div>
             </MenuSmallTop>
           )}
-          {menuItems.map((item, index) => {
-            return (
-              <MenuItemSmall
-                onClick={() => navigate(item.url[0])}
-                border={index !== 2}
-                key={index}
-              >
-                <img src={item.img} />
-                <div>{item.name}</div>
-              </MenuItemSmall>
-            );
-          })}
+          {filteredMenuItems.map((item, index) => (
+            <MenuItemSmall
+              onClick={() => navigate(item.url[0])}
+              border={index !== filteredMenuItems.length - 1}
+              key={index}
+            >
+              <img src={item.img} />
+              <div>{item.name}</div>
+            </MenuItemSmall>
+          ))}
         </MenuSmall>
       )}
       {!isLoading ? (
