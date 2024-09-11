@@ -20,6 +20,7 @@ import MyComments from "./pages/MyComments";
 import Notice from "./pages/Notice";
 import AddBrand from "./pages/Admin/AddBrand";
 import AddPerfume from "./pages/Admin/AddPerfume";
+import AddPerfumeScent from "./pages/Admin/AddPerfumeScent";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
         <Route path="/notice" element={<Notice />} />
         <Route path="/admin/addbrand" element={<AddBrand />} />
         <Route path="/admin/addPerfume" element={<AddPerfume />} />
+        <Route path="/admin/addperfumescent" element={<AddPerfumeScent />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

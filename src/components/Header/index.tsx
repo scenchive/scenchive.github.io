@@ -56,6 +56,12 @@ const Header = () => {
       img: "/assets/icon/icon_admin.svg",
       visibleFor: "ROLE_ADMIN",
     },
+    {
+      name: "향수 노트 추가",
+      url: ["/admin/addperfumescent"],
+      img: "/assets/icon/icon_admin.svg",
+      visibleFor: "ROLE_ADMIN",
+    },
   ];
 
   useEffect(() => {
