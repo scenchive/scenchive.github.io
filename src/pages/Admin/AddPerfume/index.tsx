@@ -126,7 +126,6 @@ const AddPerfume = () => {
         "Content-Type": "multipart/form-data",
         accept: "application/json",
       });
-      console.log("res", res);
       if (res?.id) {
         setPerfumeId(res?.id);
 

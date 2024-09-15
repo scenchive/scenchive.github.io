@@ -44,7 +44,14 @@ const Login = () => {
         email: email,
         password: password,
       };
-      await fetchLogin("post", "/login", data);
+      try {
+        const res = await fetchLogin("post", "/login", data);
+        if (!res) {
+          alert("계정 정보를 정확히 입력해주세요");
+        }
+      } catch {
+        alert("계정 정보를 정확히 입력해주세요");
+      }
     } else {
       alert("모든 항목을 입력해주세요.");
     }
@@ -60,7 +67,6 @@ const Login = () => {
     const userTypeData = await fetchUserType("get", `/user/${email}`);
     if (userTypeData && userTypeData.authorityDtoSet) {
       const authorityName = userTypeData.authorityDtoSet[0].authorityName;
-      console.log("authorityName", authorityName);
       setUserType(authorityName);
     }
     goToHome();
