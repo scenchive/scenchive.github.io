@@ -52,6 +52,7 @@ const Signup = () => {
   let addOrDeleteKeywordArray: { id: number; utag: string; utag_kr: string; utagtype_id: number; }[] = [];
 
   const goToLogin = () => {
+    alert("로그인이 필요합니다.");
     navigate("/login");
   }
 

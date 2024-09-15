@@ -54,6 +54,7 @@ const Community = () => {
   let token = localStorage.getItem("my-token");
 
   const goToLogin = () => {
+    alert("로그인이 필요합니다.");
     navigate("/login");
   };
 

@@ -13,6 +13,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem("my-token");
       resetUserType();
+      alert("다시 로그인해주세요");
       window.location.replace("/login");
     }
   }

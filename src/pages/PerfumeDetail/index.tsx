@@ -30,18 +30,63 @@ const PerfumeDetail = () => {
   const navigate = useNavigate();
 
   /**
- * useApi 커스텀 훅을 사용하여 데이터를 get, post, delete하는 작업과 관련된 변수들입니다.
- *  @author 김민지
- */
-  const { data: checkToken, loading: checkTokenLoading, error: checkTokenError, fetchApi: fetchCheckToken } = useApi<any>();
-  const { data: perfumeDetail, loading: detailLoading, error: detailError, fetchApi: fetchPerfumeDetail } = useApi<PerfumeDetailGroup>();
-  const { data: perfumeRating, loading: perfumeRatingLoading, error: perfumeRatingError, fetchApi: fetchPerfumeRating } = useApi<PerfumeRatingGroup>();
-  const { data: perfumeNote, loading: perfumeNoteLoading, error: perfumeNoteError, fetchApi: fetchPerfumeNote } = useApi<PerfumeNoteGroup | null | undefined>();
-  const { data: reviewData, loading: reviewLoading, error: reviewError, fetchApi: fetchReview } = useApi<ReviewInformation[]>();
-  const { data: bookmarkData, loading: bookmarkLoading, error: bookmarkError, fetchApi: fetchBookmark } = useApi<any>();
-  const { data: postBookmark, loading: postBookmarkLoading, error: postBookmarkError, fetchApi: fetchPostBookmark } = useApi<any>();
-  const { data: deleteBookmark, loading: deleteBookmarkLoading, error: deleteBookmarkError, fetchApi: fetchDeleteBookmark } = useApi<string>();
-  const { data: shoppingList, loading: shoppingListLoading, error: shoppingListError, fetchApi: fetchShoppingList } = useApi<ShoppingInformation[] | null | undefined>();
+   * useApi 커스텀 훅을 사용하여 데이터를 get, post, delete하는 작업과 관련된 변수들입니다.
+   *  @author 김민지
+   */
+  const {
+    data: checkToken,
+    loading: checkTokenLoading,
+    error: checkTokenError,
+    fetchApi: fetchCheckToken,
+  } = useApi<any>();
+  const {
+    data: perfumeDetail,
+    loading: detailLoading,
+    error: detailError,
+    fetchApi: fetchPerfumeDetail,
+  } = useApi<PerfumeDetailGroup>();
+  const {
+    data: perfumeRating,
+    loading: perfumeRatingLoading,
+    error: perfumeRatingError,
+    fetchApi: fetchPerfumeRating,
+  } = useApi<PerfumeRatingGroup>();
+  const {
+    data: perfumeNote,
+    loading: perfumeNoteLoading,
+    error: perfumeNoteError,
+    fetchApi: fetchPerfumeNote,
+  } = useApi<PerfumeNoteGroup | null | undefined>();
+  const {
+    data: reviewData,
+    loading: reviewLoading,
+    error: reviewError,
+    fetchApi: fetchReview,
+  } = useApi<ReviewInformation[]>();
+  const {
+    data: bookmarkData,
+    loading: bookmarkLoading,
+    error: bookmarkError,
+    fetchApi: fetchBookmark,
+  } = useApi<any>();
+  const {
+    data: postBookmark,
+    loading: postBookmarkLoading,
+    error: postBookmarkError,
+    fetchApi: fetchPostBookmark,
+  } = useApi<any>();
+  const {
+    data: deleteBookmark,
+    loading: deleteBookmarkLoading,
+    error: deleteBookmarkError,
+    fetchApi: fetchDeleteBookmark,
+  } = useApi<string>();
+  const {
+    data: shoppingList,
+    loading: shoppingListLoading,
+    error: shoppingListError,
+    fetchApi: fetchShoppingList,
+  } = useApi<ShoppingInformation[] | null | undefined>();
 
   const [myToken, setMyToken] = useState<string | null>();
   const [querySearch, setQuerySearch] = useSearchParams();
@@ -53,6 +98,7 @@ const PerfumeDetail = () => {
   let token = localStorage.getItem("my-token");
 
   const goToLogin = () => {
+    alert("로그인이 필요합니다.");
     navigate("/login");
   };
 
@@ -61,21 +107,29 @@ const PerfumeDetail = () => {
     if (perfumeId !== undefined && myToken) {
       if (isBookmark === false) {
         try {
-          const data = await fetchPostBookmark("post", "/bookmark?perfumeId=" + perfumeId, {});
+          const data = await fetchPostBookmark(
+            "post",
+            "/bookmark?perfumeId=" + perfumeId,
+            {}
+          );
           if (data?.perfumeId === perfumeId) {
             setIsBookmark(true);
           }
         } catch (postBookmarkError) {
-          console.log(postBookmarkError)
+          console.log(postBookmarkError);
         }
       } else {
         try {
-          const data = await fetchDeleteBookmark("delete", "/bookmark?perfumeId=" + perfumeId, {});
+          const data = await fetchDeleteBookmark(
+            "delete",
+            "/bookmark?perfumeId=" + perfumeId,
+            {}
+          );
           if (data === "북마크 해제되었습니다.") {
             setIsBookmark(false);
           }
         } catch (deleteBookmarkError) {
-          console.log(deleteBookmarkError)
+          console.log(deleteBookmarkError);
         }
       }
     } else {
@@ -119,7 +173,7 @@ const PerfumeDetail = () => {
       setMyToken(token);
     } else if (checkTokenError) {
     }
-  }, [checkToken])
+  }, [checkToken]);
 
   useEffect(() => {
     const fetchBookmarkData = async () => {
@@ -132,10 +186,10 @@ const PerfumeDetail = () => {
             setIsBookmark(false);
           }
         } catch (bookmarkError) {
-          console.log(bookmarkError)
+          console.log(bookmarkError);
         }
       }
-    }
+    };
     fetchBookmarkData();
   }, [myToken, perfumeId, bookmarkData]);
 
@@ -153,11 +207,16 @@ const PerfumeDetail = () => {
       setReviewList(reviewData);
       setReviewTotal(reviewData?.length);
     }
-  }, [reviewData])
+  }, [reviewData]);
 
   useEffect(() => {
     if (perfumeDetail?.perfumeName) {
-      fetchShoppingList("get", `/product/search?query=` + `${perfumeDetail?.brandName_kr} ${perfumeDetail?.perfumeName}`, {})
+      fetchShoppingList(
+        "get",
+        `/product/search?query=` +
+          `${perfumeDetail?.brandName_kr} ${perfumeDetail?.perfumeName}`,
+        {}
+      );
     }
   }, [perfumeDetail?.perfumeName]);
 
@@ -178,16 +237,23 @@ const PerfumeDetail = () => {
               perfumeDetail={perfumeDetail}
               ratesResArr={ratesResArr}
               perfumeRating={perfumeRating}
-              reviewTotal={reveiwTotal} />
+              reviewTotal={reveiwTotal}
+            />
             <PerfumeImageArea>
               <PerfumeImage
-                src={ perfumeDetail?.perfumeImage ? perfumeDetail?.perfumeImage 
-                  : "/assets/icon/icon-perfume-pic.png"}
+                src={
+                  perfumeDetail?.perfumeImage
+                    ? perfumeDetail?.perfumeImage
+                    : "/assets/icon/icon-perfume-pic.png"
+                }
               />
               <Bookmark
                 onClick={handleBookmark}
-                src={ isBookmark === true ? "/assets/icon/icon_bookmark_Y.svg"
-                    : "/assets/icon/icon_bookmark_N.svg"}
+                src={
+                  isBookmark === true
+                    ? "/assets/icon/icon_bookmark_Y.svg"
+                    : "/assets/icon/icon_bookmark_N.svg"
+                }
               />
             </PerfumeImageArea>
             <PerfumeInformation
