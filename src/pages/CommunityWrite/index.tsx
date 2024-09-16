@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Container,
   Main,
@@ -13,12 +13,12 @@ import {
   ImageUploadButtonDesign,
   ImageUploadButton,
   WriteButton,
-} from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { api } from "../../api";
-import Header from "../../components/Header";
-import Search from "../../components/Search";
-import useApi from "../../hooks/useApi";
+} from './styles';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { api } from '../../api';
+import Header from '../../components/Header';
+import Search from '../../components/Search';
+import useApi from '../../hooks/useApi';
 
 interface BoardType {
   id: number;
@@ -44,14 +44,14 @@ const CommunityDetail = () => {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [myToken, setMyToken] = useState<string | null>();
   const [communityTitle, setCommunityTitle] = useState<string>();
-  const [selectedMenu, setSelectedMenu] = useState<string>("전체");
+  const [selectedMenu, setSelectedMenu] = useState<string>('전체');
   const [communityContent, setCommunityContent] = useState<string>();
-  const [communityImage, setCommunityImage] = useState<any>("");
-  let token = localStorage.getItem("my-token");
+  const [communityImage, setCommunityImage] = useState<any>('');
+  const token = localStorage.getItem('my-token');
 
   const goToLogin = () => {
-    alert("로그인이 필요합니다.");
-    navigate("/login");
+    alert('로그인이 필요합니다.');
+    navigate('/login');
   };
 
   const onSelectFile = (e: any) => {
@@ -65,7 +65,7 @@ const CommunityDetail = () => {
    */
   const validateToken = useCallback(async () => {
     if (token && token.length > 0) {
-      const res = await fetchCheckToken("post", "/token-validation", {});
+      const res = await fetchCheckToken('post', '/token-validation', {});
       if (res?.length > 0) {
         setMyToken(token);
       } else if (checkTokenError) {
@@ -82,42 +82,42 @@ const CommunityDetail = () => {
 
   const uploadCommunity = async () => {
     if (!communityTitle || !communityContent || !selectedMenu) {
-      alert("모든 항목을 입력해 주세요.");
+      alert('모든 항목을 입력해 주세요.');
       return;
     }
 
-    let data = new FormData();
-    if (communityImage !== "") {
-      data.append("image", communityImage);
-    } else if (communityImage === "") {
-      data.append("image", "");
+    const data = new FormData();
+    if (communityImage !== '') {
+      data.append('image', communityImage);
+    } else if (communityImage === '') {
+      data.append('image', '');
     }
 
-    let requestDto = {
+    const requestDto = {
       title: communityTitle,
       body: communityContent,
       boardtype: {
-        id: selectedMenu === "fake" ? 1 : selectedMenu === "qna" ? 2 : 3,
+        id: selectedMenu === 'fake' ? 1 : selectedMenu === 'qna' ? 2 : 3,
         boardtype_name: selectedMenu,
       },
     };
     data.append(
-      "requestDto",
-      new Blob([JSON.stringify(requestDto)], { type: "application/json" })
+      'requestDto',
+      new Blob([JSON.stringify(requestDto)], { type: 'application/json' })
     );
 
     if (myToken) {
       try {
-        let res = await fetchPostCommunity("post", "/board", data);
+        const res = await fetchPostCommunity('post', '/board', data);
         if (res) {
-          alert("게시글이 정상적으로 업로드되었습니다.");
-          navigate("/community");
+          alert('게시글이 정상적으로 업로드되었습니다.');
+          navigate('/community');
         }
       } catch (error) {
-        alert("게시글 업로드에 실패했습니다. 다시 시도해 주세요.");
+        alert('게시글 업로드에 실패했습니다. 다시 시도해 주세요.');
       }
     } else {
-      alert("로그인이 필요합니다.");
+      alert('로그인이 필요합니다.');
       goToLogin();
       return;
     }
@@ -128,9 +128,9 @@ const CommunityDetail = () => {
   };
 
   const menuOptions = [
-    { key: "fake", label: "정/가품" },
-    { key: "qna", label: "Q & A" },
-    { key: "free", label: "자유" },
+    { key: 'fake', label: '정/가품' },
+    { key: 'qna', label: 'Q & A' },
+    { key: 'free', label: '자유' },
   ];
 
   return (
@@ -169,15 +169,15 @@ const CommunityDetail = () => {
             <ImageUploadButtonDesign onClick={onCickImageUploadHandler}>
               <span
                 style={{
-                  color: "#616161",
-                  fontSize: "1.2rem",
-                  fontFamily: "Noto Sans KR",
-                  marginRight: "10px",
+                  color: '#616161',
+                  fontSize: '1.2rem',
+                  fontFamily: 'Noto Sans KR',
+                  marginRight: '10px',
                 }}
               >
                 이미지
-              </span>{" "}
-              {communityImage?.name ? communityImage.name : "업로드하기"}
+              </span>{' '}
+              {communityImage?.name ? communityImage.name : '업로드하기'}
             </ImageUploadButtonDesign>
             <ImageUploadButton
               type="file"

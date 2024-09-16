@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Container,
   Main,
@@ -21,17 +21,17 @@ import {
   DetailReviewRow,
   DetailReviewAnswer,
   UploadButton,
-} from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { api } from "../../api";
-import Header from "../../components/Header/index";
-import KeywordModal from "./KeywordModal";
-import Search from "../../components/Search";
+} from './styles';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { api } from '../../api';
+import Header from '../../components/Header/index';
+import KeywordModal from './KeywordModal';
+import Search from '../../components/Search';
 import {
   WriteReviewKeywordType,
   WriteReviewPerfumeDetailGroup,
-} from "../../common/types";
-import useApi from "../../hooks/useApi";
+} from '../../common/types';
+import useApi from '../../hooks/useApi';
 
 const WriteReview = () => {
   const navigate = useNavigate();
@@ -83,15 +83,15 @@ const WriteReview = () => {
   const [sillage, setSillage] = useState<number>();
   const [season, setSeason] = useState<number>();
   const [content, setContent] = useState<string>();
-  let token = localStorage.getItem("my-token");
+  const token = localStorage.getItem('my-token');
 
   const goToPerfumeDetail = () => {
-    navigate("/perfumedetail?perfume=" + perfumeId);
+    navigate('/perfumedetail?perfume=' + perfumeId);
   };
 
   const goToLogin = () => {
-    alert("로그인이 필요합니다.");
-    navigate("/login");
+    alert('로그인이 필요합니다.');
+    navigate('/login');
   };
 
   /*
@@ -99,13 +99,13 @@ const WriteReview = () => {
    * @author 김민지
    */
   const validateToken = useCallback(async () => {
-    let perfumeIdProps: null | string | number = querySearch.get("perfume");
+    let perfumeIdProps: null | string | number = querySearch.get('perfume');
     if (perfumeIdProps !== null) {
       perfumeIdProps = parseInt(perfumeIdProps);
       setPerfumeId(perfumeIdProps);
     }
     if (token && token.length > 0) {
-      const res = await fetchCheckToken("post", "/token-validation", {});
+      const res = await fetchCheckToken('post', '/token-validation', {});
       if (res?.length > 0) {
         setMyToken(token);
       } else if (checkTokenError) {
@@ -126,7 +126,7 @@ const WriteReview = () => {
    */
   const uploadReview = async () => {
     if (!myToken || myToken.length <= 0) {
-      alert("로그인이 필요합니다");
+      alert('로그인이 필요합니다');
       goToLogin();
     }
     if (
@@ -138,13 +138,13 @@ const WriteReview = () => {
       !content ||
       keywordTagsArray.length <= 0
     ) {
-      alert("모든 항목을 입력해주세요.");
+      alert('모든 항목을 입력해주세요.');
       return;
     }
 
-    let ptagIdsArray: number[] = [];
+    const ptagIdsArray: number[] = [];
     keywordTagsArray.map((el) => ptagIdsArray.push(el?.id));
-    let data = {
+    const data = {
       perfumeId: perfumeId,
       rating: rating,
       longevity: longevity,
@@ -153,35 +153,35 @@ const WriteReview = () => {
       content: content,
       ptagIds: ptagIdsArray,
     };
-    const res = await fetchPostReview("post", "/review/", data);
+    const res = await fetchPostReview('post', '/review/', data);
     if (res) {
-      alert("시향 후기가 등록되었습니다.");
+      alert('시향 후기가 등록되었습니다.');
       goToPerfumeDetail();
     } else {
-      alert("시향 후기가 정상적으로 등록되지 않았습니다. 다시 시도해 주세요.");
+      alert('시향 후기가 정상적으로 등록되지 않았습니다. 다시 시도해 주세요.');
     }
   };
 
   useEffect(() => {
     if (perfumeId && myToken) {
       /* 향수 이름, 브랜드, 이미지 get api */
-      fetchPerfumeDetail("get", "/fullinfo/" + perfumeId);
+      fetchPerfumeDetail('get', '/fullinfo/' + perfumeId);
       /* 향수 세포 키워드 get api */
-      fetchKeywordList("get", "/perfumes/recommend/tpo");
+      fetchKeywordList('get', '/perfumes/recommend/tpo');
     }
   }, [myToken]);
 
   useEffect(() => {
     if (keywordList !== undefined) {
-      let fragranceWheelKeywordsArray: WriteReviewKeywordType[] = [];
-      let moodKeywordsArray: WriteReviewKeywordType[] = [];
-      let placeArray: WriteReviewKeywordType[] = [];
+      const fragranceWheelKeywordsArray: WriteReviewKeywordType[] = [];
+      const moodKeywordsArray: WriteReviewKeywordType[] = [];
+      const placeArray: WriteReviewKeywordType[] = [];
       keywordList.map((el: WriteReviewKeywordType) =>
         el.ptagtype_id === 1
           ? fragranceWheelKeywordsArray.push(el)
           : el.ptagtype_id === 2
-          ? moodKeywordsArray.push(el)
-          : placeArray.push(el)
+            ? moodKeywordsArray.push(el)
+            : placeArray.push(el)
       );
       setFragranceWheelKeywords(fragranceWheelKeywordsArray);
       setMoodKeywords(moodKeywordsArray);
@@ -199,8 +199,8 @@ const WriteReview = () => {
         setIsModalOpen(false);
       }
     };
-    window.addEventListener("mousedown", handleClick);
-    return () => window.removeEventListener("mousedown", handleClick);
+    window.addEventListener('mousedown', handleClick);
+    return () => window.removeEventListener('mousedown', handleClick);
   }, [modalBackground]);
 
   return (
@@ -251,8 +251,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setRating(5)}
                   style={{
-                    backgroundColor: rating === 5 ? "#E3A6A1" : "white",
-                    color: rating === 5 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: rating === 5 ? '#E3A6A1' : 'white',
+                    color: rating === 5 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   5점
@@ -260,8 +260,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setRating(4)}
                   style={{
-                    backgroundColor: rating === 4 ? "#E3A6A1" : "white",
-                    color: rating === 4 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: rating === 4 ? '#E3A6A1' : 'white',
+                    color: rating === 4 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   4점
@@ -269,8 +269,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setRating(3)}
                   style={{
-                    backgroundColor: rating === 3 ? "#E3A6A1" : "white",
-                    color: rating === 3 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: rating === 3 ? '#E3A6A1' : 'white',
+                    color: rating === 3 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   3점
@@ -278,8 +278,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setRating(2)}
                   style={{
-                    backgroundColor: rating === 2 ? "#E3A6A1" : "white",
-                    color: rating === 2 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: rating === 2 ? '#E3A6A1' : 'white',
+                    color: rating === 2 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   2점
@@ -287,8 +287,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setRating(1)}
                   style={{
-                    backgroundColor: rating === 1 ? "#E3A6A1" : "white",
-                    color: rating === 1 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: rating === 1 ? '#E3A6A1' : 'white',
+                    color: rating === 1 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   1점
@@ -301,8 +301,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setLongevity(1)}
                   style={{
-                    backgroundColor: longevity === 1 ? "#E3A6A1" : "white",
-                    color: longevity === 1 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: longevity === 1 ? '#E3A6A1' : 'white',
+                    color: longevity === 1 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   1h
@@ -310,8 +310,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setLongevity(2)}
                   style={{
-                    backgroundColor: longevity === 2 ? "#E3A6A1" : "white",
-                    color: longevity === 2 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: longevity === 2 ? '#E3A6A1' : 'white',
+                    color: longevity === 2 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   2h
@@ -319,8 +319,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setLongevity(3)}
                   style={{
-                    backgroundColor: longevity === 3 ? "#E3A6A1" : "white",
-                    color: longevity === 3 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: longevity === 3 ? '#E3A6A1' : 'white',
+                    color: longevity === 3 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   3h
@@ -328,8 +328,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setLongevity(4)}
                   style={{
-                    backgroundColor: longevity === 4 ? "#E3A6A1" : "white",
-                    color: longevity === 4 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: longevity === 4 ? '#E3A6A1' : 'white',
+                    color: longevity === 4 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   4h
@@ -337,8 +337,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setLongevity(5)}
                   style={{
-                    backgroundColor: longevity === 5 ? "#E3A6A1" : "white",
-                    color: longevity === 5 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: longevity === 5 ? '#E3A6A1' : 'white',
+                    color: longevity === 5 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   5h
@@ -351,8 +351,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setSillage(1)}
                   style={{
-                    backgroundColor: sillage === 1 ? "#E3A6A1" : "white",
-                    color: sillage === 1 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: sillage === 1 ? '#E3A6A1' : 'white',
+                    color: sillage === 1 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   1
@@ -360,8 +360,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setSillage(2)}
                   style={{
-                    backgroundColor: sillage === 2 ? "#E3A6A1" : "white",
-                    color: sillage === 2 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: sillage === 2 ? '#E3A6A1' : 'white',
+                    color: sillage === 2 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   2
@@ -369,8 +369,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setSillage(3)}
                   style={{
-                    backgroundColor: sillage === 3 ? "#E3A6A1" : "white",
-                    color: sillage === 3 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: sillage === 3 ? '#E3A6A1' : 'white',
+                    color: sillage === 3 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   3
@@ -378,8 +378,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setSillage(4)}
                   style={{
-                    backgroundColor: sillage === 4 ? "#E3A6A1" : "white",
-                    color: sillage === 4 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: sillage === 4 ? '#E3A6A1' : 'white',
+                    color: sillage === 4 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   4
@@ -387,8 +387,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setSillage(5)}
                   style={{
-                    backgroundColor: sillage === 5 ? "#E3A6A1" : "white",
-                    color: sillage === 5 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: sillage === 5 ? '#E3A6A1' : 'white',
+                    color: sillage === 5 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   5
@@ -401,8 +401,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setSeason(36)}
                   style={{
-                    backgroundColor: season === 36 ? "#E3A6A1" : "white",
-                    color: season === 36 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: season === 36 ? '#E3A6A1' : 'white',
+                    color: season === 36 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   봄
@@ -410,8 +410,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setSeason(37)}
                   style={{
-                    backgroundColor: season === 37 ? "#E3A6A1" : "white",
-                    color: season === 37 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: season === 37 ? '#E3A6A1' : 'white',
+                    color: season === 37 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   여름
@@ -419,8 +419,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setSeason(38)}
                   style={{
-                    backgroundColor: season === 38 ? "#E3A6A1" : "white",
-                    color: season === 38 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: season === 38 ? '#E3A6A1' : 'white',
+                    color: season === 38 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   가을
@@ -428,8 +428,8 @@ const WriteReview = () => {
                 <Answer
                   onClick={() => setSeason(39)}
                   style={{
-                    backgroundColor: season === 39 ? "#E3A6A1" : "white",
-                    color: season === 39 ? "#FFFFFF" : "#B3B3B3",
+                    backgroundColor: season === 39 ? '#E3A6A1' : 'white',
+                    color: season === 39 ? '#FFFFFF' : '#B3B3B3',
                   }}
                 >
                   겨울
@@ -440,9 +440,9 @@ const WriteReview = () => {
             <DetailReviewRow>
               <Question
                 style={{
-                  width: "fit-content",
-                  marginRight: "auto",
-                  marginLeft: "0px",
+                  width: 'fit-content',
+                  marginRight: 'auto',
+                  marginLeft: '0px',
                 }}
               >
                 상세한 시향 후기를 작성해주세요!

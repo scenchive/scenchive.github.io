@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   HeaderLeft,
@@ -10,10 +10,10 @@ import {
   MenuItemSmall,
   MenuSmall,
   MenuSmallTop,
-} from "./styles";
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import useUserTypeStore, { resetUserType } from "../../stores/useUserAuthority";
+} from './styles';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import useUserTypeStore, { resetUserType } from '../../stores/useUserAuthority';
 
 /**
  * 헤더 공통 컴포넌트입니다.
@@ -23,44 +23,44 @@ const Header = () => {
   const { userType } = useUserTypeStore();
   const navigate = useNavigate();
   const location = useLocation();
-  const token = localStorage.getItem("my-token");
+  const token = localStorage.getItem('my-token');
   const [toggle, setToggle] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const menuItems = [
     {
-      name: "마이페이지",
-      url: ["/mypage"],
-      img: "/assets/icon/icon_mypage.svg",
+      name: '마이페이지',
+      url: ['/mypage'],
+      img: '/assets/icon/icon_mypage.svg',
     },
     {
-      name: "필터 추천",
-      url: ["/keywordsearchstep1", "/keywordsearchstep2", "/recommendresult"],
-      img: "/assets/icon/icon_filter.svg",
+      name: '필터 추천',
+      url: ['/keywordsearchstep1', '/keywordsearchstep2', '/recommendresult'],
+      img: '/assets/icon/icon_filter.svg',
     },
     {
-      name: "커뮤니티",
-      url: ["/community"],
-      img: "/assets/icon/icon_board.svg",
+      name: '커뮤니티',
+      url: ['/community'],
+      img: '/assets/icon/icon_board.svg',
     },
     {
-      name: "브랜드 추가",
-      url: ["/admin/addbrand"],
-      img: "/assets/icon/icon_admin.svg",
-      visibleFor: "ROLE_ADMIN",
+      name: '브랜드 추가',
+      url: ['/admin/addbrand'],
+      img: '/assets/icon/icon_admin.svg',
+      visibleFor: 'ROLE_ADMIN',
     },
     {
-      name: "향수 추가",
-      url: ["/admin/addperfume"],
-      img: "/assets/icon/icon_admin.svg",
-      visibleFor: "ROLE_ADMIN",
+      name: '향수 추가',
+      url: ['/admin/addperfume'],
+      img: '/assets/icon/icon_admin.svg',
+      visibleFor: 'ROLE_ADMIN',
     },
     {
-      name: "향수 노트 추가",
-      url: ["/admin/addperfumescent"],
-      img: "/assets/icon/icon_admin.svg",
-      visibleFor: "ROLE_ADMIN",
+      name: '향수 노트 추가',
+      url: ['/admin/addperfumescent'],
+      img: '/assets/icon/icon_admin.svg',
+      visibleFor: 'ROLE_ADMIN',
     },
   ];
 
@@ -95,16 +95,16 @@ const Header = () => {
   const filteredMenuItems = menuItems.filter(
     (item) =>
       !item.visibleFor ||
-      item.visibleFor !== "ROLE_ADMIN" ||
-      userType === "ROLE_ADMIN"
+      item.visibleFor !== 'ROLE_ADMIN' ||
+      userType === 'ROLE_ADMIN'
   );
 
   return (
-    <Container isAdmin={userType === "ROLE_ADMIN"}>
+    <Container isAdmin={userType === 'ROLE_ADMIN'}>
       <HeaderLeft onClick={() => handleMenuClick()}>
         <img src="/assets/icon/icon_menu.svg" />
       </HeaderLeft>
-      <Logo onClick={() => navigate("/")}>
+      <Logo onClick={() => navigate('/')}>
         <div className="logo__kr">센카이브</div>
         <div className="logo__en">Scenchive</div>
       </Logo>
@@ -125,9 +125,9 @@ const Header = () => {
         <MenuSmall>
           {!isLoading && !isLogin && (
             <MenuSmallTop>
-              <div onClick={() => navigate("/login")}>로그인</div>
+              <div onClick={() => navigate('/login')}>로그인</div>
               <div>|</div>
-              <div onClick={() => navigate("/signup")}>회원가입</div>
+              <div onClick={() => navigate('/signup')}>회원가입</div>
             </MenuSmallTop>
           )}
           {filteredMenuItems.map((item, index) => (
@@ -145,11 +145,11 @@ const Header = () => {
       {!isLoading ? (
         !isLogin ? (
           <HeaderRight>
-            <HeaderRightText onClick={() => navigate("/login")}>
+            <HeaderRightText onClick={() => navigate('/login')}>
               로그인
             </HeaderRightText>
             <HeaderRightText>|</HeaderRightText>
-            <HeaderRightText onClick={() => navigate("/signup")}>
+            <HeaderRightText onClick={() => navigate('/signup')}>
               회원가입
             </HeaderRightText>
           </HeaderRight>
@@ -157,7 +157,7 @@ const Header = () => {
           <HeaderRight>
             <img
               src="/assets/icon/icon_notice.svg"
-              onClick={() => navigate("/notice")}
+              onClick={() => navigate('/notice')}
             />
           </HeaderRight>
         )

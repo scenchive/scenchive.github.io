@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Main,
@@ -13,13 +13,13 @@ import {
   PerfumeBox,
   ColorPick,
   SlickSlider,
-} from "./styles";
-import { useNavigate } from "react-router-dom";
-import { api } from "../../api";
-import Color from "color-thief-react";
-import Header from "../../components/Header/index";
-import Search from "../../components/Search/index";
-import axios from "axios";
+} from './styles';
+import { useNavigate } from 'react-router-dom';
+import { api } from '../../api';
+import Color from 'color-thief-react';
+import Header from '../../components/Header/index';
+import Search from '../../components/Search/index';
+import axios from 'axios';
 
 interface Perfumes {
   id: number;
@@ -32,14 +32,14 @@ interface Perfumes {
 
 const Home = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("my-token");
+  const token = localStorage.getItem('my-token');
   const [selectToggle, setSelectToggle] = useState(false);
   const [option, setOption] = useState(0);
-  const options = ["봄", "여름", "가을", "겨울"];
+  const options = ['봄', '여름', '가을', '겨울'];
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [contentLoading, setContentLoading] = useState(true);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState('');
   const [perfumes, setPerfumes] = useState<Perfumes[]>([]);
   const [perfumeIndex, setPerfumeIndex] = useState(0);
   const [randomPerfumes, setRandomPerfumes] = useState<Perfumes[]>([]);
@@ -108,7 +108,7 @@ const Home = () => {
       })
       .then((res) => setUsername(res.data))
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
       });
   };
 
@@ -223,9 +223,9 @@ const Home = () => {
                 <SlickSlider {...sliderSettings}>
                   {randomPerfumes?.map((el, index) => (
                     <PerfumeBox
-                      key={"perfumebox_" + index}
+                      key={'perfumebox_' + index}
                       index={index}
-                      style={{ display: "flex" }}
+                      style={{ display: 'flex' }}
                       onClick={() =>
                         navigate(`/perfumedetail?perfume=${el.id}`)
                       }
@@ -235,7 +235,7 @@ const Home = () => {
                           src={el.perfumeImage}
                           onError={(e) => {
                             e.currentTarget.src =
-                              "/assets/image/image_perfume.svg";
+                              '/assets/image/image_perfume.svg';
                           }}
                         />
                       </div>
@@ -245,7 +245,7 @@ const Home = () => {
                           el.perfumeImage
                         )}`}
                         crossOrigin="anonymous"
-                        format={"hex"}
+                        format={'hex'}
                       >
                         {({ data, loading }) => {
                           if (loading) return <div>{loading}</div>;

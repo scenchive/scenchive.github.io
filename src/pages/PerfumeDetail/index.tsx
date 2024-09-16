@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Main,
@@ -7,24 +7,24 @@ import {
   PerfumeImage,
   Bookmark,
   MobilePerfumeInformationArea,
-} from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import Header from "../../components/Header/index";
-import Search from "../../components/Search/index";
-import PerfumeRatingBlock from "./PerfumeRatingBlock/index";
-import ShoppingInformationTab from "./ShoppingInformationTab";
-import NoteInformationBlock from "./NoteInformationBlock";
-import ReviewBlock from "./ReviewBlock";
-import useApi from "../../hooks/useApi";
+} from './styles';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import Header from '../../components/Header/index';
+import Search from '../../components/Search/index';
+import PerfumeRatingBlock from './PerfumeRatingBlock/index';
+import ShoppingInformationTab from './ShoppingInformationTab';
+import NoteInformationBlock from './NoteInformationBlock';
+import ReviewBlock from './ReviewBlock';
+import useApi from '../../hooks/useApi';
 import {
   PerfumeDetailGroup,
   PerfumeRatingGroup,
   PerfumeNoteGroup,
   ReviewInformation,
   ShoppingInformation,
-} from "../../common/types";
-import MobileBrandPerfumeInformation from "./MobileBrandInformation";
-import PerfumeInformation from "./PerfumeInformation";
+} from '../../common/types';
+import MobileBrandPerfumeInformation from './MobileBrandInformation';
+import PerfumeInformation from './PerfumeInformation';
 
 const PerfumeDetail = () => {
   const navigate = useNavigate();
@@ -95,11 +95,11 @@ const PerfumeDetail = () => {
   const [isBookmark, setIsBookmark] = useState<boolean>();
   const [reveiwTotal, setReviewTotal] = useState<number>();
   const [reviewList, setReviewList] = useState<ReviewInformation[]>();
-  let token = localStorage.getItem("my-token");
+  const token = localStorage.getItem('my-token');
 
   const goToLogin = () => {
-    alert("로그인이 필요합니다.");
-    navigate("/login");
+    alert('로그인이 필요합니다.');
+    navigate('/login');
   };
 
   /* 향수 북마크 설정/삭제 api */
@@ -108,8 +108,8 @@ const PerfumeDetail = () => {
       if (isBookmark === false) {
         try {
           const data = await fetchPostBookmark(
-            "post",
-            "/bookmark?perfumeId=" + perfumeId,
+            'post',
+            '/bookmark?perfumeId=' + perfumeId,
             {}
           );
           if (data?.perfumeId === perfumeId) {
@@ -121,11 +121,11 @@ const PerfumeDetail = () => {
       } else {
         try {
           const data = await fetchDeleteBookmark(
-            "delete",
-            "/bookmark?perfumeId=" + perfumeId,
+            'delete',
+            '/bookmark?perfumeId=' + perfumeId,
             {}
           );
-          if (data === "북마크 해제되었습니다.") {
+          if (data === '북마크 해제되었습니다.') {
             setIsBookmark(false);
           }
         } catch (deleteBookmarkError) {
@@ -140,7 +140,7 @@ const PerfumeDetail = () => {
   /* 향수 전체평점 기반 별점 계산 */
   const calcStarRates = () => {
     if (perfumeRating?.ratingAvg !== undefined) {
-      let tempStarRatesArr = [0, 0, 0, 0, 0];
+      const tempStarRatesArr = [0, 0, 0, 0, 0];
       let starVerScore = (perfumeRating?.ratingAvg * 20 * 90) / 100;
       let idx = 0;
       while (starVerScore > 18) {
@@ -155,16 +155,16 @@ const PerfumeDetail = () => {
 
   /* 토큰 유효성 검사 호출 api */
   useEffect(() => {
-    let perfumeIdProps: null | string | number = querySearch.get("perfume");
-    if (perfumeIdProps !== null && perfumeIdProps !== "") {
+    let perfumeIdProps: null | string | number = querySearch.get('perfume');
+    if (perfumeIdProps !== null && perfumeIdProps !== '') {
       perfumeIdProps = parseInt(perfumeIdProps);
       setPerfumeId(perfumeIdProps);
     } else {
-      navigate("*");
+      navigate('*');
     }
 
     if (token && token?.length > 0) {
-      fetchCheckToken("post", "/token-validation", {});
+      fetchCheckToken('post', '/token-validation', {});
     }
   }, []);
 
@@ -179,10 +179,10 @@ const PerfumeDetail = () => {
     const fetchBookmarkData = async () => {
       if (perfumeId && myToken) {
         try {
-          await fetchBookmark("get", "/checkmarked?perfumeId=" + perfumeId, {});
-          if (bookmarkData === "이미 북마크한 향수입니다.") {
+          await fetchBookmark('get', '/checkmarked?perfumeId=' + perfumeId, {});
+          if (bookmarkData === '이미 북마크한 향수입니다.') {
             setIsBookmark(true);
-          } else if (bookmarkData === "북마크한 향수가 아닙니다.") {
+          } else if (bookmarkData === '북마크한 향수가 아닙니다.') {
             setIsBookmark(false);
           }
         } catch (bookmarkError) {
@@ -195,10 +195,10 @@ const PerfumeDetail = () => {
 
   useEffect(() => {
     if (perfumeId) {
-      fetchPerfumeDetail("get", "/fullinfo/" + perfumeId, {});
-      fetchPerfumeRating("get", "/perfumerating/" + perfumeId, {});
-      fetchPerfumeNote("get", "/notesinfo/" + perfumeId, {});
-      fetchReview("get", "/reviews/" + perfumeId, {});
+      fetchPerfumeDetail('get', '/fullinfo/' + perfumeId, {});
+      fetchPerfumeRating('get', '/perfumerating/' + perfumeId, {});
+      fetchPerfumeNote('get', '/notesinfo/' + perfumeId, {});
+      fetchReview('get', '/reviews/' + perfumeId, {});
     }
   }, [perfumeId]);
 
@@ -212,7 +212,7 @@ const PerfumeDetail = () => {
   useEffect(() => {
     if (perfumeDetail?.perfumeName) {
       fetchShoppingList(
-        "get",
+        'get',
         `/product/search?query=` +
           `${perfumeDetail?.brandName_kr} ${perfumeDetail?.perfumeName}`,
         {}
@@ -244,15 +244,15 @@ const PerfumeDetail = () => {
                 src={
                   perfumeDetail?.perfumeImage
                     ? perfumeDetail?.perfumeImage
-                    : "/assets/icon/icon-perfume-pic.png"
+                    : '/assets/icon/icon-perfume-pic.png'
                 }
               />
               <Bookmark
                 onClick={handleBookmark}
                 src={
                   isBookmark === true
-                    ? "/assets/icon/icon_bookmark_Y.svg"
-                    : "/assets/icon/icon_bookmark_N.svg"
+                    ? '/assets/icon/icon_bookmark_Y.svg'
+                    : '/assets/icon/icon_bookmark_N.svg'
                 }
               />
             </PerfumeImageArea>

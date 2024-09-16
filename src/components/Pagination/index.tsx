@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Number } from "./styles";
+import React from 'react';
+import { Container, Number } from './styles';
 
 interface Props {
   count: number;
@@ -12,7 +12,7 @@ const Pagination = ({ count, page, setPage }: Props) => {
   const handleArrowClick = (dir: number) => {
     if (page + dir >= 0 && page + dir < count) setPage(page + dir);
   };
- 
+
   return (
     <Container>
       <img

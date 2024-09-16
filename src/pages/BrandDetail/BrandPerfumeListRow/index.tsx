@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Container, Top, TopText, Text, Lists, List, ListText } from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import React, { useEffect, useState, useRef } from 'react';
+import { Container, Top, TopText, Text, Lists, List, ListText } from './styles';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const BrandPerfumeListRow = (props: {
   perfumeId: number;
@@ -15,7 +15,7 @@ const BrandPerfumeListRow = (props: {
   return (
     <List
       onClick={() => navigate(`/perfumedetail?perfume=${props?.perfumeId}`)}
-      key={"list_" + props?.index}
+      key={'list_' + props?.index}
     >
       <img src={`${props?.perfumeImage}`} />
       <ListText>

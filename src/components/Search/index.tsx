@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Input,
@@ -6,10 +6,10 @@ import {
   ListContent,
   ListDetail,
   SearchList,
-} from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { api } from "../../api";
-import useUserTypeStore from "../../stores/useUserAuthority";
+} from './styles';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { api } from '../../api';
+import useUserTypeStore from '../../stores/useUserAuthority';
 
 interface Perfumes {
   id: number;
@@ -29,7 +29,7 @@ interface Brands {
 const Search = () => {
   const { userType } = useUserTypeStore();
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [searchBrands, setSearchBrands] = useState<Array<Brands> | null>(null);
   const [searchPerfumes, setSearchPerfumes] = useState<Array<Perfumes> | null>(
     null
@@ -38,8 +38,8 @@ const Search = () => {
   const [querySearch, setQuerySearch] = useSearchParams();
 
   useEffect(() => {
-    if (querySearch.get("search"))
-      setSearch(JSON.stringify(querySearch.get("search")).split('"')[1]);
+    if (querySearch.get('search'))
+      setSearch(JSON.stringify(querySearch.get('search')).split('"')[1]);
   }, []);
 
   useEffect(() => {
@@ -66,14 +66,14 @@ const Search = () => {
   };
 
   const handleEnterClick = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       navigate(`/searchresult?search=${search}`);
       setToggle(false);
     }
   };
 
   return (
-    <Container isAdmin={userType === "ROLE_ADMIN"}>
+    <Container isAdmin={userType === 'ROLE_ADMIN'}>
       <InputBox>
         <Input
           type="text"
@@ -103,7 +103,7 @@ const Search = () => {
               {searchBrands.map((el, index) => {
                 return (
                   <ListDetail
-                    key={"brandlist_" + index}
+                    key={'brandlist_' + index}
                     onClick={() => {
                       navigate(`/searchresult?search=${el.brandName_kr}`);
                       setToggle(false);
@@ -124,7 +124,7 @@ const Search = () => {
               {searchPerfumes.map((el, index) => {
                 return (
                   <ListDetail
-                    key={"perfumelist+" + index}
+                    key={'perfumelist+' + index}
                     onClick={() => {
                       navigate(`/searchresult?search=${el.perfumeName}`);
                       setToggle(false);

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Container,
   Main,
@@ -10,13 +10,13 @@ import {
   RowMenu,
   RowTitle,
   WriteButton,
-} from "./styles";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { api } from "../../api";
-import Header from "../../components/Header";
-import Search from "../../components/Search";
-import useApi from "../../hooks/useApi";
-import { MyBoardsBoardType } from "../../common/types";
+} from './styles';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { api } from '../../api';
+import Header from '../../components/Header';
+import Search from '../../components/Search';
+import useApi from '../../hooks/useApi';
+import { MyBoardsBoardType } from '../../common/types';
 
 const MyBoards = () => {
   const navigate = useNavigate();
@@ -33,11 +33,11 @@ const MyBoards = () => {
     fetchApi: fetchUserContentList,
   } = useApi<any>();
   const [myToken, setMyToken] = useState<string | null>();
-  let token = localStorage.getItem("my-token");
+  const token = localStorage.getItem('my-token');
 
   const goToLogin = () => {
-    alert("로그인이 필요합니다.");
-    navigate("/login");
+    alert('로그인이 필요합니다.');
+    navigate('/login');
   };
 
   /*
@@ -46,19 +46,19 @@ const MyBoards = () => {
    */
   const validateToken = useCallback(async () => {
     if (token && token.length > 0) {
-      const res = await fetchCheckToken("post", "/token-validation", {});
+      const res = await fetchCheckToken('post', '/token-validation', {});
       if (res?.length > 0) {
         setMyToken(token);
         /*
          * 작성한 게시물 get api를 호출합니다.
          * @author 김민지
          */
-        fetchUserContentList("get", "/user/content");
+        fetchUserContentList('get', '/user/content');
       } else if (checkTokenError) {
         goToLogin();
       }
     } else {
-      alert("로그인 후 이용 가능합니다.");
+      alert('로그인 후 이용 가능합니다.');
       goToLogin();
     }
   }, [token]);
@@ -77,14 +77,14 @@ const MyBoards = () => {
             <PageTitle>내가 작성한 게시물</PageTitle>
           </PageTitleArea>
           <CommunityArea>
-            <CommunityRow style={{ marginTop: "12px" }}>
-              <RowNumber style={{ fontSize: "1.4rem", fontWeight: "500" }}>
+            <CommunityRow style={{ marginTop: '12px' }}>
+              <RowNumber style={{ fontSize: '1.4rem', fontWeight: '500' }}>
                 번호
               </RowNumber>
-              <RowMenu style={{ fontSize: "1.4rem", fontWeight: "500" }}>
+              <RowMenu style={{ fontSize: '1.4rem', fontWeight: '500' }}>
                 구분
               </RowMenu>
-              <RowTitle style={{ fontSize: "1.4rem", fontWeight: "500" }}>
+              <RowTitle style={{ fontSize: '1.4rem', fontWeight: '500' }}>
                 내용
               </RowTitle>
             </CommunityRow>
@@ -94,16 +94,16 @@ const MyBoards = () => {
                   <CommunityRow
                     key={index}
                     onClick={() =>
-                      navigate("/communitydetail?detail=" + el?.id)
+                      navigate('/communitydetail?detail=' + el?.id)
                     }
                   >
                     <RowNumber>{index + 1}</RowNumber>
                     <RowMenu>
-                      {el?.boardtype === "fake"
-                        ? "정/가품"
-                        : el?.boardtype === "qna"
-                        ? "Q & A"
-                        : "자유"}
+                      {el?.boardtype === 'fake'
+                        ? '정/가품'
+                        : el?.boardtype === 'qna'
+                          ? 'Q & A'
+                          : '자유'}
                     </RowMenu>
                     <RowTitle>{el?.title}</RowTitle>
                   </CommunityRow>
