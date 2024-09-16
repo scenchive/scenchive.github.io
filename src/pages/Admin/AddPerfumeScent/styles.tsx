@@ -30,21 +30,6 @@ export const Row = styled.div`
   align-items: start;
 `;
 
-export const RowTitle = styled.h2`
-  label: row-title;
-  font-size: 18px;
-  font-weight: 400;
-  margin-bottom: 6px;
-`;
-
-export const RowInput = styled.input`
-  label: row-input;
-  width: 250px;
-  font-size: 14px;
-  height: 25px;
-  box-sizing: border-box;
-`;
-
 export const SelectedPerfumeImage = styled.img`
   label: selected-perfume-image;
   width: 250px;
@@ -62,34 +47,10 @@ export const SelectedPerfumeName = styled.strong`
   color: #08799c;
 `;
 
-export const TopMiddleBaseSelect = styled.select`
-  label: top-middle-base-select;
-  width: inherit;
-  height: 25px;
-`;
-
-export const NoteTitle = styled.h2`
-  label: note-title;
-  font-size: 18px;
-  font-weight: 400;
-`;
-
-export const NoteList = styled.div`
-  label: note-list;
+export const NoteArea = styled.article`
+  label: note-area;
   display: flex;
-  flex-direction: row;
-  color: #19b3b1;
-  font-size: 16px;
-`;
-
-export const DeleteButton = styled.img`
-  label: delete-button;
-  width: 20px;
-  height: 20px;
-  border: none;
-  background-color: transparent;
-  margin-left: 3px;
-  cursor: pointer;
+  flex-direction: column;
 `;
 
 export const AddButton = styled.button`

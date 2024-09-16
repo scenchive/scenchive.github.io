@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { PerfumeListArea, PerfumeListRow } from './styles';
 
 interface Brand {
@@ -14,7 +14,7 @@ interface Brand {
 interface PerfumeListParams {
   brandListRef: React.RefObject<HTMLDivElement>;
   perfumeSearchResultList: Brand[];
-  handlePerfumeSelect: (el: Brand) => void;
+  selectPerfume: (el: Brand) => void;
 }
 
 const PerfumeList = (props: PerfumeListParams) => {
@@ -25,7 +25,7 @@ const PerfumeList = (props: PerfumeListParams) => {
           <PerfumeListRow
             key={'perfumelist_' + index}
             onClick={() => {
-              props?.handlePerfumeSelect(el);
+              props?.selectPerfume(el);
             }}
           >
             <div
