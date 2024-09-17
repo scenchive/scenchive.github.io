@@ -12,7 +12,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-  margin-bottom: 50px;
+  margin-bottom: 350px;
 `;
 
 export const PageTitle = styled.h1`

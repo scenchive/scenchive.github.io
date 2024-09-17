@@ -6,7 +6,7 @@ interface UseApiReturnType<T> {
   loading: boolean;
   error: any;
   fetchApi: (
-    method: string,
+    method: 'get' | 'post' | 'delete',
     url: string,
     requestBody?: any,
     header?: any

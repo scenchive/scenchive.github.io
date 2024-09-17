@@ -51,6 +51,7 @@ const AddPerfumeScent = () => {
   const [noteKorean, setNoteKorean] = useState<string>('');
   const [noteEnglish, setNoteEnglish] = useState<string>('');
   const [topMiddleBase, setTopMiddleBase] = useState<number | undefined>(1);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [notes, setNotes] = useState({
     top: [] as string[][],
     middle: [] as string[][],
@@ -87,6 +88,7 @@ const AddPerfumeScent = () => {
 
   const getPerfumeSearchResult = async () => {
     try {
+      setIsFetching(true);
       const res = await fetchPerfumeSearchResult(
         'get',
         `/search?name=${encodeURI(perfumeSearchKeyword)}&page=${perfumePage}`
@@ -101,6 +103,8 @@ const AddPerfumeScent = () => {
     } catch (error) {
       setPerfumeSearchResultList([]);
       setPerfumePage(0);
+    } finally {
+      setIsFetching(false); // Fetch 종료
     }
   };
 
@@ -149,10 +153,6 @@ const AddPerfumeScent = () => {
   useEffect(() => {
     setPerfumePage(0);
     setPerfumeSearchResultList([]);
-    // setPerfumeListToggle(false);
-    // if (perfumeSearchKeyword.length === 0) {
-    //   setPerfumeListToggle(false);
-    // }
     const debounce = setTimeout(() => {
       if (perfumeSearchKeyword.length > 1) {
         getPerfumeSearchResult();
@@ -168,17 +168,17 @@ const AddPerfumeScent = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (brandListRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = brandListRef.current;
-        const threshold = 5;
+      if (isFetching || !brandListRef.current) return; // Fetch 중이거나 참조가 없을 때는 실행 안 함
 
-        if (scrollTop + clientHeight + threshold >= scrollHeight) {
-          if (
-            perfumeSearchResultTotal &&
-            perfumePage * 10 < perfumeSearchResultTotal
-          ) {
-            setPerfumePage((prevPage) => prevPage + 1);
-          }
+      const { scrollTop, scrollHeight, clientHeight } = brandListRef.current;
+      const threshold = 700;
+
+      if (scrollTop + clientHeight + threshold >= scrollHeight) {
+        if (
+          perfumeSearchResultTotal &&
+          perfumePage * 10 < perfumeSearchResultTotal
+        ) {
+          setPerfumePage((prevPage) => prevPage + 1);
         }
       }
     };
