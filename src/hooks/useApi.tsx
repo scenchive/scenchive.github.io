@@ -6,7 +6,7 @@ interface UseApiReturnType<T> {
   loading: boolean;
   error: any;
   fetchApi: (
-    method: 'get' | 'post' | 'delete',
+    method: 'get' | 'post' | 'delete' | 'put',
     url: string,
     requestBody?: any,
     header?: any
@@ -49,6 +49,15 @@ function useApi<T>(): UseApiReturnType<T> {
           return response.data;
         case 'delete':
           response = await api.delete(url, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('my-token')}`,
+            },
+          });
+          setData(response?.data);
+          setLoading(false);
+          return response.data;
+        case 'put':
+          response = await api.put(url, requestBody, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('my-token')}`,
             },

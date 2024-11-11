@@ -2,16 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Container,
   Main,
-  ProfileArea,
-  ProfileImage,
-  NameEmailArea,
-  NameEmailAreaTop,
-  UserInformationArea,
-  MobileLogoutButton,
-  ButtonArea,
-  Splitter,
-  ProfileButton,
-  SettingIcon,
   KeywordArea,
   KeywordAreaTitle,
   MyKeywordsArea,
@@ -26,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { api } from '../../api';
 import PerfumeCell from './PerfumeCell';
 import PerfumeCellModifyModal from './PerfumeCellModifyModal';
+import Profile from './Profile';
 import Header from '../../components/Header';
 import Search from '../../components/Search';
 import UserModifyModal from './UserModifyMoal';
@@ -71,13 +62,6 @@ const MyPage = () => {
     loading: bookmarkLoading,
     error: bookmarkError,
     fetchApi: fetchBookmark,
-  } = useApi<any>();
-
-  const {
-    data: logout,
-    loading: logoutLoading,
-    error: logoutError,
-    fetchApi: fetchLogout,
   } = useApi<any>();
 
   const [myToken, setMyToken] = useState<string | null>();
@@ -157,23 +141,6 @@ const MyPage = () => {
         }
       }
     } catch {}
-  };
-
-  // 로그아웃 api
-  const handleLogout = async () => {
-    if (myToken && myToken.length > 0) {
-      try {
-        const res = await fetchLogout('post', '/service-logout', {});
-        if (res) {
-          resetUserType();
-          localStorage.removeItem('my-token');
-          alert('로그아웃되었습니다.');
-          navigate('/login');
-        }
-      } catch (error) {
-        alert('로그아웃이 정상적으로 처리되지 않았습니다. 다시 시도해주세요.');
-      }
-    }
   };
 
   useEffect(() => {
@@ -290,63 +257,12 @@ const MyPage = () => {
         <Search />
 
         <Main>
-          <ProfileArea>
-            <ProfileImage src={imageUrl} />
-            <NameEmailArea>
-              <NameEmailAreaTop>
-                <UserInformationArea>
-                  <div className="name_text">{name}</div>
-                  <MobileLogoutButton onClick={() => handleLogout()}>
-                    로그아웃
-                  </MobileLogoutButton>
-                </UserInformationArea>
-
-                <div className="email_text">{email}</div>
-              </NameEmailAreaTop>
-
-              <ButtonArea>
-                <div
-                  onClick={() => setIsModalOpen2(true)}
-                  style={{ display: 'flex', flexDirection: 'row' }}
-                >
-                  <SettingIcon src="/assets/icon/icon_settings.svg" />
-                  <ProfileButton isPink={false} isLogin={false}>
-                    프로필 수정하기
-                  </ProfileButton>
-                </div>
-                <Splitter isPink={false} isLogin={false}>
-                  |
-                </Splitter>
-                <ProfileButton
-                  onClick={() => navigate('/myBoards')}
-                  isPink={true}
-                  isLogin={false}
-                >
-                  내가 작성한 게시글
-                </ProfileButton>
-                <Splitter isPink={false} isLogin={false}>
-                  |
-                </Splitter>
-                <ProfileButton
-                  onClick={() => navigate('/myComments')}
-                  isPink={true}
-                  isLogin={false}
-                >
-                  내가 작성한 댓글
-                </ProfileButton>
-                <Splitter isPink={false} isLogin={true}>
-                  |
-                </Splitter>
-                <ProfileButton
-                  onClick={() => handleLogout()}
-                  isPink={false}
-                  isLogin={true}
-                >
-                  로그아웃{' '}
-                </ProfileButton>
-              </ButtonArea>
-            </NameEmailArea>
-          </ProfileArea>
+          <Profile
+            imageUrl={imageUrl}
+            name={name}
+            email={email}
+            setIsModalOpen2={setIsModalOpen2}
+          />
 
           <KeywordArea>
             <KeywordAreaTitle>나의 향수 세포</KeywordAreaTitle>
