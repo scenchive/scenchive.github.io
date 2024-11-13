@@ -11,6 +11,7 @@ import {
   QuestionRow,
   AnswerArea,
   AnswerRow,
+  AnswerButton,
   AlertMessage,
   KeywordArea,
   AreaTitle,
@@ -19,6 +20,7 @@ import {
   SignupButton,
   // @ts-ignore
 } from './styles';
+import useSendVerificationEmail from '../../hooks/auth/useSendVerificationEmail';
 // import ApiService from "../ApiService.js";
 import { api } from '../../api';
 import Header from '../../components/Header/index';
@@ -28,10 +30,12 @@ import {
   MOODKEYWORDSTYPE,
 } from '../../common/types';
 import useApi from '../../hooks/useApi';
+import useCheckVerificationEmail from '../../hooks/auth/useCheckVerificationCode';
 
 const Signup = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const {
     data: keyword,
     loading: keywordLoading,
@@ -58,6 +62,9 @@ const Signup = () => {
   const [password, setPassword] = useState<string>('');
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
   const [emailMessage, setEmailMessage] = useState<string>('');
+  const [isVerifySent, setIsVerifySent] = useState<boolean>(false);
+  const [verificationCode, setVerificationCode] = useState<string>('');
+  const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
   const [isNameValid, setIsNameValid] = useState<boolean>();
   const [nameMessage, setNameMessage] = useState<string>('');
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>();
@@ -95,6 +102,31 @@ const Signup = () => {
       };
     } else {
       setProfileImage(profileImage);
+    }
+  };
+  const { sendVerificationEmail, error } = useSendVerificationEmail({
+    email,
+    setIsVerifySent,
+  });
+
+  const handleSendVerificationEmail = () => {
+    if (isEmailValid) {
+      sendVerificationEmail();
+    } else {
+      alert('이메일을 정확히 입력해주세요');
+    }
+  };
+  const { checkVerificationEmail } = useCheckVerificationEmail({
+    email,
+    verificationCode,
+    setIsEmailVerified,
+  });
+
+  const handleCheckVerificationCode = () => {
+    if (verificationCode.length > 0) {
+      checkVerificationEmail();
+    } else {
+      alert('다시 시도해주세요.');
     }
   };
 
@@ -301,10 +333,38 @@ const Signup = () => {
                 type="text"
                 placeholder="이메일을 입력해주세요."
                 onChange={onChangeEmail}
+                disabled={isVerifySent}
               />
+              <AnswerButton
+                disabled={isVerifySent}
+                onClick={() => handleSendVerificationEmail()}
+              >
+                인증
+              </AnswerButton>
               <AlertMessage>{emailMessage}</AlertMessage>
             </AnswerArea>
           </RowArea>
+          {isVerifySent && (
+            <RowArea>
+              <QuestionRow>인증번호</QuestionRow>
+              <AnswerArea>
+                <AnswerRow
+                  type="text"
+                  placeholder="인증번호를 입력해주세요."
+                  onChange={(e) => setVerificationCode(e.target.value)}
+                  disabled={isEmailVerified}
+                />
+                <AnswerButton
+                  disabled={isEmailVerified}
+                  onClick={() => handleCheckVerificationCode()}
+                >
+                  인증
+                </AnswerButton>
+                <AlertMessage>{emailMessage}</AlertMessage>
+              </AnswerArea>
+            </RowArea>
+          )}
+
           <RowArea>
             <QuestionRow>닉네임</QuestionRow>
             <AnswerArea>

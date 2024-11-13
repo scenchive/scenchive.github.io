@@ -80,12 +80,31 @@ export const AnswerRow = styled.input`
   font-size: 1.1rem;
   border: none;
   border-bottom: 1px solid #dfdfdf;
-  background-color: transparent;
   outline: none;
-  -webkit-box-shadow: 0 0 0 1000px white inset;
   ::placeholder {
     font-size: 8px;
     color: #b2b2b2;
+  }
+  &:disabled {
+    color: #c0c0c0;
+    background-color: #ececec;
+  }
+`;
+
+export const AnswerButton = styled.button`
+  label: styled-button;
+  position: absolute;
+  right: 0;
+  width: auto;
+  height: 25px;
+  font-size: 1.2rem;
+  color: #d67070;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  &:disabled {
+    color: #c0c0c0;
+    cursor: default;
   }
 `;
 
