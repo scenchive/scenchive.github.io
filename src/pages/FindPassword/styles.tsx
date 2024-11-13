@@ -23,7 +23,7 @@ export const ContentLogo = styled.div`
   display: flex;
   justify-content: start;
   align-items: end;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
   color: #d67070;
@@ -66,6 +66,15 @@ export const LoginArea = styled.div`
   margin-bottom: 20px;
 `;
 
+export const Notice = styled.div`
+  label: notice;
+  color: #616161;
+  font-size: 1rem;
+  margin-bottom: 25px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 export const RowArea = styled.div`
   max-width: 90%;
   min-width: 250px;
@@ -95,14 +104,13 @@ export const AnswerRow = styled.input`
   -webkit-box-shadow: 0 0 0 1000px white inset;
 `;
 
-export const FindPassword = styled.button`
-  label: find-password;
-  color: #e3a6a1;
-  font-size: 1.1rem;
-  border: none;
-  background-color: transparent;
-  margin-left: auto;
-  cursor: pointer;
+export const AlertMessage = styled.div`
+  label: alert-message;
+  color: red;
+  font-size: 10px;
+  text-align: left;
+  width: inherit;
+  position: absolute;
 `;
 
 export const LoginButton = styled.button`

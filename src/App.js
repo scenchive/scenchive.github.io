@@ -23,6 +23,7 @@ import AddBrand from './pages/Admin/AddBrand';
 import AddPerfume from './pages/Admin/AddPerfume';
 import AddPerfumeScent from './pages/Admin/AddPerfumeScent';
 import NotFound from './pages/NotFound';
+import FindPassword from './pages/FindPassword';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/findpassword" element={<FindPassword />} />
         <Route path="/searchresult" element={<SearchResult />} />
         <Route path="/branddetail" element={<BrandDetail />} />
         <Route path="/perfumedetail" element={<PerfumeDetail />} />
