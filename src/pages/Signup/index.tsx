@@ -31,6 +31,7 @@ import {
 } from '../../common/types';
 import useApi from '../../hooks/useApi';
 import useCheckVerificationEmail from '../../hooks/auth/useCheckVerificationCode';
+import useCheckEmailAvailability from '../../hooks/auth/useCheckEmailAvailability';
 
 const Signup = () => {
   const location = useLocation();
@@ -104,14 +105,21 @@ const Signup = () => {
       setProfileImage(profileImage);
     }
   };
+
+  const { checkEmailAvailability } = useCheckEmailAvailability({ email });
   const { sendVerificationEmail, error } = useSendVerificationEmail({
     email,
     setIsVerifySent,
   });
 
-  const handleSendVerificationEmail = () => {
+  const handleSendVerificationEmail = async () => {
     if (isEmailValid) {
-      sendVerificationEmail();
+      const isAvailable = await checkEmailAvailability();
+      if (isAvailable === '사용 가능한 이메일입니다.') {
+        sendVerificationEmail();
+      } else {
+        alert(isAvailable);
+      }
     } else {
       alert('이메일을 정확히 입력해주세요');
     }
