@@ -32,6 +32,7 @@ import {
 import useApi from '../../hooks/useApi';
 import useCheckVerificationEmail from '../../hooks/auth/useCheckVerificationCode';
 import useCheckEmailAvailability from '../../hooks/auth/useCheckEmailAvailability';
+import useCheckNameAvailability from '../../hooks/auth/useCheckNameAvailability';
 
 const Signup = () => {
   const location = useLocation();
@@ -67,6 +68,7 @@ const Signup = () => {
   const [verificationCode, setVerificationCode] = useState<string>('');
   const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
   const [isNameValid, setIsNameValid] = useState<boolean>();
+  const [isNameAvailable, setIsNameAvailable] = useState<boolean>(false);
   const [nameMessage, setNameMessage] = useState<string>('');
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>();
   const [passwordMessage, setPasswordMessage] = useState<string>('');
@@ -124,6 +126,7 @@ const Signup = () => {
       alert('이메일을 정확히 입력해주세요');
     }
   };
+
   const { checkVerificationEmail } = useCheckVerificationEmail({
     email,
     verificationCode,
@@ -179,7 +182,24 @@ const Signup = () => {
     }
   };
 
+  const { checkNameAvailability } = useCheckNameAvailability({ name });
+
+  const handleCheckNameAvailability = async () => {
+    if (isNameValid) {
+      const isAvailable = await checkNameAvailability();
+      if (isAvailable === '사용 가능한 닉네임입니다다.') {
+        setIsNameAvailable(true);
+      } else {
+        alert(isAvailable);
+        setNameMessage('이미 가입되어 있는 닉네임입니다');
+      }
+    } else {
+      alert('닉네임을 정확하게 입력해주세요');
+    }
+  };
+
   const onChangeName = (e: { target: { value: string } }) => {
+    setIsNameAvailable(false);
     const currentName = e.target.value;
     setName(currentName);
     const nameRegularExpression = new RegExp(
@@ -287,10 +307,23 @@ const Signup = () => {
   };
 
   const Signup = () => {
-    if (keywordTagsArray.length > 0) {
+    if (
+      keywordTagsArray.length > 0 &&
+      isEmailVerified &&
+      isNameAvailable &&
+      isPasswordValid
+    ) {
       signupAccount();
     } else {
-      alert('키워드를 1개 이상 선택해주세요.');
+      if (!isEmailVerified) {
+        alert('이메일을 인증해주세요');
+      } else if (!isNameAvailable) {
+        alert('닉네임 중복확인을 해주세요');
+      } else if (!isPasswordValid) {
+        alert('비밀번호를 정확히 입력해주세요');
+      } else if (keywordTagsArray.length == 0) {
+        alert('키워드를 1개 이상 선택해주세요.');
+      }
     }
   };
 
@@ -381,6 +414,12 @@ const Signup = () => {
                 placeholder="영문/숫자/한글로 이루어진 2~10자의 닉네임을 입력해주세요."
                 onChange={onChangeName}
               />
+              <AnswerButton
+                disabled={isNameAvailable}
+                onClick={() => handleCheckNameAvailability()}
+              >
+                중복확인
+              </AnswerButton>
               <AlertMessage>{nameMessage}</AlertMessage>
             </AnswerArea>
           </RowArea>
@@ -392,6 +431,7 @@ const Signup = () => {
                 placeholder="영문,숫자,특수기호로 이루어진 8~20자의 비밀번호를 입력해주세요."
                 onChange={onChangePassword}
               />
+
               <AlertMessage>{passwordMessage}</AlertMessage>
             </AnswerArea>
           </RowArea>

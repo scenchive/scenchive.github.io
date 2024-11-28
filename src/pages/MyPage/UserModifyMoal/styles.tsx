@@ -57,7 +57,7 @@ export const NameTitle = styled.div`
 
 export const NameInput = styled.input`
   label: name-input;
-  width: 60%;
+  width: 100%;
   height: 20px;
   color: #b2b2b2;
   font-size: 1.1rem;
@@ -70,6 +70,14 @@ export const NameInput = styled.input`
   :focus {
     outline: none;
   }
+`;
+
+export const AlertMessage = styled.div`
+  label: alert-message;
+  color: red;
+  font-size: 10px;
+  text-align: left;
+  width: inherit;
 `;
 
 export const ModifyButton = styled.div`

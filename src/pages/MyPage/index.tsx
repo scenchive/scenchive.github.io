@@ -117,6 +117,12 @@ const MyPage = () => {
     validateToken();
   }, [validateToken]);
 
+  useEffect(() => {
+    if (isModalOpen2 === false) {
+      fetchProfile('get', '/profile');
+    }
+  }, [isModalOpen2]);
+
   // 북마크 목록 가져오는 api
   const getBookmarkList = async () => {
     try {
