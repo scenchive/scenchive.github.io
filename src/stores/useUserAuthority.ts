@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface UserTypeState {
   userType: string;
@@ -12,18 +12,18 @@ let resetUserTypeOutside = () => {};
 const useUserTypeStore = create(
   persist<UserTypeState>(
     (set) => {
-      resetUserTypeOutside = () => set({ userType: "" });
+      resetUserTypeOutside = () => set({ userType: '' });
 
       return {
-        userType: "",
+        userType: '',
         setUserType: (value: string) => set({ userType: value }),
-        resetUserType: () => set({ userType: "" }),
+        resetUserType: () => set({ userType: '' }),
       };
     },
     {
-      name: "user-storage",
+      name: 'user-storage',
       getStorage: () =>
-        typeof window !== "undefined"
+        typeof window !== 'undefined'
           ? localStorage
           : {
               getItem: () => null,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Container,
   PageTitle,
@@ -13,12 +13,12 @@ import {
   BrandWarning,
   RowInput,
   AddButton,
-} from "./styles";
-import { useNavigate } from "react-router-dom";
-import Header from "../../../components/Header";
-import Search from "../../../components/Search";
-import useApi from "../../../hooks/useApi";
-import useUserTypeStore from "../../../stores/useUserAuthority";
+} from './styles';
+import { useNavigate } from 'react-router-dom';
+import Header from '../../../components/Header';
+import Search from '../../../components/Search';
+import useApi from '../../../hooks/useApi';
+import useUserTypeStore from '../../../stores/useUserAuthority';
 
 interface Brand {
   brandId: number | null;
@@ -37,12 +37,12 @@ const AddPerfume = () => {
   const [brandListToggle, setBrandListToggle] = useState<boolean>(false);
   const [brandSearchResultList, setBrandSearchResultList] = useState<Brand[]>();
   const [brandDisabled, setBrandDisabled] = useState<boolean>(true);
-  const [brandSearchKeyword, setBrandSearchKeyword] = useState<string>("");
-  const [brandName, setBrandName] = useState<string>("");
-  const [brandNameKorean, setBrandNameKorean] = useState<string>("");
+  const [brandSearchKeyword, setBrandSearchKeyword] = useState<string>('');
+  const [brandName, setBrandName] = useState<string>('');
+  const [brandNameKorean, setBrandNameKorean] = useState<string>('');
   const [brandPage, setBrandPage] = useState<number>(0);
-  const [PerfumeName, setPerfumeName] = useState<string>("");
-  const [PerfumeNameKorean, setPerfumeNameKorean] = useState<string>("");
+  const [PerfumeName, setPerfumeName] = useState<string>('');
+  const [PerfumeNameKorean, setPerfumeNameKorean] = useState<string>('');
   const [perfumeId, setPerfumeId] = useState<number>();
   const {
     data: BrandListData,
@@ -75,10 +75,10 @@ const AddPerfume = () => {
   };
 
   const getBrandSearchResult = async () => {
-    setBrandName("");
-    setBrandNameKorean("");
+    setBrandName('');
+    setBrandNameKorean('');
     const res = await fetchBrandSearchResult(
-      "get",
+      'get',
       `/search?name=${encodeURI(brandSearchKeyword)}&page=${brandPage}`
     );
     setBrandSearchResultList(res?.brands);
@@ -90,43 +90,42 @@ const AddPerfume = () => {
     const isKorean = /^[가-힣\s]+$/;
 
     if (!PerfumeImage) {
-      alert("향수 사진을 업로드해주세요.");
+      alert('향수 사진을 업로드해주세요.');
       return;
     }
 
     if (PerfumeName.length === 0 || PerfumeNameKorean.length === 0) {
-      alert("모든 값을 정확히 입력해주세요.");
+      alert('모든 값을 정확히 입력해주세요.');
       return;
     }
 
     if (!isKorean.test(PerfumeNameKorean)) {
-      alert("향수 한글 이름은 한글로 입력해야 합니다.");
+      alert('향수 한글 이름은 한글로 입력해야 합니다.');
       return;
     }
 
     if (!isEnglish.test(PerfumeName)) {
-      alert("향수 영문 이름은 영어로 입력해야 합니다.");
+      alert('향수 영문 이름은 영어로 입력해야 합니다.');
       return;
     }
 
     const formData = new FormData();
-    formData.append("image", PerfumeImage);
+    formData.append('image', PerfumeImage);
     const dto = {
       brandName: brandName,
       perfumeName: PerfumeName,
       perfume_kr: PerfumeNameKorean,
     };
     formData.append(
-      "dto",
-      new Blob([JSON.stringify(dto)], { type: "application/json" })
+      'dto',
+      new Blob([JSON.stringify(dto)], { type: 'application/json' })
     );
     try {
-      const res = await fetchPostPerfume("post", "/master/perfume", formData, {
-        Authorization: "Bearer " + localStorage.getItem("my-token"),
-        "Content-Type": "multipart/form-data",
-        accept: "application/json",
+      const res = await fetchPostPerfume('post', '/master/perfume', formData, {
+        Authorization: 'Bearer ' + localStorage.getItem('my-token'),
+        'Content-Type': 'multipart/form-data',
+        accept: 'application/json',
       });
-      console.log("res", res);
       if (res?.id) {
         setPerfumeId(res?.id);
 
@@ -137,18 +136,18 @@ const AddPerfume = () => {
         ) {
           navigate(`/perfumedetail?perfume=${res?.id}`);
         } else {
-          setPerfumeName("");
-          setPerfumeNameKorean("");
+          setPerfumeName('');
+          setPerfumeNameKorean('');
         }
       }
     } catch (error) {
-      console.error("향수 등록 중 오류 발생", error);
+      console.error('향수 등록 중 오류 발생', error);
     }
   };
 
   useEffect(() => {
-    if (userType !== "ROLE_ADMIN") {
-      navigate("/");
+    if (userType !== 'ROLE_ADMIN') {
+      navigate('/');
     }
   }, [userType]);
 
@@ -160,7 +159,7 @@ const AddPerfume = () => {
       if (brandSearchKeyword.length > 1) {
         getBrandSearchResult();
       } else {
-        setBrandSearchKeyword("");
+        setBrandSearchKeyword('');
         setBrandSearchResultList([]);
         setBrandListToggle(false);
       }
@@ -193,36 +192,36 @@ const AddPerfume = () => {
             width: 0,
             height: 0,
             padding: 0,
-            overflow: "hidden",
+            overflow: 'hidden',
             border: 0,
           }}
         />
-        <ImageUploadTitle htmlFor="PerfumeFile" style={{ cursor: "pointer" }}>
+        <ImageUploadTitle htmlFor="PerfumeFile" style={{ cursor: 'pointer' }}>
           {PerfumeImageName !== undefined
             ? PerfumeImageName
-            : "향수 사진 업로드"}
+            : '향수 사진 업로드'}
         </ImageUploadTitle>
       </PerfumeArea>
 
       <Row>
-        <RowTitle style={{ marginBottom: "2px" }}>브랜드 검색</RowTitle>
-        <BrandWarning onClick={() => navigate("/admin/addbrand")}>
+        <RowTitle style={{ marginBottom: '2px' }}>브랜드 검색</RowTitle>
+        <BrandWarning onClick={() => navigate('/admin/addbrand')}>
           브랜드가 없을 경우, 브랜드 등록을 먼저 해주세요
           <img
-            style={{ width: "10px", height: "10px", marginLeft: "5px" }}
+            style={{ width: '10px', height: '10px', marginLeft: '5px' }}
             src="/assets/icon/icon_link_red.svg"
           />
         </BrandWarning>
         <div
           style={{
-            position: "relative",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
           }}
         >
           <RowInput
-            style={{ width: "220px", marginRight: "8px" }}
+            style={{ width: '220px', marginRight: '8px' }}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setBrandSearchKeyword(e.target.value);
             }}
@@ -230,7 +229,7 @@ const AddPerfume = () => {
           />
           <img
             onClick={getBrandSearchResult}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             src="/assets/icon/icon_search.svg"
           />
           {brandListToggle && brandSearchResultList && (
@@ -238,10 +237,10 @@ const AddPerfume = () => {
               {brandSearchResultList.map((el, index) => {
                 return (
                   <BrandListRow
-                    key={"brandlist_" + index}
+                    key={'brandlist_' + index}
                     onClick={() => {
                       setBrandListToggle(false);
-                      setBrandSearchKeyword("");
+                      setBrandSearchKeyword('');
                       setBrandName(el?.brandName);
                       setBrandNameKorean(el?.brandName_kr);
                     }}
@@ -273,7 +272,7 @@ const AddPerfume = () => {
         />
       </Row>
 
-      <hr style={{ width: "100px", marginTop: "20px", marginBottom: "20px" }} />
+      <hr style={{ width: '100px', marginTop: '20px', marginBottom: '20px' }} />
       <Row>
         <RowTitle>향수 한글 이름</RowTitle>
         <RowInput

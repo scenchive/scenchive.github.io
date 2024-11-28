@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   ModalBackgroundArea,
   ModalArea,
@@ -8,66 +8,84 @@ import {
   NameInput,
   ModifyButton,
   CancelButton,
-} from "./styles";
-import { useNavigate } from "react-router-dom";
-import {api} from "../../../api";
-
+  AlertMessage,
+} from './styles';
+import { useNavigate } from 'react-router-dom';
+import { api } from '../../../api';
+import useCheckNameAvailabilityTokenY from '../../../hooks/user/useCheckNameAvailabilityTokenY';
+import useChangeName from '../../../hooks/user/useChangeName';
 
 const UserModifyModal = (props: {
-  oldName: string | null | undefined,
-  setName:  React.Dispatch<React.SetStateAction<string | null | undefined>>,
-  ModalBackground: any,
-  isModalOpen2: boolean,
-  setIsModalOpen2: React.Dispatch<React.SetStateAction<boolean>>,
-  myToken: string | null | undefined,
+  oldName: string | null | undefined;
+  setName: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+  ModalBackground: any;
+  isModalOpen2: boolean;
+  setIsModalOpen2: React.Dispatch<React.SetStateAction<boolean>>;
+  myToken: string | null | undefined;
 }) => {
+  const [name, setName] = useState<string>('');
+  const [nameMessage, setNameMessage] = useState<string>();
+  const { checkNameAvailabilityTokenY } = useCheckNameAvailabilityTokenY();
+  const { changeName } = useChangeName();
 
-  const navigate = useNavigate();
-  const [name, setName] = useState<string>();
-
-
-  const modifyInformation = () => {
-    if (props?.oldName && props?.oldName !== name) {
-      api.put('/member/name', { 'name': name }, { headers: { 'Authorization': `Bearer ${props.myToken}` } })
-        .then((data) => {
-          if (data?.data === '닉네임이 변경되었습니다.') {
-            alert('닉네임이 변경되었습니다.');
-            props?.setName(name);
-            props.setIsModalOpen2(false);
-          } else if (data?.data === '이미 존재하는 닉네임입니다.') {
-            alert('이미 존재하는 닉네임입니다.');
-          }
-
+  const modifyInformation = async () => {
+    if (
+      props?.oldName &&
+      props?.oldName.trim() !== name.trim() &&
+      name.trim() !== ''
+    ) {
+      const isAvailable = await checkNameAvailabilityTokenY({
+        name: name,
+      });
+      if (isAvailable === '사용 가능한 닉네임입니다.') {
+        const isChanged = await changeName({ name: name });
+        if (isChanged === '닉네임이 변경되었습니다.') {
+          alert(isChanged);
+          props.setIsModalOpen2(false);
+        } else {
+          alert(isChanged);
         }
-        ).catch(function (err) {
-          console.log(`Error Message: ${err}`);
-        }
-        )
+      } else {
+        alert(isAvailable);
+        setNameMessage(isAvailable);
+      }
+    } else {
+      alert('새 닉네임을 입력해주세요');
     }
-  }
-
+  };
 
   useEffect(() => {
     if (props?.oldName) {
-      setName(props?.oldName)
+      setName(props?.oldName);
     }
-  }, [props?.oldName])
-
-
+  }, [props?.oldName]);
 
   return (
-    <div style={{ width: "100%", display: "contents", paddingTop: "100px" }}>
-      <ModalBackgroundArea isModalOpen={props.isModalOpen2} ref={props.ModalBackground}>
-      </ModalBackgroundArea>
+    <div style={{ width: '100%', display: 'contents', paddingTop: '100px' }}>
+      <ModalBackgroundArea
+        isModalOpen={props.isModalOpen2}
+        ref={props.ModalBackground}
+      ></ModalBackgroundArea>
       <ModalArea isModalOpen={props.isModalOpen2} ref={props.ModalBackground}>
-        <CancelButton onClick={() => props.setIsModalOpen2(false)} src="/assets/icon/icon_modal_x.svg" />
+        <CancelButton
+          onClick={() => props.setIsModalOpen2(false)}
+          src="/assets/icon/icon_modal_x.svg"
+        />
         <ModalTitle>내 정보 수정</ModalTitle>
-        <NameArea >
+        <NameArea>
           <NameTitle>닉네임</NameTitle>
-          <NameInput type="text" value={name ? name : ""} onChange={(e) => setName(e.target.value)} />
-
+          <div style={{ width: '60%' }}>
+            <NameInput
+              type="text"
+              value={name ? name : ''}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <AlertMessage>{nameMessage}</AlertMessage>
+          </div>
         </NameArea>
-        <ModifyButton onClick={() => modifyInformation()}>수정하기</ModifyButton>
+        <ModifyButton onClick={() => modifyInformation()}>
+          수정하기
+        </ModifyButton>
       </ModalArea>
     </div>
   );

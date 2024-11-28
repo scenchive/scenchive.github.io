@@ -1,13 +1,13 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-const breakpoint = "768px";
+const breakpoint = '768px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div<{ isAdmin: boolean }>`
   label: container;
   width: 100%;
   height: 60px;
-  background-color: ${(props) => (props.isAdmin ? "#08799c" : "#d67070")};
+  background-color: ${(props) => (props.isAdmin ? '#08799c' : '#d67070')};
   display: flex;
   justify-content: center;
   align-items: center;

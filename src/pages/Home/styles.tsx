@@ -1,11 +1,11 @@
-import styled from "@emotion/styled";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import styled from '@emotion/styled';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-const breakpoint = "565px";
+const breakpoint = '565px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
-const colors = ["#F5D0CD", "#E3A6A1", "#D67070"];
+const colors = ['#F5D0CD', '#E3A6A1', '#D67070'];
 
 export const Container = styled.div`
   label: container;
@@ -214,7 +214,7 @@ export const PerfumeBox = styled.div<{ index: number }>`
   label: prefume-box;
   width: 200px;
   height: 100%;
-  cursor:pointer;
+  cursor: pointer;
 
   img {
     width: 180px;

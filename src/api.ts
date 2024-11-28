@@ -1,5 +1,5 @@
-import axios from "axios";
-import { resetUserType } from "./stores/useUserAuthority";
+import axios from 'axios';
+import { resetUserType } from './stores/useUserAuthority';
 
 export const api = axios.create({
   baseURL: `${process.env.REACT_APP_API}`,
@@ -11,9 +11,10 @@ api.interceptors.response.use(
   },
   async (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("my-token");
+      localStorage.removeItem('my-token');
       resetUserType();
-      window.location.replace("/login");
+      alert('다시 로그인해주세요');
+      window.location.replace('/login');
     }
   }
 );

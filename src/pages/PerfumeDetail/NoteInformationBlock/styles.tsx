@@ -1,8 +1,8 @@
-import styled from "@emotion/styled";
-const breakpoint = "565px";
+import styled from '@emotion/styled';
+const breakpoint = '565px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
-export const NoteArea=styled.div`
+export const NoteArea = styled.div`
   label: note-area;
   width: 100%;
   position: relative;
@@ -13,9 +13,9 @@ export const NoteArea=styled.div`
   ${mediaQuery} {
     margin-top: 20px;
   }
-`
+`;
 
-export const ImageNoteUp=styled.img`
+export const ImageNoteUp = styled.img`
   label: image-note-up;
   position: absolute;
   top: 0;
@@ -24,42 +24,41 @@ export const ImageNoteUp=styled.img`
   ${mediaQuery} {
     display: none;
   }
-`
+`;
 
-export const ImageNoteDown=styled.img`
+export const ImageNoteDown = styled.img`
   label: image-note-down;
-  position: absolute; 
+  position: absolute;
   bottom: 0;
   right: 0;
 
   ${mediaQuery} {
     display: none;
   }
-`
+`;
 
-export const NoteTitle=styled.div`
+export const NoteTitle = styled.div`
   label: note-title;
-  color: #D67070;
-  font-size:2rem;
+  color: #d67070;
+  font-size: 2rem;
   font-family: Noto Sans KR;
-  margin-top:40px;
-  margin-bottom:15px;
+  margin-top: 40px;
+  margin-bottom: 15px;
 
   ${mediaQuery} {
-  margin-top: 20px;
+    margin-top: 20px;
   }
-`
+`;
 
-export const NoteInformation=styled.div`
-  label:note-information;
+export const NoteInformation = styled.div`
+  label: note-information;
   color: #616161;
   font-family: Noto Sans KR;
   font-size: 1.5rem;
-`
+`;
 
-export const NoteInformationArea=styled.div`
-  label:note-information-area;
+export const NoteInformationArea = styled.div`
+  label: note-information-area;
   display: flex;
   flex-direction: column;
-`
-
+`;

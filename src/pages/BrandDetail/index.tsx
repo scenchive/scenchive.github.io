@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Container, Top, TopText, Text, Lists, List, ListText } from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import Header from "../../components/Header";
-import Search from "../../components/Search";
-import KakaoMapArea from "./KakaoMapArea";
-import axios from "axios";
-import { Perfumes, Store } from "../../common/types";
-import BrandPerfumeListRow from "./BrandPerfumeListRow";
-import useApi from "../../hooks/useApi";
+import React, { useEffect, useState, useRef } from 'react';
+import { Container, Top, TopText, Text, Lists, List, ListText } from './styles';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import Header from '../../components/Header';
+import Search from '../../components/Search';
+import KakaoMapArea from './KakaoMapArea';
+import axios from 'axios';
+import { Perfumes, Store } from '../../common/types';
+import BrandPerfumeListRow from './BrandPerfumeListRow';
+import useApi from '../../hooks/useApi';
 
 const BrandDetail = () => {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ const BrandDetail = () => {
 
   const options = {
     root: view.current,
-    rootMargin: "10px",
+    rootMargin: '10px',
     threshold: 1.0,
   };
 
@@ -64,8 +64,8 @@ const BrandDetail = () => {
 
   const getPerfumes = async () => {
     const data = await fetchBrandPerfumeList(
-      "get",
-      `/brandperfume?name=${querySearch.get("name")}&page=${perfumesPage}`,
+      'get',
+      `/brandperfume?name=${querySearch.get('name')}&page=${perfumesPage}`,
       {}
     );
     if (data) {
@@ -88,8 +88,8 @@ const BrandDetail = () => {
   useEffect(() => {
     if (perfumes && perfumes[0]?.brandName_kr) {
       if (storeList === undefined || storeList?.length !== storeTotalCount) {
-        if (perfumes[0]?.brandName_kr === "샤넬") {
-          getStoreList("샤넬화장품");
+        if (perfumes[0]?.brandName_kr === '샤넬') {
+          getStoreList('샤넬화장품');
         } else {
           getStoreList(perfumes[0]?.brandName_kr);
         }
@@ -113,11 +113,11 @@ const BrandDetail = () => {
         },
       });
       if (result?.data?.documents?.length > 0) {
-        let newList = result.data?.documents.filter(
+        const newList = result.data?.documents.filter(
           (el: any) =>
-            el?.category_name.includes("화장품") ||
-            el?.category_name.includes("향수") ||
-            el?.category_name.includes("미용")
+            el?.category_name.includes('화장품') ||
+            el?.category_name.includes('향수') ||
+            el?.category_name.includes('미용')
         );
         setStoreList((prevState) => {
           if (prevState && prevState.length > 0) {
@@ -136,7 +136,7 @@ const BrandDetail = () => {
           setStorePage(storePage + 1);
         }
       } else {
-        console.log("오프라인 매장이 없습니다.");
+        console.log('오프라인 매장이 없습니다.');
       }
     }
   };
@@ -150,7 +150,7 @@ const BrandDetail = () => {
           <img src={perfumes[0].brandImage} />
         )}
         <TopText>
-          <div className="top-text__title">{querySearch.get("name")}</div>
+          <div className="top-text__title">{querySearch.get('name')}</div>
           <div className="top-text__sub-title">
             {perfumes && perfumes[0]?.brandName_kr}
           </div>
@@ -176,7 +176,7 @@ const BrandDetail = () => {
         {perfumes?.map((el, index) => {
           return (
             <BrandPerfumeListRow
-              key={"perfumeListRow_" + index}
+              key={'perfumeListRow_' + index}
               perfumeId={el?.perfumeId}
               index={index}
               perfumeImage={el?.perfumeImage}
@@ -187,7 +187,7 @@ const BrandDetail = () => {
           );
         })}
         {perfumes && (
-          <div ref={setTarget} style={{ width: "100%", height: "1px" }} />
+          <div ref={setTarget} style={{ width: '100%', height: '1px' }} />
         )}
       </Lists>
     </Container>

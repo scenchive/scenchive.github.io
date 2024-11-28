@@ -1,7 +1,7 @@
-import { keyframes } from "@emotion/react";
-import styled from "@emotion/styled";
+import { keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
 
-const breakpoint = "565px";
+const breakpoint = '565px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 const fade = keyframes`
