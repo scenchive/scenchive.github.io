@@ -10,19 +10,65 @@ export const ProfileArea = styled.div`
   margin-top: 30px;
 `;
 
+export const ProfileImageArea = styled.div`
+  label: profile-image-area;
+  width: 75px;
+  height: 75px;
+  position: relative;
+  &:hover > div {
+    top: 0;
+    opacity: 0.8;
+    transition:
+      opacity 0.3s ease,
+      top 0.3s ease;
+  }
+`;
+
 export const ProfileImage = styled.img`
   label: profile-image;
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
   max-width: 100px;
-  border-radius: 20px;
+  border-radius: 10px;
   object-fit: cover;
   box-shadow: 0.1px 0.1px 3px 1px #dddddd;
+  cursor: pointer;
 
   ${mediaQuery} {
-    width: 65px;
-    height: 65px;
+    width: 75px;
+    height: 75px;
   }
+`;
+
+export const ProfileEditIcon = styled.img`
+  label: profile-edit-icon;
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  top: 5px;
+  right: 4px;
+  opacity: 70%;
+`;
+
+export const ProfileImageChangeWord = styled.div`
+  label: profile-image-change-word;
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  font-size: 9.5px;
+  background-color: #e3a6a1;
+  color: white;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    opacity 0.3s ease,
+    top 0.3s ease;
+  cursor: pointer;
 `;
 
 export const NameEmailArea = styled.div`
@@ -44,26 +90,19 @@ export const NameEmailAreaTop = styled.div`
   width: -webkit-fill-available;
   display: flex;
   flex-direction: column;
-
-  .email_text {
-    color: #616161;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 17px;
-    margin-top: 5px;
-    text-align: left;
-  }
-`;
-
-export const UserInformationArea = styled.div`
-  label: user-information-area;
-  display: flex;
-  flex-direction: row;
-  text-align: left;
   .name_text {
     color: #616161;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 17px;
+    text-align: left;
+  }
+  .email_text {
+    color: #616161;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    margin-top: 4px;
+    text-align: left;
   }
 `;
 
@@ -81,6 +120,18 @@ export const ButtonArea = styled.div`
   label: button-area;
   display: flex;
   flex-direction: row;
+  .icon_collection {
+    width: 13px;
+    height: 13px;
+    margin-top: 6px;
+    margin-right: 4px;
+  }
+  .icon_settings {
+    width: 13px;
+    height: 13px;
+    margin-top: 5px;
+    margin-right: 5px;
+  }
 `;
 
 interface ProfileButton {
@@ -90,11 +141,11 @@ interface ProfileButton {
 
 export const Splitter = styled.div<ProfileButton>`
   label: splitter;
-  color: #a2a2a2;
-  font-size: 1.2rem;
+  color: #c8c8c8;
+  font-size: 1rem;
   font-family: Noto Sans KR;
   border: none;
-  margin-top: 10px;
+  margin-top: 4px;
   margin-left: 7px;
   margin-right: 7px;
 
@@ -105,11 +156,11 @@ export const Splitter = styled.div<ProfileButton>`
 
 export const ProfileButton = styled.div<ProfileButton>`
   label: profile-button;
-  height: 20px;
+  height: 15px;
   color: ${(props) => (props?.isPink === true ? '#E3A6A1' : '#A2A2A2')};
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-family: Noto Sans KR;
-  margin-top: 10px;
+  margin-top: 3px;
   border: none;
   padding: 0px;
   background-color: transparent;

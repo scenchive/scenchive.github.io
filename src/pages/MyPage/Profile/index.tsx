@@ -4,12 +4,14 @@ import {
   ProfileImage,
   NameEmailArea,
   NameEmailAreaTop,
-  UserInformationArea,
   ProfileChangeButton,
   ButtonArea,
   Splitter,
   ProfileButton,
   SettingIcon,
+  ProfileImageArea,
+  ProfileImageChangeWord,
+  ProfileEditIcon,
 } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../../api';
@@ -28,6 +30,7 @@ const Profile = (props: {
   name: string | null | undefined;
   email: string | null | undefined;
   setIsModalOpen2: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalOpen3: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const navigate = useNavigate();
   const {
@@ -88,42 +91,27 @@ const Profile = (props: {
   };
   return (
     <ProfileArea>
-      <ProfileImage src={props.imageUrl} />
+      <ProfileImageArea>
+        <ProfileImage src={props.imageUrl} />
+        <ProfileEditIcon src={'/assets/icon/icon_edit.svg'} />
+        <ProfileImageChangeWord onClick={() => props.setIsModalOpen3(true)}>
+          프로필 사진 수정
+        </ProfileImageChangeWord>
+      </ProfileImageArea>
+
       <NameEmailArea>
         <NameEmailAreaTop>
-          <UserInformationArea>
-            <div className="name_text" style={{ marginRight: '10px' }}>
-              {props.name}
-            </div>
-            <ProfileChangeButton onClick={() => props.setIsModalOpen2(true)}>
-              프로필 수정하기
-            </ProfileChangeButton>
-            <Splitter
-              isPink={false}
-              isLogin={false}
-              style={{ fontSize: '1rem', marginTop: 'auto' }}
-            >
-              |
-            </Splitter>
-            <ProfileChangeButton onClick={() => navigate('/changepassword')}>
-              비밀번호 변경
-            </ProfileChangeButton>
-            <Splitter
-              isPink={false}
-              isLogin={false}
-              style={{ fontSize: '1rem', marginTop: 'auto' }}
-            >
-              |
-            </Splitter>
-            <ProfileChangeButton onClick={() => handleLogout()}>
-              로그아웃
-            </ProfileChangeButton>
-          </UserInformationArea>
-
+          <div className="name_text" style={{ marginRight: '10px' }}>
+            {props.name}
+          </div>
           <div className="email_text">{props.email}</div>
         </NameEmailAreaTop>
 
         <ButtonArea>
+          <img
+            className="icon_collection"
+            src="/assets/icon/icon_collection.svg"
+          />
           <ProfileButton isPink={true} isLogin={false}>
             나의 보유 향수
           </ProfileButton>
@@ -147,6 +135,33 @@ const Profile = (props: {
           >
             내가 작성한 댓글
           </ProfileButton>
+        </ButtonArea>
+
+        <ButtonArea>
+          <img className="icon_settings" src="/assets/icon/icon_settings.svg" />
+          <ProfileChangeButton onClick={() => props.setIsModalOpen2(true)}>
+            프로필 수정하기
+          </ProfileChangeButton>
+          <Splitter
+            isPink={false}
+            isLogin={false}
+            style={{ fontSize: '1rem', marginTop: 'auto' }}
+          >
+            |
+          </Splitter>
+          <ProfileChangeButton onClick={() => navigate('/changepassword')}>
+            비밀번호 변경
+          </ProfileChangeButton>
+          <Splitter
+            isPink={false}
+            isLogin={false}
+            style={{ fontSize: '1rem', marginTop: 'auto' }}
+          >
+            |
+          </Splitter>
+          <ProfileChangeButton onClick={() => handleLogout()}>
+            로그아웃
+          </ProfileChangeButton>
         </ButtonArea>
       </NameEmailArea>
     </ProfileArea>
