@@ -19,10 +19,11 @@ import PerfumeCellModifyModal from './PerfumeCellModifyModal';
 import Profile from './Profile';
 import Header from '../../components/Header';
 import Search from '../../components/Search';
-import UserModifyModal from './UserModifyMoal';
+import UserModifyModal from './UserModifyModal';
 import { KeywordType, PerfumeType } from '../../common/types';
 import useApi from '../../hooks/useApi';
 import { resetUserType } from '../../stores/useUserAuthority';
+import ProfileImageModifyModal from './ProfileImageChangeModal';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -77,6 +78,7 @@ const MyPage = () => {
   const [moodKeywords, setMoodKeywords] = useState<KeywordType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalOpen2, setIsModalOpen2] = useState<boolean>(false);
+  const [isModalOpen3, setIsModalOpen3] = useState<boolean>(false);
   const [clickedTabMenu, setClickedTabMenu] = useState<string>('북마크한 향수');
   const [bookmarkList, setBookmarkList] = useState<PerfumeType[]>();
   const [totalBookmarkPerfumeCount, setTotalBookmarkPerfumeCount] =
@@ -123,6 +125,12 @@ const MyPage = () => {
     }
   }, [isModalOpen2]);
 
+  // useEffect(()=>{
+  //   if (isModalOpen2===false){
+
+  //   }
+  // })
+
   // 북마크 목록 가져오는 api
   const getBookmarkList = async () => {
     try {
@@ -159,6 +167,8 @@ const MyPage = () => {
           setIsModalOpen(false);
         } else if (isModalOpen2 === true) {
           setIsModalOpen2(false);
+        } else if (isModalOpen3 === true) {
+          setIsModalOpen(false);
         }
       }
     };
@@ -258,6 +268,16 @@ const MyPage = () => {
         />
       ) : null}
 
+      {isModalOpen3 === true ? (
+        <ProfileImageModifyModal
+          ModalBackground={modalBackground}
+          imageUrl={imageUrl}
+          isModalOpen3={isModalOpen3}
+          setIsModalOpen3={setIsModalOpen3}
+          myToken={myToken}
+        />
+      ) : null}
+
       <Container>
         <Header />
         <Search />
@@ -268,6 +288,7 @@ const MyPage = () => {
             name={name}
             email={email}
             setIsModalOpen2={setIsModalOpen2}
+            setIsModalOpen3={setIsModalOpen3}
           />
 
           <KeywordArea>
