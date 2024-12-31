@@ -9,8 +9,8 @@ import {
   MobilePerfumeInformationArea,
 } from './styles';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import Header from '../../components/Header/index';
-import Search from '../../components/Search/index';
+import Header from '../../common/Header/index';
+import Search from '../../common/Search/index';
 import PerfumeRatingBlock from './PerfumeRatingBlock/index';
 import ShoppingInformationTab from './ShoppingInformationTab';
 import NoteInformationBlock from './NoteInformationBlock';

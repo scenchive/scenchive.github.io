@@ -23,7 +23,7 @@ import {
 import useSendVerificationEmail from '../../hooks/auth/useSendVerificationEmail';
 // import ApiService from "../ApiService.js";
 import { api } from '../../api';
-import Header from '../../components/Header/index';
+import Header from '../../common/Header/index';
 import {
   FRAGRANCEWHEELKEYWORDSTYPE,
   KEYWORDTAGSTYPE,

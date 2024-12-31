@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Top, Main, Box } from './styles';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../../components/Header';
-import Search from '../../../components/Search';
+import Header from '../../../common/Header';
+import Search from '../../../common/Search';
 
 const KeywordSearchStep1 = () => {
   const navigate = useNavigate();

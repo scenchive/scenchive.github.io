@@ -24,9 +24,9 @@ import {
 } from './styles';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { api } from '../../api';
-import Header from '../../components/Header/index';
+import Header from '../../common/Header/index';
 import KeywordModal from './KeywordModal';
-import Search from '../../components/Search';
+import Search from '../../common/Search';
 import {
   WriteReviewKeywordType,
   WriteReviewPerfumeDetailGroup,

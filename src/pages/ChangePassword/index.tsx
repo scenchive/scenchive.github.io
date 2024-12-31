@@ -14,8 +14,8 @@ import { api } from '../../api';
 import { KeywordType, PerfumeType } from '../../common/types';
 import useApi from '../../hooks/useApi';
 import { resetUserType } from '../../stores/useUserAuthority';
-import Header from '../../components/Header';
-import Search from '../../components/Search';
+import Header from '../../common/Header';
+import Search from '../../common/Search';
 
 const MyPage = () => {
   const navigate = useNavigate();

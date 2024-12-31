@@ -19,8 +19,8 @@ export const Container = styled.div`
 
 export const Main = styled.div`
   label: main;
-  width: 100%;
-  max-width: 700px;
+  width: 70%;
+  min-width: 600px;
   min-height: 450px;
   display: flex;
   justify-content: center;
@@ -30,6 +30,7 @@ export const Main = styled.div`
 
   ${mediaQuery} {
     width: 100%;
+    min-width: 0px;
     padding: 0 20px;
     box-sizing: border-box;
   }
@@ -123,7 +124,7 @@ export const Option = styled.div`
 
 export const MainBottom = styled.div`
   label: main-bottom;
-  width: 60%;
+  min-width: 600px;
   display: flex;
   justify-content: center;
   font-family: Noto Sans KR;
@@ -133,6 +134,7 @@ export const MainBottom = styled.div`
 
   ${mediaQuery} {
     width: 100%;
+    min-width: 0px;
     & > img {
       width: 15px;
     }
