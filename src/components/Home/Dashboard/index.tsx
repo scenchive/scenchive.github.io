@@ -7,6 +7,8 @@ import useDashboard from '../../../hooks/dashboard/useDashboard';
 
 import axios from 'axios';
 import SeasonBestPerfume from './SeasonBestPerfume/SeasonBestPerfume';
+import Top5 from './Top5/Top5';
+import { useFetchWithCache } from '../../../hooks/dashboard/useFetchWithCache';
 
 interface Perfumes {
   perfumeId: number;
@@ -22,40 +24,33 @@ interface Perfumes {
 const Dashboard = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('my-token');
-  const { getSeasonPopularPerfume } = useDashboard();
-  const [seasonPopularList, setSeasonPopularList] = useState<Perfumes[]>([]);
+  const {
+    getSeasonPopularPerfume,
+    getMostCollectedPerfume,
+    getMostCollectedBrand,
+    getReviewTop5Perfume,
+  } = useDashboard();
+  // const [seasonPopularList, setSeasonPopularList] = useState<Perfumes[]>([]);
 
-  useEffect(() => {
-    const fetchAndCacheData = async () => {
-      try {
-        const cachedData = sessionStorage.getItem('seasonPopularList');
-        // 캐시 데이터가 있을 경우 seasonPopularList 상태 업데이트
-        if (cachedData) {
-          if (JSON.parse(cachedData).length > 0) {
-            setSeasonPopularList(JSON.parse(cachedData));
-            return;
-          }
-        }
+  const [seasonPopularList, seasonPopularListLoading, seasonPopularListError] =
+    useFetchWithCache<Perfumes[]>('seasonPopularList', getSeasonPopularPerfume);
 
-        // 캐시 데이터가 없을 경우 api 호출
-        const data = await getSeasonPopularPerfume();
-        if (data && Array.isArray(data)) {
-          sessionStorage.setItem('seasonPopularList', JSON.stringify(data));
-          setSeasonPopularList(data);
-        }
-      } catch (error) {
-        console.error('Error fetching season popular perfumes:', error);
-      }
-    };
-
-    fetchAndCacheData();
-  }, []);
+  const [
+    reviewTop5PerfumeList,
+    reviewTop5PerfumeListLoading,
+    reviewTop5PerfumeListError,
+  ] = useFetchWithCache('reviewTop5PerfumeList', getReviewTop5Perfume);
 
   return (
     <DashboardArea>
-      {seasonPopularList && seasonPopularList?.length > 0 && (
-        <SeasonBestPerfume seasonPopularList={seasonPopularList} />
-      )}
+      {!seasonPopularListLoading &&
+        !seasonPopularListError &&
+        seasonPopularList &&
+        seasonPopularList?.length > 0 && (
+          <SeasonBestPerfume seasonPopularList={seasonPopularList} />
+        )}
+
+      <Top5 reviewTop5PerfumeList={reviewTop5PerfumeList} />
     </DashboardArea>
   );
 };

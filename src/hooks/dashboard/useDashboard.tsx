@@ -8,14 +8,8 @@ const useDashboard = () => {
     setError(null);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API}/main/popular-season`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('my-token')}`,
-          },
-        }
+        `${process.env.REACT_APP_API}/main/popular-season`
       );
-      console.log('------------------');
       return res.data;
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
@@ -25,7 +19,56 @@ const useDashboard = () => {
     }
   };
 
-  return { getSeasonPopularPerfume, error };
+  const getMostCollectedPerfume = async () => {
+    setError(null);
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/main/most-collected/perfume`
+      );
+      return res.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error(err.response.data);
+        return err.response.data;
+      }
+    }
+  };
+  const getMostCollectedBrand = async () => {
+    setError(null);
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/main/most-collected/brand`
+      );
+      return res.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error(err.response.data);
+        return err.response.data;
+      }
+    }
+  };
+
+  const getReviewTop5Perfume = async () => {
+    setError(null);
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/main/top-reviewed-perfumes`
+      );
+      return res.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error(err.response.data);
+        return err.response.data;
+      }
+    }
+  };
+
+  return {
+    getSeasonPopularPerfume,
+    getMostCollectedPerfume,
+    getMostCollectedBrand,
+    getReviewTop5Perfume,
+  };
 };
 
 export default useDashboard;

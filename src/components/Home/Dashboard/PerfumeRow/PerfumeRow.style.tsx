@@ -7,7 +7,7 @@ const breakpoint = '565px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 const colors = ['#F5D0CD', '#E3A6A1', '#D67070'];
 
-export const PerfumeRowArea = styled.div`
+export const PerfumeRowArea = styled.div<{ addStyle?: string }>`
   label: perfume-row-area;
   width: fit-content;
   height: fit-content;
@@ -18,6 +18,7 @@ export const PerfumeRowArea = styled.div`
   position: relative;
   margin-left: auto;
   margin-right: auto;
+  ${(props) => props.addStyle};
 `;
 
 export const PerfumeImage = styled.img`

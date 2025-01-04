@@ -15,14 +15,15 @@ import axios from 'axios';
 import Ranking from '../Ranking';
 
 interface PerfumesInfo {
-  brandId: number;
-  brandImage: string | null;
+  brandId?: number;
+  brandImage?: string | null;
   brandName: string;
-  brandName_kr: string;
+  brandName_kr?: string;
   perfumeId: number;
-  perfumeImage: string;
+  perfumeImage?: string;
   perfumeName: string;
-  perfume_kr: string | null | undefined;
+  perfume_kr?: string | null | undefined;
+  addStyle?: string;
 }
 
 const PerfumeRow = (props: {
@@ -35,9 +36,10 @@ const PerfumeRow = (props: {
   BrandNameKoreanFontSize: number;
   BrandNameEnglishFontSize: number;
   PerfumeNameFontSize: number;
+  addStyle?: string;
 }) => {
   return (
-    <PerfumeRowArea>
+    <PerfumeRowArea addStyle={props?.addStyle}>
       <Ranking index={props?.index} width={props.isMobile ? '35px' : '40px'} />
       <PerfumeImage
         src={

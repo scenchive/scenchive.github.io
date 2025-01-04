@@ -15,7 +15,7 @@ export const SeasonBestPerfumeArea = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-  margin-bottom: 200px;
+  margin-bottom: 80px;
 
   ${mediaQuery} {
     width: 100%;
