@@ -112,7 +112,11 @@ const Profile = (props: {
             className="icon_collection"
             src="/assets/icon/icon_collection.svg"
           />
-          <ProfileButton isPink={true} isLogin={false}>
+          <ProfileButton
+            onClick={() => navigate('/myCollection')}
+            isPink={true}
+            isLogin={false}
+          >
             나의 보유 향수
           </ProfileButton>
           <Splitter isPink={false} isLogin={false}>

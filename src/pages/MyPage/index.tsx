@@ -14,16 +14,16 @@ import {
 } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../api';
-import PerfumeCell from './PerfumeCell';
-import PerfumeCellModifyModal from './PerfumeCellModifyModal';
-import Profile from './Profile';
+import PerfumeCell from '../../components/MyPage/PerfumeCell';
+import PerfumeCellModifyModal from '../../components/MyPage/PerfumeCellModifyModal';
 import Header from '../../common/Header';
 import Search from '../../common/Search';
-import UserModifyModal from './UserModifyModal';
+import UserModifyModal from '../../components/MyPage/UserModifyModal';
 import { KeywordType, PerfumeType } from '../../common/types';
 import useApi from '../../hooks/useApi';
 import { resetUserType } from '../../stores/useUserAuthority';
-import ProfileImageModifyModal from './ProfileImageChangeModal';
+import ProfileImageModifyModal from '../../components/MyPage/ProfileImageChangeModal';
+import Profile from '../../components/MyPage/Profile';
 
 const MyPage = () => {
   const navigate = useNavigate();

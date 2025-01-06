@@ -13,9 +13,9 @@ import Header from '../../../common/Header';
 import Search from '../../../common/Search';
 import useApi from '../../../hooks/useApi';
 import useUserTypeStore from '../../../stores/useUserAuthority';
-import NoteList from './components/NoteList';
-import NoteInput from './components/NoteInput';
-import PerfumeSearch from './components/PerfumeSearch';
+import NoteList from '../../../components/Admin/NoteList';
+import NoteInput from '../../../components/Admin/NoteInput';
+import PerfumeSearch from '../../../components/Admin/PerfumeSearch';
 
 interface Brand {
   brandId: number | null;

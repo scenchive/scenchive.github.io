@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, SyntheticEvent } from 'react';
-import { handleAddNote } from '../../../../../handlers/addPerfumeHandlers';
+import { handleAddNote } from '../../../handlers/addPerfumeHandlers';
 import {
   Row,
   RowTitle,

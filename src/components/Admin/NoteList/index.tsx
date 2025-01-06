@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, SyntheticEvent } from 'react';
 import { NoteTitle, NoteListRow, DeleteButton } from './styles';
-import { handleDelete } from '../../../../../handlers/addPerfumeHandlers';
+import { handleDelete } from '../../../handlers/addPerfumeHandlers';
 
 interface NoteListProps {
   title: string;

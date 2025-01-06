@@ -8,6 +8,7 @@ import SearchResult from './pages/SearchResult/index.tsx';
 import BrandDetail from './pages/BrandDetail/index.tsx';
 import PerfumeDetail from './pages/PerfumeDetail/index.tsx';
 import MyPage from './pages/MyPage/index.tsx';
+import MyCollection from './pages/MyCollection';
 import ChangePassword from './pages/ChangePassword/index.tsx';
 import WriteReview from './pages/WriteReview';
 import KeywordSearchStep1 from './pages/KeywordSearch/KeywordSearchStep1/index.tsx';
@@ -37,6 +38,7 @@ function App() {
         <Route path="/branddetail" element={<BrandDetail />} />
         <Route path="/perfumedetail" element={<PerfumeDetail />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mycollection" element={<MyCollection />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/writereview" element={<WriteReview />} />
         <Route path="/keywordsearchstep1" element={<KeywordSearchStep1 />} />
