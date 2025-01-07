@@ -63,6 +63,11 @@ const Dashboard = () => {
         seasonPopularList?.length > 0 && (
           <SeasonBestPerfume seasonPopularList={seasonPopularList} />
         )}
+
+      <div style={{ fontSize: '30px', color: 'red', fontWeight: 600 }}>
+        {' '}
+        가장 많이 보유항 향수랑 브랜드 넣어야 함
+      </div>
       {/* <MostCollected
         mostCollectedPerfume={mostCollectedPerfume}
         mostCollectedBrand={mostCollectedBrand}

@@ -20,7 +20,6 @@ export const Top5Area = styled.div`
 
   ${mediaQuery} {
     width: 100%;
-    padding: 0px 20px;
     min-width: 0px;
     box-sizing: border-box;
     flex-direction: column;
