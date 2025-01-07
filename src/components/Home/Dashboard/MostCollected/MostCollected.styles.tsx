@@ -7,8 +7,8 @@ const breakpoint = '565px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 const colors = ['#F5D0CD', '#E3A6A1', '#D67070'];
 
-export const Top5Area = styled.div`
-  label: top5-area;
+export const MostCollectedArea = styled.div`
+  label: most-collected-area;
   width: 70%;
   min-width: 600px;
   box-sizing: border-box;
@@ -23,23 +23,24 @@ export const Top5Area = styled.div`
     padding: 0px 20px;
     min-width: 0px;
     box-sizing: border-box;
-    flex-direction: column;
   }
 `;
 
-export const ReviewTop5PerfumeListArea = styled.div`
-  label: review-top5-perfume-list-area;
+export const MostCollectedPerfumeArea = styled.div`
+  label: most-collected-perfume-area;
   width: 50%;
-  ${mediaQuery} {
-    width: 100%;
-    margin-bottom: 30px;
-  }
 `;
 
-export const Top5BrandListListArea = styled.div`
-  label: top5-brand-list-area;
+export const Title = styled.h1`
+  label: title;
+  width: fit-content;
+  font-size: 2rem;
+  color: #bc5f6a;
+  margin-right: auto;
+  margin-left: auto;
+`;
+
+export const MostCollectedBrandArea = styled.div`
+  label: most-collected-brand-area;
   width: 50%;
-  ${mediaQuery} {
-    width: 100%;
-  }
 `;

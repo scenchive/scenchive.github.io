@@ -21,14 +21,15 @@ interface PerfumesInfo {
   brandName_kr?: string;
   perfumeId: number;
   perfumeImage?: string;
-  perfumeName: string;
+  perfumeName?: string;
+  name?: string;
   perfume_kr?: string | null | undefined;
   addStyle?: string;
 }
 
 const PerfumeRow = (props: {
   isMobile: boolean;
-  index: number;
+  index: number | undefined;
   perfumeInformation: PerfumesInfo;
   ImgWidth: number;
   ImgHeight: number;
@@ -40,7 +41,12 @@ const PerfumeRow = (props: {
 }) => {
   return (
     <PerfumeRowArea addStyle={props?.addStyle}>
-      <Ranking index={props?.index} width={props.isMobile ? '35px' : '40px'} />
+      {props.index !== undefined && (
+        <Ranking
+          index={props?.index}
+          width={props.isMobile ? '35px' : '40px'}
+        />
+      )}
       <PerfumeImage
         src={
           props?.perfumeInformation?.perfumeImage
@@ -61,7 +67,9 @@ const PerfumeRow = (props: {
           </BrandNameEnglish>
         </BrandNameArea>
         <PerfumeName fontSize={props?.PerfumeNameFontSize}>
-          {props?.perfumeInformation?.perfumeName}
+          {props?.perfumeInformation?.perfumeName
+            ? props?.perfumeInformation?.perfumeName
+            : props?.perfumeInformation?.name}
           {props?.perfumeInformation?.perfume_kr && (
             <span>({props?.perfumeInformation?.perfume_kr})</span>
           )}

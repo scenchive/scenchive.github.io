@@ -9,6 +9,8 @@ import axios from 'axios';
 import SeasonBestPerfume from './SeasonBestPerfume/SeasonBestPerfume';
 import Top5 from './Top5/Top5';
 import { useFetchWithCache } from '../../../hooks/dashboard/useFetchWithCache';
+import MostCollected from './MostCollected/MostCollected';
+import ScenchiverStat from './ScenchiverStat/ScenchiverStat';
 
 interface Perfumes {
   perfumeId: number;
@@ -28,18 +30,30 @@ const Dashboard = () => {
     getSeasonPopularPerfume,
     getMostCollectedPerfume,
     getMostCollectedBrand,
+    getScenchiverMaster,
     getReviewTop5Perfume,
   } = useDashboard();
-  // const [seasonPopularList, setSeasonPopularList] = useState<Perfumes[]>([]);
 
   const [seasonPopularList, seasonPopularListLoading, seasonPopularListError] =
     useFetchWithCache<Perfumes[]>('seasonPopularList', getSeasonPopularPerfume);
 
-  const [
-    reviewTop5PerfumeList,
-    reviewTop5PerfumeListLoading,
-    reviewTop5PerfumeListError,
-  ] = useFetchWithCache('reviewTop5PerfumeList', getReviewTop5Perfume);
+  const [mostCollectedPerfume] = useFetchWithCache(
+    'mostCollectedPerfume',
+    getMostCollectedPerfume
+  );
+  const [mostCollectedBrand] = useFetchWithCache(
+    'mostCollectedBrand',
+    getMostCollectedBrand
+  );
+  const [scenchiverMasterInfo] = useFetchWithCache(
+    'scenchiverMasterInfo',
+    getScenchiverMaster
+  );
+
+  const [reviewTop5PerfumeList] = useFetchWithCache(
+    'reviewTop5PerfumeList',
+    getReviewTop5Perfume
+  );
 
   return (
     <DashboardArea>
@@ -49,8 +63,16 @@ const Dashboard = () => {
         seasonPopularList?.length > 0 && (
           <SeasonBestPerfume seasonPopularList={seasonPopularList} />
         )}
-
-      <Top5 reviewTop5PerfumeList={reviewTop5PerfumeList} />
+      {/* <MostCollected
+        mostCollectedPerfume={mostCollectedPerfume}
+        mostCollectedBrand={mostCollectedBrand}
+      /> */}
+      {scenchiverMasterInfo && (
+        <ScenchiverStat scenchiverMasterInfo={scenchiverMasterInfo[0]} />
+      )}
+      {reviewTop5PerfumeList && (
+        <Top5 reviewTop5PerfumeList={reviewTop5PerfumeList} />
+      )}
     </DashboardArea>
   );
 };

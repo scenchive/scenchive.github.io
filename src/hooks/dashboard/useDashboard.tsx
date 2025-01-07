@@ -33,6 +33,7 @@ const useDashboard = () => {
       }
     }
   };
+
   const getMostCollectedBrand = async () => {
     setError(null);
     try {
@@ -47,6 +48,36 @@ const useDashboard = () => {
       }
     }
   };
+
+  const getScenchiverMaster = async () => {
+    setError(null);
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/main/most-collected/user`
+      );
+      return res.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error(err.response.data);
+        return err.response.data;
+      }
+    }
+  };
+
+  // const getScenchiverAverage = async () => {
+  //   setError(null);
+  //   try {
+  //     const res = await axios.get(
+  //       `${process.env.REACT_APP_API}/main/most-collected/user`
+  //     );
+  //     return res.data;
+  //   } catch (err) {
+  //     if (axios.isAxiosError(err) && err.response) {
+  //       console.error(err.response.data);
+  //       return err.response.data;
+  //     }
+  //   }
+  // };
 
   const getReviewTop5Perfume = async () => {
     setError(null);
@@ -67,6 +98,8 @@ const useDashboard = () => {
     getSeasonPopularPerfume,
     getMostCollectedPerfume,
     getMostCollectedBrand,
+    getScenchiverMaster,
+
     getReviewTop5Perfume,
   };
 };

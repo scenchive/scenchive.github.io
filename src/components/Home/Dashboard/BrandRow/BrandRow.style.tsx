@@ -7,8 +7,8 @@ const breakpoint = '565px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 const colors = ['#F5D0CD', '#E3A6A1', '#D67070'];
 
-export const PerfumeRowArea = styled.div`
-  label: perfume-row-area;
+export const BrandRowArea = styled.div`
+  label: brand-row-area;
   width: fit-content;
   height: fit-content;
   box-sizing: border-box;
@@ -20,14 +20,14 @@ export const PerfumeRowArea = styled.div`
   margin-right: auto;
 `;
 
-export const PerfumeImage = styled.img`
-  label: perfume-image;
+export const BrandImage = styled.img`
+  label: brand-image;
   margin-left: 10px;
   margin-right: 20px;
 `;
 
-export const PerfumeInfo = styled.div`
-  label: perfume-info;
+export const BrandInfo = styled.div`
+  label: brand-info;
   display: flex;
   flex-direction: column;
   text-align: start;
@@ -53,8 +53,8 @@ export const BrandNameEnglish = styled.span<{ fontSize: number }>`
   color: #616161;
 `;
 
-export const PerfumeName = styled.div<{ fontSize: number }>`
-  label: perfume-name;
+export const BrandName = styled.div<{ fontSize: number }>`
+  label: brand-name;
   font-size: ${(props) => props.fontSize}rem;
   font-weight: 550;
   color: #242424;

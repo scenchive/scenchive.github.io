@@ -1,71 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import {
-  PerfumeRowArea,
-  PerfumeImage,
-  PerfumeInfo,
+  BrandRowArea,
+  BrandImage,
+  BrandInfo,
   BrandNameArea,
   BrandNameKorean,
   BrandNameEnglish,
-  PerfumeName,
+  BrandName,
 } from './BrandRow.style';
-import { useNavigate } from 'react-router-dom';
-import Color from 'color-thief-react';
 
-import axios from 'axios';
 import Ranking from '../Ranking';
 
-interface PerfumesInfo {
+interface BrandInfo {
   brandId: number;
   brandImage: string | null;
-  brandName: string;
+  brandName?: string;
+  name?: string;
   brandName_kr: string;
-  perfumeId: number;
-  perfumeImage: string;
-  perfumeName: string;
-  perfume_kr: string | null | undefined;
 }
 
-const PerfumeRow = (props: {
-  index: number;
-  perfumeInformation: PerfumesInfo;
+const BrandRow = (props: {
+  index: number | undefined;
+  brandInformation: BrandInfo[];
   ImgWidth: number;
   ImgHeight: number;
   flexDirection: 'column' | 'row';
   BrandNameKoreanFontSize: number;
   BrandNameEnglishFontSize: number;
-  PerfumeNameFontSize: number;
+  BrandNameFontSize: number;
 }) => {
+  console.log('pppppp', props?.brandInformation[0].name);
   return (
-    <PerfumeRowArea>
-      <Ranking index={props?.index} />
-      <PerfumeImage
+    <BrandRowArea>
+      {props?.index && <Ranking index={props?.index} />}
+      <BrandImage
         src={
-          props?.perfumeInformation?.perfumeImage
-            ? props?.perfumeInformation?.perfumeImage
+          props?.brandInformation[0]?.brandImage
+            ? props?.brandInformation[0]?.brandImage
             : '/assets/image/image_perfume.svg'
         }
         width={props?.ImgWidth}
         height={props?.ImgHeight}
       />
-      <PerfumeInfo>
+      <BrandInfo>
         <BrandNameArea flexDirection={props?.flexDirection}>
           <BrandNameKorean fontSize={props?.BrandNameKoreanFontSize}>
-            {props?.perfumeInformation?.brandName_kr}
+            {props?.brandInformation[0]?.brandName_kr}
           </BrandNameKorean>
 
           <BrandNameEnglish fontSize={props?.BrandNameEnglishFontSize}>
-            ({props?.perfumeInformation?.brandName})
+            {/* ( {props?.brandInformation[0].name}
+            {props?.brandInformation[0]?.name
+              ? props?.brandInformation[0]?.name
+              : props?.brandInformation[0]?.brandName}
+            ) */}{' '}
+            {props?.brandInformation[0].name}
           </BrandNameEnglish>
         </BrandNameArea>
-        <PerfumeName fontSize={props?.PerfumeNameFontSize}>
-          {props?.perfumeInformation?.perfumeName}
-          {props?.perfumeInformation?.perfume_kr && (
-            <span>({props?.perfumeInformation?.perfume_kr})</span>
+        <BrandName fontSize={props?.BrandNameFontSize}>
+          {props?.brandInformation[0]?.brandName}
+          {props?.brandInformation[0]?.brandName_kr && (
+            <span>{props?.brandInformation[0]?.brandName_kr}</span>
           )}
-        </PerfumeName>
-      </PerfumeInfo>
-    </PerfumeRowArea>
+        </BrandName>
+      </BrandInfo>
+    </BrandRowArea>
   );
 };
 
-export default PerfumeRow;
+export default BrandRow;
