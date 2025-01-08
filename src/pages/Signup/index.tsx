@@ -187,7 +187,7 @@ const Signup = () => {
   const handleCheckNameAvailability = async () => {
     if (isNameValid) {
       const isAvailable = await checkNameAvailability();
-      if (isAvailable === '사용 가능한 닉네임입니다다.') {
+      if (isAvailable === '사용 가능한 닉네임입니다.') {
         setIsNameAvailable(true);
       } else {
         alert(isAvailable);

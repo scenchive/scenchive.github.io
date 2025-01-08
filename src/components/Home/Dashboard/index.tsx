@@ -68,6 +68,11 @@ const Dashboard = () => {
         {' '}
         가장 많이 보유항 향수랑 브랜드 넣어야 함
       </div>
+      <div style={{ fontSize: '30px', color: 'red', fontWeight: 600 }}>
+        {' '}
+        로그인한 사용자만 새 향수/브랜드 requeset할 수 있게 해야 함 설문지에
+        향수/브랜드 영어/한글로 다 검색해봤는지 없는거 확실한지 물어봐야 함.
+      </div>
       {/* <MostCollected
         mostCollectedPerfume={mostCollectedPerfume}
         mostCollectedBrand={mostCollectedBrand}
