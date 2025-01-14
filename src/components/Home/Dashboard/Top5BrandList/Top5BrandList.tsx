@@ -10,6 +10,7 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 import PerfumeRow from '../PerfumeRow/PerfumeRow';
+import BrandRow from '../BrandRow/BrandRow';
 
 interface Perfumes {
   brandImage?: string | null;
@@ -64,13 +65,13 @@ const Top5BrandList = (props: { reviewTop5PerfumeList: Perfumes[] }) => {
 
   return (
     <Top5BrandListArea>
-      <Title>최다 리뷰 향수 Top 5</Title>
-      {isMobile ? (
+      <Title>인기 브랜드 Top 5</Title>
+      {/* {isMobile ? (
         <SlickSlider {...sliderSettings} ref={slickRef}>
           {props?.reviewTop5PerfumeList?.map((el, index) => (
             <SliderArea>
               <PerfumeRowBox key={'perfumeRow_' + index}>
-                <PerfumeRow
+                <BrandRow
                   isMobile={isMobile}
                   index={index}
                   perfumeInformation={el}
@@ -105,7 +106,7 @@ const Top5BrandList = (props: { reviewTop5PerfumeList: Perfumes[] }) => {
             </EachPerfumeRowArea>
           ))}
         </>
-      )}
+      )} */}
     </Top5BrandListArea>
   );
 };

@@ -22,8 +22,8 @@ interface Brand {
 }
 
 const TopCollected = (props: {
-  mostCollectedPerfume: Perfume[];
-  mostCollectedBrand: Brand[];
+  mostCollectedPerfume: Perfume;
+  mostCollectedBrand: Brand;
 }) => {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -40,9 +40,11 @@ const TopCollected = (props: {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  console.log('psop=', props.mostCollectedBrand);
+  console.log('??', props.mostCollectedPerfume);
   return (
     <MostCollectedArea>
-      {/* <MostCollectedPerfumeArea>
+      <MostCollectedPerfumeArea>
         <Title>센카이버 최다 보유 향수</Title>
         {props.mostCollectedPerfume && (
           <PerfumeRow
@@ -74,7 +76,7 @@ const TopCollected = (props: {
             BrandNameFontSize={isMobile ? 1.3 : 1.3}
           />
         )}
-      </MostCollectedBrandArea> */}
+      </MostCollectedBrandArea>
     </MostCollectedArea>
   );
 };

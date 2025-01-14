@@ -21,7 +21,7 @@ interface BrandInfo {
 
 const BrandRow = (props: {
   index: number | undefined;
-  brandInformation: BrandInfo[];
+  brandInformation: BrandInfo;
   ImgWidth: number;
   ImgHeight: number;
   flexDirection: 'column' | 'row';
@@ -29,14 +29,14 @@ const BrandRow = (props: {
   BrandNameEnglishFontSize: number;
   BrandNameFontSize: number;
 }) => {
-  console.log('pppppp', props?.brandInformation[0].name);
+  console.log('pppppp', props?.brandInformation);
   return (
     <BrandRowArea>
       {props?.index && <Ranking index={props?.index} />}
       <BrandImage
         src={
-          props?.brandInformation[0]?.brandImage
-            ? props?.brandInformation[0]?.brandImage
+          props?.brandInformation?.brandImage
+            ? props?.brandInformation?.brandImage
             : '/assets/image/image_perfume.svg'
         }
         width={props?.ImgWidth}
@@ -45,22 +45,22 @@ const BrandRow = (props: {
       <BrandInfo>
         <BrandNameArea flexDirection={props?.flexDirection}>
           <BrandNameKorean fontSize={props?.BrandNameKoreanFontSize}>
-            {props?.brandInformation[0]?.brandName_kr}
+            {props?.brandInformation?.brandName_kr}
           </BrandNameKorean>
 
           <BrandNameEnglish fontSize={props?.BrandNameEnglishFontSize}>
-            {/* ( {props?.brandInformation[0].name}
-            {props?.brandInformation[0]?.name
-              ? props?.brandInformation[0]?.name
-              : props?.brandInformation[0]?.brandName}
+            {/* ( {props?.brandInformation.name}
+            {props?.brandInformation?.name
+              ? props?.brandInformation?.name
+              : props?.brandInformation?.brandName}
             ) */}{' '}
-            {props?.brandInformation[0].name}
+            {props?.brandInformation.name}
           </BrandNameEnglish>
         </BrandNameArea>
         <BrandName fontSize={props?.BrandNameFontSize}>
-          {props?.brandInformation[0]?.brandName}
-          {props?.brandInformation[0]?.brandName_kr && (
-            <span>{props?.brandInformation[0]?.brandName_kr}</span>
+          {props?.brandInformation?.brandName}
+          {props?.brandInformation?.brandName_kr && (
+            <span>{props?.brandInformation?.brandName_kr}</span>
           )}
         </BrandName>
       </BrandInfo>

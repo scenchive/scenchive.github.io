@@ -16,11 +16,10 @@ export const MostCollectedArea = styled.div`
   flex-direction: row;
   align-items: center;
   position: relative;
-  margin-bottom: 200px;
+  margin-bottom: 80px;
 
   ${mediaQuery} {
     width: 100%;
-    padding: 0px 20px;
     min-width: 0px;
     box-sizing: border-box;
   }
@@ -38,6 +37,11 @@ export const Title = styled.h1`
   color: #bc5f6a;
   margin-right: auto;
   margin-left: auto;
+
+  ${mediaQuery} {
+    font-size: 1.5rem;
+    white-space: nowrap;
+  }
 `;
 
 export const MostCollectedBrandArea = styled.div`

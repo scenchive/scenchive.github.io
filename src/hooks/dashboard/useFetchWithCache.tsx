@@ -10,7 +10,8 @@ export const useFetchWithCache = <T,>(
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    // sessionStorage.removeItem('scenchiverMasterInfo');
+    sessionStorage.removeItem('reviewTop5PerfumeList');
+    sessionStorage.removeItem('clickTop5Brand');
 
     const fetchData = async () => {
       try {

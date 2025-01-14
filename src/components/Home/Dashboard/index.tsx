@@ -31,6 +31,7 @@ const Dashboard = () => {
     getMostCollectedPerfume,
     getMostCollectedBrand,
     getScenchiverMaster,
+    getScenchiverAverage,
     getReviewTop5Perfume,
   } = useDashboard();
 
@@ -49,7 +50,10 @@ const Dashboard = () => {
     'scenchiverMasterInfo',
     getScenchiverMaster
   );
-
+  const [scenchiverAverage] = useFetchWithCache(
+    'scenchiverAverage',
+    getScenchiverAverage
+  );
   const [reviewTop5PerfumeList] = useFetchWithCache(
     'reviewTop5PerfumeList',
     getReviewTop5Perfume
@@ -73,12 +77,15 @@ const Dashboard = () => {
         로그인한 사용자만 새 향수/브랜드 requeset할 수 있게 해야 함 설문지에
         향수/브랜드 영어/한글로 다 검색해봤는지 없는거 확실한지 물어봐야 함.
       </div>
-      {/* <MostCollected
+      <MostCollected
         mostCollectedPerfume={mostCollectedPerfume}
         mostCollectedBrand={mostCollectedBrand}
-      /> */}
+      />
       {scenchiverMasterInfo && (
-        <ScenchiverStat scenchiverMasterInfo={scenchiverMasterInfo[0]} />
+        <ScenchiverStat
+          scenchiverMasterInfo={scenchiverMasterInfo[0]}
+          scenchiverAverage={scenchiverAverage}
+        />
       )}
       {reviewTop5PerfumeList && (
         <Top5 reviewTop5PerfumeList={reviewTop5PerfumeList} />

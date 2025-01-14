@@ -64,20 +64,20 @@ const useDashboard = () => {
     }
   };
 
-  // const getScenchiverAverage = async () => {
-  //   setError(null);
-  //   try {
-  //     const res = await axios.get(
-  //       `${process.env.REACT_APP_API}/main/most-collected/user`
-  //     );
-  //     return res.data;
-  //   } catch (err) {
-  //     if (axios.isAxiosError(err) && err.response) {
-  //       console.error(err.response.data);
-  //       return err.response.data;
-  //     }
-  //   }
-  // };
+  const getScenchiverAverage = async () => {
+    setError(null);
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/main/average-perfume`
+      );
+      return res.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error(err.response.data);
+        return err.response.data;
+      }
+    }
+  };
 
   const getReviewTop5Perfume = async () => {
     setError(null);
@@ -93,14 +93,29 @@ const useDashboard = () => {
       }
     }
   };
+  // const getReviewTop5Brand = async () => {
+  //   setError(null);
+  //   try {
+  //     const res = await axios.get(
+  //       `${process.env.REACT_APP_API}/main/top-reviewed-brand`
+  //     );
+  //     return res.data;
+  //   } catch (err) {
+  //     if (axios.isAxiosError(err) && err.response) {
+  //       console.error(err.response.data);
+  //       return err.response.data;
+  //     }
+  //   }
+  // };
 
   return {
     getSeasonPopularPerfume,
     getMostCollectedPerfume,
     getMostCollectedBrand,
     getScenchiverMaster,
-
+    getScenchiverAverage,
     getReviewTop5Perfume,
+    // getReviewTop5Brand,
   };
 };
 
