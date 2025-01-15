@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
 
+const breakpoint = '768px';
+const mediaQuery = () => `@media(max-width:${breakpoint})`;
+
 export const ModalBackgroundArea = styled.div<{
   isModalOpen: boolean | undefined;
 }>`
@@ -49,6 +52,11 @@ export const NameArea = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  ${mediaQuery} {
+    margin-top: 15px;
+    flex-direction: column;
+  }
 `;
 
 export const NameTitle = styled.div`
@@ -63,6 +71,10 @@ export const NameTitle = styled.div`
   margin-right: 10px;
   text-align: center;
   white-space: nowrap;
+
+  ${mediaQuery} {
+    margin-right: auto;
+  }
 `;
 
 export const NameInput = styled.input`
