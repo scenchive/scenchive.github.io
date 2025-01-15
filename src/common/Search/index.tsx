@@ -10,6 +10,7 @@ import {
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { api } from '../../api';
 import useUserTypeStore from '../../stores/useUserAuthority';
+import RequestPerfumeOrBrand from '../RequestPerfumeOrBrand';
 
 interface Perfumes {
   id: number;
@@ -139,6 +140,7 @@ const Search = () => {
               })}
             </ListContent>
           )}
+          <RequestPerfumeOrBrand />
         </SearchList>
       )}
     </Container>

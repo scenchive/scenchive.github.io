@@ -1,4 +1,5 @@
 import React from 'react';
+import RequestPerfumeOrBrand from '../../../common/RequestPerfumeOrBrand';
 import { PerfumeListArea, PerfumeListRow } from './styles';
 
 interface Perfume {
@@ -20,6 +21,7 @@ interface PerfumeListParams {
 const PerfumeList = (props: PerfumeListParams) => {
   return (
     <PerfumeListArea ref={props?.brandListRef}>
+      <RequestPerfumeOrBrand />
       {props?.perfumeSearchResultList.map((el, index) => {
         return (
           <PerfumeListRow
