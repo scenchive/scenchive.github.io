@@ -13,7 +13,7 @@ export const NoteListRow = styled.div`
   label: note-list-row;
   display: flex;
   flex-direction: row;
-  color: #19b3b1;
+  color: #d67070;
   font-size: 16px;
 `;
 

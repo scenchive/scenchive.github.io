@@ -1,49 +1,57 @@
 import React from 'react';
-import { PerfumeListArea, PerfumeListRow } from './styles';
+import { useNavigate } from 'react-router-dom';
+import {
+  Card,
+  CardText,
+  PerfumeImageContainer,
+  PerfumeListArea,
+  PerfumeListRow,
+} from './styles';
 
-interface Brand {
-  brandId: number | null;
+interface Perfume {
+  brandId: number;
   brandImage: string;
   brandName: string;
   brandName_kr: string;
   perfumeId: number;
   perfumeName: string;
+  perfume_kr: string | null;
   perfumeImage: string;
 }
 
 interface PerfumeListParams {
-  brandListRef: React.RefObject<HTMLDivElement>;
-  perfumeSearchResultList: Brand[];
-  selectPerfume: (el: Brand) => void;
+  perfume: Perfume;
 }
 
 const PerfumeList = (props: PerfumeListParams) => {
+  const navigate = useNavigate();
   return (
-    <PerfumeListArea ref={props?.brandListRef}>
-      {props?.perfumeSearchResultList.map((el, index) => {
-        return (
-          <PerfumeListRow
-            key={'perfumelist_' + index}
-            onClick={() => {
-              props?.selectPerfume(el);
-            }}
-          >
-            <div
-              style={{
-                width: 'inherit',
-                color: '#2e2e2e',
-                fontSize: '10px',
-                fontWeight: '400',
-                marginBottom: '4px',
-              }}
-            >
-              {el?.brandName_kr}({el?.brandName})
-            </div>
-            {el?.perfumeName}
-          </PerfumeListRow>
-        );
-      })}
-    </PerfumeListArea>
+    <>
+      <Card
+        key={props.perfume.perfumeId}
+        onClick={() =>
+          navigate('/perfumedetail?perfume=' + props.perfume.perfumeId)
+        }
+      >
+        <PerfumeImageContainer
+          src={
+            props.perfume?.perfumeImage
+              ? props.perfume?.perfumeImage
+              : '/assets/image/image_perfume.svg'
+          }
+        />
+        <CardText>
+          <div className="card-text__brand">
+            {props.perfume.brandName_kr ? props.perfume.brandName_kr : ''}{' '}
+            {props.perfume.brandName_kr && '('}
+            {props.perfume.brandName}
+            {props.perfume.brandName_kr && ')'}
+          </div>
+
+          <div className="card-text__title">{props.perfume?.perfumeName}</div>
+        </CardText>
+      </Card>
+    </>
   );
 };
 

@@ -1,196 +1,132 @@
 import React, { useEffect, useState, useRef, SyntheticEvent } from 'react';
-import { Container, Title, SearchNotice, NoteArea, AddButton } from './styles';
+import {
+  Container,
+  Title,
+  SearchNotice,
+  NoteArea,
+  AddButton,
+  PerfumeListArea,
+} from './styles';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../common/Header';
 import Search from '../../common/Search';
-import useApi from '../../hooks/useApi';
 import NoteList from '../../components/SearchByNote/NoteList';
 import NoteInput from '../../components/SearchByNote/NoteInput';
-import PerfumeSearch from '../../components/SearchByNote/PerfumeSearch';
+import PerfumeList from '../../components/SearchByNote/PerfumeList';
+import useSearch from '../../hooks/search/useSearch';
 
-interface Brand {
-  brandId: number | null;
+interface Perfume {
+  brandId: number;
   brandImage: string;
   brandName: string;
   brandName_kr: string;
   perfumeId: number;
   perfumeName: string;
+  perfume_kr: string | null;
   perfumeImage: string;
 }
 
 const SearchByNote = () => {
   const navigate = useNavigate();
-  const brandListRef = useRef<HTMLDivElement>(null);
-  const { fetchApi: fetchPerfumeSearchResult } = useApi<any>();
-  const { data: existingNotes, fetchApi: fetchExistingNotes } = useApi<any>();
-  const { fetchApi: fetchPostPerfume } = useApi<{ perfumeId?: number }>();
+  const noteListRef = useRef<HTMLDivElement>(null);
+  const { getSearchByNoteResultList } = useSearch();
 
-  const [perfumeListToggle, setPerfumeListToggle] = useState<boolean>(false);
   const [perfumeSearchResultTotal, setPerfumeSearchResultTotal] =
     useState<number>();
   const [perfumeSearchResultList, setPerfumeSearchResultList] = useState<
-    Brand[]
+    Perfume[]
   >([]);
-  const [perfumeSearchKeyword, setPerfumeSearchKeyword] = useState<string>('');
-  const [perfumeName, setPerfumeName] = useState<string>('');
-  const [brandName, setBrandName] = useState<string>('');
-  const [brandNameKorean, setBrandNameKorean] = useState<string>('');
   const [perfumePage, setPerfumePage] = useState<number>(0);
-  const [perfumeId, setPerfumeId] = useState<number | undefined>();
-  const [perfumeImage, setPerfumeImage] = useState<string>('');
   const [noteKorean, setNoteKorean] = useState<string>('');
   const [noteEnglish, setNoteEnglish] = useState<string>('');
   const [topMiddleBase, setTopMiddleBase] = useState<number | undefined>(1);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [notes, setNotes] = useState({
-    top: [] as string[][],
-    middle: [] as string[][],
-    base: [] as string[][],
+    top: [] as string[],
+    middle: [] as string[],
+    base: [] as string[],
   });
+  const [loading, setLoading] = useState(false);
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const view = useRef<HTMLDivElement>(null);
 
-  const selectPerfume = (el: Brand) => {
-    setPerfumeListToggle(false);
-    setPerfumeSearchKeyword('');
-    setPerfumeId(el?.perfumeId);
-    setPerfumeImage(
-      el?.perfumeImage ? el?.perfumeImage : '/assets/image/image_perfume.svg'
+  useEffect(() => {
+    if (!target) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading) {
+          setPerfumePage((prev) => prev + 1);
+        }
+      },
+      { root: null, rootMargin: '10px', threshold: 1.0 }
     );
-    setPerfumeName(el?.perfumeName);
-    setBrandName(el?.brandName);
-    setBrandNameKorean(el?.brandName_kr);
-  };
 
-  const resetPerfumeForm = () => {
-    setPerfumeSearchKeyword('');
-    setPerfumeName('');
-    setBrandName('');
-    setBrandNameKorean('');
-    setPerfumePage(0);
-    setPerfumeId(undefined);
-    setNoteKorean('');
-    setNoteEnglish('');
-    setNotes({
-      top: [],
-      middle: [],
-      base: [],
-    });
-  };
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [target, loading]);
 
-  const getPerfumeSearchResult = async () => {
-    try {
-      setIsFetching(true);
-      const res = await fetchPerfumeSearchResult(
-        'get',
-        `/search?name=${encodeURI(perfumeSearchKeyword)}&page=${perfumePage}`
-      );
-      if (res?.perfumes) {
-        setPerfumeSearchResultList((prev) =>
-          prev ? [...prev, ...res?.perfumes] : res?.perfumes
-        );
-        setPerfumeListToggle(true);
-        setPerfumeSearchResultTotal(res?.perfumesNum);
-      }
-    } catch (error) {
-      setPerfumeSearchResultList([]);
-      setPerfumePage(0);
-    } finally {
-      setIsFetching(false); // Fetch 종료
-    }
-  };
-
-  const postAddPerfumeScent = async () => {
+  useEffect(() => {
     if (
-      !perfumeId ||
-      (!notes.top.length && !notes.middle.length && !notes.base.length)
+      perfumePage > 0 &&
+      (notes.top.length || notes.middle.length || notes.base.length)
     ) {
-      alert('향수 모든 정보를 올바르게 입력해주세요.');
-      return;
-    }
-
-    const data = {
-      perfumeId: perfumeId,
-      scents: [...notes.top, ...notes.middle, ...notes.base],
-    };
-
-    try {
-      const res = await fetchPostPerfume('post', '/master/note', data, {
-        Authorization: 'Bearer ' + localStorage.getItem('my-token'),
-        accept: 'application/json',
-      });
-
-      if (res?.perfumeId) {
-        if (
-          window.confirm(
-            `노트 정보를 등록하였습니다.${brandName}(${brandNameKorean}) ${perfumeName} 향수 상세 페이지로 이동하시겠습니까?`
-          )
-        ) {
-          navigate(`/perfumedetail?perfume=${perfumeId}`);
-        } else {
-          resetPerfumeForm();
-        }
-      }
-    } catch (error) {
-      console.error('향수 등록 중 오류 발생', error);
-    }
-  };
-
-  useEffect(() => {
-    setPerfumePage(0);
-    setPerfumeSearchResultList([]);
-    const debounce = setTimeout(() => {
-      if (perfumeSearchKeyword.length > 1) {
-        getPerfumeSearchResult();
-      } else {
-        setPerfumeSearchResultList([]);
-        setPerfumeListToggle(false);
-      }
-    }, 300);
-    return () => {
-      clearTimeout(debounce);
-    };
-  }, [perfumeSearchKeyword]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isFetching || !brandListRef.current) return; // Fetch 중이거나 참조가 없을 때는 실행 안 함
-
-      const { scrollTop, scrollHeight, clientHeight } = brandListRef.current;
-      const threshold = 700;
-
-      if (scrollTop + clientHeight + threshold >= scrollHeight) {
-        if (
-          perfumeSearchResultTotal &&
-          perfumePage * 10 < perfumeSearchResultTotal
-        ) {
-          setPerfumePage((prevPage) => prevPage + 1);
-        }
-      }
-    };
-
-    const refCurrent = brandListRef.current;
-    refCurrent?.addEventListener('scroll', handleScroll);
-
-    return () => {
-      refCurrent?.removeEventListener('scroll', handleScroll);
-    };
-  }, [perfumePage, perfumeSearchResultTotal, perfumeSearchResultList]);
-
-  useEffect(() => {
-    if (perfumePage > 0) {
-      getPerfumeSearchResult();
+      postSearchByNote();
     }
   }, [perfumePage]);
 
-  useEffect(() => {
-    try {
-      fetchExistingNotes('get', `/notesinfo/${perfumeId}`, {
-        Authorization: 'Bearer ' + localStorage.getItem('my-token'),
-        accept: 'application/json',
-      });
-    } catch (error) {
-      console.error('향수 등록 중 오류 발생', error);
+  const callback = () => {
+    if (perfumeSearchResultList.length > 0) {
+      if (perfumePage !== -1) {
+        setPerfumePage((prev) => prev + 1);
+      }
     }
-  }, [perfumeName]);
+  };
+
+  const options = {
+    root: view.current,
+    rootMargin: '10px',
+    threshold: 1.0,
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    if (entries[0].isIntersecting) {
+      callback();
+      observer.unobserve(entries[0].target);
+    }
+  }, options);
+
+  const postSearchByNote = async () => {
+    if (!notes.top.length && !notes.middle.length && !notes.base.length) {
+      alert('노트를 올바르게 입력해주세요.');
+      return;
+    }
+
+    const formData = new FormData();
+    const blob = new Blob(
+      [
+        JSON.stringify({
+          topNote: [...notes.top.map((el) => el[0])],
+          middleNote: [...notes.middle.map((el) => el[0])],
+          baseNote: [...notes.base.map((el) => el[0])],
+        }),
+      ],
+      { type: 'application/json' }
+    );
+
+    formData.append('requestDto', blob);
+
+    setLoading(true);
+    try {
+      const res = await getSearchByNoteResultList(formData, perfumePage);
+      if (res?.totalBrandPerfumeCount > 0) {
+        setPerfumeSearchResultList((prev) => [...prev, ...res.perfumes]);
+        setPerfumeSearchResultTotal(res.totalBrandPerfumeCount);
+      } else {
+        setPerfumePage(-1);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Container>
@@ -210,25 +146,42 @@ const SearchByNote = () => {
           noteKorean={noteKorean}
           notes={notes}
           setNotes={setNotes}
-          existingNotes={existingNotes}
+          setPerfumePage={setPerfumePage}
         />
 
         <NoteArea>
-          <NoteList title={'탑노트'} notes={notes?.top} setNotes={setNotes} />
-          <NoteList
-            title={'미들노트'}
-            notes={notes?.middle}
-            setNotes={setNotes}
-          />
-          <NoteList
-            title={'베이스노트'}
-            notes={notes?.base}
-            setNotes={setNotes}
-          />
+          <NoteList title={'탑노트'} notes={notes} setNotes={setNotes} />
+          <NoteList title={'미들노트'} notes={notes} setNotes={setNotes} />
+          <NoteList title={'베이스노트'} notes={notes} setNotes={setNotes} />
 
-          <AddButton onClick={() => postAddPerfumeScent()}>검색하기</AddButton>
+          <AddButton
+            onClick={() => {
+              setPerfumePage(0);
+              setPerfumeSearchResultList([]);
+              postSearchByNote();
+            }}
+          >
+            검색하기
+          </AddButton>
         </NoteArea>
       </>
+      {perfumeSearchResultList?.length > 0 && (
+        <PerfumeListArea>
+          {perfumeSearchResultList?.map((perfume, index) => {
+            return <PerfumeList key={'perfume_' + index} perfume={perfume} />;
+          })}
+
+          <div
+            ref={setTarget}
+            style={{
+              backgroundColor: 'red',
+              width: '100%',
+              height: '180px',
+            }}
+          />
+        </PerfumeListArea>
+      )}
+      {/* )} */}
     </Container>
   );
 };

@@ -33,6 +33,56 @@ export const RowInput = styled.input`
   outline: none;
 `;
 
+export const NoteListArea = styled.div`
+  label: note-list-area;
+  position: absolute;
+  top: 33px;
+  width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #ffffff;
+  border: 1px solid #d67070;
+  border-radius: 5px;
+  box-sizing: border-box;
+  /* 스크롤바 스타일 조정 */
+  ::-webkit-scrollbar {
+    width: 6px; /* 스크롤바 너비 */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* 스크롤바 배경 색상 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #e3a6a1; /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 둥글게 */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 스크롤바 호버 색상 */
+  }
+`;
+
+export const NoteListRow = styled.div`
+  label: note-list-row;
+  width: inherit;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: Noto Sans Kr;
+  align-content: center;
+  cursor: pointer;
+  text-align: center;
+
+  :hover {
+    background-color: rgb(255, 237, 235);
+  }
+`;
+
 export const TopMiddleBaseSelect = styled.select`
   label: top-middle-base-select;
   width: inherit;
@@ -42,20 +92,4 @@ export const TopMiddleBaseSelect = styled.select`
   border: 1px solid #b3b3b3;
   border-radius: 5px;
   padding: 8px 15px;
-`;
-
-export const AddButton = styled.button`
-  label: add-button;
-  width: auto;
-  height: 30px;
-  font-size: 1.5rem;
-  font-weight: 550;
-  margin-left: auto;
-  margin-right: auto;
-  color: #ffffff;
-  margin-top: 30px;
-  background-color: #f5d0cd;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 `;

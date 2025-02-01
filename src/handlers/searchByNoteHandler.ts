@@ -23,9 +23,9 @@ export const handleAddNote = (
   noteEnglish: string,
   noteKorean: string,
   topMiddleBase: number | undefined,
-  notes: { top: string[][]; middle: string[][]; base: string[][] },
+  notes: { top: string[]; middle: string[]; base: string[] },
   setNotes: React.Dispatch<React.SetStateAction<any>>,
-  existingNotes: any
+  setNoteListToggle: (value: React.SetStateAction<boolean>) => void
 ) => {
   if (!validateNoteInput(noteEnglish, noteKorean)) return;
 
@@ -33,36 +33,44 @@ export const handleAddNote = (
     topMiddleBase === 1 ? 'top' : topMiddleBase === 2 ? 'middle' : 'base';
 
   // 중복 여부 확인
-  const isDuplicate =
-    existingNotes[key]?.some((note: string) => note === noteKorean) ||
-    notes[key]?.some(
-      (note) => note[1] === noteKorean && note[2] === topMiddleBase?.toString()
-    );
+  if (notes[key].length > 0) {
+    const isDuplicate =
+      notes[key]?.filter((note) => note.includes(noteKorean)).length > 0
+        ? true
+        : false;
 
-  if (isDuplicate) {
-    alert('이미 추가하신 노트입니다.');
-    return;
+    if (isDuplicate) {
+      alert('이미 추가하신 노트입니다.');
+      return;
+    }
   }
 
   setNotes((prevNotes: { [x: string]: any }) => ({
     ...prevNotes,
-    [key]: [
-      ...prevNotes[key],
-      [noteEnglish, noteKorean, topMiddleBase?.toString()],
-    ],
+    [key]: [...prevNotes[key], [noteKorean, noteEnglish]],
   }));
+  setNoteListToggle(false);
 };
 
 // handleDelete 함수
 export const handleDelete = (
-  el: string[],
-  notes: string[][],
-  setNotes: React.Dispatch<React.SetStateAction<any>>
+  title: keyof typeof notes,
+  toBeDeletedIndex: number,
+  notes: { top: string[]; middle: string[]; base: string[] },
+  setNotes: React.Dispatch<
+    React.SetStateAction<{
+      top: string[];
+      middle: string[];
+      base: string[];
+    }>
+  >
 ) => {
-  const key = el[2] === '1' ? 'top' : el[2] === '2' ? 'middle' : 'base';
-
-  setNotes((prevNotes: { [x: string]: any[] }) => ({
-    ...prevNotes,
-    [key]: prevNotes[key].filter((n) => n[0] !== el[0] || n[1] !== el[1]),
-  }));
+  if (notes[title] && notes[title].length > 0) {
+    setNotes((prevNotes) => ({
+      ...prevNotes,
+      [title]: prevNotes[title].filter(
+        (_, index) => index !== toBeDeletedIndex
+      ),
+    }));
+  }
 };

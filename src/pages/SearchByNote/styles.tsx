@@ -12,7 +12,6 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-  margin-bottom: 350px;
 `;
 
 export const Title = styled.h1`
@@ -69,6 +68,29 @@ export const NoteArea = styled.article`
   flex-direction: column;
 `;
 
+export const PerfumeListArea = styled.div`
+  label: perfume-list-area;
+  width: 70%;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px 10px;
+  margin-bottom: 30px;
+  margin-top: 40px;
+
+  ${`@media(max-width:670px)`} {
+    width: 70%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 10px;
+  }
+
+  ${mediaQuery} {
+    width: calc(100% - 40px);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 10px;
+  }
+`;
+
 export const AddButton = styled.button`
   label: add-button;
   width: auto;
@@ -77,6 +99,7 @@ export const AddButton = styled.button`
   font-weight: 500;
   color: #ffffff;
   margin-top: 15px;
+  margin-bottom: 50px;
   background-color: #d67070;
   border: none;
   border-radius: 5px;
