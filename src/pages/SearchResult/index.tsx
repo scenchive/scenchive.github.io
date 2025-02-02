@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Container,
   Main,
@@ -7,11 +7,11 @@ import {
   Lists,
   ListText,
   Loading,
-} from "./styles";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { api } from "../../api";
-import Header from "../../components/Header";
-import Search from "../../components/Search";
+} from './styles';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { api } from '../../api';
+import Header from '../../common/Header';
+import Search from '../../common/Search';
 
 interface Perfumes {
   perfumeId: number;
@@ -49,7 +49,7 @@ const SearchResult = () => {
 
   const options = {
     root: view.current,
-    rootMargin: "10px",
+    rootMargin: '10px',
     threshold: 1.0,
   };
 
@@ -69,31 +69,31 @@ const SearchResult = () => {
   }, [target, loading]);
 
   useEffect(() => {
-    getSearchResult("result");
-  }, [querySearch.get("search")]);
+    getSearchResult('result');
+  }, [querySearch.get('search')]);
 
   useEffect(() => {
     if (perfumesPage !== -1 && perfumesPage > 0) {
-      getSearchResult("more");
+      getSearchResult('more');
     }
   }, [perfumesPage]);
 
   const getSearchResult = async (type: string) => {
     await api
       .get(
-        `/search?name=${querySearch.get("search")}&page=${
-          type !== "more" ? 0 : perfumesPage
+        `/search?name=${querySearch.get('search')}&page=${
+          type !== 'more' ? 0 : perfumesPage
         }`
       )
       .then((res) => {
-        if (type === "result") {
+        if (type === 'result') {
           //검색 결과
           if (res.data.brandsNum === 0) setResultBrands(null);
           else setResultBrands(res.data.brands);
           if (res.data.perfumesNum === 0) setResultPerfumes(null);
           else setResultPerfumes(res.data.perfumes);
           setResultLoading(false);
-        } else if (type === "more") {
+        } else if (type === 'more') {
           //무한스크롤
           if (res.data) {
             setResultPerfumes((prev) =>
@@ -122,7 +122,7 @@ const SearchResult = () => {
                 {resultBrands.map((el, index) => {
                   return (
                     <List
-                      key={"brand_" + index}
+                      key={'brand_' + index}
                       onClick={() =>
                         navigate(`/branddetail?name=${el.brandName}`)
                       }
@@ -149,7 +149,7 @@ const SearchResult = () => {
                 {resultPerfumes?.map((el, index) => {
                   return (
                     <List
-                      key={"perfume_" + index}
+                      key={'perfume_' + index}
                       onClick={() =>
                         navigate(`/perfumedetail?perfume=${el.perfumeId}`)
                       }
@@ -170,7 +170,7 @@ const SearchResult = () => {
                 {resultPerfumes && (
                   <div
                     ref={setTarget}
-                    style={{ width: "100%", height: "1px" }}
+                    style={{ width: '100%', height: '1px' }}
                   />
                 )}
               </Lists>

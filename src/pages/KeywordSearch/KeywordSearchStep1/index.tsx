@@ -1,8 +1,8 @@
-import React from "react";
-import { Container, Top, Main, Box } from "./styles";
-import { useNavigate } from "react-router-dom";
-import Header from "../../../components/Header";
-import Search from "../../../components/Search";
+import React from 'react';
+import { Container, Top, Main, Box } from './styles';
+import { useNavigate } from 'react-router-dom';
+import Header from '../../../common/Header';
+import Search from '../../../common/Search';
 
 const KeywordSearchStep1 = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const KeywordSearchStep1 = () => {
         <Box
           borderColor="#D67070"
           onClick={() => {
-            navigate("/keywordsearchstep2?option=1");
+            navigate('/keywordsearchstep2?option=1');
           }}
         >
           계열/분위기/계절
@@ -31,7 +31,7 @@ const KeywordSearchStep1 = () => {
         <Box
           borderColor="#CEB172"
           onClick={() => {
-            navigate("/keywordsearchstep2?option=2");
+            navigate('/keywordsearchstep2?option=2');
           }}
         >
           TPO

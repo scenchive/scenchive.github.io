@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Card,
   CardText,
@@ -7,11 +7,11 @@ import {
   Keyword,
   KeywordBox,
   Top,
-} from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { api } from "../../api";
-import Header from "../../components/Header";
-import Search from "../../components/Search";
+} from './styles';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { api } from '../../api';
+import Header from '../../common/Header';
+import Search from '../../common/Search';
 
 interface Perfumes {
   id: number;
@@ -31,10 +31,10 @@ interface Keyword {
 
 const RecommendResult = () => {
   const [querySearch, setQuerySearch] = useSearchParams();
-  const option = querySearch.get("option");
+  const option = querySearch.get('option');
   const navigate = useNavigate();
-  const keywordIds = querySearch.get("id")?.split(",").map(Number);
-  let keywordString = "";
+  const keywordIds = querySearch.get('id')?.split(',').map(Number);
+  let keywordString = '';
   const [perfumes, setPerfumes] = useState<Array<Perfumes> | []>([]);
   const [keywords, setKeywords] = useState<Array<Keyword> | []>([]);
   const [perfumesPage, setPerfumesPage] = useState(0);
@@ -69,7 +69,7 @@ const RecommendResult = () => {
 
   const options = {
     root: view.current,
-    rootMargin: "10px",
+    rootMargin: '10px',
     threshold: 1.0,
   };
 
@@ -118,7 +118,7 @@ const RecommendResult = () => {
           return (
             <Card
               key={el.id}
-              onClick={() => navigate("/perfumedetail?perfume=" + el.id)}
+              onClick={() => navigate('/perfumedetail?perfume=' + el.id)}
             >
               <img src={el.perfumeImage} />
               <CardText>
@@ -129,7 +129,7 @@ const RecommendResult = () => {
             </Card>
           );
         })}
-        <div ref={setTarget} style={{ width: "100%", height: "180px" }} />
+        <div ref={setTarget} style={{ width: '100%', height: '180px' }} />
       </Cards>
     </Container>
   );

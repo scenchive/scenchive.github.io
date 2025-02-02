@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Top,
@@ -8,11 +8,11 @@ import {
   Keyword,
   Button,
   Keywords,
-} from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { api } from "../../../api";
-import Header from "../../../components/Header";
-import Search from "../../../components/Search";
+} from './styles';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { api } from '../../../api';
+import Header from '../../../common/Header';
+import Search from '../../../common/Search';
 
 interface Keywords {
   id: number;
@@ -28,10 +28,10 @@ interface Keywords {
 const KeywordSearchStep2 = () => {
   const [querySearch, setQuerySearch] = useSearchParams();
   //1 : 계열/분위기/계절 or 2 : TPO
-  const option = Number(querySearch.get("option"));
+  const option = Number(querySearch.get('option'));
   const navigate = useNavigate();
-  const top = ["계열/분위기/계절", "TPO"];
-  const title = ["계절", "장소"];
+  const top = ['계열/분위기/계절', 'TPO'];
+  const title = ['계절', '장소'];
   const [keywords, setKeywords] = useState<Array<Keywords> | []>([]);
   const [selectedKeywords, setSelectedKeywords] = useState<Array<number>>([]);
   const [keywordCount, setKeywordCount] = useState([0, 0, 0]);
@@ -46,7 +46,7 @@ const KeywordSearchStep2 = () => {
    * 키워드 가져오는 api 호출 함수
    */
   const getKeyword = () => {
-    const opt = option === 1 ? "type" : "tpo";
+    const opt = option === 1 ? 'type' : 'tpo';
     api.get(`perfumes/recommend/${opt}`, {}).then((res) => {
       setKeywords(res.data);
     });
@@ -58,7 +58,7 @@ const KeywordSearchStep2 = () => {
    * @param {number} type 키워드 ptagtype_id
    */
   const handleClickKeyword = (target: number, type: number) => {
-    let temp = [...selectedKeywords];
+    const temp = [...selectedKeywords];
     //선택된 상태일 경우
     if (isSelected(target)) {
       setSelectedKeywords(temp.filter((el) => el !== target));
@@ -89,10 +89,10 @@ const KeywordSearchStep2 = () => {
     if (keywordCount[0] > 0 && keywordCount[1] > 0 && keywordCount[2] > 0)
       navigate(
         `/recommendresult?option=${
-          option === 1 ? "type" : "tpo"
+          option === 1 ? 'type' : 'tpo'
         }&id=${selectedKeywords}`
       );
-    else alert("항목 당 한 개 이상의 키워드를 선택해주세요.");
+    else alert('항목 당 한 개 이상의 키워드를 선택해주세요.');
   };
 
   return (

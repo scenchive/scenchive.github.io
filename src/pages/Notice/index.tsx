@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Content,
@@ -11,12 +11,12 @@ import {
   Lists,
   NoData,
   Top,
-} from "./styles";
-import Header from "../../components/Header";
-import Search from "../../components/Search";
-import Pagination from "../../components/Pagination";
-import { api } from "../../api";
-import { useNavigate } from "react-router-dom";
+} from './styles';
+import Header from '../../common/Header';
+import Search from '../../common/Search';
+import Pagination from '../../common/Pagination';
+import { api } from '../../api';
+import { useNavigate } from 'react-router-dom';
 
 interface Notice {
   id: number;
@@ -32,7 +32,7 @@ interface Notice {
  * @author 신정은
  */
 const Notice = () => {
-  const token = localStorage.getItem("my-token");
+  const token = localStorage.getItem('my-token');
   const navigate = useNavigate();
   const [notices, setNotices] = useState<Array<Notice> | []>([]);
   const [unread, setUnread] = useState(0);
@@ -44,7 +44,6 @@ const Notice = () => {
       getNotice();
     }
   }, [token, page]);
-
 
   //알림 목록 가져오는 api
   const getNotice = () => {

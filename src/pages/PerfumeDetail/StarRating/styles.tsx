@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-const breakpoint = "565px";
+import styled from '@emotion/styled';
+const breakpoint = '565px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const StarRatingArea = styled.div`
@@ -11,7 +11,6 @@ export const StarRatingArea = styled.div`
   margin-right: 5px;
 
   ${mediaQuery} {
-    
   }
 `;
 
@@ -21,8 +20,5 @@ export const StarIcon = styled.span`
   margin-right: 5px;
 
   ${mediaQuery} {
-    
   }
 `;
-
-

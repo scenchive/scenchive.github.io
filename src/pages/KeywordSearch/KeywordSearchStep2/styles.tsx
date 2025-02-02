@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-const breakpoint = "565px";
+const breakpoint = '565px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
@@ -79,12 +79,12 @@ export const Keyword = styled.div<{ isSelected: boolean }>`
   width: fit-content;
   font-family: Noto Sans Kr;
   font-size: 1.2rem;
-  border: 1.5px solid ${(props) => (props.isSelected ? "#D67070" : "#e3a6a1")};
+  border: 1.5px solid ${(props) => (props.isSelected ? '#D67070' : '#e3a6a1')};
   align-self: flex-start;
   padding: 6px 10px 6.5px 10px;
   border-radius: 30px;
-  background-color: ${(props) => (props.isSelected ? "#D67070" : "#F5D0CD")};
-  color: ${(props) => (props.isSelected ? "white" : "#616161")};
+  background-color: ${(props) => (props.isSelected ? '#D67070' : '#F5D0CD')};
+  color: ${(props) => (props.isSelected ? 'white' : '#616161')};
   box-shadow: 2px 3px 2.5px #d9d9d9;
   margin: 5px;
   cursor: pointer;
