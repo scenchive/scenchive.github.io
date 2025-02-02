@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Container, Main, PageNotFoundNotice, HomeButton } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../api';
-import Header from '../../components/Header/index';
-import Search from '../../components/Search/index';
+import Header from '../../common/Header/index';
+import Search from '../../common/Search/index';
 
 const NotFound = () => {
   const navigate = useNavigate();

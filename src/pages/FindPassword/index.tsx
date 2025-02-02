@@ -2,7 +2,7 @@
 import React, { useCallback, useRef } from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Header from '../../components/Header/index';
+import Header from '../../common/Header/index';
 import useFindPassword from '../../hooks/auth/useFindPassword';
 import useApi from '../../hooks/useApi';
 import useUserTypeStore from '../../stores/useUserAuthority';

@@ -17,9 +17,10 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../api';
 import Color from 'color-thief-react';
-import Header from '../../components/Header/index';
-import Search from '../../components/Search/index';
+import Header from '../../common/Header/index';
+import Search from '../../common/Search/index';
 import axios from 'axios';
+import Dashboard from '../../components/Home/Dashboard';
 
 interface Perfumes {
   id: number;
@@ -263,6 +264,7 @@ const Home = () => {
             </Main>
           )
         ) : null}
+        <Dashboard />
       </Container>
     </>
   );

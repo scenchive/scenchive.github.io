@@ -13,8 +13,8 @@ import {
   CommentBoardTitle,
 } from './styles';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
-import Search from '../../components/Search';
+import Header from '../../common/Header';
+import Search from '../../common/Search';
 import useApi from '../../hooks/useApi';
 import { CommentType } from '../../common/types';
 

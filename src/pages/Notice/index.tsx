@@ -12,9 +12,9 @@ import {
   NoData,
   Top,
 } from './styles';
-import Header from '../../components/Header';
-import Search from '../../components/Search';
-import Pagination from '../../components/Pagination';
+import Header from '../../common/Header';
+import Search from '../../common/Search';
+import Pagination from '../../common/Pagination';
 import { api } from '../../api';
 import { useNavigate } from 'react-router-dom';
 

@@ -13,8 +13,8 @@ import {
 } from './styles';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { api } from '../../api';
-import Header from '../../components/Header';
-import Search from '../../components/Search';
+import Header from '../../common/Header';
+import Search from '../../common/Search';
 import useApi from '../../hooks/useApi';
 import { MyBoardsBoardType } from '../../common/types';
 

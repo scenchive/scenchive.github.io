@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Container, Top, TopText, Text, Lists, List, ListText } from './styles';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import Header from '../../components/Header';
-import Search from '../../components/Search';
+import Header from '../../common/Header';
+import Search from '../../common/Search';
 import KakaoMapArea from './KakaoMapArea';
 import axios from 'axios';
 import { Perfumes, Store } from '../../common/types';
