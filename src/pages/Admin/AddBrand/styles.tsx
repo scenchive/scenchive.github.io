@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
-const breakpoint = '565px';
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`

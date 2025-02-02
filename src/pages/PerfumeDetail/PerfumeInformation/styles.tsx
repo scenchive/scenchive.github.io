@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-const breakpoint = '565px';
+import styled from "@emotion/styled";
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const PerfumeInformationArea = styled.div`
@@ -22,6 +22,7 @@ export const PerfumeNameKR = styled.div`
   ${mediaQuery} {
   }
 `;
+
 
 export const BrandArea = styled.div`
   label: brand-area;

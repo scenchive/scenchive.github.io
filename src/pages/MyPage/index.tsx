@@ -1,7 +1,17 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Container,
   Main,
+  ProfileArea,
+  ProfileImage,
+  NameEmailArea,
+  NameEmailAreaTop,
+  UserInformationArea,
+  MobileLogoutButton,
+  ButtonArea,
+  Splitter,
+  ProfileButton,
+  SettingIcon,
   KeywordArea,
   KeywordAreaTitle,
   MyKeywordsArea,
@@ -11,19 +21,17 @@ import {
   RecommendTabButton,
   ListArea,
   NoticeComment,
-} from './styles';
-import { useNavigate } from 'react-router-dom';
-import { api } from '../../api';
-import PerfumeCell from '../../components/MyPage/PerfumeCell';
-import PerfumeCellModifyModal from '../../components/MyPage/PerfumeCellModifyModal';
-import Header from '../../common/Header';
-import Search from '../../common/Search';
-import UserModifyModal from '../../components/MyPage/UserModifyModal';
-import { KeywordType, PerfumeType } from '../../common/types';
-import useApi from '../../hooks/useApi';
-import { resetUserType } from '../../stores/useUserAuthority';
-import ProfileImageModifyModal from '../../components/MyPage/ProfileImageChangeModal';
-import Profile from '../../components/MyPage/Profile';
+} from "./styles";
+import { useNavigate } from "react-router-dom";
+import { api } from "../../api";
+import PerfumeCell from "./PerfumeCell";
+import PerfumeCellModifyModal from "./PerfumeCellModifyModal";
+import Header from "../../components/Header";
+import Search from "../../components/Search";
+import UserModifyModal from "./UserModifyMoal";
+import { KeywordType, PerfumeType } from "../../common/types";
+import useApi from "../../hooks/useApi";
+import { resetUserType } from "../../stores/useUserAuthority";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -65,11 +73,18 @@ const MyPage = () => {
     fetchApi: fetchBookmark,
   } = useApi<any>();
 
+  const {
+    data: logout,
+    loading: logoutLoading,
+    error: logoutError,
+    fetchApi: fetchLogout,
+  } = useApi<any>();
+
   const [myToken, setMyToken] = useState<string | null>();
   const [email, setEmail] = useState<string | null>();
   const [name, setName] = useState<string | null>();
   const [imageUrl, setImageUrl] = useState<string>(
-    '/assets/icon/icon-profile-picture.svg'
+    "/assets/icon/icon-profile-picture.svg"
   );
   const [userKeyword, setUserKeyword] = useState<KeywordType[]>();
   const [fragranceWheelKeywords, setFragranceWheelKeywords] = useState<
@@ -78,19 +93,17 @@ const MyPage = () => {
   const [moodKeywords, setMoodKeywords] = useState<KeywordType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalOpen2, setIsModalOpen2] = useState<boolean>(false);
-  const [isModalOpen3, setIsModalOpen3] = useState<boolean>(false);
-  const [clickedTabMenu, setClickedTabMenu] = useState<string>('북마크한 향수');
+  const [clickedTabMenu, setClickedTabMenu] = useState<string>("북마크한 향수");
   const [bookmarkList, setBookmarkList] = useState<PerfumeType[]>();
   const [totalBookmarkPerfumeCount, setTotalBookmarkPerfumeCount] =
     useState<number>();
   const [recommendList, setRecommendList] = useState<PerfumeType[]>();
   const modalBackground = useRef<HTMLDivElement>(null);
   const [bookmarkPage, setBookmarkPage] = useState<number>(0);
-  const token = localStorage.getItem('my-token');
+  let token = localStorage.getItem("my-token");
 
   const goToLogin = () => {
-    alert('로그인이 필요합니다.');
-    navigate('/login');
+    navigate("/login");
   };
 
   /*
@@ -99,13 +112,13 @@ const MyPage = () => {
    */
   const validateToken = useCallback(async () => {
     if (token && token.length > 0) {
-      const res = await fetchCheckToken('post', '/token-validation', {});
+      const res = await fetchCheckToken("post", "/token-validation", {});
       if (res?.length > 0) {
         setMyToken(token);
-        fetchProfile('get', '/profile');
-        fetchInitialUserKeyword('get', '/keyword');
-        fetchInitialRecommendList('get', '/bookmark/recommend');
-        fetchKeywordList('get', '/survey');
+        fetchProfile("get", "/profile");
+        fetchInitialUserKeyword("get", "/keyword");
+        fetchInitialRecommendList("get", "/bookmark/recommend");
+        fetchKeywordList("get", "/survey");
         getBookmarkList();
       } else if (checkTokenError) {
         goToLogin();
@@ -119,27 +132,15 @@ const MyPage = () => {
     validateToken();
   }, [validateToken]);
 
-  useEffect(() => {
-    if (isModalOpen2 === false) {
-      fetchProfile('get', '/profile');
-    }
-  }, [isModalOpen2]);
-
-  // useEffect(()=>{
-  //   if (isModalOpen2===false){
-
-  //   }
-  // })
-
   // 북마크 목록 가져오는 api
   const getBookmarkList = async () => {
     try {
-      const res = await fetchBookmark('get', '/bookmark?page=' + bookmarkPage);
+      const res = await fetchBookmark("get", "/bookmark?page=" + bookmarkPage);
       if (res?.perfumes.length > 0) {
         if (!totalBookmarkPerfumeCount) {
           setTotalBookmarkPerfumeCount(res?.totalBookmarkPerfumeCount);
         }
-        const newBookmarkList = bookmarkList?.concat(...res?.perfumes);
+        let newBookmarkList = bookmarkList?.concat(...res?.perfumes);
         setBookmarkList((prev) => {
           if (prev) {
             return [...prev, ...res?.perfumes];
@@ -151,10 +152,27 @@ const MyPage = () => {
           newBookmarkList &&
           newBookmarkList.length === totalBookmarkPerfumeCount
         ) {
-          window.removeEventListener('scroll', handleScroll, true);
+          window.removeEventListener("scroll", handleScroll, true);
         }
       }
     } catch {}
+  };
+
+  // 로그아웃 api
+  const handleLogout = async () => {
+    if (myToken && myToken.length > 0) {
+      try {
+        const res = await fetchLogout("post", "/service-logout", {});
+        if (res) {
+          resetUserType();
+          localStorage.removeItem("my-token");
+          alert("로그아웃되었습니다.");
+          navigate("/login");
+        }
+      } catch (error) {
+        alert("로그아웃이 정상적으로 처리되지 않았습니다. 다시 시도해주세요.");
+      }
+    }
   };
 
   useEffect(() => {
@@ -167,13 +185,11 @@ const MyPage = () => {
           setIsModalOpen(false);
         } else if (isModalOpen2 === true) {
           setIsModalOpen2(false);
-        } else if (isModalOpen3 === true) {
-          setIsModalOpen(false);
         }
       }
     };
-    window.addEventListener('mousedown', handleClick);
-    return () => window.removeEventListener('mousedown', handleClick);
+    window.addEventListener("mousedown", handleClick);
+    return () => window.removeEventListener("mousedown", handleClick);
   }, [modalBackground]);
 
   const handleScroll = useCallback((): void => {
@@ -193,7 +209,7 @@ const MyPage = () => {
         totalBookmarkPerfumeCount &&
         Math.ceil(totalBookmarkPerfumeCount) < (bookmarkPage + 1) * 10
       ) {
-        window.removeEventListener('scroll', handleScroll, true);
+        window.removeEventListener("scroll", handleScroll, true);
       }
       if (bookmarkPage > 0) {
         getBookmarkList();
@@ -202,9 +218,9 @@ const MyPage = () => {
   }, [bookmarkPage, bookmarkList]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, true);
+    window.addEventListener("scroll", handleScroll, true);
     return () => {
-      window.removeEventListener('scroll', handleScroll, true);
+      window.removeEventListener("scroll", handleScroll, true);
     };
   }, [handleScroll]);
 
@@ -230,8 +246,8 @@ const MyPage = () => {
 
   useEffect(() => {
     if (keywordList !== undefined) {
-      const fragranceWheelKeywordsArray: KeywordType[] = [];
-      const moodKeywordsArray: KeywordType[] = [];
+      let fragranceWheelKeywordsArray: KeywordType[] = [];
+      let moodKeywordsArray: KeywordType[] = [];
       keywordList.map((el: KeywordType) =>
         el.utagtype_id === 1
           ? fragranceWheelKeywordsArray.push(el)
@@ -268,28 +284,68 @@ const MyPage = () => {
         />
       ) : null}
 
-      {isModalOpen3 === true ? (
-        <ProfileImageModifyModal
-          ModalBackground={modalBackground}
-          imageUrl={imageUrl}
-          isModalOpen3={isModalOpen3}
-          setIsModalOpen3={setIsModalOpen3}
-          myToken={myToken}
-        />
-      ) : null}
-
       <Container>
         <Header />
         <Search />
 
         <Main>
-          <Profile
-            imageUrl={imageUrl}
-            name={name}
-            email={email}
-            setIsModalOpen2={setIsModalOpen2}
-            setIsModalOpen3={setIsModalOpen3}
-          />
+          <ProfileArea>
+            <ProfileImage src={imageUrl} />
+            <NameEmailArea>
+              <NameEmailAreaTop>
+                <UserInformationArea>
+                  <div className="name_text">{name}</div>
+                  <MobileLogoutButton onClick={() => handleLogout()}>
+                    로그아웃
+                  </MobileLogoutButton>
+                </UserInformationArea>
+
+                <div className="email_text">{email}</div>
+              </NameEmailAreaTop>
+
+              <ButtonArea>
+                <div
+                  onClick={() => setIsModalOpen2(true)}
+                  style={{ display: "flex", flexDirection: "row" }}
+                >
+                  <SettingIcon src="/assets/icon/icon_settings.svg" />
+                  <ProfileButton isPink={false} isLogin={false}>
+                    프로필 수정하기
+                  </ProfileButton>
+                </div>
+                <Splitter isPink={false} isLogin={false}>
+                  |
+                </Splitter>
+                <ProfileButton
+                  onClick={() => navigate("/myBoards")}
+                  isPink={true}
+                  isLogin={false}
+                >
+                  내가 작성한 게시글
+                </ProfileButton>
+                <Splitter isPink={false} isLogin={false}>
+                  |
+                </Splitter>
+                <ProfileButton
+                  onClick={() => navigate("/myComments")}
+                  isPink={true}
+                  isLogin={false}
+                >
+                  내가 작성한 댓글
+                </ProfileButton>
+                <Splitter isPink={false} isLogin={true}>
+                  |
+                </Splitter>
+                <ProfileButton
+                  onClick={() => handleLogout()}
+                  isPink={false}
+                  isLogin={true}
+                >
+                  로그아웃{" "}
+                </ProfileButton>
+              </ButtonArea>
+            </NameEmailArea>
+          </ProfileArea>
 
           <KeywordArea>
             <KeywordAreaTitle>나의 향수 세포</KeywordAreaTitle>
@@ -307,22 +363,22 @@ const MyPage = () => {
           <TabButtonArea>
             <BookmarkedTabButton
               clickedTabMenu={clickedTabMenu}
-              onClick={() => setClickedTabMenu('북마크한 향수')}
+              onClick={() => setClickedTabMenu("북마크한 향수")}
             >
               북마크한 향수
             </BookmarkedTabButton>
             <RecommendTabButton
               clickedTabMenu={clickedTabMenu}
-              onClick={() => setClickedTabMenu('맞춤 추천 향수')}
+              onClick={() => setClickedTabMenu("맞춤 추천 향수")}
             >
               맞춤 추천 향수
             </RecommendTabButton>
           </TabButtonArea>
           <ListArea>
-            {clickedTabMenu === '북마크한 향수' ? (
+            {clickedTabMenu === "북마크한 향수" ? (
               bookmarkList?.length ? (
                 bookmarkList.map((el) => (
-                  <PerfumeCell key={'bookmark_' + el.perfume_id} Perfume={el} />
+                  <PerfumeCell key={"bookmark_" + el.perfume_id} Perfume={el} />
                 ))
               ) : (
                 <NoticeComment>북마크한 향수가 없습니다.</NoticeComment>
@@ -330,7 +386,7 @@ const MyPage = () => {
             ) : recommendList?.length ? (
               recommendList?.map((el) => (
                 <PerfumeCell
-                  key={'recommended_' + el.perfume_id}
+                  key={"recommended_" + el.perfume_id}
                   Perfume={el}
                 />
               ))

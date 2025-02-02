@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-const breakpoint = '565px';
+import styled from "@emotion/styled";
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
@@ -49,14 +49,14 @@ export const PerfumeNameKR = styled.div`
 
 export const PerfumeInformationArea = styled.div`
   label: perfume-information-area;
-  width: calc(100% - 26px);
+  width: calc( 100% - 26px );
   display: flex;
   flex-direction: row;
   align-items: center;
   border: 1px solid #dfdfdf;
   padding: 13px;
-  word-break: keep-all;
-  text-align: left;
+  word-break:keep-all;
+  text-align:left;
 
   ${mediaQuery} {
   }

@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import styled from "@emotion/styled";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const breakpoint = '565px';
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
-const colors = ['#F5D0CD', '#E3A6A1', '#D67070'];
+const colors = ["#F5D0CD", "#E3A6A1", "#D67070"];
 
 export const Container = styled.div`
   label: container;
@@ -19,8 +19,8 @@ export const Container = styled.div`
 
 export const Main = styled.div`
   label: main;
-  width: 70%;
-  min-width: 600px;
+  width: 100%;
+  max-width: 700px;
   min-height: 450px;
   display: flex;
   justify-content: center;
@@ -30,7 +30,6 @@ export const Main = styled.div`
 
   ${mediaQuery} {
     width: 100%;
-    min-width: 0px;
     padding: 0 20px;
     box-sizing: border-box;
   }
@@ -124,7 +123,7 @@ export const Option = styled.div`
 
 export const MainBottom = styled.div`
   label: main-bottom;
-  min-width: 600px;
+  width: 60%;
   display: flex;
   justify-content: center;
   font-family: Noto Sans KR;
@@ -134,7 +133,6 @@ export const MainBottom = styled.div`
 
   ${mediaQuery} {
     width: 100%;
-    min-width: 0px;
     & > img {
       width: 15px;
     }
@@ -216,7 +214,7 @@ export const PerfumeBox = styled.div<{ index: number }>`
   label: prefume-box;
   width: 200px;
   height: 100%;
-  cursor: pointer;
+  cursor:pointer;
 
   img {
     width: 180px;

@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { api } from '../api';
+import { useEffect, useState } from "react";
+import { api } from "../api";
 
 interface UseApiReturnType<T> {
   data: T | undefined;
   loading: boolean;
   error: any;
   fetchApi: (
-    method: 'get' | 'post' | 'delete' | 'put',
+    method: string,
     url: string,
     requestBody?: any,
     header?: any
@@ -29,44 +29,35 @@ function useApi<T>(): UseApiReturnType<T> {
     try {
       let response;
       switch (method.toLowerCase()) {
-        case 'get':
+        case "get":
           response = await api.get(url, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('my-token')}`,
+              Authorization: `Bearer ${localStorage.getItem("my-token")}`,
             },
           });
           setData(response?.data);
           setLoading(false);
           return response.data;
-        case 'post':
+        case "post":
           response = await api.post(url, requestBody, {
             headers: header
               ? header
-              : { Authorization: `Bearer ${localStorage.getItem('my-token')}` },
+              : { Authorization: `Bearer ${localStorage.getItem("my-token")}` },
           });
           setData(response?.data);
           setLoading(false);
           return response.data;
-        case 'delete':
+        case "delete":
           response = await api.delete(url, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('my-token')}`,
-            },
-          });
-          setData(response?.data);
-          setLoading(false);
-          return response.data;
-        case 'put':
-          response = await api.put(url, requestBody, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('my-token')}`,
+              Authorization: `Bearer ${localStorage.getItem("my-token")}`,
             },
           });
           setData(response?.data);
           setLoading(false);
           return response.data;
         default:
-          throw new Error('Unsupported HTTP method');
+          throw new Error("Unsupported HTTP method");
       }
     } catch (err: any) {
       setError(err);

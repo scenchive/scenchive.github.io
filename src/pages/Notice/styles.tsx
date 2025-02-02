@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
-const breakpoint = '565px';
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
@@ -86,7 +86,7 @@ export const List = styled.div<{ read: boolean }>`
   width: 100%;
   height: 45px;
   display: flex;
-  color: ${(props) => (props.read ? '#D9D9D9' : '#616161')};
+  color: ${(props) => (props.read ? "#D9D9D9" : "#616161")};
   font-size: 1.2rem;
   border-bottom: 1px solid #d5d5d5;
 `;
