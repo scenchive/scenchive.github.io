@@ -13,13 +13,13 @@ import Ranking from '../Ranking';
 
 interface BrandInfo {
   brandId: number;
+  brandName: string | null;
+  brandName_kr: string | null;
   brandImage: string | null;
-  brandName?: string;
-  name?: string;
-  brandName_kr: string;
 }
 
 const BrandRow = (props: {
+  isMobile: boolean;
   index: number | undefined;
   brandInformation: BrandInfo;
   ImgWidth: number;
@@ -28,11 +28,16 @@ const BrandRow = (props: {
   BrandNameKoreanFontSize: number;
   BrandNameEnglishFontSize: number;
   BrandNameFontSize: number;
+  addStyle?: string;
 }) => {
-  console.log('pppppp', props?.brandInformation);
   return (
-    <BrandRowArea>
-      {props?.index && <Ranking index={props?.index} />}
+    <BrandRowArea addStyle={props?.addStyle}>
+      {props.index !== undefined && (
+        <Ranking
+          index={props?.index}
+          width={props.isMobile ? '35px' : '40px'}
+        />
+      )}
       <BrandImage
         src={
           props?.brandInformation?.brandImage
@@ -44,21 +49,11 @@ const BrandRow = (props: {
       />
       <BrandInfo>
         <BrandNameArea flexDirection={props?.flexDirection}>
-          <BrandNameKorean fontSize={props?.BrandNameKoreanFontSize}>
-            {props?.brandInformation?.brandName_kr}
-          </BrandNameKorean>
-
           <BrandNameEnglish fontSize={props?.BrandNameEnglishFontSize}>
-            {/* ( {props?.brandInformation.name}
-            {props?.brandInformation?.name
-              ? props?.brandInformation?.name
-              : props?.brandInformation?.brandName}
-            ) */}{' '}
-            {props?.brandInformation.name}
+            {props?.brandInformation?.brandName}
           </BrandNameEnglish>
         </BrandNameArea>
         <BrandName fontSize={props?.BrandNameFontSize}>
-          {props?.brandInformation?.brandName}
           {props?.brandInformation?.brandName_kr && (
             <span>{props?.brandInformation?.brandName_kr}</span>
           )}

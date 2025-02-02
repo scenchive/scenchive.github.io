@@ -19,6 +19,7 @@ interface Brand {
   brandImage: string | null;
   name: string;
   brandName_kr: string;
+  brandName: string | null;
 }
 
 const TopCollected = (props: {
@@ -40,8 +41,7 @@ const TopCollected = (props: {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  console.log('psop=', props.mostCollectedBrand);
-  console.log('??', props.mostCollectedPerfume);
+
   return (
     <MostCollectedArea>
       <MostCollectedPerfumeArea>
@@ -66,6 +66,7 @@ const TopCollected = (props: {
 
         {props.mostCollectedBrand && (
           <BrandRow
+            isMobile={isMobile}
             index={undefined}
             brandInformation={props.mostCollectedBrand}
             ImgWidth={isMobile ? 40 : 50}

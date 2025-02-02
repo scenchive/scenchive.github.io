@@ -93,20 +93,21 @@ const useDashboard = () => {
       }
     }
   };
-  // const getReviewTop5Brand = async () => {
-  //   setError(null);
-  //   try {
-  //     const res = await axios.get(
-  //       `${process.env.REACT_APP_API}/main/top-reviewed-brand`
-  //     );
-  //     return res.data;
-  //   } catch (err) {
-  //     if (axios.isAxiosError(err) && err.response) {
-  //       console.error(err.response.data);
-  //       return err.response.data;
-  //     }
-  //   }
-  // };
+  const getReviewTop5Brand = async () => {
+    setError(null);
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/main/popular-brand`
+      );
+
+      return res.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error(err.response.data);
+        return err.response.data;
+      }
+    }
+  };
 
   return {
     getSeasonPopularPerfume,
@@ -115,7 +116,7 @@ const useDashboard = () => {
     getScenchiverMaster,
     getScenchiverAverage,
     getReviewTop5Perfume,
-    // getReviewTop5Brand,
+    getReviewTop5Brand,
   };
 };
 

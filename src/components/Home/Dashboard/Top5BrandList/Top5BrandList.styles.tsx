@@ -15,7 +15,6 @@ export const Top5BrandListArea = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-  background-color: red;
 
   ${mediaQuery} {
     width: 100%;

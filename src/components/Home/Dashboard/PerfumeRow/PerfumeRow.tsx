@@ -59,12 +59,10 @@ const PerfumeRow = (props: {
       <PerfumeInfo>
         <BrandNameArea flexDirection={props?.flexDirection}>
           <BrandNameKorean fontSize={props?.BrandNameKoreanFontSize}>
-            {props?.perfumeInformation?.brandName_kr}
+            {props?.perfumeInformation?.brandName_kr
+              ? `${props.perfumeInformation.brandName_kr} (${props.perfumeInformation.brandName})`
+              : props?.perfumeInformation?.brandName}
           </BrandNameKorean>
-
-          <BrandNameEnglish fontSize={props?.BrandNameEnglishFontSize}>
-            ({props?.perfumeInformation?.brandName})
-          </BrandNameEnglish>
         </BrandNameArea>
         <PerfumeName fontSize={props?.PerfumeNameFontSize}>
           {props?.perfumeInformation?.perfumeName

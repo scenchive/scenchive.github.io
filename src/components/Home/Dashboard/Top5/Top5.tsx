@@ -15,7 +15,17 @@ interface Perfumes {
   reviewCount: number;
 }
 
-const Top5 = (props: { reviewTop5PerfumeList: Perfumes[] }) => {
+interface Brands {
+  brandId: number;
+  brandName: string | null;
+  brandName_kr: string | null;
+  brandImage: string;
+}
+
+const Top5 = (props: {
+  reviewTop5PerfumeList: Perfumes[];
+  reviewTop5BrandList: Brands[];
+}) => {
   const navigate = useNavigate();
   const token = localStorage.getItem('my-token');
 
@@ -29,8 +39,8 @@ const Top5 = (props: { reviewTop5PerfumeList: Perfumes[] }) => {
         )}
       </ReviewTop5PerfumeListArea>
       <Top5BrandListListArea>
-        {props.reviewTop5PerfumeList && (
-          <Top5BrandList reviewTop5PerfumeList={props?.reviewTop5PerfumeList} />
+        {props.reviewTop5BrandList && (
+          <Top5BrandList reviewTop5BrandList={props?.reviewTop5BrandList} />
         )}
       </Top5BrandListListArea>
     </Top5Area>
