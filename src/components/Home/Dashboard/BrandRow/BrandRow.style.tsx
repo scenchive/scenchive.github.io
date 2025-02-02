@@ -7,7 +7,7 @@ const breakpoint = '565px';
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 const colors = ['#F5D0CD', '#E3A6A1', '#D67070'];
 
-export const BrandRowArea = styled.div`
+export const BrandRowArea = styled.div<{ addStyle?: string }>`
   label: brand-row-area;
   width: fit-content;
   height: fit-content;
@@ -18,12 +18,18 @@ export const BrandRowArea = styled.div`
   position: relative;
   margin-left: auto;
   margin-right: auto;
+  ${(props) => props.addStyle};
 `;
 
 export const BrandImage = styled.img`
   label: brand-image;
   margin-left: 10px;
   margin-right: 20px;
+
+  ${mediaQuery} {
+    margin-left: 5px;
+    margin-right: 8px;
+  }
 `;
 
 export const BrandInfo = styled.div`
@@ -44,6 +50,9 @@ export const BrandNameKorean = styled.span<{ fontSize: number }>`
   font-weight: 500;
   font-size: ${(props) => props.fontSize}rem;
   color: #616161;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const BrandNameEnglish = styled.span<{ fontSize: number }>`
@@ -51,6 +60,9 @@ export const BrandNameEnglish = styled.span<{ fontSize: number }>`
   font-weight: 500;
   font-size: ${(props) => props.fontSize}rem;
   color: #616161;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const BrandName = styled.div<{ fontSize: number }>`
