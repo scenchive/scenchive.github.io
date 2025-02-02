@@ -11,6 +11,7 @@ import MyPage from './pages/MyPage/index.tsx';
 import MyCollection from './pages/MyCollection';
 import ChangePassword from './pages/ChangePassword/index.tsx';
 import WriteReview from './pages/WriteReview';
+import SearchByNote from './pages/SearchByNote';
 import KeywordSearchStep1 from './pages/KeywordSearch/KeywordSearchStep1/index.tsx';
 import KeywordSearchStep2 from './pages/KeywordSearch/KeywordSearchStep2/index.tsx';
 import RecommendResult from './pages/RecommendResult';
@@ -41,6 +42,7 @@ function App() {
         <Route path="/mycollection" element={<MyCollection />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/writereview" element={<WriteReview />} />
+        <Route path="/searchbynote" element={<SearchByNote />} />
         <Route path="/keywordsearchstep1" element={<KeywordSearchStep1 />} />
         <Route path="/keywordsearchstep2" element={<KeywordSearchStep2 />} />
         <Route path="/recommendresult" element={<RecommendResult />} />

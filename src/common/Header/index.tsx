@@ -40,6 +40,11 @@ const Header = () => {
       img: '/assets/icon/icon_filter.svg',
     },
     {
+      name: '향 검색',
+      url: ['/searchbynote'],
+      img: '/assets/icon/icon_search_note.svg',
+    },
+    {
       name: '커뮤니티',
       url: ['/community'],
       img: '/assets/icon/icon_board.svg',
