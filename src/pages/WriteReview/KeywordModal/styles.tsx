@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-const breakpoint = '565px';
+import styled from "@emotion/styled";
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const ModalBackgroundArea = styled.div<{
@@ -11,9 +11,9 @@ export const ModalBackgroundArea = styled.div<{
   position: fixed;
   top: 0;
   background-color: ${(props) =>
-    props.isModalOpen === true ? '#000000' : null};
-  opacity: ${(props) => (props.isModalOpen === true ? '0.79' : null)};
-  z-index: ${(props) => (props.isModalOpen === true ? '1000' : null)};
+    props.isModalOpen === true ? "#000000" : null};
+  opacity: ${(props) => (props.isModalOpen === true ? "0.79" : null)};
+  z-index: ${(props) => (props.isModalOpen === true ? "1000" : null)};
 `;
 
 export const ModalArea = styled.div<{ isModalOpen: boolean | undefined }>`
@@ -28,7 +28,7 @@ export const ModalArea = styled.div<{ isModalOpen: boolean | undefined }>`
   margin: 100px auto 200px auto;
   padding: 50px;
   flex-flow: wrap;
-  z-index: ${(props) => (props.isModalOpen === true ? '1000' : null)};
+  z-index: ${(props) => (props.isModalOpen === true ? "1000" : null)};
 
   ${mediaQuery} {
     width: calc(100% - 80px);

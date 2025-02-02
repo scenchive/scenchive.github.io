@@ -1,7 +1,7 @@
-import { keyframes } from '@emotion/react';
-import styled from '@emotion/styled';
+import { keyframes } from "@emotion/react";
+import styled from "@emotion/styled";
 
-const breakpoint = '565px';
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 const fade = keyframes`
@@ -57,7 +57,6 @@ export const Content = styled.div`
     color: #616161;
     border-bottom: 1px solid #bc5f6a;
     padding: 10px 5px;
-    box-sizing: border-box;
   }
   .content__none {
     height: 400px;

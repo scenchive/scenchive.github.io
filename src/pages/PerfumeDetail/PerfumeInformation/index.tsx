@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   PerfumeInformationArea,
   BrandArea,
@@ -6,18 +6,21 @@ import {
   BrandDetailPageIcon,
   PerfumeNameKR,
   PerfumeRating,
-} from './styles';
-import { PerfumeDetailGroup, PerfumeRatingGroup } from '../../../common/types';
-import StarRating from '../StarRating';
-import PerfumeRatingBlock from '../PerfumeRatingBlock/index';
-import { useNavigate } from 'react-router-dom';
+} from "./styles";
+import {
+  PerfumeDetailGroup,
+  PerfumeRatingGroup,
+} from "../../../common/types";
+import StarRating from "../StarRating";
+import PerfumeRatingBlock from "../PerfumeRatingBlock/index";
+import { useNavigate } from "react-router-dom";
 
-const PerfumeInformation = (props: {
-  perfumeDetail: PerfumeDetailGroup | undefined;
-  ratesResArr: number[];
-  perfumeRating: PerfumeRatingGroup | undefined;
-  reviewTotal: number | undefined;
-}) => {
+const PerfumeInformation = (
+  props: {
+    perfumeDetail: PerfumeDetailGroup | undefined, ratesResArr: number[],
+    perfumeRating: PerfumeRatingGroup | undefined,
+    reviewTotal: number | undefined
+  }) => {
   const navigate = useNavigate();
 
   return (
@@ -28,15 +31,14 @@ const PerfumeInformation = (props: {
         }
       >
         <BrandNameKR>
-          {props?.perfumeDetail?.brandName_kr} ({' '}
-          {props?.perfumeDetail?.brandName})
+          {props?.perfumeDetail?.brandName_kr} ( {props?.perfumeDetail?.brandName})
         </BrandNameKR>
-        <BrandDetailPageIcon src={'/assets/icon/icon_brand_page.svg'} />
+        <BrandDetailPageIcon src={"/assets/icon/icon_brand_page.svg"} />
       </BrandArea>
       <PerfumeNameKR>{props?.perfumeDetail?.perfumeName}</PerfumeNameKR>
 
       <PerfumeRating>
-        <StarRating ratesResArr={props?.ratesResArr} />{' '}
+        <StarRating ratesResArr={props?.ratesResArr} />{" "}
         {props?.perfumeRating?.ratingAvg} ({props?.reviewTotal}건)
       </PerfumeRating>
 

@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-const breakpoint = '565px';
+import styled from "@emotion/styled";
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Content = styled.div`
@@ -63,7 +63,6 @@ export const LoginArea = styled.div`
   align-items: start;
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
 `;
 
 export const RowArea = styled.div`
@@ -88,21 +87,12 @@ export const AnswerRow = styled.input`
   width: -webkit-fill-available;
   font-family: Noto Sans KR;
   font-size: 1.1rem;
+  margin-bottom: 25px;
   border: none;
   border-bottom: 1px solid #dfdfdf;
   background-color: transparent;
   outline: none;
   -webkit-box-shadow: 0 0 0 1000px white inset;
-`;
-
-export const FindPassword = styled.button`
-  label: find-password;
-  color: #e3a6a1;
-  font-size: 1.1rem;
-  border: none;
-  background-color: transparent;
-  margin-left: auto;
-  cursor: pointer;
 `;
 
 export const LoginButton = styled.button`

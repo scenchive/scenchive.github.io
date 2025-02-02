@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
-const breakpoint = '565px';
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
@@ -77,8 +77,9 @@ export const Box = styled.div<{ borderColor: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor:pointer;
   ${mediaQuery} {
     font-size: 1.5rem;
   }
 `;
+

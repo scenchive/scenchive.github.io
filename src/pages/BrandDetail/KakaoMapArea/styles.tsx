@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
-const breakpoint = '565px';
+const breakpoint = "565px";
 const mediaQuery = () => `@media(max-width:${breakpoint})`;
 
 export const Container = styled.div`
@@ -41,16 +41,17 @@ export const ArrowImage = styled.img`
   width: 15px;
   height: 15px;
   margin-left: auto;
-`;
+
+`
 
 export const StoreListArea = styled.div`
   label: store-list-area;
   width: 70%;
 
-  ${mediaQuery} {
+  ${mediaQuery}{
     width: calc(100% - 40px);
   }
-`;
+`
 
 export const StoreListRow = styled.div`
   label: store-list-row;
@@ -62,9 +63,9 @@ export const StoreListRow = styled.div`
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
-`;
+`
 
-export const StoreNameAddress = styled.div`
+export const StoreNameAddress= styled.div`
   label: store-name-address;
   display: flex;
   flex-direction: column;
@@ -72,7 +73,7 @@ export const StoreNameAddress = styled.div`
   text-align: left;
   margin-left: auto;
   margin-right: auto;
-`;
+`
 
 export const StoreName = styled.div`
   label: store-name;
@@ -82,13 +83,15 @@ export const StoreName = styled.div`
   margin-bottom: 4px;
   margin-left: auto;
   margin-right: auto;
-`;
 
-export const Address = styled.div`
+`
+
+export const  Address = styled.div`
   label: address;
   color: #a2a2a2;
   font-family: Noto Sans KR;
   font-size: 1rem;
   margin-left: auto;
   margin-right: auto;
-`;
+
+`

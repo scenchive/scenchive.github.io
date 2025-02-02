@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import {
   Container,
   PageTitle,
@@ -10,12 +10,12 @@ import {
   RowTitle,
   RowInput,
   AddButton,
-} from './styles';
-import { useNavigate } from 'react-router-dom';
-import Header from '../../../common/Header';
-import Search from '../../../common/Search';
-import useApi from '../../../hooks/useApi';
-import useUserTypeStore from '../../../stores/useUserAuthority';
+} from "./styles";
+import { useNavigate } from "react-router-dom";
+import Header from "../../../components/Header";
+import Search from "../../../components/Search";
+import useApi from "../../../hooks/useApi";
+import useUserTypeStore from "../../../stores/useUserAuthority";
 
 const AddBrand = () => {
   const { userType } = useUserTypeStore();
@@ -24,8 +24,8 @@ const AddBrand = () => {
   const [brandLogoImage, setbrandLogoImage] = useState<any>();
   const [brandLogoImageName, setbrandLogoImageName] = useState<string>();
   const [previewImage, setPreviewImage] = useState<any>();
-  const [brandName, setBrandName] = useState('');
-  const [brandNameKorean, setBrandNameKorean] = useState('');
+  const [brandName, setBrandName] = useState("");
+  const [brandNameKorean, setBrandNameKorean] = useState("");
 
   const {
     data: brandListData,
@@ -59,40 +59,40 @@ const AddBrand = () => {
     const isKorean = /^[가-힣\s]+$/;
 
     if (!brandLogoImage) {
-      alert('브랜드 로고 사진을 업로드해주세요.');
+      alert("브랜드 로고 사진을 업로드해주세요.");
       return;
     }
 
     if (brandName.length === 0 || brandNameKorean.length === 0) {
-      alert('모든 값을 정확히 입력해주세요.');
+      alert("모든 값을 정확히 입력해주세요.");
       return;
     }
 
     if (!isKorean.test(brandNameKorean)) {
-      alert('브랜드 한글 이름은 한글로 입력해야 합니다.');
+      alert("브랜드 한글 이름은 한글로 입력해야 합니다.");
       return;
     }
 
     if (!isEnglish.test(brandName)) {
-      alert('브랜드 영문 이름은 영어로 입력해야 합니다.');
+      alert("브랜드 영문 이름은 영어로 입력해야 합니다.");
       return;
     }
 
     const formData = new FormData();
-    formData.append('image', brandLogoImage);
+    formData.append("image", brandLogoImage);
     const dto = {
       brandName: brandName,
       brandName_kr: brandNameKorean,
     };
     formData.append(
-      'dto',
-      new Blob([JSON.stringify(dto)], { type: 'application/json' })
+      "dto",
+      new Blob([JSON.stringify(dto)], { type: "application/json" })
     );
     try {
-      const res = await fetchPostBrand('post', '/master/brand', formData, {
-        Authorization: 'Bearer ' + localStorage.getItem('my-token'),
-        'Content-Type': 'multipart/form-data',
-        accept: 'application/json',
+      const res = await fetchPostBrand("post", "/master/brand", formData, {
+        Authorization: "Bearer " + localStorage.getItem("my-token"),
+        "Content-Type": "multipart/form-data",
+        accept: "application/json",
       });
 
       if (res) {
@@ -105,18 +105,18 @@ const AddBrand = () => {
           goToBrandDetail();
         } else {
           // '아니오'를 누르면 이 코드가 실행됩니다.
-          setBrandName('');
-          setBrandNameKorean('');
+          setBrandName("");
+          setBrandNameKorean("");
         }
       }
     } catch (error) {
-      console.error('브랜드 등록 중 오류 발생', error);
+      console.error("브랜드 등록 중 오류 발생", error);
     }
   };
 
   useEffect(() => {
-    if (userType !== 'ROLE_ADMIN') {
-      navigate('/');
+    if (userType !== "ROLE_ADMIN") {
+      navigate("/");
     }
   }, [userType]);
 
@@ -143,14 +143,14 @@ const AddBrand = () => {
             width: 0,
             height: 0,
             padding: 0,
-            overflow: 'hidden',
+            overflow: "hidden",
             border: 0,
           }}
         />
-        <ImageUploadTitle htmlFor="brandLogoFile" style={{ cursor: 'pointer' }}>
+        <ImageUploadTitle htmlFor="brandLogoFile" style={{ cursor: "pointer" }}>
           {brandLogoImageName !== undefined
             ? brandLogoImageName
-            : '브랜드 로고 업로드'}
+            : "브랜드 로고 업로드"}
         </ImageUploadTitle>
       </BrandLogoArea>
       <Row>
