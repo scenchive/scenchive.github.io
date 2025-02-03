@@ -89,7 +89,12 @@ export const Title = styled.h1`
   margin-right: auto;
   margin-left: auto;
   ${mediaQuery} {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    white-space: nowrap;
+  }
+
+  ${`@media(max-width:330px)`} {
+    font-size: 1.15rem;
     white-space: nowrap;
   }
 `;

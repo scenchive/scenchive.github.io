@@ -16,7 +16,7 @@ export const MostCollectedArea = styled.div`
   flex-direction: row;
   align-items: center;
   position: relative;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
 
   ${mediaQuery} {
     width: 100%;
@@ -39,7 +39,12 @@ export const Title = styled.h1`
   margin-left: auto;
 
   ${mediaQuery} {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    white-space: nowrap;
+  }
+
+  ${`@media(max-width:330px)`} {
+    font-size: 1.15rem;
     white-space: nowrap;
   }
 `;
