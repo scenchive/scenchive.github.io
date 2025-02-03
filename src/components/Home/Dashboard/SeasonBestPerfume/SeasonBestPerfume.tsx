@@ -97,6 +97,7 @@ const SeasonBestPerfume = (props: { seasonPopularList: any }) => {
               onClick={() => navigate(`/perfumedetail?perfume=${el.perfumeId}`)}
             >
               <PerfumeRow
+                addStyle={isMobile ? 'width: inherit !important' : ''}
                 isMobile={isMobile}
                 index={index}
                 perfumeInformation={el}
