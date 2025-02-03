@@ -68,6 +68,7 @@ const Top5BrandList = (props: { reviewTop5BrandList: Brands[] }) => {
             <SliderArea>
               <PerfumeRowBox key={'perfumeRow_' + index}>
                 <BrandRow
+                  addStyle="max-width: 100% !important;"
                   isMobile={isMobile}
                   index={index}
                   brandInformation={el}

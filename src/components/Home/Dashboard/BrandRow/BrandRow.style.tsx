@@ -10,7 +10,7 @@ const colors = ['#F5D0CD', '#E3A6A1', '#D67070'];
 export const BrandRowArea = styled.div<{ addStyle?: string }>`
   label: brand-row-area;
   width: fit-content;
-  height: fit-content;
+  height: 70px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -18,6 +18,10 @@ export const BrandRowArea = styled.div<{ addStyle?: string }>`
   position: relative;
   margin-left: auto;
   margin-right: auto;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   ${(props) => props.addStyle};
 `;
 
@@ -34,6 +38,8 @@ export const BrandImage = styled.img`
 
 export const BrandInfo = styled.div`
   label: brand-info;
+  max-width: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   text-align: start;
@@ -43,6 +49,8 @@ export const BrandNameArea = styled.div<{ flexDirection: string }>`
   label: brand-name-area;
   display: flex;
   flex-direction: ${(props) => props.flexDirection};
+  flex-wrap: wrap;
+  max-width: 100%;
 `;
 
 export const BrandNameKorean = styled.span<{ fontSize: number }>`
@@ -63,6 +71,8 @@ export const BrandNameEnglish = styled.span<{ fontSize: number }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
+  max-width: 100%;
 `;
 
 export const BrandName = styled.div<{ fontSize: number }>`
@@ -70,4 +80,9 @@ export const BrandName = styled.div<{ fontSize: number }>`
   font-size: ${(props) => props.fontSize}rem;
   font-weight: 550;
   color: #242424;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  max-width: 100%;
 `;

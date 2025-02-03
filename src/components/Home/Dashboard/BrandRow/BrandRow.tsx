@@ -10,6 +10,7 @@ import {
 } from './BrandRow.style';
 
 import Ranking from '../Ranking';
+import { useNavigate } from 'react-router-dom';
 
 interface BrandInfo {
   brandId: number;
@@ -30,8 +31,14 @@ const BrandRow = (props: {
   BrandNameFontSize: number;
   addStyle?: string;
 }) => {
+  const navigate = useNavigate();
   return (
-    <BrandRowArea addStyle={props?.addStyle}>
+    <BrandRowArea
+      addStyle={props?.addStyle}
+      onClick={() =>
+        navigate(`/branddetail?name=${props?.brandInformation?.brandId}`)
+      }
+    >
       {props.index !== undefined && (
         <Ranking
           index={props?.index}

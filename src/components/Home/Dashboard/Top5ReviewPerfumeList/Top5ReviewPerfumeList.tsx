@@ -73,6 +73,7 @@ const ReviewTop5PerfumeList = (props: {
             <SliderArea>
               <PerfumeRowBox key={'perfumeRow_' + index}>
                 <PerfumeRow
+                  addStyle="max-width: 100% !important;"
                   isMobile={isMobile}
                   index={index}
                   perfumeInformation={el}
@@ -92,7 +93,7 @@ const ReviewTop5PerfumeList = (props: {
           {props?.reviewTop5PerfumeList.map((el, index) => (
             <EachPerfumeRowArea index={index} key={'reviewTop' + index}>
               <PerfumeRow
-                addStyle="margin:0px !important"
+                addStyle="margin:0px !important; max-width: 100% !important;"
                 key={'top5Perfume_' + index}
                 isMobile={isMobile}
                 index={index}
