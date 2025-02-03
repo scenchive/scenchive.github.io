@@ -36,7 +36,7 @@ const BrandRow = (props: {
     <BrandRowArea
       addStyle={props?.addStyle}
       onClick={() =>
-        navigate(`/branddetail?name=${props?.brandInformation?.brandId}`)
+        navigate(`/branddetail?name=${props?.brandInformation?.brandName}`)
       }
     >
       {props.index !== undefined && (
