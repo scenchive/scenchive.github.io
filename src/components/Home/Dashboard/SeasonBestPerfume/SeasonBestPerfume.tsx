@@ -27,6 +27,7 @@ interface PerfumesInfo {
 }
 
 const SeasonBestPerfume = (props: { seasonPopularList: any }) => {
+  const navigate = useNavigate();
   const slickRef = useRef<any>(null); // Slider의 정확한 타입으로 설정
   const previous = useCallback(() => {
     if (slickRef.current) {
@@ -91,7 +92,10 @@ const SeasonBestPerfume = (props: { seasonPopularList: any }) => {
         )}
         <SlickSlider {...sliderSettings} ref={slickRef}>
           {props?.seasonPopularList?.map((el: PerfumesInfo, index: number) => (
-            <PerfumeRowBox key={'perfumeRow_' + index}>
+            <PerfumeRowBox
+              key={'perfumeRow_' + index}
+              onClick={() => navigate(`/perfumedetail?perfume=${el.perfumeId}`)}
+            >
               <PerfumeRow
                 isMobile={isMobile}
                 index={index}

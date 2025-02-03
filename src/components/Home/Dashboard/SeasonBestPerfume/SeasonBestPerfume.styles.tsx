@@ -63,6 +63,8 @@ export const PerfumeRowBox = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 15px 10px;
+  cursor: pointer;
+
   ${mediaQuery} {
     width: 330px;
     padding: 10px 20px;
