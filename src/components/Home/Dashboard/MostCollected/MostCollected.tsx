@@ -19,11 +19,12 @@ interface Brand {
   brandImage: string | null;
   name: string;
   brandName_kr: string;
+  brandName: string | null;
 }
 
 const TopCollected = (props: {
-  mostCollectedPerfume: Perfume[];
-  mostCollectedBrand: Brand[];
+  mostCollectedPerfume: Perfume;
+  mostCollectedBrand: Brand;
 }) => {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -40,13 +41,14 @@ const TopCollected = (props: {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
   return (
     <MostCollectedArea>
-      {/* <MostCollectedPerfumeArea>
+      <MostCollectedPerfumeArea>
         <Title>센카이버 최다 보유 향수</Title>
         {props.mostCollectedPerfume && (
           <PerfumeRow
-            addStyle="margin:0px !important"
+            addStyle={`${isMobile ? 'max-width: 100% !important;' : ''} `}
             isMobile={isMobile}
             index={undefined}
             perfumeInformation={props?.mostCollectedPerfume}
@@ -55,7 +57,7 @@ const TopCollected = (props: {
             flexDirection={isMobile ? 'column' : 'row'}
             BrandNameKoreanFontSize={isMobile ? 1 : 1}
             BrandNameEnglishFontSize={isMobile ? 1 : 1}
-            PerfumeNameFontSize={isMobile ? 1.3 : 1.3}
+            PerfumeNameFontSize={isMobile ? 1.2 : 1.3}
           />
         )}
       </MostCollectedPerfumeArea>
@@ -64,17 +66,19 @@ const TopCollected = (props: {
 
         {props.mostCollectedBrand && (
           <BrandRow
+            addStyle={`${isMobile ? 'max-width: 100% !important;' : ''}`}
+            isMobile={isMobile}
             index={undefined}
             brandInformation={props.mostCollectedBrand}
             ImgWidth={isMobile ? 40 : 50}
             ImgHeight={isMobile ? 40 : 50}
             flexDirection={isMobile ? 'column' : 'row'}
-            BrandNameKoreanFontSize={isMobile ? 1 : 1}
-            BrandNameEnglishFontSize={isMobile ? 1 : 1}
-            BrandNameFontSize={isMobile ? 1.3 : 1.3}
+            BrandNameKoreanFontSize={isMobile ? 0.8 : 1}
+            BrandNameEnglishFontSize={isMobile ? 0.8 : 1}
+            BrandNameFontSize={isMobile ? 1.2 : 1.3}
           />
         )}
-      </MostCollectedBrandArea> */}
+      </MostCollectedBrandArea>
     </MostCollectedArea>
   );
 };

@@ -17,6 +17,7 @@ export const Top5Area = styled.div`
   align-items: center;
   position: relative;
   margin-bottom: 200px;
+  justify-content: space-between;
 
   ${mediaQuery} {
     width: 100%;
@@ -28,7 +29,7 @@ export const Top5Area = styled.div`
 
 export const ReviewTop5PerfumeListArea = styled.div`
   label: review-top5-perfume-list-area;
-  width: 50%;
+  width: 49%;
   ${mediaQuery} {
     width: 100%;
     margin-bottom: 30px;
@@ -37,7 +38,7 @@ export const ReviewTop5PerfumeListArea = styled.div`
 
 export const Top5BrandListListArea = styled.div`
   label: top5-brand-list-area;
-  width: 50%;
+  width: 49%;
   ${mediaQuery} {
     width: 100%;
   }

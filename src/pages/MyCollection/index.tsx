@@ -24,12 +24,10 @@ interface Perfumes {
   perfumeId: number;
   perfumeName: string;
   perfumeImage?: string | null;
-  brandDto: {
-    brandId: number;
-    brandName: string;
-    brandName_kr: string | null;
-    brandImage: string | null;
-  };
+  brandId: number;
+  brandName: string;
+  brandNameKr: string | null;
+  brandImage: string | null;
 }
 
 interface Keyword {
@@ -188,7 +186,7 @@ const MyCollection = () => {
                     handleDeleteCollection(
                       e,
                       el.perfumeId,
-                      el?.brandDto?.brandName,
+                      el?.brandName,
                       el.perfumeName
                     )
                   }
@@ -202,10 +200,10 @@ const MyCollection = () => {
                 />
                 <CardText>
                   <div className="card-text__brand">
-                    {el.brandDto?.brandName_kr ? el.brandDto?.brandName_kr : ''}{' '}
-                    {el.brandDto?.brandName_kr && '('}
-                    {el.brandDto.brandName}
-                    {el.brandDto?.brandName_kr && ')'}
+                    {el?.brandNameKr ? el?.brandNameKr : ''}
+                    {el?.brandNameKr && '('}
+                    {el?.brandName}
+                    {el?.brandNameKr && ')'}
                   </div>
 
                   <div className="card-text__title">{el?.perfumeName}</div>

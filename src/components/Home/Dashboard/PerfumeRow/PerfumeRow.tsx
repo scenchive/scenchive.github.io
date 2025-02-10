@@ -39,8 +39,17 @@ const PerfumeRow = (props: {
   PerfumeNameFontSize: number;
   addStyle?: string;
 }) => {
+  const navigate = useNavigate();
+
   return (
-    <PerfumeRowArea addStyle={props?.addStyle}>
+    <PerfumeRowArea
+      addStyle={props?.addStyle}
+      onClick={() =>
+        navigate(
+          `/perfumedetail?perfume=${props?.perfumeInformation?.perfumeId}`
+        )
+      }
+    >
       {props.index !== undefined && (
         <Ranking
           index={props?.index}
@@ -59,17 +68,15 @@ const PerfumeRow = (props: {
       <PerfumeInfo>
         <BrandNameArea flexDirection={props?.flexDirection}>
           <BrandNameKorean fontSize={props?.BrandNameKoreanFontSize}>
-            {props?.perfumeInformation?.brandName_kr}
+            {props?.perfumeInformation?.brandName_kr
+              ? `${props.perfumeInformation.brandName_kr} (${props.perfumeInformation.brandName})`
+              : props?.perfumeInformation?.brandName}
           </BrandNameKorean>
-
-          <BrandNameEnglish fontSize={props?.BrandNameEnglishFontSize}>
-            ({props?.perfumeInformation?.brandName})
-          </BrandNameEnglish>
         </BrandNameArea>
         <PerfumeName fontSize={props?.PerfumeNameFontSize}>
           {props?.perfumeInformation?.perfumeName
             ? props?.perfumeInformation?.perfumeName
-            : props?.perfumeInformation?.name}
+            : props?.perfumeInformation?.perfumeName}
           {props?.perfumeInformation?.perfume_kr && (
             <span>({props?.perfumeInformation?.perfume_kr})</span>
           )}

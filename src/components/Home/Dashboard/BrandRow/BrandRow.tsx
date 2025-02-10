@@ -10,33 +10,45 @@ import {
 } from './BrandRow.style';
 
 import Ranking from '../Ranking';
+import { useNavigate } from 'react-router-dom';
 
 interface BrandInfo {
   brandId: number;
+  brandName: string | null;
+  brandName_kr: string | null;
   brandImage: string | null;
-  brandName?: string;
-  name?: string;
-  brandName_kr: string;
 }
 
 const BrandRow = (props: {
+  isMobile: boolean;
   index: number | undefined;
-  brandInformation: BrandInfo[];
+  brandInformation: BrandInfo;
   ImgWidth: number;
   ImgHeight: number;
   flexDirection: 'column' | 'row';
   BrandNameKoreanFontSize: number;
   BrandNameEnglishFontSize: number;
   BrandNameFontSize: number;
+  addStyle?: string;
 }) => {
-  console.log('pppppp', props?.brandInformation[0].name);
+  const navigate = useNavigate();
   return (
-    <BrandRowArea>
-      {props?.index && <Ranking index={props?.index} />}
+    <BrandRowArea
+      addStyle={props?.addStyle}
+      onClick={() =>
+        navigate(`/branddetail?name=${props?.brandInformation?.brandName}`)
+      }
+    >
+      {props.index !== undefined && (
+        <Ranking
+          index={props?.index}
+          width={props.isMobile ? '35px' : '40px'}
+        />
+      )}
       <BrandImage
         src={
-          props?.brandInformation[0]?.brandImage
-            ? props?.brandInformation[0]?.brandImage
+          props?.brandInformation?.brandImage
+            ? props?.brandInformation?.brandImage
             : '/assets/image/image_perfume.svg'
         }
         width={props?.ImgWidth}
@@ -44,23 +56,13 @@ const BrandRow = (props: {
       />
       <BrandInfo>
         <BrandNameArea flexDirection={props?.flexDirection}>
-          <BrandNameKorean fontSize={props?.BrandNameKoreanFontSize}>
-            {props?.brandInformation[0]?.brandName_kr}
-          </BrandNameKorean>
-
           <BrandNameEnglish fontSize={props?.BrandNameEnglishFontSize}>
-            {/* ( {props?.brandInformation[0].name}
-            {props?.brandInformation[0]?.name
-              ? props?.brandInformation[0]?.name
-              : props?.brandInformation[0]?.brandName}
-            ) */}{' '}
-            {props?.brandInformation[0].name}
+            {props?.brandInformation?.brandName}
           </BrandNameEnglish>
         </BrandNameArea>
         <BrandName fontSize={props?.BrandNameFontSize}>
-          {props?.brandInformation[0]?.brandName}
-          {props?.brandInformation[0]?.brandName_kr && (
-            <span>{props?.brandInformation[0]?.brandName_kr}</span>
+          {props?.brandInformation?.brandName_kr && (
+            <span>{props?.brandInformation?.brandName_kr}</span>
           )}
         </BrandName>
       </BrandInfo>

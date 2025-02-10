@@ -73,6 +73,6 @@ export const EachPerfumeRowArea = styled.div<{ index: number }>`
   border: ${(props) => (props.index === 0 ? '1px solid #FFF6CC' : '')};
   box-shadow: ${(props) => (props.index === 0 ? '0 0 7px 2px #FFF6CC' : '')};
   border-radius: 10px;
-  padding: 5px 15px;
+  padding: 5px 17px;
   margin-bottom: 6px;
 `;

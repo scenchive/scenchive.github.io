@@ -17,7 +17,10 @@ interface scenchiverMaster {
   name: string;
   count: number;
 }
-const ScenchiverStat = (props: { scenchiverMasterInfo: scenchiverMaster }) => {
+const ScenchiverStat = (props: {
+  scenchiverMasterInfo: scenchiverMaster;
+  scenchiverAverage: number;
+}) => {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const handleResize = () => {
@@ -50,7 +53,7 @@ const ScenchiverStat = (props: { scenchiverMasterInfo: scenchiverMaster }) => {
         <Title>센카이버 평균 보유 향수</Title>
         <ScenchiverAverage>
           <ScenchiverAverageNumber>
-            <span>23</span>개
+            <span>{props.scenchiverAverage}</span>개
           </ScenchiverAverageNumber>
         </ScenchiverAverage>
       </ScenchiverAverageArea>
