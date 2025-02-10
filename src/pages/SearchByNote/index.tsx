@@ -28,7 +28,6 @@ interface Perfume {
 
 const SearchByNote = () => {
   const navigate = useNavigate();
-  const noteListRef = useRef<HTMLDivElement>(null);
   const { getSearchByNoteResultList } = useSearch();
 
   const [perfumeSearchResultTotal, setPerfumeSearchResultTotal] =
@@ -47,7 +46,6 @@ const SearchByNote = () => {
   });
   const [loading, setLoading] = useState(false);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
-  const view = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!target) return;
@@ -72,27 +70,6 @@ const SearchByNote = () => {
       postSearchByNote();
     }
   }, [perfumePage]);
-
-  const callback = () => {
-    if (perfumeSearchResultList.length > 0) {
-      if (perfumePage !== -1) {
-        setPerfumePage((prev) => prev + 1);
-      }
-    }
-  };
-
-  const options = {
-    root: view.current,
-    rootMargin: '10px',
-    threshold: 1.0,
-  };
-
-  const observer = new IntersectionObserver((entries, observer) => {
-    if (entries[0].isIntersecting) {
-      callback();
-      observer.unobserve(entries[0].target);
-    }
-  }, options);
 
   const postSearchByNote = async () => {
     if (!notes.top.length && !notes.middle.length && !notes.base.length) {
@@ -174,7 +151,6 @@ const SearchByNote = () => {
           <div
             ref={setTarget}
             style={{
-              backgroundColor: 'red',
               width: '100%',
               height: '180px',
             }}

@@ -4,11 +4,11 @@ import { useState } from 'react';
 const useDashboard = () => {
   const [error, setError] = useState<string | null>(null);
 
-  const getSearchNoteList = async (noteSearchWord: string) => {
+  const getSearchNoteList = async (noteSearchWord: string, page: number) => {
     setError(null);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API}/noteValue?value=${noteSearchWord}`
+        `${process.env.REACT_APP_API}/noteValue?value=${noteSearchWord}&page=${page}`
       );
 
       return res.data;
