@@ -87,7 +87,7 @@ const MyPage = () => {
           currentPassword: currentPassword,
           newPassword: newPassword,
         };
-        const res = await fetchChangePassword('put', '/member/password', data);
+        const res = await fetchChangePassword('put', '/password', data);
 
         if (!res) {
           alert('계정 정보를 정확히 입력해주세요');
