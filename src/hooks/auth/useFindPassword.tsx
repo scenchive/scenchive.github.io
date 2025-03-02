@@ -12,7 +12,13 @@ const useFindPassword = (props: { email: string }) => {
       const data = { email: props.email };
       const res = await axios.post(
         `${process.env.REACT_APP_API}/member/find/password`,
-        data
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        }
       );
       alert(res.data);
       navigate('/login');
