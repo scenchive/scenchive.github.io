@@ -23,6 +23,7 @@ const useFindPassword = (props: { email: string }) => {
       alert(res.data);
       navigate('/login');
     } catch (err) {
+      console.log(err);
       if (axios.isAxiosError(err) && err.response) {
         alert(err.response.data);
       } else {
