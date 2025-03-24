@@ -92,7 +92,13 @@ const Profile = (props: {
   return (
     <ProfileArea>
       <ProfileImageArea>
-        <ProfileImage src={props.imageUrl} />
+        <ProfileImage
+          src={
+            props.imageUrl
+              ? props.imageUrl
+              : '/assets/icon/icon_profile_picture.svg'
+          }
+        />
         <ProfileEditIcon src={'/assets/icon/icon_edit.svg'} />
         <ProfileImageChangeWord onClick={() => props.setIsModalOpen3(true)}>
           프로필 사진 수정

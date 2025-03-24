@@ -52,7 +52,7 @@ export const UserImage = styled.img`
   object-fit:cover;
   margin-right:10px;
   border:radius:20px;
-
+  border-radius: 10px;
 `;
 
 export const CommentDetailArea = styled.div`

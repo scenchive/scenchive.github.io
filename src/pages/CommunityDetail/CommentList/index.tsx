@@ -54,7 +54,7 @@ const CommentList = (props: {
                     src={
                       commentEach?.imageUrl
                         ? commentEach?.imageUrl
-                        : '/assets/icon/icon-profile-picture.svg'
+                        : '/assets/icon/icon_profile_picture.svg'
                     }
                   />
                   <CommentDetailArea>
@@ -131,7 +131,7 @@ const CommentList = (props: {
                           src={
                             el2?.imageUrl
                               ? el2?.imageUrl
-                              : '/assets/icon/icon-profile-picture.svg'
+                              : '/assets/icon/icon_profile_picture.svg'
                           }
                         />
                         <CommentDetailArea>

@@ -9,9 +9,7 @@ const useChangeProfileImage = () => {
 
     try {
       const formData = new FormData();
-      console.log('?????????????????');
-      console.log(props);
-      console.log(props.profileImage);
+
       formData.append('image', props.profileImage);
 
       const res = await axios.put(

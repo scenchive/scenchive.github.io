@@ -41,7 +41,7 @@ const ReviewBlock = (props: {
                   src={
                     el.imageUrl
                       ? el.imageUrl
-                      : '/assets/icon/icon-profile-picture.svg'
+                      : '/assets/icon/icon_profile_picture.svg'
                   }
                 />
                 <UserInformation>
