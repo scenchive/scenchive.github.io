@@ -69,7 +69,7 @@ const MyPage = () => {
   const [email, setEmail] = useState<string | null>();
   const [name, setName] = useState<string | null>();
   const [imageUrl, setImageUrl] = useState<string>(
-    '/assets/icon/icon-profile-picture.svg'
+    '/assets/icon/icon_profile_picture.svg'
   );
   const [userKeyword, setUserKeyword] = useState<KeywordType[]>();
   const [fragranceWheelKeywords, setFragranceWheelKeywords] = useState<

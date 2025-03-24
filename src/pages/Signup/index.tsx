@@ -53,10 +53,10 @@ const Signup = () => {
 
   const imageRef = useRef<any>();
   const [profileImage, setProfileImage] = useState<any>(
-    '/assets/icon/icon-profile-picture.svg'
+    '/assets/icon/icon_profile_picture.svg'
   );
   const [profileImageName, setProfileImageName] = useState<string>(
-    '/assets/icon/icon-profile-picture.svg'
+    '/assets/icon/icon_profile_picture.svg'
   );
   const [previewImage, setPreviewImage] = useState<any>();
   const [email, setEmail] = useState<string>('');
@@ -263,7 +263,7 @@ const Signup = () => {
 
   const signupAccount = async () => {
     const formData = new FormData();
-    if (profileImage === '/assets/icon/icon-profile-picture.svg') {
+    if (profileImage === '/assets/icon/icon_profile_picture.svg') {
       formData.append('image', '');
     } else {
       formData.append('image', profileImage);
@@ -340,7 +340,7 @@ const Signup = () => {
             src={
               previewImage
                 ? previewImage
-                : '/assets/icon/icon-profile-picture.svg'
+                : '/assets/icon/icon_profile_picture.svg'
             }
           />
           <input
@@ -361,7 +361,7 @@ const Signup = () => {
             htmlFor="profileImageFile"
             style={{ cursor: 'pointer' }}
           >
-            {profileImageName !== '/assets/icon/icon-profile-picture.svg'
+            {profileImageName !== '/assets/icon/icon_profile_picture.svg'
               ? profileImageName
               : '프로필 사진 업로드'}
           </PfpUploadTitle>

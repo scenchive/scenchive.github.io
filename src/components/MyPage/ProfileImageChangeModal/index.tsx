@@ -61,13 +61,10 @@ const ProfileImageModifyModal = (props: {
     if (!profileImage && props.imageUrl === profileImage) {
       alert('이미지를 변경해주세요');
     }
-    console.log('===================');
-    console.log(profileImage);
+
     const isChanged = await changeProfileImage({ profileImage });
 
     if (isChanged?.imageUrl) {
-      console.log('===================');
-      console.log(isChanged);
       alert('프로필 이미지가 변경되었습니다.');
       props.setIsModalOpen3(false);
     } else {
